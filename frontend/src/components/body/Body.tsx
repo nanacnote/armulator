@@ -12,13 +12,7 @@ const Body: React.FC<TProps> = (): JSX.Element => {
   return (
     <div
       className={cx(styles.container, 'flex justify-center overflow-hidden')}
-    >
-      <img
-        style={{ width: '400px', height: '400px' }}
-        src="assets/images/logo/logo_white.png"
-        alt="hiram labs ltd - logo"
-      />
-    </div>
+    ></div>
   );
 };
 

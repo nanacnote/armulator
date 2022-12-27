@@ -19,12 +19,16 @@ export const NORMAL_CLOCK_SPEED = 500; // indicates the clock is running at norm
 export const SLOW_CLOCK_SPEED = 1000; // indicates the clock is running at slow speed
 
 // Bus class:: CONTROL BUS value definitions
-export const C_BUS_READ_VAL = 0b00000000000000010000000000000000; // sets the control bus to read mode
-export const C_BUS_WRITE_VAL = 0b00000000000000000000000100000000; // sets the control bus to write mode
+export const C_BUS_READ_8_VAL = 0b00000000000000010000000000000000; // sets the control bus to read mode
+export const C_BUS_READ_16_VAL = 0b00000000000000100000000000000000; // sets the control bus to read mode
+export const C_BUS_READ_32_VAL = 0b00000000000000110000000000000000; // sets the control bus to read mode
+export const C_BUS_WRITE_8_VAL = 0b00000000000000000000000100000000; // sets the control bus to write mode
+export const C_BUS_WRITE_16_VAL = 0b00000000000000000000001000000000; // sets the control bus to write mode
+export const C_BUS_WRITE_32_VAL = 0b00000000000000000000001100000000; // sets the control bus to write mode
 export const C_BUS_INTERRUPT_VAL = 0b00000000000000000000000000000001; // sets the control bus to interrupt mode
 
 // Bus class:: DEVICES key
 export const RAM_DEV_KEY = 0b00000001000000000000000000000000;
 
 // Ram class::
-export const RAM_SIZE = 2e6;
+export const RAM_SIZE_IN_BYTE = 2e6;

@@ -21,4 +21,24 @@ export class Buffer32Bit {
     this.IS_EMPTY = OK_CODE;
     return OK_CODE;
   }
+
+  view() {
+    return [...this];
+  }
+
+  [Symbol.iterator]() {
+    const binStr = this.BUFFER.getUint32(0).toString(2);
+    const binStr32 =
+      "00000000000000000000000000000000".substring(binStr.length) + binStr;
+    let index = 0;
+    return {
+      next: () => {
+        if (index < binStr32.length) {
+          return { value: +binStr32[index++], done: false };
+        } else {
+          return { done: true };
+        }
+      },
+    };
+  }
 }

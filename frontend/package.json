@@ -1,7 +1,7 @@
 {
-  "name": "react-tailwind-gh-pages",
+  "name": "ARMulator",
   "version": "1.0.0",
-  "description": "React static website builder template, UI configured with Tailwind CSS, Build optimise to seamlessly deploy on GitHub Pages.",
+  "description": "JavaScript Visual Emulator for ARM",
   "main": "index.js",
   "scripts": {
     "start": "webpack-dev-server --open --config webpack.dev.js",
@@ -10,16 +10,15 @@
     "prettier-format": "prettier --config .prettierrc 'src/**/*.*' --write"
   },
   "author": "Owusu K",
-  "sponsor": "Hiram Labs Ltd",
   "license": "CC0-1.0",
   "bugs": {
-    "url": "https://github.com/hiram-labs/react-tailwind-gh-pages/issues"
+    "url": "https://github.com/nanacnote/armulator/issues"
   },
-  "homepage": "https://github.com/hiram-labs/react-tailwind-gh-pages#readme",
+  "homepage": "https://github.com/nanacnote/armulator#readme",
   "email": "adjeibohyen@hotmail.co.uk",
   "repository": {
     "type": "git",
-    "url": "https://github.com/hiram-labs/react-tailwind-gh-pages.git"
+    "url": "https://github.com/nanacnote/armulator.git"
   },
   "devDependencies": {
     "@babel/cli": "^7.11.5",

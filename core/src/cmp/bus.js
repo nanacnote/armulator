@@ -1,7 +1,11 @@
 import {
   C_BUS_INTERRUPT_VAL,
-  C_BUS_READ_VAL,
-  C_BUS_WRITE_VAL,
+  C_BUS_READ_16_VAL,
+  C_BUS_READ_32_VAL,
+  C_BUS_READ_8_VAL,
+  C_BUS_WRITE_16_VAL,
+  C_BUS_WRITE_32_VAL,
+  C_BUS_WRITE_8_VAL,
   RAM_DEV_KEY,
 } from "../var/def.js";
 import { Buffer32Bit } from "./buf32.js";
@@ -17,39 +21,64 @@ export class Bus {
     this.onTick = this.onTick.bind(this);
   }
 
-  address(val) {
+  setAddress(val) {
     // NOTE: first 8bits of address represents the device key
     this.A_BUS_BUFFER.write(val);
   }
 
-  data(val) {
+  setData(val) {
     this.D_BUS_BUFFER.write(val);
   }
 
-  control(val) {
+  getData() {
+    return this.D_BUS_BUFFER.read();
+  }
+
+  setControl(val) {
     this.C_BUS_BUFFER.write(val);
+  }
+
+  view() {
+    return {
+      address: this.A_BUS_BUFFER.view(),
+      data: this.D_BUS_BUFFER.view(),
+      control: this.C_BUS_BUFFER.view(),
+    };
   }
 
   onTick() {
     if (this.A_BUS_BUFFER.IS_EMPTY) return;
-    const tmp = new Buffer32Bit();
-    tmp.BUFFER.setInt8(0, this.A_BUS_BUFFER.BUFFER.getUint8());
-    const device = this.DEVICES[tmp.read()];
+    const mask = (((1 << 8) - 1) << 24) >>> 0;
+    const device = this.DEVICES[this.A_BUS_BUFFER.read() & mask];
     const byteOffset = this.A_BUS_BUFFER.read() ^ RAM_DEV_KEY;
 
-    if (!(this.C_BUS_BUFFER.read() ^ C_BUS_READ_VAL)) {
-      const val = device.read(byteOffset);
-      console.log(`Value from RAM addr ${byteOffset.toString(16)}: ${val}`);
-      // TODO: load the read value into a register
+    // read data from memory into register
+    if (!(this.C_BUS_BUFFER.read() ^ C_BUS_READ_8_VAL)) {
+      this.D_BUS_BUFFER.write(device.read8(byteOffset));
+    }
+    if (!(this.C_BUS_BUFFER.read() ^ C_BUS_READ_16_VAL)) {
+      this.D_BUS_BUFFER.write(device.read16(byteOffset));
+    }
+    if (!(this.C_BUS_BUFFER.read() ^ C_BUS_READ_32_VAL)) {
+      this.D_BUS_BUFFER.write(device.read32(byteOffset));
     }
 
-    if (!(this.C_BUS_BUFFER.read() ^ C_BUS_WRITE_VAL)) {
-      device.write(this.D_BUS_BUFFER.read(), byteOffset);
+    // write data from memory into register
+    if (!(this.C_BUS_BUFFER.read() ^ C_BUS_WRITE_8_VAL)) {
+      device.write8(this.D_BUS_BUFFER.read(), byteOffset);
+    }
+    if (!(this.C_BUS_BUFFER.read() ^ C_BUS_WRITE_16_VAL)) {
+      device.write16(this.D_BUS_BUFFER.read(), byteOffset);
+    }
+    if (!(this.C_BUS_BUFFER.read() ^ C_BUS_WRITE_32_VAL)) {
+      device.write32(this.D_BUS_BUFFER.read(), byteOffset);
     }
 
+    // handle interrupts
     if (!(this.C_BUS_BUFFER.read() ^ C_BUS_INTERRUPT_VAL)) {
       console.log("TODO: handle interrupt signals here");
     }
+
     this.A_BUS_BUFFER.flush();
   }
 }
