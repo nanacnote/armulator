@@ -2,6 +2,14 @@
 export const OK_CODE = 1; // indicates everything went right
 export const ERROR_CODE = 0; // indicates everything went right
 
+// Execution and Interrupt key
+export const EXECUTION_KEY = 0b0000000000000000;
+export const INTERRUPT_KEY = 0b0000000100000000;
+
+// Interrupt handler codes
+export const EMPTY_INSTRUCTION_INTERRUPT = INTERRUPT_KEY + 0b00000001;
+export const UNIMPLEMENTED_INSTRUCTION_INTERRUPT = INTERRUPT_KEY + 0b00000010;
+
 // Clock class:: CYCLE value definitions
 export const FETCH_CYCLE_KEY = 0; // the state of the machine is set to fetch
 export const DECODE_CYCLE_KEY = 1; // the state of the machine is set to decode
