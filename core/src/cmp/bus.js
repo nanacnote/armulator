@@ -48,8 +48,8 @@ export class Bus {
 
   onTick() {
     if (this.A_BUS_BUFFER.IS_EMPTY) return;
-    const mask = (((1 << 8) - 1) << 24) >>> 0;
-    const device = this.DEVICES[this.A_BUS_BUFFER.read() & mask];
+    const device =
+      this.DEVICES[this.A_BUS_BUFFER.read() & ((((1 << 8) - 1) << 24) >>> 0)];
     const byteOffset = this.A_BUS_BUFFER.read() ^ RAM_DEV_KEY;
 
     // read data from memory into register

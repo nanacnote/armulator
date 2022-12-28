@@ -1,10 +1,10 @@
 import { C_BUS_READ_32_VAL, RAM_DEV_KEY } from "../var/def.js";
-import { r15 } from "../var/reg.js";
-import { Decoder } from "./dec.js";
 
 export class Cpu {
-  constructor(bus) {
-    this.BUS = bus;
+  constructor(parts) {
+    this.BUS = parts.bus;
+    this.DECODER = parts.dec;
+    this.REGISTERS = parts.registers;
 
     this.CURRENT_INSTRUCTION = null;
 
@@ -14,15 +14,15 @@ export class Cpu {
   }
 
   fetch() {
-    const pc_addr = r15.read();
+    const pc_addr = this.REGISTERS.r15.read();
     this.BUS.setAddress(RAM_DEV_KEY + pc_addr);
     this.BUS.setControl(C_BUS_READ_32_VAL);
-    r15.write(pc_addr + 8);
+    this.REGISTERS.r15.write(pc_addr + 8);
   }
 
   decode() {
     const inst = this.BUS.getData();
-    new Decoder(inst).init();
+    this.DECODER.init(inst);
   }
 
   execute() {
