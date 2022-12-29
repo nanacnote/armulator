@@ -21,16 +21,6 @@ export class Clock {
     this._trigger_observers = this._trigger_observers.bind(this);
   }
 
-  _trigger_observers() {
-    if (this.OBSERVERS.hasOwnProperty(this.CYCLE)) {
-      this.OBSERVERS[this.CYCLE].forEach((func) => {
-        func.call();
-      });
-      this.COUNTER++;
-      this.CYCLE = this.COUNTER % CYCLE_SIZE;
-    }
-  }
-
   start() {
     this.STATE = START_CLOCK_KEY;
     this.TICKER = setInterval(this._trigger_observers, this.SPEED);
@@ -59,5 +49,15 @@ export class Clock {
     this.SPEED = val;
     this.pause();
     this.resume();
+  }
+
+  _trigger_observers() {
+    if (this.OBSERVERS.hasOwnProperty(this.CYCLE)) {
+      this.OBSERVERS[this.CYCLE].forEach((func) => {
+        func.call();
+      });
+      this.COUNTER++;
+      this.CYCLE = this.COUNTER % CYCLE_SIZE;
+    }
   }
 }
