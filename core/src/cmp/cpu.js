@@ -25,7 +25,7 @@ export class Cpu {
     const pc_addr = this.REGISTERS.r15.read();
     this.BUS.setAddress(RAM_DEV_KEY + pc_addr);
     this.BUS.setControl(C_BUS_READ_32_VAL);
-    this.REGISTERS.r15.write(pc_addr + 8);
+    this.REGISTERS.r15.write(pc_addr + 4);
   }
 
   decode() {
