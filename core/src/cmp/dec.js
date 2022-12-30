@@ -10,10 +10,10 @@ T0 - main encoding
             • BX
             • CLZ
         T15 - Halfword Multiply and Accumulate                                              **
-        T16 - Data-processing register (immediate shift) 
+        T16 - Data-processing register (immediate shift)
 
-        T17 - Data-processing register (register shift) 
-
+        T17 - Data-processing register (register shift)
+        
         T18 - Data-processing immediate  
             T181 - Integer Data Processing (two register and immediate)
                 • AND, ANDS (immediate)
@@ -110,10 +110,10 @@ export class Decoder {
         [["_eq", 0b0],        ["_any"],               ["_eq", 0b1],       ["_ne", 0b00],      ["_eq", 0b1],       ["_ret", UNDEFINED_INSTRUCTION_INTERRUPT]],   // Extra load/store 
         [["_eq", 0b0],        ["_eqC", "0xxxx"],      ["_eq", 0b1],       ["_eq", 0b00],      ["_eq", 0b1],       ["_lup", "_T12"]],                            // Multiply and Accumulate 
         [["_eq", 0b0],        ["_eqC", "1xxxx"],      ["_eq", 0b1],       ["_eq", 0b00],      ["_eq", 0b1],       ["_ret", UNDEFINED_INSTRUCTION_INTERRUPT]],   // Synchronization primitives and Load-Acquire/Store-Release 
-        [["_eq", 0b0],        ["_eqC", "10xx0"],      ["_eq", 0b0],       ["_any"],           ["_any"],           ["_lup", "_T14"]],                             // Miscellaneous 
+        [["_eq", 0b0],        ["_eqC", "10xx0"],      ["_eq", 0b0],       ["_any"],           ["_any"],           ["_lup", "_T14"]],                            // Miscellaneous 
         [["_eq", 0b0],        ["_eqC", "10xx0"],      ["_eq", 0b1],       ["_any"],           ["_eq", 0b0],       ["_ret", UNDEFINED_INSTRUCTION_INTERRUPT]],   // Halfword Multiply and Accumulate  
         [["_eq", 0b0],        ["_neC", "10xx0"],      ["_any"],           ["_any"],           ["_eq", 0b0],       ["_lup", "_T16"]],                            // Data-processing register (immediate shift) 
-        [["_eq", 0b0],        ["_neC", "10xx0"],      ["_eq", 0b0],       ["_any"],           ["_eq", 0b1],       ["_lup", "_T17"]],                            // Data-processing register (register shift) 
+        [["_eq", 0b0],        ["_neC", "10xx0"],      ["_eq", 0b0],       ["_any"],           ["_eq", 0b1],       ["_lup", "_T16"]],                            // Data-processing register (register shift) 
         [["_eq", 0b1],        ["_any"],               ["_any"],           ["_any"],           ["_any"],           ["_lup", "_T18"]],                            // Data-processing immediate  
     ];
     // prettier-ignore
@@ -121,18 +121,11 @@ export class Decoder {
         // TODO: not all opcodes implemented 
         [["_eq", 0b000],       ["_any"],       ["_ret", "MUL_MULS"]],         // MUL/MULS
     ]
+    // prettier-ignore
     this.T14 = [
       // TODO: not all opcodes implemented
-      [
-        ["_eq", 0b01],
-        ["_eq", 0b001],
-        ["_ret", "BX"],
-      ], // BX
-      [
-        ["_eq", 0b11],
-        ["_eq", 0b001],
-        ["_ret", "CLZ"],
-      ], // CLZ
+      [["_eq", 0b01], ["_eq", 0b001], ["_ret", "BX"]], // BX
+      [["_eq", 0b11], ["_eq", 0b001], ["_ret", "CLZ"]], // CLZ
     ];
     // prettier-ignore
     this.T18 = [
@@ -163,8 +156,8 @@ export class Decoder {
     ]
     // prettier-ignore
     this.T182 = [
-        [["_eq", 0b0],    ["_ret", "MOV_IMD"]],         // MOV, MOVS (immediate)
-        [["_eq", 0b1],    ["_ret", "MOVT"]],            // MOVT
+        [["_eq", 0b0],    ["_ret", "MOV_MOVS_IMD"]],        // MOV, MOVS (immediate)
+        [["_eq", 0b1],    ["_ret", "MOVT"]],                // MOVT
     ]
     // prettier-ignore
     this.T184 = [
@@ -175,10 +168,10 @@ export class Decoder {
     ]
     // prettier-ignore
     this.T185 = [
-        [["_eq", 0b00], ["_ret", "ORR_ORRS"]],         // ORR, ORRS (immediate)
-        [["_eq", 0b01], ["_ret", "MOV_MOVS"]],         // MOV, MOVS (immediate)
-        [["_eq", 0b10], ["_ret", "BIC_BICS"]],         // BIC, BICS (immediate)
-        [["_eq", 0b11], ["_ret", "MVN_MVNS"]],         // MVN, MVNS (immediate)
+        [["_eq", 0b00], ["_ret", "ORR_ORRS_IMD"]],         // ORR, ORRS (immediate)
+        [["_eq", 0b01], ["_ret", "MOV_MOVS_IMD"]],         // MOV, MOVS (immediate)
+        [["_eq", 0b10], ["_ret", "BIC_BICS_IMD"]],         // BIC, BICS (immediate)
+        [["_eq", 0b11], ["_ret", "MVN_MVNS_IMD"]],         // MVN, MVNS (immediate)
     ]
     // prettier-ignore
     this.T2 = [
@@ -262,9 +255,9 @@ export class Decoder {
       const curV1 = v1[i];
       const curV2 = v2str[i];
       if (curV1 == "x") continue;
-      if (curV1 == curV2) return false;
+      if (curV1 != curV2) return true;
     }
-    return true;
+    return false;
   }
 
   _eqC(v1, v2) {
@@ -471,26 +464,6 @@ export class Decoder {
     return UNDEFINED_INSTRUCTION_INTERRUPT;
   }
 
-  // TABLE 5x
-  _T53() {
-    const cond = (this.INSTRUCTION >>> 28) & (((1 << 4) >>> 0) - 1);
-    const H = (this.INSTRUCTION >>> 24) & (((1 << 1) >>> 0) - 1);
-    for (let i = 0, len = this.T53.length; i < len; i++) {
-      const entry = this.T53[i];
-      const [cond_func, cond_v1] = entry[0];
-      const [H_func, H_v1] = entry[1];
-      const fields = [
-        this[cond_func].call(this, cond_v1, cond),
-        this[H_func].call(this, H_v1, H),
-      ];
-      if (fields.every((v) => v)) {
-        const [caller, callee] = entry[fields.length];
-        return this[caller].call(this, callee);
-      }
-    }
-    return UNDEFINED_INSTRUCTION_INTERRUPT;
-  }
-
   // TABLE 18x
   _T181() {
     const opc = (this.INSTRUCTION >>> 21) & (((1 << 3) >>> 0) - 1);
@@ -548,6 +521,26 @@ export class Decoder {
       const entry = this.T185[i];
       const [opc_func, opc_v1] = entry[0];
       const fields = [this[opc_func].call(this, opc_v1, opc)];
+      if (fields.every((v) => v)) {
+        const [caller, callee] = entry[fields.length];
+        return this[caller].call(this, callee);
+      }
+    }
+    return UNDEFINED_INSTRUCTION_INTERRUPT;
+  }
+
+  // TABLE 5x
+  _T53() {
+    const cond = (this.INSTRUCTION >>> 28) & (((1 << 4) >>> 0) - 1);
+    const H = (this.INSTRUCTION >>> 24) & (((1 << 1) >>> 0) - 1);
+    for (let i = 0, len = this.T53.length; i < len; i++) {
+      const entry = this.T53[i];
+      const [cond_func, cond_v1] = entry[0];
+      const [H_func, H_v1] = entry[1];
+      const fields = [
+        this[cond_func].call(this, cond_v1, cond),
+        this[H_func].call(this, H_v1, H),
+      ];
       if (fields.every((v) => v)) {
         const [caller, callee] = entry[fields.length];
         return this[caller].call(this, callee);
