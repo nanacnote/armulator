@@ -1,5 +1,4 @@
 export class Alu {
-  // interrupt vector table
   constructor() {}
 
   handle(code) {

@@ -8,7 +8,7 @@ import {
   C_BUS_WRITE_8_VAL,
   RAM_DEV_KEY,
 } from "../var/def.js";
-import { Buffer32Bit } from "./buf32.js";
+import { Buffer32Bit } from "./buf.js";
 
 export class Bus {
   constructor(dev) {

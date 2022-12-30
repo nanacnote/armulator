@@ -1,5 +1,7 @@
 import {
   FETCH_CYCLE_KEY,
+  DECODE_CYCLE_KEY,
+  EXECUTE_CYCLE_KEY,
   NORMAL_CLOCK_SPEED,
   CYCLE_SIZE,
   PAUSE_CLOCK_KEY,
@@ -7,9 +9,14 @@ import {
   STOP_CLOCK_KEY,
 } from "../var/def.js";
 
-export class Clock {
-  constructor(obs) {
-    this.OBSERVERS = obs;
+export class Clk {
+  // system clock
+  constructor() {
+    this.OBSERVERS = {
+      [FETCH_CYCLE_KEY]: [],
+      [DECODE_CYCLE_KEY]: [],
+      [EXECUTE_CYCLE_KEY]: [],
+    };
 
     this.TICKER = null;
     this.COUNTER = 0;
@@ -21,28 +28,30 @@ export class Clock {
     this._trigger_observers = this._trigger_observers.bind(this);
   }
 
+  addObserver(cycleKey, obsFuncs) {
+    this.OBSERVERS[cycleKey].push(
+      ...(Array.isArray(obsFuncs) ? obsFuncs : [obsFuncs])
+    );
+  }
+
   start() {
     this.STATE = START_CLOCK_KEY;
     this.TICKER = setInterval(this._trigger_observers, this.SPEED);
-    // TODO: add logic to load instructions
   }
 
   stop() {
     if (this.TICKER) clearInterval(this.TICKER);
     this.STATE = STOP_CLOCK_KEY;
-    // TODO: add logic to empty register and memory
   }
 
   pause() {
     if (this.TICKER) clearInterval(this.TICKER);
     this.STATE = PAUSE_CLOCK_KEY;
-    // TODO: add logic to save state so that resuming is seamless
   }
 
   resume() {
     this.STATE = START_CLOCK_KEY;
     this.TICKER = setInterval(this._trigger_observers, this.SPEED);
-    // TODO: add logic to restore state from pause
   }
 
   change_speed(val) {

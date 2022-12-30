@@ -2,11 +2,11 @@ import { OK_CODE, RAM_SIZE_IN_BYTE } from "../var/def.js";
 
 export class Ram {
   constructor() {
-    this.init();
-  }
-
-  init() {
-    this.BUFFER = new DataView(new ArrayBuffer(RAM_SIZE_IN_BYTE));
+    this.START_ADDRESS = 0;
+    this.BUFFER = new DataView(
+      new ArrayBuffer(RAM_SIZE_IN_BYTE),
+      this.START_ADDRESS
+    );
   }
 
   read8(byteOffset = 0) {

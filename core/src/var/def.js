@@ -23,7 +23,7 @@ export const PAUSE_CLOCK_KEY = 2; // indicates the system is in pause/suspended 
 
 // Clock class:: SPEED value definitions
 export const FAST_CLOCK_SPEED = 200; // indicates the clock is running at fast speed
-export const NORMAL_CLOCK_SPEED = 500; // indicates the clock is running at normal speed
+export const NORMAL_CLOCK_SPEED = 50; // indicates the clock is running at normal speed    // TODO: change to 500
 export const SLOW_CLOCK_SPEED = 1000; // indicates the clock is running at slow speed
 
 // Bus class:: CONTROL BUS value definitions
@@ -39,4 +39,4 @@ export const C_BUS_INTERRUPT_VAL = 0b00000000000000000000000000000001; // sets t
 export const RAM_DEV_KEY = 0b00000001000000000000000000000000;
 
 // Ram class::
-export const RAM_SIZE_IN_BYTE = 2e6;
+export const RAM_SIZE_IN_BYTE = 2 * 1024 * 1024;

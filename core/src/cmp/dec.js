@@ -91,7 +91,8 @@ import {
   UNDEFINED_INSTRUCTION_INTERRUPT,
 } from "../var/def.js";
 
-export class Decoder {
+export class Dec {
+  // Machine code decoder
   constructor() {
     this.INSTRUCTION = null;
 
