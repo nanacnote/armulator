@@ -3,6 +3,11 @@ export class Ivt {
   constructor() {}
 
   handle(code) {
-    console.log(`Handle Interrupt - ${code.toString(2)}\n\n`);
+    console.log(
+      `%c Handle Interrupt - ${code.toString(2)} - ${
+        window.currentInstruction
+      }\n\n`,
+      "background: black; color: white"
+    );
   }
 }

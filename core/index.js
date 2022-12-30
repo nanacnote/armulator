@@ -35,9 +35,20 @@ clock.start();
 // ram.write32(0b11100100100100010000000000001100, 24); // LDR R0, [R1], #12,
 
 let mem_offset = -4;
+// prettier-ignore
 [
-  0xe52d7004, 0xe24dd00c, 0xe28d7000, 0xe5870004, 0xe5973004, 0xe0030393,
-  0xe1a00003, 0xe297700c, 0xe1a0d007, 0xe49d7004, 0xe12fff1e,
+  0xE35300F5,     // cmp     r3, #245
+  0xe52d7004,     // push    {r7}
+  0xe24dd00c,     // sub     sp, sp, #12
+  0xe28d7000,     // add     r7, sp, #0
+  0xe5870004,     // str     r0, [r7, #4]
+  0xe5973004,     // ldr     r3, [r7, #4]
+  0xe0030393,     // mul     r3, r3, r3
+  0xe1a00003,     // mov     r0, r3
+  0xe297700c,     // adds    r7, r7, #12
+  0xe1a0d007,     // mov     sp, r7
+  0xe49d7004,     // ldr     r7, [sp], #4
+  0xe12fff1e,     // bx      lr
 ].forEach((inst) => ram.write32(inst, (mem_offset += 4)));
 
 setTimeout(() => {

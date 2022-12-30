@@ -2,20 +2,50 @@
 
 T0 - main encoding
     T1 - data-processing and miscellaneous instructions
-        T11 - Extra load/store **
-        T12 - Multiply and Accumulate **
+        T11 - Extra load/store                                                              **
+        T12 - Multiply and Accumulate
             • MUL/MULS
-        T13 - Synchronization primitives and Load-Acquire/Store-Release **
-        T14 - Miscellaneous **
-        T15 - Halfword Multiply and Accumulate **
+        T13 - Synchronization primitives and Load-Acquire/Store-Release                     **
+        T14 - Miscellaneous
+            • BX
+            • CLZ
+        T15 - Halfword Multiply and Accumulate                                              **
         T16 - Data-processing register (immediate shift) 
+
         T17 - Data-processing register (register shift) 
+
         T18 - Data-processing immediate  
             T181 - Integer Data Processing (two register and immediate)
+                • AND, ANDS (immediate)
+                • EOR, EORS (immediate)
+                • SUB, SUBS (immediate) - SUB variant
+                • SUB, SUBS (SP minus immediate) - SUB variant 
+                • ADR - A2
+                • SUB, SUBS (immediate) - SUBS variant
+                • SUB, SUBS (SP minus immediate) - SUBS variant 
+                • RSB, RSBS (immediate)
+                • ADD, ADDS (immediate) - ADD variant
+                • ADD, ADDS (SP plus immediate) - ADD variant 
+                • ADR - A1
+                • ADD, ADDS (immediate) - ADDS variant
+                • ADD, ADDS (SP plus immediate) - ADDS variant
+                • ADC, ADCS (immediate)
+                • SBC, SBCS (immediate)
+                • RSC, RSCS (immediate)
             T182 - Move Halfword (immediate) 
-            T183 - Move Special Register and Hints (immediate) 
+                • MOV, MOVS (immediate)
+                • MOVT
+            T183 - Move Special Register and Hints (immediate)                              **
             T184 - Integer Test and Compare (one register and immediate) 
+                • TST (immediate)
+                • TEQ (immediate)
+                • CMP (immediate)
+                • CMN (immediate)
             T185 - Logical Arithmetic (two register and immediate)
+                • ORR, ORRS (immediate)
+                • MOV, MOVS (immediate)
+                • BIC, BICS (immediate)
+                • MVN, MVNS (immediate)
 
     T2 - Load/Store Word, Unsigned Byte (immediate, literal)
         • LDR(literal)
@@ -40,19 +70,19 @@ T0 - main encoding
         • STRB (register) - Pre indexed variant
         • STRB (register) - Post indexed variant
 
-    T4 - Media instructions **
+    T4 - Media instructions                                                                 **
 
     T5 - Branch, branch with link, and block data transfer
-        T51 - Exception Save/Restore **
-        T52 - Load/Store Multiple **
+        T51 - Exception Save/Restore                                                        **
+        T52 - Load/Store Multiple                                                           **
         T53 - Branch (immediate)
             • B
             • BL (immediate)
             • BLX (immediate)
 
-    T6 - System register access, Advanced SIMD, floating-point, and Supervisor call **
+    T6 - System register access, Advanced SIMD, floating-point, and Supervisor call         **
 
-    T7 - Unconditional instructions **
+    T7 - Unconditional instructions                                                         **
 
  */
 
@@ -80,7 +110,7 @@ export class Decoder {
         [["_eq", 0b0],        ["_any"],               ["_eq", 0b1],       ["_ne", 0b00],      ["_eq", 0b1],       ["_ret", UNDEFINED_INSTRUCTION_INTERRUPT]],   // Extra load/store 
         [["_eq", 0b0],        ["_eqC", "0xxxx"],      ["_eq", 0b1],       ["_eq", 0b00],      ["_eq", 0b1],       ["_lup", "_T12"]],                            // Multiply and Accumulate 
         [["_eq", 0b0],        ["_eqC", "1xxxx"],      ["_eq", 0b1],       ["_eq", 0b00],      ["_eq", 0b1],       ["_ret", UNDEFINED_INSTRUCTION_INTERRUPT]],   // Synchronization primitives and Load-Acquire/Store-Release 
-        [["_eq", 0b0],        ["_eqC", "10xx0"],      ["_eq", 0b0],       ["_any"],           ["_any"],           ["_ret", UNDEFINED_INSTRUCTION_INTERRUPT]],   // Miscellaneous 
+        [["_eq", 0b0],        ["_eqC", "10xx0"],      ["_eq", 0b0],       ["_any"],           ["_any"],           ["_lup", "_T14"]],                             // Miscellaneous 
         [["_eq", 0b0],        ["_eqC", "10xx0"],      ["_eq", 0b1],       ["_any"],           ["_eq", 0b0],       ["_ret", UNDEFINED_INSTRUCTION_INTERRUPT]],   // Halfword Multiply and Accumulate  
         [["_eq", 0b0],        ["_neC", "10xx0"],      ["_any"],           ["_any"],           ["_eq", 0b0],       ["_lup", "_T16"]],                            // Data-processing register (immediate shift) 
         [["_eq", 0b0],        ["_neC", "10xx0"],      ["_eq", 0b0],       ["_any"],           ["_eq", 0b1],       ["_lup", "_T17"]],                            // Data-processing register (register shift) 
@@ -91,13 +121,64 @@ export class Decoder {
         // TODO: not all opcodes implemented 
         [["_eq", 0b000],       ["_any"],       ["_ret", "MUL_MULS"]],         // MUL/MULS
     ]
+    this.T14 = [
+      // TODO: not all opcodes implemented
+      [
+        ["_eq", 0b01],
+        ["_eq", 0b001],
+        ["_ret", "BX"],
+      ], // BX
+      [
+        ["_eq", 0b11],
+        ["_eq", 0b001],
+        ["_ret", "CLZ"],
+      ], // CLZ
+    ];
     // prettier-ignore
     this.T18 = [
-        [[], [], []],    // Integer Data Processing (two register and immediate)
-        [[], [], []],    // Move Halfword (immediate) 
-        [[], [], []],    // Move Special Register and Hints (immediate) 
-        [[], [], []],    // Integer Test and Compare (one register and immediate) 
-        [[], [], []],    // Logical Arithmetic (two register and immediate)
+        [["_eqC", "0x"],        ["_any"],           ["_lup", "_T181"]],                             // Integer Data Processing (two register and immediate)
+        [["_eq", 0b10],         ["_eq", 0b00],      ["_lup", "_T182"]],                             // Move Halfword (immediate) 
+        [["_eq", 0b10],         ["_eq", 0b10],      ["_ret", UNDEFINED_INSTRUCTION_INTERRUPT]],     // Move Special Register and Hints (immediate) 
+        [["_eq", 0b10],         ["_eqC", "x1"],     ["_lup", "_T184"]],                             // Integer Test and Compare (one register and immediate) 
+        [["_eq", 0b11],         ["_any"],           ["_lup", "_T185"]],                             // Logical Arithmetic (two register and immediate)
+    ]
+    // prettier-ignore
+    this.T181 = [
+        [["_eq", 0b000],        ["_any"],       ["_any"],               ["_ret", "AND_ANDS_IMD"]],              // AND, ANDS (immediate)
+        [["_eq", 0b001],        ["_any"],       ["_any"],               ["_ret", "EOR_EORS_IMD"]],              // EOR, EORS (immediate)
+        [["_eq", 0b010],        ["_eq", 0b0],   ["_neC","11x1"],        ["_ret", "SUB_IMD"]],                   // SUB, SUBS (immediate) - SUB variant
+        [["_eq", 0b010],        ["_eq", 0b0],   ["_eq", 0b1101],        ["_ret", "SUB_IMD_SP"]],                // SUB, SUBS (SP minus immediate) - SUB variant 
+        [["_eq", 0b010],        ["_eq", 0b0],   ["_eq", 0b1111],        ["_ret", "ADR_A2"]],                    // ADR - A2
+        [["_eq", 0b010],        ["_eq", 0b1],   ["_ne", 0b1101],        ["_ret", "SUBS_IMD"]],                  // SUB, SUBS (immediate) - SUBS variant
+        [["_eq", 0b010],        ["_eq", 0b1],   ["_eq", 0b1101],        ["_ret", "SUBS_IMD_SP"]],               // SUB, SUBS (SP minus immediate) - SUBS variant 
+        [["_eq", 0b011],        ["_any"],       ["_any"],               ["_ret", "RSB_RSBS_IMD"]],              // RSB, RSBS (immediate)
+        [["_eq", 0b100],        ["_eq", 0b0],   ["_neC","11x1"],        ["_ret", "ADD_IMD"]],                   // ADD, ADDS (immediate) - ADD variant
+        [["_eq", 0b100],        ["_eq", 0b0],   ["_eq", 0b1101],        ["_ret", "ADD_IMD_SP"]],                // ADD, ADDS (SP plus immediate) - ADD variant 
+        [["_eq", 0b100],        ["_eq", 0b0],   ["_eq", 0b1111],        ["_ret", "ADR_A1"]],                    // ADR - A1
+        [["_eq", 0b100],        ["_eq", 0b1],   ["_ne", 0b1101],        ["_ret", "ADDS_IMD"]],                  // ADD, ADDS (immediate) - ADDS variant
+        [["_eq", 0b100],        ["_eq", 0b1],   ["_eq", 0b1101],        ["_ret", "ADDS_IMD_SP"]],               // ADD, ADDS (SP plus immediate) - ADDS variant
+        [["_eq", 0b101],        ["_any"],       ["_any"],               ["_ret", "ADC_ADCS_IMD"]],              // ADC, ADCS (immediate)
+        [["_eq", 0b110],        ["_any"],       ["_any"],               ["_ret", "SBC_SBCS_IMD"]],              // SBC, SBCS (immediate)
+        [["_eq", 0b111],        ["_any"],       ["_any"],               ["_ret", "RSC_RSCS_IMD"]],              // RSC, RSCS (immediate)
+    ]
+    // prettier-ignore
+    this.T182 = [
+        [["_eq", 0b0],    ["_ret", "MOV_IMD"]],         // MOV, MOVS (immediate)
+        [["_eq", 0b1],    ["_ret", "MOVT"]],            // MOVT
+    ]
+    // prettier-ignore
+    this.T184 = [
+        [["_eq", 0b00],    ["_ret", "TST_IMD"]],         // TST (immediate)
+        [["_eq", 0b01],    ["_ret", "TEQ_IMD"]],         // TEQ (immediate)
+        [["_eq", 0b10],    ["_ret", "CMP_IMD"]],         // CMP (immediate)
+        [["_eq", 0b11],    ["_ret", "CMN_IMD"]],         // CMN (immediate)
+    ]
+    // prettier-ignore
+    this.T185 = [
+        [["_eq", 0b00], ["_ret", "ORR_ORRS"]],         // ORR, ORRS (immediate)
+        [["_eq", 0b01], ["_ret", "MOV_MOVS"]],         // MOV, MOVS (immediate)
+        [["_eq", 0b10], ["_ret", "BIC_BICS"]],         // BIC, BICS (immediate)
+        [["_eq", 0b11], ["_ret", "MVN_MVNS"]],         // MVN, MVNS (immediate)
     ]
     // prettier-ignore
     this.T2 = [
@@ -135,13 +216,14 @@ export class Decoder {
     // prettier-ignore
     this.T53 = [
         [["_ne", 0b1111],       ["_eq", 0b0],       ["_ret", "B"]],         // B
-        [["_ne", 0b1111],       ["_eq", 0b1],       ["_ret", "BL"]],        // BL (immediate)
-        [["_eq", 0b1111],       ["_any"],           ["_ret", "BLX"]],       // BLX (immediate)
+        [["_ne", 0b1111],       ["_eq", 0b1],       ["_ret", "BL"]],        // BL/BLX (immediate)
+        [["_eq", 0b1111],       ["_any"],           ["_ret", "BLX"]],       // BL/BLX (immediate)
     ]
   }
 
   decode(inst) {
     if ((this.INSTRUCTION = inst)) {
+      window.currentInstruction = inst.toString(16); // TODO: remove before production
       const exec_handler = this._T0();
       this.INSTRUCTION = null;
       return exec_handler;
@@ -343,6 +425,25 @@ export class Decoder {
     return UNDEFINED_INSTRUCTION_INTERRUPT;
   }
 
+  _T14() {
+    const op0 = (this.INSTRUCTION >>> 21) & (((1 << 2) >>> 0) - 1);
+    const op1 = (this.INSTRUCTION >>> 4) & (((1 << 3) >>> 0) - 1);
+    for (let i = 0, len = this.T14.length; i < len; i++) {
+      const entry = this.T14[i];
+      const [op0_func, op0_v1] = entry[0];
+      const [op1_func, op1_v1] = entry[1];
+      const fields = [
+        this[op0_func].call(this, op0_v1, op0),
+        this[op1_func].call(this, op1_v1, op1),
+      ];
+      if (fields.every((v) => v)) {
+        const [caller, callee] = entry[fields.length];
+        return this[caller].call(this, callee);
+      }
+    }
+    return UNDEFINED_INSTRUCTION_INTERRUPT;
+  }
+
   _T16() {
     return "T16";
   }
@@ -382,6 +483,71 @@ export class Decoder {
         this[cond_func].call(this, cond_v1, cond),
         this[H_func].call(this, H_v1, H),
       ];
+      if (fields.every((v) => v)) {
+        const [caller, callee] = entry[fields.length];
+        return this[caller].call(this, callee);
+      }
+    }
+    return UNDEFINED_INSTRUCTION_INTERRUPT;
+  }
+
+  // TABLE 18x
+  _T181() {
+    const opc = (this.INSTRUCTION >>> 21) & (((1 << 3) >>> 0) - 1);
+    const S = (this.INSTRUCTION >>> 20) & (((1 << 1) >>> 0) - 1);
+    const Rn = (this.INSTRUCTION >>> 16) & (((1 << 4) >>> 0) - 1);
+    for (let i = 0, len = this.T181.length; i < len; i++) {
+      const entry = this.T181[i];
+      const [opc_func, opc_v1] = entry[0];
+      const [S_func, S_v1] = entry[1];
+      const [Rn_func, Rn_v1] = entry[2];
+      const fields = [
+        this[opc_func].call(this, opc_v1, opc),
+        this[S_func].call(this, S_v1, S),
+        this[Rn_func].call(this, Rn_v1, Rn),
+      ];
+      if (fields.every((v) => v)) {
+        const [caller, callee] = entry[fields.length];
+        return this[caller].call(this, callee);
+      }
+    }
+    return UNDEFINED_INSTRUCTION_INTERRUPT;
+  }
+
+  _T182() {
+    const H = (this.INSTRUCTION >>> 22) & (((1 << 1) >>> 0) - 1);
+    for (let i = 0, len = this.T182.length; i < len; i++) {
+      const entry = this.T182[i];
+      const [H_func, H_v1] = entry[0];
+      const fields = [this[H_func].call(this, H_v1, H)];
+      if (fields.every((v) => v)) {
+        const [caller, callee] = entry[fields.length];
+        return this[caller].call(this, callee);
+      }
+    }
+    return UNDEFINED_INSTRUCTION_INTERRUPT;
+  }
+
+  _T184() {
+    const opc = (this.INSTRUCTION >>> 21) & (((1 << 2) >>> 0) - 1);
+    for (let i = 0, len = this.T184.length; i < len; i++) {
+      const entry = this.T184[i];
+      const [opc_func, opc_v1] = entry[0];
+      const fields = [this[opc_func].call(this, opc_v1, opc)];
+      if (fields.every((v) => v)) {
+        const [caller, callee] = entry[fields.length];
+        return this[caller].call(this, callee);
+      }
+    }
+    return UNDEFINED_INSTRUCTION_INTERRUPT;
+  }
+
+  _T185() {
+    const opc = (this.INSTRUCTION >>> 21) & (((1 << 2) >>> 0) - 1);
+    for (let i = 0, len = this.T185.length; i < len; i++) {
+      const entry = this.T185[i];
+      const [opc_func, opc_v1] = entry[0];
+      const fields = [this[opc_func].call(this, opc_v1, opc)];
       if (fields.every((v) => v)) {
         const [caller, callee] = entry[fields.length];
         return this[caller].call(this, callee);
