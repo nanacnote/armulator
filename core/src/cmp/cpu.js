@@ -34,9 +34,9 @@ export class Cpu {
     this.CLK.addObserver(EXECUTE_CYCLE_KEY, [this._execute, this.BUS.onTick]);
   }
 
-  loadELF(elf) {
-    this.PROG_BYTE_SIZE = elf.progSize;
-    this.STACK_BYTE_SIZE = elf.stackSize;
+  loadProg(ctx) {
+    this.PROG_BYTE_SIZE = ctx.progSize;
+    this.STACK_BYTE_SIZE = ctx.stackSize;
     this.PROG_START_ADDRESS = this.MMU.byteAlloc(this.PROG_BYTE_SIZE, 0);
     this.STACK_START_ADDRESS = this.MMU.byteAlloc(
       this.STACK_BYTE_SIZE,
@@ -44,7 +44,7 @@ export class Cpu {
     );
     this.REG.pc.write(this.PROG_START_ADDRESS);
     this.REG.sp.write(this.PROG_START_ADDRESS);
-    this.MMU.loadProg(elf.progInst);
+    this.MMU.initProg(ctx.text);
     return this;
   }
 
@@ -67,18 +67,21 @@ export class Cpu {
 
   _decode() {
     this.CURRENT_INSTRUCTION = this.BUS.getData();
-    this.HANDLER_CODE = this.DEC.decode(this.CURRENT_INSTRUCTION);
+    if (this.CURRENT_INSTRUCTION)
+      this.HANDLER_CODE = this.DEC.decode(this.CURRENT_INSTRUCTION);
   }
 
   _execute() {
-    const type = this.HANDLER_CODE & ((((1 << 8) - 1) << 8) >>> 0);
+    if (this.CURRENT_INSTRUCTION) {
+      const type = this.HANDLER_CODE & ((((1 << 8) - 1) << 8) >>> 0);
 
-    if (!(type ^ INTERRUPT_KEY)) {
-      this.IVT.handle(this.HANDLER_CODE);
-    }
+      if (!(type ^ INTERRUPT_KEY)) {
+        this.IVT.handle(this.HANDLER_CODE, this.CURRENT_INSTRUCTION);
+      }
 
-    if (!(type ^ EXECUTION_KEY)) {
-      this.ALU.handle(this.HANDLER_CODE);
+      if (!(type ^ EXECUTION_KEY)) {
+        this.ALU.handle(this.HANDLER_CODE, this.CURRENT_INSTRUCTION);
+      }
     }
   }
 }

@@ -20,7 +20,7 @@ export class Mmu {
     return offset;
   }
 
-  loadProg(instructions) {
+  initProg(instructions) {
     const ram = this.BUS.DEVICES[RAM_DEV_KEY];
     for (
       let i = 0 + ram.START_ADDRESS,

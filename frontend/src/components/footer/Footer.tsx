@@ -2,19 +2,33 @@ import React from 'react';
 import styles from './footer.module.css';
 import cx from 'classnames';
 import pkg from '../../../package.json';
+import { useKompilerAPI } from '../../hooks/useKompilerAPI';
+import { useArmulatorCore } from '../../hooks/useArmulatorCore';
 
 interface TProps {}
 
 /**
- * Footer componet
+ * Footer component
  *
  */
 const Footer: React.FC<TProps> = (): JSX.Element => {
+  const { post } = useKompilerAPI();
+  const { cpu } = useArmulatorCore();
+
+  const startHandler = () => {
+    post(
+      'cmp r3, #245; push {r7}; sub sp, sp, #12; add r7, sp, #0; str r0, [r7, #4]; ldr r3, [r7, #4]; mul r3, r3, r3; mov r0, r3; adds r7, r7, #12; mov sp, r7; ldr r7, [sp], #4; bx lr'
+    ).then((data) => cpu.loadProg(data).run());
+  };
+
   return (
     <div className={cx(styles.container, 'text-center w-full')}>
       <hr />
       <div className="my-2">
-        <button className="w-40 bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded-l-lg">
+        <button
+          className="w-40 bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded-l-lg"
+          onClick={startHandler}
+        >
           Start
         </button>
         <button className="w-40 bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4">

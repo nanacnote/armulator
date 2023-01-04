@@ -1,0 +1,37 @@
+{
+  "name": "armulator-core",
+  "version": "1.0.0",
+  "description": "JavaScript ARM CPU Emulator core library",
+  "type": "module",
+  "source": "src/index.js",
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.module.js",
+  "unpkg": "./dist/index.umd.js",
+  "exports": {
+    "require": "./dist/index.cjs",
+    "import": "./dist/index.modern.js"
+  },
+  "scripts": {
+    "build": "microbundle",
+    "dev": "microbundle watch",
+    "dev:debug": "microbundle watch --no-compress",
+    "build:mv": "microbundle --no-compress && cp ./dist/index.modern.js ../frontend/src/lib/armulator_core.js && cp ./dist/index.modern.js.map ../frontend/src/lib/armulator_core.js.map",
+    "test": "echo \"no test\""
+  },
+  "directories": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nanacnote/armulator.git"
+  },
+  "author": "Owusu K <adjeibohyen@hotmail.co.uk>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/nanacnote/armulator/issues"
+  },
+  "homepage": "https://github.com/nanacnote/armulator#readme",
+  "devDependencies": {
+    "microbundle": "^0.15.1"
+  }
+}

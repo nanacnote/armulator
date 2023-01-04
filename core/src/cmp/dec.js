@@ -86,10 +86,7 @@ T0 - main encoding
 
  */
 
-import {
-  EMPTY_INSTRUCTION_INTERRUPT,
-  UNDEFINED_INSTRUCTION_INTERRUPT,
-} from "../var/def.js";
+import { UNDEFINED_INSTRUCTION_INTERRUPT } from "../var/def.js";
 
 export class Dec {
   // Machine code decoder
@@ -216,14 +213,8 @@ export class Dec {
   }
 
   decode(inst) {
-    if ((this.INSTRUCTION = inst)) {
-      window.currentInstruction = inst.toString(16); // TODO: remove before production
-      const exec_handler = this._T0();
-      this.INSTRUCTION = null;
-      return exec_handler;
-    } else {
-      return EMPTY_INSTRUCTION_INTERRUPT;
-    }
+    this.INSTRUCTION = inst;
+    return this._T0();
   }
 
   _any() {

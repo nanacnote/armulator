@@ -7,8 +7,7 @@ export const EXECUTION_KEY = 0b0000000000000000;
 export const INTERRUPT_KEY = 0b0000000100000000;
 
 // Interrupt handler codes
-export const EMPTY_INSTRUCTION_INTERRUPT = INTERRUPT_KEY + 0b00000001;
-export const UNDEFINED_INSTRUCTION_INTERRUPT = INTERRUPT_KEY + 0b00000010;
+export const UNDEFINED_INSTRUCTION_INTERRUPT = INTERRUPT_KEY + 0b00000001;
 
 // Clock class:: CYCLE value definitions
 export const FETCH_CYCLE_KEY = 0; // the state of the machine is set to fetch

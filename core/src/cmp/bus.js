@@ -31,7 +31,9 @@ export class Bus {
   }
 
   getData() {
-    return this.D_BUS_BUFFER.read();
+    const data = this.D_BUS_BUFFER.read();
+    this.D_BUS_BUFFER.flush();
+    return data;
   }
 
   setControl(val) {

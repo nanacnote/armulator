@@ -41,6 +41,8 @@ export class Clk {
 
   stop() {
     if (this.TICKER) clearInterval(this.TICKER);
+    this.COUNTER = 0;
+    this.CYCLE = FETCH_CYCLE_KEY;
     this.STATE = STOP_CLOCK_KEY;
   }
 
@@ -61,10 +63,11 @@ export class Clk {
   }
 
   _trigger_observers() {
-    if (this.OBSERVERS.hasOwnProperty(this.CYCLE)) {
-      this.OBSERVERS[this.CYCLE].forEach((func) => {
-        func.call();
-      });
+    const funcs = this.OBSERVERS[this.CYCLE];
+    for (let i = 0, len = funcs.length; i < len; i++) {
+      funcs[i].call();
+    }
+    if (this.STATE == START_CLOCK_KEY) {
       this.COUNTER++;
       this.CYCLE = this.COUNTER % CYCLE_SIZE;
     }
