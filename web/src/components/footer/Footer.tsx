@@ -1,4 +1,4 @@
-import React from 'react';
+import * as React from 'react';
 import styles from './footer.module.css';
 import cx from 'classnames';
 import pkg from '../../../package.json';

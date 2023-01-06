@@ -1,6 +1,6 @@
 import './_app.global.css';
 import { hot } from 'react-hot-loader';
-import React, { Component } from 'react';
+import { Component } from 'react';
 import { Layout, Header, Body, Footer } from './components/index';
 
 class App extends Component {
