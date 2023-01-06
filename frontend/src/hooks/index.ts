@@ -1,1 +1,0 @@
-export { useResponsiveTypo } from './useResponsiveTypo';

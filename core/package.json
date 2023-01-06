@@ -15,8 +15,8 @@
     "build": "microbundle",
     "dev": "microbundle watch",
     "dev:debug": "microbundle watch --no-compress",
-    "build:mv": "microbundle --no-compress && cp ./dist/index.modern.js ../frontend/src/lib/armulator_core.js && cp ./dist/index.modern.js.map ../frontend/src/lib/armulator_core.js.map",
-    "test": "echo \"no test\""
+    "build:mv": "microbundle --no-compress && cp ./dist/index.modern.js ../frontend/src/lib/armulator_core/armulator_core.js && cp ./dist/index.modern.js.map ../frontend/src/lib/ar/armulator_core.js.map",
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "directories": {
     "test": "test"
