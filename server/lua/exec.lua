@@ -15,6 +15,8 @@ function exec.kstool()
 
     if (arch_mode == nil or arch_mode == "") or (asm_str == nil or asm_str == "") then ngx.exit(ngx.HTTP_NO_CONTENT) end
 
+    -- TODO: sanitize incoming string by escaping all double quotes
+
     for instruction in asm_str:gmatch("([^;]+)") do
         local p_handler = io.popen("/opt/vcpkg/packages/keystone_x64-linux/tools/keystone/kstool" .. " " .. arch_mode .. " " .. "\"" .. instruction .. "\"")
         local m_code = p_handler:read("a")
@@ -28,6 +30,8 @@ function exec.kstool()
             table.insert(ret.text, fmt_m_code)
         end
     end
+
+    -- TODO: raise error if the text array in ret is empty
 
     ngx.say(cjson.encode(ret))
 end

@@ -1,7 +1,8 @@
-import { OK_CODE, RAM_SIZE_IN_BYTE } from "../var/def.js";
+import { OK_CODE, ON_RAM_WRITE_EVENT, RAM_SIZE_IN_BYTE } from "../var/def.js";
 
-export class Ram {
+export class Ram extends EventTarget {
   constructor() {
+    super();
     this.START_ADDRESS = 0;
     this.BUFFER = new DataView(
       new ArrayBuffer(RAM_SIZE_IN_BYTE),
@@ -23,16 +24,19 @@ export class Ram {
 
   write8(val, byteOffset = 0) {
     this.BUFFER.setUint8(byteOffset, val);
+    this.dispatchEvent(new Event(ON_RAM_WRITE_EVENT));
     return OK_CODE;
   }
 
   write16(val, byteOffset = 0) {
     this.BUFFER.setUint16(byteOffset, val);
+    this.dispatchEvent(new Event(ON_RAM_WRITE_EVENT));
     return OK_CODE;
   }
 
   write32(val, byteOffset = 0) {
     this.BUFFER.setUint32(byteOffset, val);
+    this.dispatchEvent(new Event(ON_RAM_WRITE_EVENT));
     return OK_CODE;
   }
 

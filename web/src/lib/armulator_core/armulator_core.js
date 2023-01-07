@@ -2,6 +2,14 @@
 const OK_CODE = 1; // indicates everything went right
 const ERROR_CODE = 0; // indicates everything went right
 
+// Event dispatch keys
+const ON_START_EVENT = "start";
+const ON_STOP_EVENT = "stop";
+const ON_PAUSE_EVENT = "pause";
+const ON_RESUME_EVENT = "resume";
+const ON_SPEED_CHANGE_EVENT = "speed-change";
+const ON_RAM_WRITE_EVENT = "memory-write";
+
 // Execution and Interrupt key
 const EXECUTION_KEY = 0b0000000000000000;
 const INTERRUPT_KEY = 0b0000000100000000;
@@ -19,7 +27,7 @@ const CYCLE_SIZE = 3; // the number of states the machine can exist in
 const STOP_CLOCK_KEY = 0; // indicates the system is in stop/idle state
 const START_CLOCK_KEY = 1; // indicates the system is in start/active state
 const PAUSE_CLOCK_KEY = 2; // indicates the system is in pause/suspended state
-const NORMAL_CLOCK_SPEED = 50; // indicates the clock is running at normal speed    // TODO: change to 500
+const NORMAL_CLOCK_SPEED = 500; // indicates the clock is running at normal speed
 
 // Bus class:: CONTROL BUS value definitions
 const C_BUS_READ_8_VAL = 0b00000000000000010000000000000000; // sets the control bus to read mode
@@ -34,11 +42,12 @@ const C_BUS_INTERRUPT_VAL = 0b00000000000000000000000000000001; // sets the cont
 const RAM_DEV_KEY = 0b00000001000000000000000000000000;
 
 // Ram class::
-const RAM_SIZE_IN_BYTE = 2 * 1024 * 1024;
+const RAM_SIZE_IN_BYTE = 0.5 * 1024 * 1024;
 
-class Clk {
+class Clk extends EventTarget {
   // system clock
   constructor() {
+    super();
     this.OBSERVERS = {
       [FETCH_CYCLE_KEY]: [],
       [DECODE_CYCLE_KEY]: [],
@@ -57,25 +66,41 @@ class Clk {
   start() {
     this.STATE = START_CLOCK_KEY;
     this.TICKER = setInterval(this._trigger_observers, this.SPEED);
+    this.dispatchEvent(new Event(ON_START_EVENT));
   }
   stop() {
-    if (this.TICKER) clearInterval(this.TICKER);
-    this.COUNTER = 0;
-    this.CYCLE = FETCH_CYCLE_KEY;
-    this.STATE = STOP_CLOCK_KEY;
+    if (this.TICKER) {
+      clearInterval(this.TICKER);
+      this.COUNTER = 0;
+      this.CYCLE = FETCH_CYCLE_KEY;
+      this.STATE = STOP_CLOCK_KEY;
+      this.TICKER = null;
+      this.dispatchEvent(new Event(ON_STOP_EVENT));
+    }
   }
   pause() {
-    if (this.TICKER) clearInterval(this.TICKER);
-    this.STATE = PAUSE_CLOCK_KEY;
+    if (this.TICKER) {
+      clearInterval(this.TICKER);
+      this.STATE = PAUSE_CLOCK_KEY;
+      this.dispatchEvent(new Event(ON_PAUSE_EVENT));
+    }
   }
   resume() {
-    this.STATE = START_CLOCK_KEY;
-    this.TICKER = setInterval(this._trigger_observers, this.SPEED);
+    if (this.STATE == PAUSE_CLOCK_KEY) {
+      this.STATE = START_CLOCK_KEY;
+      this.TICKER = setInterval(this._trigger_observers, this.SPEED);
+      this.dispatchEvent(new Event(ON_RESUME_EVENT));
+    }
   }
-  change_speed(val) {
+  changeSpeed(val) {
     this.SPEED = val;
-    this.pause();
-    this.resume();
+    if (this.TICKER) {
+      clearInterval(this.TICKER);
+      this.TICKER = setInterval(this._trigger_observers, this.SPEED);
+    }
+    this.dispatchEvent(new CustomEvent(ON_SPEED_CHANGE_EVENT, {
+      detail: this.SPEED
+    }));
   }
   _trigger_observers() {
     const funcs = this.OBSERVERS[this.CYCLE];
@@ -89,8 +114,9 @@ class Clk {
   }
 }
 
-class Ram {
+class Ram extends EventTarget {
   constructor() {
+    super();
     this.START_ADDRESS = 0;
     this.BUFFER = new DataView(new ArrayBuffer(RAM_SIZE_IN_BYTE), this.START_ADDRESS);
   }
@@ -105,14 +131,17 @@ class Ram {
   }
   write8(val, byteOffset = 0) {
     this.BUFFER.setUint8(byteOffset, val);
+    this.dispatchEvent(new Event(ON_RAM_WRITE_EVENT));
     return OK_CODE;
   }
   write16(val, byteOffset = 0) {
     this.BUFFER.setUint16(byteOffset, val);
+    this.dispatchEvent(new Event(ON_RAM_WRITE_EVENT));
     return OK_CODE;
   }
   write32(val, byteOffset = 0) {
     this.BUFFER.setUint32(byteOffset, val);
+    this.dispatchEvent(new Event(ON_RAM_WRITE_EVENT));
     return OK_CODE;
   }
   view() {
@@ -973,18 +1002,26 @@ class Ivt {
   }
 }
 
+const ram = new Ram();
+const reg = new Reg();
+const mmu = new Mmu();
+const dec = new Dec();
+const alu = new Alu();
+const ivt = new Ivt();
+const clk = new Clk();
 const bus = new Bus({
-  [RAM_DEV_KEY]: new Ram()
+  [RAM_DEV_KEY]: ram
 });
 const cpu = new Cpu({
   bus,
-  reg: new Reg(),
-  mmu: new Mmu(),
-  dec: new Dec(),
-  alu: new Alu(),
-  ivt: new Ivt(),
-  clk: new Clk()
+  reg,
+  mmu,
+  dec,
+  alu,
+  ivt,
+  clk,
+  ram
 });
 
-export { cpu };
+export { alu, bus, clk, cpu, dec, ivt, mmu, ram, reg };
 //# sourceMappingURL=index.modern.js.map

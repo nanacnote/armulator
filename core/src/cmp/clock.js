@@ -7,11 +7,17 @@ import {
   PAUSE_CLOCK_KEY,
   START_CLOCK_KEY,
   STOP_CLOCK_KEY,
+  ON_STOP_EVENT,
+  ON_START_EVENT,
+  ON_PAUSE_EVENT,
+  ON_RESUME_EVENT,
+  ON_SPEED_CHANGE_EVENT,
 } from "../var/def.js";
 
-export class Clk {
+export class Clk extends EventTarget {
   // system clock
   constructor() {
+    super();
     this.OBSERVERS = {
       [FETCH_CYCLE_KEY]: [],
       [DECODE_CYCLE_KEY]: [],
@@ -37,29 +43,45 @@ export class Clk {
   start() {
     this.STATE = START_CLOCK_KEY;
     this.TICKER = setInterval(this._trigger_observers, this.SPEED);
+    this.dispatchEvent(new Event(ON_START_EVENT));
   }
 
   stop() {
-    if (this.TICKER) clearInterval(this.TICKER);
-    this.COUNTER = 0;
-    this.CYCLE = FETCH_CYCLE_KEY;
-    this.STATE = STOP_CLOCK_KEY;
+    if (this.TICKER) {
+      clearInterval(this.TICKER);
+      this.COUNTER = 0;
+      this.CYCLE = FETCH_CYCLE_KEY;
+      this.STATE = STOP_CLOCK_KEY;
+      this.TICKER = null;
+      this.dispatchEvent(new Event(ON_STOP_EVENT));
+    }
   }
 
   pause() {
-    if (this.TICKER) clearInterval(this.TICKER);
-    this.STATE = PAUSE_CLOCK_KEY;
+    if (this.TICKER) {
+      clearInterval(this.TICKER);
+      this.STATE = PAUSE_CLOCK_KEY;
+      this.dispatchEvent(new Event(ON_PAUSE_EVENT));
+    }
   }
 
   resume() {
-    this.STATE = START_CLOCK_KEY;
-    this.TICKER = setInterval(this._trigger_observers, this.SPEED);
+    if (this.STATE == PAUSE_CLOCK_KEY) {
+      this.STATE = START_CLOCK_KEY;
+      this.TICKER = setInterval(this._trigger_observers, this.SPEED);
+      this.dispatchEvent(new Event(ON_RESUME_EVENT));
+    }
   }
 
-  change_speed(val) {
+  changeSpeed(val) {
     this.SPEED = val;
-    this.pause();
-    this.resume();
+    if (this.TICKER) {
+      clearInterval(this.TICKER);
+      this.TICKER = setInterval(this._trigger_observers, this.SPEED);
+    }
+    this.dispatchEvent(
+      new CustomEvent(ON_SPEED_CHANGE_EVENT, { detail: this.SPEED })
+    );
   }
 
   _trigger_observers() {

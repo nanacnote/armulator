@@ -1,8 +1,10 @@
 import * as React from 'react';
-import styles from './footer.module.css';
-import cx from 'classnames';
 import pkg from '../../../package.json';
-import { useArmulatorCore, useKompilerAPI } from '../../hooks';
+import {
+  useArmulatorCore,
+  useASMTextBuffer,
+  useKompilerAPI
+} from '../../hooks';
 
 interface TProps {}
 
@@ -11,37 +13,98 @@ interface TProps {}
  *
  */
 const Footer: React.FC<TProps> = (): JSX.Element => {
+  const thisComponent = React.useRef<HTMLDivElement>(null);
+  const { getBuffer } = useASMTextBuffer();
   const { post } = useKompilerAPI();
-  const { cpu } = useArmulatorCore();
+  const { cpu, clk } = useArmulatorCore();
 
-  const startHandler = () => {
-    post(
-      'cmp r3, #245; push {r7}; sub sp, sp, #12; add r7, sp, #0; str r0, [r7, #4]; ldr r3, [r7, #4]; mul r3, r3, r3; mov r0, r3; adds r7, r7, #12; mov sp, r7; ldr r7, [sp], #4; bx lr'
-    ).then((data) => cpu.loadProg(data).run());
+  const ctaGroupHandler = (e: Event) => {
+    const children = thisComponent.current?.getElementsByClassName(
+      'btn-item-for-cta'
+    ) as HTMLCollectionOf<HTMLButtonElement>;
+    for (const child of children) {
+      if (child.dataset.type == e.type) {
+        child.classList.add('btn-active');
+      } else {
+        child.classList.remove('btn-active');
+      }
+    }
   };
 
+  const startHandler = (e: React.MouseEvent) => {
+    const asmText = getBuffer();
+    if (asmText) {
+      post(asmText).then((data) => cpu.loadProg(data).run());
+    } else {
+      // TODO: implement alert
+    }
+  };
+
+  const stopHandler = (e: React.MouseEvent) => {
+    clk.stop();
+  };
+
+  const pauseHandler = (e: React.MouseEvent) => {
+    clk.pause();
+  };
+
+  const resumeHandler = (e: React.MouseEvent) => {
+    clk.resume();
+  };
+
+  React.useEffect(() => {
+    clk.addEventListener('start', ctaGroupHandler);
+    clk.addEventListener('stop', ctaGroupHandler);
+    clk.addEventListener('pause', ctaGroupHandler);
+    clk.addEventListener('resume', ctaGroupHandler);
+    return () => {
+      clk.removeEventListener('start', ctaGroupHandler);
+      clk.removeEventListener('stop', ctaGroupHandler);
+      clk.removeEventListener('pause', ctaGroupHandler);
+      clk.removeEventListener('resume', ctaGroupHandler);
+    };
+  }, []);
+
   return (
-    <div className={cx(styles.container, 'text-center w-full')}>
-      <hr />
-      <div className="my-2">
-        <button
-          className="w-40 bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 sm:rounded-l-lg"
-          onClick={startHandler}
-        >
-          Start
-        </button>
-        <button className="w-40 bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4">
-          Stop
-        </button>
-        <button className="w-40 bg-yellow-500 hover:bg-yellow-700 text-white font-bold py-2 px-4">
-          Pause
-        </button>
-        <button className="w-40 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 sm:rounded-r-lg">
-          Step
-        </button>
+    <div ref={thisComponent}>
+      <div className="flex justify-center">
+        <div className="btn-group btn-group-horizontal">
+          <button
+            className="btn btn-item-for-cta"
+            name="start"
+            data-type="start"
+            onClick={startHandler}
+          >
+            Start
+          </button>
+          <button
+            className="btn btn-item-for-cta"
+            name="stop"
+            data-type="stop"
+            onClick={stopHandler}
+          >
+            Stop
+          </button>
+          <button
+            className="btn btn-item-for-cta"
+            name="pause"
+            data-type="pause"
+            onClick={pauseHandler}
+          >
+            Pause
+          </button>
+          <button
+            className="btn btn-item-for-cta"
+            name="resume"
+            data-type="resume"
+            onClick={resumeHandler}
+          >
+            Resume
+          </button>
+        </div>
       </div>
-      <hr />
-      <p className="text-sm my-2">{`${new Date().getFullYear()} | © CC0-1.0 by ${
+      <div className="divider my-0"></div>
+      <p className="text-sm my-2 text-center">{`${new Date().getFullYear()} | © CC0-1.0 by ${
         pkg.author
       }`}</p>
     </div>

@@ -10,16 +10,15 @@ import { Dec } from "./cmp/dec.js";
 import { Alu } from "./cmp/alu.js";
 import { Ivt } from "./cmp/ivt.js";
 
-const bus = new Bus({ [RAM_DEV_KEY]: new Ram() });
+const ram = new Ram();
+const reg = new Reg();
+const mmu = new Mmu();
+const dec = new Dec();
+const alu = new Alu();
+const ivt = new Ivt();
+const clk = new Clk();
 
-const cpu = new Cpu({
-  bus,
-  reg: new Reg(),
-  mmu: new Mmu(),
-  dec: new Dec(),
-  alu: new Alu(),
-  ivt: new Ivt(),
-  clk: new Clk(),
-});
+const bus = new Bus({ [RAM_DEV_KEY]: ram });
+const cpu = new Cpu({ bus, reg, mmu, dec, alu, ivt, clk, ram });
 
-export { cpu };
+export { cpu, bus, reg, mmu, dec, alu, ivt, clk, ram };

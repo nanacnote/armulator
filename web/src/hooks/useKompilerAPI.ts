@@ -10,8 +10,8 @@ export function useKompilerAPI() {
     })
       .then((res) => res.json())
       .then((ctx) => ({
-        stackSize: 1024,
-        progSize: ctx.text.length * 4,
+        stackSize: ctx.text.length * 4, // TODO: get from response
+        progSize: ctx.text.length * 4, // TODO: get from response
         text: ctx.text.map((s: string) => parseInt(s, 16))
       }));
   };
