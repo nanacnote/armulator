@@ -1,97 +1,226 @@
-// Generic value definition
-const OK_CODE = 1; // indicates everything went right
-const ERROR_CODE = 0; // indicates everything went right
-
-// Event dispatch keys
+// Constants used as keys to dispatch events
 const ON_START_EVENT = "start";
 const ON_STOP_EVENT = "stop";
 const ON_PAUSE_EVENT = "pause";
 const ON_RESUME_EVENT = "resume";
 const ON_SPEED_CHANGE_EVENT = "speed-change";
-const ON_RAM_WRITE_EVENT = "memory-write";
+const ON_RAM_WRITE_EVENT = "ram-write";
+const ON_RAM_READ_EVENT = "ram-read";
+const ON_BUFFER_32_WRITE_EVENT = "buffer-32-write";
+const ON_BUFFER_32_READ_EVENT = "buffer-32-write";
 
-// Execution and Interrupt key
-const EXECUTION_KEY = 0b0000000000000000;
-const INTERRUPT_KEY = 0b0000000100000000;
+// Constant values that represent the status of an operation
+const OK_CODE = 1; // indicates everything went right
+const ERROR_CODE = 0; // indicates an error occurred
 
-// Interrupt handler codes
-const UNDEFINED_INSTRUCTION_INTERRUPT = INTERRUPT_KEY + 0b00000001;
+// Constants used to distinguish between different types of execution
+const EXECUTION_KEY = 0b0000000000000000; // indicates normal execution
+const INTERRUPT_KEY = 0b0000000100000000; // indicates interrupt execution
 
-// Clock class:: CYCLE value definitions
+// Constants used to identify specific interrupt types
+const UNDEFINED_INSTRUCTION_INTERRUPT = INTERRUPT_KEY + 0b00000001; // indicates an undefined instruction interrupt
+
+// Constants used to identify different clock cycles
 const FETCH_CYCLE_KEY = 0; // the state of the machine is set to fetch
 const DECODE_CYCLE_KEY = 1; // the state of the machine is set to decode
 const EXECUTE_CYCLE_KEY = 2; // the state of the machine is set to execute
 const CYCLE_SIZE = 3; // the number of states the machine can exist in
 
-// Clock class:: STATE value definitions
+// Constants used to identify different clock states
 const STOP_CLOCK_KEY = 0; // indicates the system is in stop/idle state
 const START_CLOCK_KEY = 1; // indicates the system is in start/active state
 const PAUSE_CLOCK_KEY = 2; // indicates the system is in pause/suspended state
-const NORMAL_CLOCK_SPEED = 500; // indicates the clock is running at normal speed
 
-// Bus class:: CONTROL BUS value definitions
-const C_BUS_READ_8_VAL = 0b00000000000000010000000000000000; // sets the control bus to read mode
-const C_BUS_READ_16_VAL = 0b00000000000000100000000000000000; // sets the control bus to read mode
-const C_BUS_READ_32_VAL = 0b00000000000000110000000000000000; // sets the control bus to read mode
-const C_BUS_WRITE_8_VAL = 0b00000000000000000000000100000000; // sets the control bus to write mode
-const C_BUS_WRITE_16_VAL = 0b00000000000000000000001000000000; // sets the control bus to write mode
-const C_BUS_WRITE_32_VAL = 0b00000000000000000000001100000000; // sets the control bus to write mode
+// Constants used to identify different clock speeds in ms
+const FAST_CLOCK_SPEED = 200; // indicates the clock is running at fast speed
+const NORMAL_CLOCK_SPEED = 500; // indicates the clock is running at normal speed
+const SLOW_CLOCK_SPEED = 1000; // indicates the clock is running at slow speed
+
+// Constants used to set the control bus to different modes
+const C_BUS_READ_8_VAL = 0b00000000000000010000000000000000; // sets the control bus to read 8-bit mode
+const C_BUS_READ_16_VAL = 0b00000000000000100000000000000000; // sets the control bus to read 16-bit mode
+const C_BUS_READ_32_VAL = 0b00000000000000110000000000000000; // sets the control bus to read 32-bit mode
+const C_BUS_WRITE_8_VAL = 0b00000000000000000000000100000000; // sets the control bus to write 8-bit mode
+const C_BUS_WRITE_16_VAL = 0b00000000000000000000001000000000; // sets the control bus to write 16-bit mode
+const C_BUS_WRITE_32_VAL = 0b00000000000000000000001100000000; // sets the control bus to write 32-bit mode
 const C_BUS_INTERRUPT_VAL = 0b00000000000000000000000000000001; // sets the control bus to interrupt mode
 
-// Bus class:: DEVICES key
+// Constant used to identify the RAM device
 const RAM_DEV_KEY = 0b00000001000000000000000000000000;
 
-// Ram class::
+// Constant used to specify the size of the RAM in bytes
 const RAM_SIZE_IN_BYTE = 0.5 * 1024 * 1024;
 
+var def = {
+  __proto__: null,
+  ON_START_EVENT: ON_START_EVENT,
+  ON_STOP_EVENT: ON_STOP_EVENT,
+  ON_PAUSE_EVENT: ON_PAUSE_EVENT,
+  ON_RESUME_EVENT: ON_RESUME_EVENT,
+  ON_SPEED_CHANGE_EVENT: ON_SPEED_CHANGE_EVENT,
+  ON_RAM_WRITE_EVENT: ON_RAM_WRITE_EVENT,
+  ON_RAM_READ_EVENT: ON_RAM_READ_EVENT,
+  ON_BUFFER_32_WRITE_EVENT: ON_BUFFER_32_WRITE_EVENT,
+  ON_BUFFER_32_READ_EVENT: ON_BUFFER_32_READ_EVENT,
+  OK_CODE: OK_CODE,
+  ERROR_CODE: ERROR_CODE,
+  EXECUTION_KEY: EXECUTION_KEY,
+  INTERRUPT_KEY: INTERRUPT_KEY,
+  UNDEFINED_INSTRUCTION_INTERRUPT: UNDEFINED_INSTRUCTION_INTERRUPT,
+  FETCH_CYCLE_KEY: FETCH_CYCLE_KEY,
+  DECODE_CYCLE_KEY: DECODE_CYCLE_KEY,
+  EXECUTE_CYCLE_KEY: EXECUTE_CYCLE_KEY,
+  CYCLE_SIZE: CYCLE_SIZE,
+  STOP_CLOCK_KEY: STOP_CLOCK_KEY,
+  START_CLOCK_KEY: START_CLOCK_KEY,
+  PAUSE_CLOCK_KEY: PAUSE_CLOCK_KEY,
+  FAST_CLOCK_SPEED: FAST_CLOCK_SPEED,
+  NORMAL_CLOCK_SPEED: NORMAL_CLOCK_SPEED,
+  SLOW_CLOCK_SPEED: SLOW_CLOCK_SPEED,
+  C_BUS_READ_8_VAL: C_BUS_READ_8_VAL,
+  C_BUS_READ_16_VAL: C_BUS_READ_16_VAL,
+  C_BUS_READ_32_VAL: C_BUS_READ_32_VAL,
+  C_BUS_WRITE_8_VAL: C_BUS_WRITE_8_VAL,
+  C_BUS_WRITE_16_VAL: C_BUS_WRITE_16_VAL,
+  C_BUS_WRITE_32_VAL: C_BUS_WRITE_32_VAL,
+  C_BUS_INTERRUPT_VAL: C_BUS_INTERRUPT_VAL,
+  RAM_DEV_KEY: RAM_DEV_KEY,
+  RAM_SIZE_IN_BYTE: RAM_SIZE_IN_BYTE
+};
+
+/**
+ * Represents a system clock that can be started, stopped, paused, and resumed, and can have its speed changed.
+ * It also has observers that can be registered to be notified of different clock cycles.
+ * @extends EventTarget
+ */
 class Clk extends EventTarget {
-  // system clock
+  /**
+   * Creates a new Clk object.
+   * @constructor
+   */
   constructor() {
     super();
+
+    /**
+     *An object containing arrays of observer functions that are called during different clock cycles.
+     *The keys represent the clock cycle, and the values are arrays of observer functions.
+     *@type {Object.<string, function[]>}
+     */
     this.OBSERVERS = {
       [FETCH_CYCLE_KEY]: [],
       [DECODE_CYCLE_KEY]: [],
       [EXECUTE_CYCLE_KEY]: []
     };
+
+    /**
+     *The ID of the current interval timer, or null if the clock is not currently running.
+     *@type {?number}
+     */
     this.TICKER = null;
+
+    /**
+     *The number of clock cycles that have passed since the clock was started.
+     *@type {number}
+     */
     this.COUNTER = 0;
+
+    /**
+     * The current cycle of the clock.
+     * Can be one of FETCH_CYCLE_KEY, DECODE_CYCLE_KEY, or EXECUTE_CYCLE_KEY.
+     * @type {number}
+     * @default FETCH_CYCLE_KEY
+     */
     this.CYCLE = FETCH_CYCLE_KEY;
+
+    /**
+     * The current state of the clock.
+     * Can be one of STOP_CLOCK_KEY, START_CLOCK_KEY, or PAUSE_CLOCK_KEY.
+     * @type {string}
+     * @default STOP_CLOCK_KEY
+     */
     this.STATE = STOP_CLOCK_KEY;
+
+    /**
+     * The current speed of the clock in milliseconds.
+     * Can be any positive number.
+     * @type {number}
+     * @default NORMAL_CLOCK_SPEED
+     */
     this.SPEED = NORMAL_CLOCK_SPEED;
     this._trigger_observers = this._trigger_observers.bind(this);
   }
+
+  /**
+   * Adds one or more observer functions to be called during a specific clock cycle.
+   * @param {number} cycleKey - The key of the clock cycle to observe (one of the FETCH_CYCLE_KEY, DECODE_CYCLE_KEY, or EXECUTE_CYCLE_KEY constants).
+   * @param {Function|Function[]} obsFuncs - A single observer function or an array of observer functions to be called during the specified clock cycle.
+   */
   addObserver(cycleKey, obsFuncs) {
     this.OBSERVERS[cycleKey].push(...(Array.isArray(obsFuncs) ? obsFuncs : [obsFuncs]));
   }
+
+  /**
+   * Starts the system clock.
+   * @fires ON_START_EVENT
+   */
   start() {
-    this.STATE = START_CLOCK_KEY;
-    this.TICKER = setInterval(this._trigger_observers, this.SPEED);
-    this.dispatchEvent(new Event(ON_START_EVENT));
+    if (this.STATE != START_CLOCK_KEY) {
+      this.STATE = START_CLOCK_KEY;
+      this.dispatchEvent(new Event(ON_START_EVENT));
+      this.TICKER = setInterval(this._trigger_observers, this.SPEED);
+    }
   }
+
+  /**
+   * Stops the clock, resetting the counter and cycle to their default values, and sets the state to `STOP_CLOCK_KEY`.
+   * If the clock is already stopped, this method does nothing.
+   *
+   * @fires ON_STOP_EVENT when the clock is stopped
+   */
   stop() {
-    if (this.TICKER) {
+    if (this.STATE != STOP_CLOCK_KEY) {
       clearInterval(this.TICKER);
       this.COUNTER = 0;
+      this.TICKER = null;
       this.CYCLE = FETCH_CYCLE_KEY;
       this.STATE = STOP_CLOCK_KEY;
-      this.TICKER = null;
       this.dispatchEvent(new Event(ON_STOP_EVENT));
     }
   }
+
+  /**
+   * Pauses the system clock. If the clock is already paused, this method has no effect.
+   *
+   * @fires ON_PAUSE_EVENT when the clock is paused
+   */
   pause() {
-    if (this.TICKER) {
+    if (this.STATE != PAUSE_CLOCK_KEY) {
       clearInterval(this.TICKER);
+      this.TICKER = null;
       this.STATE = PAUSE_CLOCK_KEY;
       this.dispatchEvent(new Event(ON_PAUSE_EVENT));
     }
   }
+
+  /**
+   * Resumes the clock if it is currently paused.
+   *
+   * @fires ON_RESUME_EVENTwhen the clock is resumed
+   */
   resume() {
-    if (this.STATE == PAUSE_CLOCK_KEY) {
+    if (this.STATE === PAUSE_CLOCK_KEY) {
       this.STATE = START_CLOCK_KEY;
-      this.TICKER = setInterval(this._trigger_observers, this.SPEED);
       this.dispatchEvent(new Event(ON_RESUME_EVENT));
+      this.TICKER = setInterval(this._trigger_observers, this.SPEED);
     }
   }
+
+  /**
+   * Changes the speed of the clock.
+   *
+   * @param {number} val - The new speed of the clock, in milliseconds.
+   * @fires ON_SPEED_CHANGE_EVENT the clock speed is changed
+   */
   changeSpeed(val) {
     this.SPEED = val;
     if (this.TICKER) {
@@ -102,61 +231,145 @@ class Clk extends EventTarget {
       detail: this.SPEED
     }));
   }
+
+  /**
+   * Triggers the registered observers for the current clock cycle.
+   * @private
+   */
   _trigger_observers() {
-    const funcs = this.OBSERVERS[this.CYCLE];
-    for (let i = 0, len = funcs.length; i < len; i++) {
-      funcs[i].call();
+    for (const func of this.OBSERVERS[this.CYCLE]) {
+      func.call();
     }
-    if (this.STATE == START_CLOCK_KEY) {
+    if (this.STATE === START_CLOCK_KEY) {
       this.COUNTER++;
       this.CYCLE = this.COUNTER % CYCLE_SIZE;
     }
   }
 }
 
+/**
+ * A class representing a memory buffer that can be read and written to.
+ * @extends EventTarget
+ */
 class Ram extends EventTarget {
+  /**
+   * Creates a new Ram object.
+   * @constructor
+   */
   constructor() {
     super();
     this.START_ADDRESS = 0;
     this.BUFFER = new DataView(new ArrayBuffer(RAM_SIZE_IN_BYTE), this.START_ADDRESS);
   }
+
+  /**
+   * Reads an 8-bit value from the memory buffer at the specified byte offset.
+   * @param {number} [byteOffset=0] - The byte offset at which to read the value.
+   * @returns {number} The 8-bit value read from the memory buffer.
+   * @fires ON_RAM_READ_EVENT
+   */
   read8(byteOffset = 0) {
-    return this.BUFFER.getUint8(byteOffset);
+    const val = this.BUFFER.getUint8(byteOffset);
+    this.dispatchEvent(new Event(ON_RAM_READ_EVENT));
+    return val;
   }
+
+  /**
+   * Reads a 16-bit value from the memory buffer at the specified byte offset.
+   * @param {number} [byteOffset=0] - The byte offset at which to read the value.
+   * @returns {number} The 16-bit value read from the memory buffer.
+   * @fires ON_RAM_READ_EVENT
+   */
   read16(byteOffset = 0) {
-    return this.BUFFER.getUint16(byteOffset);
+    const val = this.BUFFER.getUint16(byteOffset);
+    this.dispatchEvent(new Event(ON_RAM_READ_EVENT));
+    return val;
   }
+
+  /**
+   * Reads a 32-bit value from the memory buffer at the specified byte offset.
+   * @param {number} [byteOffset=0] - The byte offset at which to read the value.
+   * @returns {number} The 32-bit value read from the memory buffer.
+   * @fires ON_RAM_READ_EVENT
+   */
   read32(byteOffset = 0) {
-    return this.BUFFER.getUint32(byteOffset);
+    const val = this.BUFFER.getUint32(byteOffset);
+    this.dispatchEvent(new Event(ON_RAM_READ_EVENT));
+    return val;
   }
+
+  /**
+   * Writes an 8-bit value to the memory buffer at the specified byte offset.
+   * @param {number} val - The 8-bit value to write to the memory buffer.
+   * @param {number} [byteOffset=0] - The byte offset at which to write the value.
+   * @returns {number} The OK_CODE indicating success.
+   * @fires ON_RAM_WRITE_EVENT
+   */
   write8(val, byteOffset = 0) {
     this.BUFFER.setUint8(byteOffset, val);
     this.dispatchEvent(new Event(ON_RAM_WRITE_EVENT));
     return OK_CODE;
   }
+
+  /**
+   * Writes a 16-bit value to the memory buffer at the specified byte offset.
+   * @param {number} val - The 16-bit value to write to the memory buffer.
+   * @param {number} [byteOffset=0] - The byte offset at which to write the value.
+   * @returns {number} The OK_CODE indicating success.
+   * @fires ON_RAM_WRITE_EVENT
+   */
   write16(val, byteOffset = 0) {
     this.BUFFER.setUint16(byteOffset, val);
     this.dispatchEvent(new Event(ON_RAM_WRITE_EVENT));
     return OK_CODE;
   }
+
+  /**
+   * Writes a 32-bit value to the memory buffer at the specified byte offset.
+   * @param {number} val - The 32-bit value to write to the memory buffer.
+   * @param {number} [byteOffset=0] - The byte offset at which to write the value.
+   * @returns {number} The OK_CODE indicating success.
+   * @fires ON_RAM_WRITE_EVENT
+   */
+
   write32(val, byteOffset = 0) {
     this.BUFFER.setUint32(byteOffset, val);
     this.dispatchEvent(new Event(ON_RAM_WRITE_EVENT));
     return OK_CODE;
   }
+
+  /**
+   * Returns the length of the memory buffer in bytes.
+   * @returns {number} The length of the memory buffer in bytes.
+   */
+  getByteLength() {
+    return this.BUFFER.byteLength;
+  }
+
+  /**
+   * Returns an array containing the binary representation of each byte in the memory buffer.
+   * @returns {string[]} An array containing the binary representation of each byte in the memory buffer.
+   */
   view() {
     return [...this];
   }
+
+  /**
+   * An iterator function that allows the memory buffer to be iterated over with a `for-of` loop.
+   * @returns {Object} An object with a `next` method that returns an object with a `value` property
+   * representing the current byte in the memory buffer as a binary string, and a `done` property
+   * indicating whether the end of the memory buffer has been reached.
+   */
   [Symbol.iterator]() {
     let index = 0;
     return {
       next: () => {
         if (index < RAM_SIZE_IN_BYTE) {
           const binStr = this.BUFFER.getUint8(index).toString(2);
-          const binStr32 = "00000000".substring(binStr.length) + binStr;
+          const binStr32 = binStr.padStart(8, "0");
           index++;
           return {
-            value: binStr32.split("").map(v => +v),
+            value: binStr32,
             done: false
           };
         } else {
@@ -169,36 +382,82 @@ class Ram extends EventTarget {
   }
 }
 
-class Buffer32Bit {
+/**
+ * A class representing a 32-bit buffer that can be read from and written to.
+ * @extends EventTarget
+ */
+class Buffer32Bit extends EventTarget {
+  /**
+   * Creates a new Buffer32Bit object.
+   * @constructor
+   */
   constructor() {
+    super();
     this.IS_EMPTY = OK_CODE;
     this.BUFFER = new DataView(new ArrayBuffer(4));
   }
+
+  /**
+   * Reads a 32-bit value from the buffer at the specified byte offset.
+   * @param {number} [byteOffset=0] - The byte offset at which to read the value.
+   * @returns {number} The 32-bit value read from the buffer.
+   * @fires ON_BUFFER_32_READ_EVENT
+   */
   read(byteOffset = 0) {
-    return this.BUFFER.getUint32(byteOffset);
+    const val = this.BUFFER.getUint32(byteOffset);
+    this.dispatchEvent(new Event(ON_BUFFER_32_READ_EVENT));
+    return val;
   }
+
+  /**
+   * Writes a 32-bit value to the buffer at the specified byte offset.
+   * @param {number} val - The 32-bit value to write to the buffer.
+   * @param {number} [byteOffset=0] - The byte offset at which to write the value.
+   * @returns {number} The OK_CODE indicating success.
+   * @fires ON_BUFFER_32_WRITE_EVENT
+   */
+
   write(val, byteOffset = 0) {
     this.BUFFER.setUint32(byteOffset, val);
     this.IS_EMPTY = ERROR_CODE;
+    this.dispatchEvent(new Event(ON_BUFFER_32_WRITE_EVENT));
     return OK_CODE;
   }
+
+  /**
+   * Resets the buffer to all zeros.
+   * @returns {number} The OK_CODE indicating success.
+   */
+
   flush() {
     this.BUFFER.setUint32(0, 0);
     this.IS_EMPTY = OK_CODE;
     return OK_CODE;
   }
+
+  /**
+   * Returns a string representation of the binary contents of the buffer.
+   * @returns {string} A string representation of the binary contents of the buffer.
+   */
   view() {
-    return [...this];
+    return [...this].join("");
   }
+
+  /**
+   * An iterator function that allows the buffer to be iterated over with a `for-of` loop.
+   * @returns {Object} An object with a `next` method that returns an object with a `value` property
+   * representing the current bit in the buffer as a binary string, and a `done` property
+   * indicating whether the end of the buffer has been reached.
+   */
   [Symbol.iterator]() {
     const binStr = this.BUFFER.getUint32(0).toString(2);
-    const binStr32 = "00000000000000000000000000000000".substring(binStr.length) + binStr;
+    const binStr32 = binStr.padStart(32, "0");
     let index = 0;
     return {
       next: () => {
         if (index < binStr32.length) {
           return {
-            value: +binStr32[index++],
+            value: binStr32[index++],
             done: false
           };
         } else {
@@ -211,29 +470,81 @@ class Buffer32Bit {
   }
 }
 
+/**
+ * Represents a bus system that connects devices and allows them to communicate with each other.
+ * It has three buffers for the address, data, and control signals, and can read and write data from and to devices.
+ */
 class Bus {
+  /**
+   * Creates a new Bus instance.
+   * @param {Object} dev - An object containing the devices connected to the bus.
+   */
   constructor(dev) {
+    /**
+     * An object containing the devices connected to the bus.
+     * @type {Object}
+     */
     this.DEVICES = dev;
+
+    /**
+     * The ADDRESS-BUS buffer.
+     * @type {Buffer32Bit}
+     */
     this.A_BUS_BUFFER = new Buffer32Bit();
-    this.D_BUS_BUFFER = new Buffer32Bit();
+
+    /**
+     * The CONTROL-BUS buffer.
+     * @type {Buffer32Bit}
+     */
     this.C_BUS_BUFFER = new Buffer32Bit();
+
+    /**
+     * The DATA-BUS buffer.
+     * @type {Buffer32Bit}
+     */
+    this.D_BUS_BUFFER = new Buffer32Bit();
     this.onTick = this.onTick.bind(this);
   }
+
+  /**
+   * Sets the value of the ADDRESS-BUS buffer.
+   * @param {number} val - The value to set.
+   */
   setAddress(val) {
     // NOTE: first 8bits of address represents the device key
     this.A_BUS_BUFFER.write(val);
   }
+
+  /**
+   * Sets the value of the CONTROL-BUS buffer.
+   * @param {number} val - The value to set.
+   */
+  setControl(val) {
+    this.C_BUS_BUFFER.write(val);
+  }
+
+  /**
+   * Sets the value of the DATA-BUS buffer.
+   * @param {number} val - The value to set.
+   */
   setData(val) {
     this.D_BUS_BUFFER.write(val);
   }
+
+  /**
+   * Returns the value of the data bus.
+   * @return {number} The value of the data bus.
+   */
   getData() {
     const data = this.D_BUS_BUFFER.read();
     this.D_BUS_BUFFER.flush();
     return data;
   }
-  setControl(val) {
-    this.C_BUS_BUFFER.write(val);
-  }
+
+  /**
+   * Returns the values of the address, data, and control buses.
+   * @return {Object} An object containing the values of the address, data, and control buses.
+   */
   view() {
     return {
       address: this.A_BUS_BUFFER.view(),
@@ -241,6 +552,17 @@ class Bus {
       control: this.C_BUS_BUFFER.view()
     };
   }
+
+  /**
+   * Handles bus transactions on each tick of the clock.
+   * If the address bus buffer is not empty, it reads the device key and byte offset from the address bus buffer,
+   * then determines the type of bus transaction based on the value in the control bus buffer.
+   * If the transaction is a read operation, it reads the specified number of bytes from the device at the specified byte offset
+   * and writes the data to the data bus buffer.
+   * If the transaction is a write operation, it writes the data in the data bus buffer to the device at the specified byte offset.
+   * If the transaction is an interrupt request, it logs a message indicating that interrupt handling is not yet implemented.
+   * Finally, it flushes the address bus buffer.
+   */
   onTick() {
     if (this.A_BUS_BUFFER.IS_EMPTY) return;
     const device = this.DEVICES[this.A_BUS_BUFFER.read() & (1 << 8) - 1 << 24 >>> 0];
@@ -341,86 +663,176 @@ class Cpu {
   }
 }
 
+/**
+ * A class representing a set of registers in a processor.
+ */
 class Reg {
+  /**
+   * Creates a new set of registers.
+   * @constructor
+   */
   constructor() {
-    this._r0 = new Buffer32Bit(); // General-purpose. Can be used for any purpose.
-    this._r1 = new Buffer32Bit(); // General-purpose. Can be used for any purpose.
-    this._r2 = new Buffer32Bit(); // General-purpose. Can be used for any purpose.
-    this._r3 = new Buffer32Bit(); // General-purpose. Can be used for any purpose.
-    this._r4 = new Buffer32Bit(); // General-purpose. Can be used for any purpose.
-    this._r5 = new Buffer32Bit(); // General-purpose. Can be used for any purpose.
-    this._r6 = new Buffer32Bit(); // General-purpose. Can be used for any purpose.
-    this._r7 = new Buffer32Bit(); // General-purpose. Can be used for any purpose.
-    this._r8 = new Buffer32Bit(); // General-purpose. Can be used for any purpose.
-    this._r9 = new Buffer32Bit(); // General-purpose. Can be used for any purpose.
-    this._r10 = new Buffer32Bit(); // General-purpose. Can be used for any purpose.
-    this._r11 = new Buffer32Bit(); // General-purpose. Can be used for any purpose.
-    this._r12 = new Buffer32Bit(); // General-purpose. Can be used for any purpose.
-
-    this._r13 = new Buffer32Bit(); // // Stack pointer register. Points to the top of the stack. [SP]
-    this._r14 = new Buffer32Bit(); // Link register. Stores the return address for function calls. [LR]
-    this._r15 = new Buffer32Bit(); // // Program counter register. Stores the address of the current instruction. [PC]
-
-    this._cpsr = new Buffer32Bit(); //Current program status register. Stores the current status of the processor, such as the current processor mode and condition flags.}
+    this._r0 = new Buffer32Bit();
+    this._r1 = new Buffer32Bit();
+    this._r2 = new Buffer32Bit();
+    this._r3 = new Buffer32Bit();
+    this._r4 = new Buffer32Bit();
+    this._r5 = new Buffer32Bit();
+    this._r6 = new Buffer32Bit();
+    this._r7 = new Buffer32Bit();
+    this._r8 = new Buffer32Bit();
+    this._r9 = new Buffer32Bit();
+    this._r10 = new Buffer32Bit();
+    this._r11 = new Buffer32Bit();
+    this._r12 = new Buffer32Bit();
+    this._r13 = new Buffer32Bit();
+    this._r14 = new Buffer32Bit();
+    this._r15 = new Buffer32Bit();
+    this._cpsr = new Buffer32Bit();
   }
 
+  /**
+   * @returns {Buffer32Bit} The r0 general-purpose register. Can be used for any purpose.
+   */
   get r0() {
     return this._r0;
   }
+
+  /**
+   * @returns {Buffer32Bit} The r1 general-purpose register. Can be used for any purpose.
+   */
   get r1() {
     return this._r1;
   }
+
+  /**
+   * @returns {Buffer32Bit} The r2 general-purpose register. Can be used for any purpose.
+   */
   get r2() {
     return this._r2;
   }
+
+  /**
+   * @returns {Buffer32Bit} The r3 general-purpose register. Can be used for any purpose.
+   */
   get r3() {
     return this._r3;
   }
+
+  /**
+   * @returns {Buffer32Bit} The r4 general-purpose register. Can be used for any purpose.
+   */
   get r4() {
     return this._r4;
   }
+
+  /**
+   * @returns {Buffer32Bit} The r5 general-purpose register. Can be used for any purpose.
+   */
   get r5() {
     return this._r5;
   }
+
+  /**
+   * @returns {Buffer32Bit} The r6 general-purpose register. Can be used for any purpose.
+   */
   get r6() {
     return this._r6;
   }
+
+  /**
+   * @returns {Buffer32Bit} The r7 general-purpose register. Can be used for any purpose.
+   */
   get r7() {
     return this._r7;
   }
+
+  /**
+   * @returns {Buffer32Bit} The r8 general-purpose register. Can be used for any purpose.
+   */
   get r8() {
     return this._r8;
   }
+
+  /**
+   * @returns {Buffer32Bit} The r9 general-purpose register. Can be used for any purpose.
+   */
   get r9() {
     return this._r9;
   }
+
+  /**
+   * @returns {Buffer32Bit} The r10 general-purpose register. Can be used for any purpose.
+   */
   get r10() {
     return this._r10;
   }
+
+  /**
+   * @returns {Buffer32Bit} The r11 general-purpose register. Can be used for any purpose.
+   */
   get r11() {
     return this._r11;
   }
+
+  /**
+   * @returns {Buffer32Bit} The r12 general-purpose register. Can be used for any purpose.
+   */
   get r12() {
     return this._r12;
   }
+
+  /**
+   * @returns {Buffer32Bit} The r13 stack pointer register. Points to the top of the stack.[SP]
+   * @alias sp
+   */
   get r13() {
     return this._r13;
   }
+
+  /**
+   * @returns {Buffer32Bit} The r14 link register. Stores the return address for function calls.
+   * @alias lr
+   */
   get r14() {
     return this._r14;
   }
+
+  /**
+   * @returns {Buffer32Bit} The r15 program counter register. Stores the address of the current instruction.
+   * @alias pc
+   */
   get r15() {
     return this._r15;
   }
+
+  /**
+   * @returns {Buffer32Bit} The r13 stack pointer register. Points to the top of the stack.[SP]
+   * @alias sp
+   */
   get sp() {
     return this._r13;
   }
+
+  /**
+   * @returns {Buffer32Bit} The r14 link register. Stores the return address for function calls.
+   * @alias lr
+   */
   get lr() {
     return this._r14;
   }
+
+  /**
+   * @returns {Buffer32Bit} The r15 program counter register. Stores the address of the current instruction.
+   * @alias pc
+   */
   get pc() {
     return this._r15;
   }
+
+  /**
+   * @returns {Buffer32Bit} The current program status register. Stores the current status of the processor, such as the current processor mode and condition flags.
+   */
   get cpsr() {
     return this._cpsr;
   }
@@ -1023,5 +1435,5 @@ const cpu = new Cpu({
   ram
 });
 
-export { alu, bus, clk, cpu, dec, ivt, mmu, ram, reg };
+export { def as DEF, alu, bus, clk, cpu, dec, ivt, mmu, ram, reg };
 //# sourceMappingURL=index.modern.js.map

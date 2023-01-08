@@ -1,4 +1,4 @@
-import { RAM_DEV_KEY } from "./var/def.js";
+import * as DEF from "./var/def.js";
 
 import { Clk } from "./cmp/clock.js";
 import { Ram } from "./cmp/ram.js";
@@ -18,7 +18,7 @@ const alu = new Alu();
 const ivt = new Ivt();
 const clk = new Clk();
 
-const bus = new Bus({ [RAM_DEV_KEY]: ram });
+const bus = new Bus({ [DEF.RAM_DEV_KEY]: ram });
 const cpu = new Cpu({ bus, reg, mmu, dec, alu, ivt, clk, ram });
 
-export { cpu, bus, reg, mmu, dec, alu, ivt, clk, ram };
+export { DEF, cpu, bus, reg, mmu, dec, alu, ivt, clk, ram };

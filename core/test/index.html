@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ARMulator - JavaScript Visual Emulator for ARM</title>
+  </head>
+  <body>
+    <script type="module">
+      import { cpu, clk, reg, ram } from "../src/index.js";
+      clk.changeSpeed(50);
+      console.log(ram.view());
+      console.log(reg.pc.view());
+      clk.addEventListener("stop", () => console.log(reg.pc.view()));
+      cpu
+        .loadProg({
+          stackSize: 48,
+          progSize: 48,
+          text: [
+            0xe35300f5, // cmp     r3, #245
+            0xe52d7004, // push    {r7}
+            0xe24dd00c, // sub     sp, sp, #12
+            0xe28d7000, // add     r7, sp, #0
+            0xe5870004, // str     r0, [r7, #4]
+            0xe5973004, // ldr     r3, [r7, #4]
+            0xe0030393, // mul     r3, r3, r3
+            0xe1a00003, // mov     r0, r3
+            0xe297700c, // adds    r7, r7, #12
+            0xe1a0d007, // mov     sp, r7
+            0xe49d7004, // ldr     r7, [sp], #4
+            0xe12fff1e, // bx      lr
+          ],
+        })
+        .run();
+    </script>
+  </body>
+</html>

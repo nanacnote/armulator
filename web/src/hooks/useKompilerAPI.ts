@@ -3,7 +3,7 @@
  */
 export function useKompilerAPI() {
   const post = (asm_str: string, arch_mode = 'armbe') => {
-    return fetch('http://localhost:9001/kstool', {
+    return fetch('http://192.168.0.10:9001/kstool', {
       cache: 'no-cache',
       method: 'POST',
       body: JSON.stringify({ arch_mode, asm_str })

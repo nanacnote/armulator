@@ -1,10 +1,6 @@
 import * as React from 'react';
 import pkg from '../../../package.json';
-import {
-  useArmulatorCore,
-  useASMTextBuffer,
-  useKompilerAPI
-} from '../../hooks';
+import { useArmulatorCore, useSession, useKompilerAPI } from '../../hooks';
 
 interface TProps {}
 
@@ -14,9 +10,9 @@ interface TProps {}
  */
 const Footer: React.FC<TProps> = (): JSX.Element => {
   const thisComponent = React.useRef<HTMLDivElement>(null);
-  const { getBuffer } = useASMTextBuffer();
+  const { getASMTextChunk } = useSession();
   const { post } = useKompilerAPI();
-  const { cpu, clk } = useArmulatorCore();
+  const { DEF, cpu, clk } = useArmulatorCore();
 
   const ctaGroupHandler = (e: Event) => {
     const children = thisComponent.current?.getElementsByClassName(
@@ -32,7 +28,7 @@ const Footer: React.FC<TProps> = (): JSX.Element => {
   };
 
   const startHandler = (e: React.MouseEvent) => {
-    const asmText = getBuffer();
+    const asmText = getASMTextChunk();
     if (asmText) {
       post(asmText).then((data) => cpu.loadProg(data).run());
     } else {
@@ -53,15 +49,15 @@ const Footer: React.FC<TProps> = (): JSX.Element => {
   };
 
   React.useEffect(() => {
-    clk.addEventListener('start', ctaGroupHandler);
-    clk.addEventListener('stop', ctaGroupHandler);
-    clk.addEventListener('pause', ctaGroupHandler);
-    clk.addEventListener('resume', ctaGroupHandler);
+    clk.addEventListener(DEF.ON_START_EVENT, ctaGroupHandler);
+    clk.addEventListener(DEF.ON_STOP_EVENT, ctaGroupHandler);
+    clk.addEventListener(DEF.ON_PAUSE_EVENT, ctaGroupHandler);
+    clk.addEventListener(DEF.ON_RESUME_EVENT, ctaGroupHandler);
     return () => {
-      clk.removeEventListener('start', ctaGroupHandler);
-      clk.removeEventListener('stop', ctaGroupHandler);
-      clk.removeEventListener('pause', ctaGroupHandler);
-      clk.removeEventListener('resume', ctaGroupHandler);
+      clk.removeEventListener(DEF.ON_START_EVENT, ctaGroupHandler);
+      clk.removeEventListener(DEF.ON_STOP_EVENT, ctaGroupHandler);
+      clk.removeEventListener(DEF.ON_PAUSE_EVENT, ctaGroupHandler);
+      clk.removeEventListener(DEF.ON_RESUME_EVENT, ctaGroupHandler);
     };
   }, []);
 
@@ -103,7 +99,6 @@ const Footer: React.FC<TProps> = (): JSX.Element => {
           </button>
         </div>
       </div>
-      <div className="divider my-0"></div>
       <p className="text-sm my-2 text-center">{`${new Date().getFullYear()} | © CC0-1.0 by ${
         pkg.author
       }`}</p>
