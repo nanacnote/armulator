@@ -10,11 +10,13 @@ export function useSession() {
     type: session.TYPE,
     on: session.addEventListener,
     off: session.removeEventListener,
-    toggleTheme: session.toggleTheme,
     getTheme: session.getTheme,
-    setNumeralType: session.setNumeralType,
+    toggleTheme: session.toggleTheme,
+    getSelectedTab: session.getSelectedTab,
+    setSelectedTab: session.setSelectedTab,
     getNumeralType: session.getNumeralType,
-    setASMTextChunk: session.setASMTextChunk,
-    getASMTextChunk: session.getASMTextChunk
+    setNumeralType: session.setNumeralType,
+    getASMTextChunk: session.getASMTextChunk,
+    setASMTextChunk: session.setASMTextChunk
   };
 }

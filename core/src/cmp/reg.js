@@ -144,7 +144,7 @@ export class Reg {
   }
 
   /**
-   * @returns {Buffer32Bit} The r13 stack pointer register. Points to the top of the stack.[SP]
+   * @returns {Buffer32Bit} The r13 stack pointer register. Points to the top of the stack.
    * @alias sp
    */
   get sp() {

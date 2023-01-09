@@ -19,13 +19,16 @@ const Numeral: React.FC<TProps> = ({ binStr }): JSX.Element => {
     switch (e.detail) {
       case NUMERAL_TYPE_HEX:
         setInnerText(
-          '0x' + parseInt(origBinStr.current).toString(16).padStart(8, '0')
+          '0x' +
+            parseInt(origBinStr.current)
+              .toString(16)
+              .padStart(8, '0')
+              .toUpperCase()
         );
         break;
       case NUMERAL_TYPE_BIN:
         setInnerText('0b' + origBinStr.current.padStart(8, '0'));
         break;
-
       default:
         break;
     }

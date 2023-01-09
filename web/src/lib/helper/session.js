@@ -1,4 +1,9 @@
-import { DARK_THEME_NAME, LIGHT_THEME_NAME, NUMERAL_TYPE_HEX } from './def';
+import {
+  DARK_THEME_NAME,
+  DEFAULT_SELECTED_TAB,
+  LIGHT_THEME_NAME,
+  NUMERAL_TYPE_HEX
+} from './def';
 
 class Session extends EventTarget {
   constructor() {
@@ -8,15 +13,18 @@ class Session extends EventTarget {
     this.TYPE = {
       UPLOAD: 'upload',
       THEME: 'theme',
-      NUMERAL: 'numeral'
+      NUMERAL: 'numeral',
+      TAB: 'tab'
     };
 
     this.getTheme = this.getTheme.bind(this);
     this.toggleTheme = this.toggleTheme.bind(this);
-    this.setNumeralType = this.setNumeralType.bind(this);
+    this.getSelectedTab = this.getSelectedTab.bind(this);
+    this.setSelectedTab = this.setSelectedTab.bind(this);
     this.getNumeralType = this.getNumeralType.bind(this);
-    this.setASMTextChunk = this.setASMTextChunk.bind(this);
+    this.setNumeralType = this.setNumeralType.bind(this);
     this.getASMTextChunk = this.getASMTextChunk.bind(this);
+    this.setASMTextChunk = this.setASMTextChunk.bind(this);
 
     this.addEventListener = this.addEventListener.bind(this);
 
@@ -26,7 +34,8 @@ class Session extends EventTarget {
   _init() {
     const fallback = {
       theme: LIGHT_THEME_NAME,
-      numeral: NUMERAL_TYPE_HEX
+      numeral: NUMERAL_TYPE_HEX,
+      tab: DEFAULT_SELECTED_TAB
     };
     for (const key in fallback) {
       if (
@@ -48,6 +57,9 @@ class Session extends EventTarget {
     return super.addEventListener(type, callback, options);
   }
 
+  getTheme() {
+    return this.STORE.getItem(this.TYPE.THEME);
+  }
   toggleTheme() {
     switch (this.getTheme()) {
       case LIGHT_THEME_NAME:
@@ -70,16 +82,21 @@ class Session extends EventTarget {
         break;
     }
   }
-  getTheme() {
-    return this.STORE.getItem(this.TYPE.THEME);
+
+  getSelectedTab() {
+    return this.STORE.getItem(this.TYPE.TAB);
+  }
+  setSelectedTab(value) {
+    this.STORE.setItem(this.TYPE.TAB, value);
+    this.dispatchEvent(new CustomEvent(this.TYPE.TAB, { detail: value }));
   }
 
+  getNumeralType() {
+    return this.STORE.getItem(this.TYPE.NUMERAL);
+  }
   setNumeralType(value) {
     this.STORE.setItem(this.TYPE.NUMERAL, value);
     this.dispatchEvent(new CustomEvent(this.TYPE.NUMERAL, { detail: value }));
-  }
-  getNumeralType() {
-    return this.STORE.getItem(this.TYPE.NUMERAL);
   }
 
   setASMTextChunk(value) {

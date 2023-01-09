@@ -11,7 +11,7 @@ interface TProps {
  */
 const Tab: React.FC<TProps> = ({ onSelect }): JSX.Element => {
   const thisComponent = React.useRef<HTMLDivElement>(null);
-  const { on, off, type } = useSession();
+  const { type, on, off, getSelectedTab, setSelectedTab } = useSession();
 
   const editorTabIndicatorHandler = (e: Event) => {
     const children = thisComponent.current?.getElementsByClassName(
@@ -26,45 +26,41 @@ const Tab: React.FC<TProps> = ({ onSelect }): JSX.Element => {
     }
   };
 
-  const tabGroupHandler = (e: React.MouseEvent) => {
+  const tabSelectionHandler = (e: React.MouseEvent) => {
     const el = e.currentTarget as HTMLButtonElement;
     const parent = el.parentNode!;
     const children = parent.children as HTMLCollectionOf<HTMLButtonElement>;
     for (const child of children) {
       if (child.dataset.name == el.dataset.name) {
         child.classList.add('tab-active');
-        onSelect(child.dataset.name!);
+        setSelectedTab(child.dataset.name);
       } else {
         child.classList.remove('tab-active');
       }
     }
   };
 
-  const editorTabHandler = (e: React.MouseEvent) => {
-    tabGroupHandler(e);
-  };
-
-  const schematicTabHandler = (e: React.MouseEvent) => {
-    tabGroupHandler(e);
-  };
-
-  const memoryTabHandler = (e: React.MouseEvent) => {
-    tabGroupHandler(e);
+  const visibleContentHandler = (e: CustomEventInit) => {
+    onSelect(e.detail);
   };
 
   React.useEffect(() => {
     on(type.UPLOAD, editorTabIndicatorHandler);
+    on(type.TAB, visibleContentHandler);
     return () => {
       off(type.UPLOAD, editorTabIndicatorHandler);
+      off(type.TAB, visibleContentHandler);
     };
   }, []);
 
   return (
     <div ref={thisComponent} className="tabs">
       <a
-        className="tab tab-lifted"
+        className={`tab tab-lifted ${
+          getSelectedTab() === 'editor' ? 'tab-active' : ''
+        }`}
         data-name="editor"
-        onClick={editorTabHandler}
+        onClick={tabSelectionHandler}
       >
         Editor &nbsp;
         <span
@@ -81,16 +77,20 @@ const Tab: React.FC<TProps> = ({ onSelect }): JSX.Element => {
         </span>
       </a>
       <a
-        className="tab tab-lifted"
+        className={`tab tab-lifted ${
+          getSelectedTab() === 'schematic' ? 'tab-active' : ''
+        }`}
         data-name="schematic"
-        onClick={schematicTabHandler}
+        onClick={tabSelectionHandler}
       >
         Schematic
       </a>
       <a
-        className="tab tab-lifted tab-active"
+        className={`tab tab-lifted ${
+          getSelectedTab() === 'memory' ? 'tab-active' : ''
+        }`}
         data-name="memory"
-        onClick={memoryTabHandler}
+        onClick={tabSelectionHandler}
       >
         Memory
       </a>
