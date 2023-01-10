@@ -1,5 +1,4 @@
 import * as React from 'react';
-import { useResponsiveTypo } from '../../hooks/index';
 
 interface TProps {
   header: JSX.Element;
@@ -16,7 +15,6 @@ interface TProps {
  */
 const Layout: React.FC<TProps> = ({ header, body, footer }): JSX.Element => {
   const thisComponent = React.useRef<HTMLDivElement>(null);
-  useResponsiveTypo(thisComponent);
 
   return (
     <div ref={thisComponent}>

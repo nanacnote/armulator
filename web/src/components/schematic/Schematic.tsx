@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { useSchematicAnimation } from '../../hooks';
 
 interface TProps {}
 
@@ -7,45 +8,46 @@ interface TProps {}
  */
 const Schematic: React.FC<TProps> = (): JSX.Element => {
   const thisComponent = React.useRef<HTMLDivElement>(null);
+  const {} = useSchematicAnimation();
 
   return (
     <div ref={thisComponent}>
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1366 768">
-        <g fill="none">
+        <g id="schematic_container" fill="none">
           <g
-            id="bus"
+            id="schematic_bus"
             stroke="hsl(var(--b2))"
             transform="matrix(.70638 0 0 .97308 1057 -52.689)"
           >
             <path
-              id="bus_data"
+              id="schematic_bus_data"
               strokeWidth="14.565"
               d="M-233.61 726.53v39.288h-200.12v-204.94h-246.08"
             />
             <path
-              id="bus_control"
+              id="schematic_bus_control"
               strokeWidth="14.305"
               d="M-385.67 389.63h-294.46"
             />
             <path
-              id="bus_address"
+              id="schematic_bus_address"
               strokeWidth="12"
               d="M892.04 112.67V79.593H752.5v142.64H577.81"
               transform="matrix(1.4157 0 0 1.0277 -1496.4 54.147)"
             />
           </g>
           <g
-            id="mem"
-            stroke="#1a1a1a"
+            id="schematic_mem"
+            stroke="hsl(var(--bc))"
             transform="matrix(1.4012 0 0 1.1532 606.48 -118.91)"
           >
-            <g id="mem_chunk" strokeWidth="1.783">
+            <g id="schematic_mem_chunk" strokeWidth="1.783">
               <g
-                id="mem_chunk_text"
+                id="schematic_mem_chunk_text"
                 transform="matrix(.49079 0 0 .64092 501.38 232.41)"
               >
                 <path
-                  id="mem_chunk_text_ptr"
+                  id="schematic_mem_chunk_text_ptr"
                   fill="hsl(var(--b2))"
                   stroke="none"
                   d="m285.13 470.8-16.414 162.16 15.701 32.085z"
@@ -53,74 +55,80 @@ const Schematic: React.FC<TProps> = (): JSX.Element => {
                 />
                 <g>
                   <g
-                    id="mem_chunk_9_text"
+                    id="schematic_mem_chunk_9_text"
                     transform="translate(-456.96 276.67)"
                   >
                     <path d="M16.303 369.3h151.36v29.404H16.303z" />
                     <path d="M167.73 369.37h298.49v29.259H167.73z" />
                   </g>
                   <g
-                    id="mem_chunk_8_text"
+                    id="schematic_mem_chunk_8_text"
                     transform="translate(-456.96 246.27)"
                   >
                     <path d="M16.303 369.3h151.36v29.404H16.303z" />
                     <path d="M167.73 369.37h298.49v29.259H167.73z" />
                   </g>
                   <g
-                    id="mem_chunk_7_text"
+                    id="schematic_mem_chunk_7_text"
                     transform="translate(-456.96 215.86)"
                   >
                     <path d="M16.303 369.3h151.36v29.404H16.303z" />
                     <path d="M167.73 369.37h298.49v29.259H167.73z" />
                   </g>
-                  <g id="mem_chunk_6_text">
+                  <g id="schematic_mem_chunk_6_text">
                     <path d="M-440.66 554.76h151.36v29.404h-151.36z" />
                     <path d="M-289.23 554.83H9.26v29.259h-298.49z" />
                   </g>
                   <g
-                    id="mem_chunk_5_text"
+                    id="schematic_mem_chunk_5_text"
                     transform="translate(-456.96 155.05)"
                   >
                     <path d="M16.303 369.3h151.36v29.404H16.303z" />
                     <path d="M167.73 369.37h298.49v29.259H167.73z" />
                   </g>
                   <g
-                    id="mem_chunk_4_text"
+                    id="schematic_mem_chunk_4_text"
                     transform="translate(-456.96 124.65)"
                   >
                     <path d="M16.303 369.3h151.36v29.404H16.303z" />
                     <path d="M167.73 369.37h298.49v29.259H167.73z" />
                   </g>
                   <g
-                    id="mem_chunk_3_text"
+                    id="schematic_mem_chunk_3_text"
                     transform="translate(-456.96 94.247)"
                   >
                     <path d="M16.303 369.3h151.36v29.404H16.303z" />
                     <path d="M167.73 369.37h298.49v29.259H167.73z" />
                   </g>
                   <g
-                    id="mem_chunk_2_text"
+                    id="schematic_mem_chunk_2_text"
                     transform="translate(-456.96 63.844)"
                   >
                     <path d="M16.303 369.3h151.36v29.404H16.303z" />
                     <path d="M167.73 369.37h298.49v29.259H167.73z" />
                   </g>
-                  <g id="mem_chunk_1_text" transform="translate(-456.96 33.44)">
+                  <g
+                    id="schematic_mem_chunk_1_text"
+                    transform="translate(-456.96 33.44)"
+                  >
                     <path d="M16.303 369.3h151.36v29.404H16.303z" />
                     <path d="M167.73 369.37h298.49v29.259H167.73z" />
                   </g>
-                  <g id="mem_chunk_0_text" transform="translate(-456.96 3.036)">
+                  <g
+                    id="schematic_mem_chunk_0_text"
+                    transform="translate(-456.96 3.036)"
+                  >
                     <path d="M16.303 369.3h151.36v29.404H16.303z" />
                     <path d="M167.73 369.37h298.49v29.259H167.73z" />
                   </g>
                 </g>
               </g>
               <g
-                id="mem_chunk_init_data"
+                id="schematic_mem_chunk_init_data"
                 transform="matrix(.49079 0 0 .64092 501.38 171.43)"
               >
                 <path
-                  id="mem_chunk_init_ptr"
+                  id="schematic_mem_chunk_init_ptr"
                   fill="hsl(var(--b2))"
                   stroke="none"
                   d="m1005 354-22 192 23 33z"
@@ -128,67 +136,67 @@ const Schematic: React.FC<TProps> = (): JSX.Element => {
                 />
                 <g>
                   <g
-                    id="mem_chunk_9_init_data"
+                    id="schematic_mem_chunk_9_init_data"
                     transform="translate(-456.96 276.67)"
                   >
                     <path d="M16.303 369.3h151.36v29.404H16.303z" />
                     <path d="M167.73 369.37h298.49v29.259H167.73z" />
                   </g>
                   <g
-                    id="mem_chunk_8_init_data"
+                    id="schematic_mem_chunk_8_init_data"
                     transform="translate(-456.96 246.27)"
                   >
                     <path d="M16.303 369.3h151.36v29.404H16.303z" />
                     <path d="M167.73 369.37h298.49v29.259H167.73z" />
                   </g>
                   <g
-                    id="mem_chunk_7_init_data"
+                    id="schematic_mem_chunk_7_init_data"
                     transform="translate(-456.96 215.86)"
                   >
                     <path d="M16.303 369.3h151.36v29.404H16.303z" />
                     <path d="M167.73 369.37h298.49v29.259H167.73z" />
                   </g>
-                  <g id="mem_chunk_6_init_data">
+                  <g id="schematic_mem_chunk_6_init_data">
                     <path d="M-440.66 554.76h151.36v29.404h-151.36z" />
                     <path d="M-289.23 554.83H9.26v29.259h-298.49z" />
                   </g>
                   <g
-                    id="mem_chunk_5_init_data"
+                    id="schematic_mem_chunk_5_init_data"
                     transform="translate(-456.96 155.05)"
                   >
                     <path d="M16.303 369.3h151.36v29.404H16.303z" />
                     <path d="M167.73 369.37h298.49v29.259H167.73z" />
                   </g>
                   <g
-                    id="mem_chunk_4_init_data"
+                    id="schematic_mem_chunk_4_init_data"
                     transform="translate(-456.96 124.65)"
                   >
                     <path d="M16.303 369.3h151.36v29.404H16.303z" />
                     <path d="M167.73 369.37h298.49v29.259H167.73z" />
                   </g>
                   <g
-                    id="mem_chunk_3_init_data"
+                    id="schematic_mem_chunk_3_init_data"
                     transform="translate(-456.96 94.247)"
                   >
                     <path d="M16.303 369.3h151.36v29.404H16.303z" />
                     <path d="M167.73 369.37h298.49v29.259H167.73z" />
                   </g>
                   <g
-                    id="mem_chunk_2_init_data"
+                    id="schematic_mem_chunk_2_init_data"
                     transform="translate(-456.96 63.844)"
                   >
                     <path d="M16.303 369.3h151.36v29.404H16.303z" />
                     <path d="M167.73 369.37h298.49v29.259H167.73z" />
                   </g>
                   <g
-                    id="mem_chunk_1_init_data"
+                    id="schematic_mem_chunk_1_init_data"
                     transform="translate(-456.96 33.44)"
                   >
                     <path d="M16.303 369.3h151.36v29.404H16.303z" />
                     <path d="M167.73 369.37h298.49v29.259H167.73z" />
                   </g>
                   <g
-                    id="mem_chunk_0_init_data"
+                    id="schematic_mem_chunk_0_init_data"
                     transform="translate(-456.96 3.036)"
                   >
                     <path d="M16.303 369.3h151.36v29.404H16.303z" />
@@ -197,139 +205,172 @@ const Schematic: React.FC<TProps> = (): JSX.Element => {
                 </g>
               </g>
               <g
-                id="mem_chunk_bss"
+                id="schematic_mem_chunk_bss"
                 transform="matrix(.49079 0 0 .64092 501.38 119.66)"
               >
                 <path
-                  id="mem_chunk_bss_ptr"
+                  id="schematic_mem_chunk_bss_ptr"
                   fill="hsl(var(--b2))"
                   stroke="none"
                   d="m284.41 358.06-15.701 163.03 15.701 30.351z"
                   transform="matrix(2.0375 0 0 1.5603 -1021.6 -186.7)"
                 />
                 <g>
-                  <g id="mem_chunk_9_bss" transform="translate(-456.96 276.67)">
-                    <path d="M16.303 369.3h151.36v29.404H16.303z" />
-                    <path d="M167.73 369.37h298.49v29.259H167.73z" />
-                  </g>
-                  <g id="mem_chunk_8_bss" transform="translate(-456.96 246.27)">
-                    <path d="M16.303 369.3h151.36v29.404H16.303z" />
-                    <path d="M167.73 369.37h298.49v29.259H167.73z" />
-                  </g>
-                  <g id="mem_chunk_7_bss" transform="translate(-456.96 215.86)">
-                    <path d="M16.303 369.3h151.36v29.404H16.303z" />
-                    <path d="M167.73 369.37h298.49v29.259H167.73z" />
-                  </g>
-                  <g id="mem_chunk_6_bss">
-                    <path d="M-440.66 554.76h151.36v29.404h-151.36z" />
-                    <path d="M-289.23 554.83H9.26v29.259h-298.49z" />
-                  </g>
-                  <g id="mem_chunk_5_bss" transform="translate(-456.96 155.05)">
-                    <path d="M16.303 369.3h151.36v29.404H16.303z" />
-                    <path d="M167.73 369.37h298.49v29.259H167.73z" />
-                  </g>
-                  <g id="mem_chunk_4_bss" transform="translate(-456.96 124.65)">
-                    <path d="M16.303 369.3h151.36v29.404H16.303z" />
-                    <path d="M167.73 369.37h298.49v29.259H167.73z" />
-                  </g>
-                  <g id="mem_chunk_3_bss" transform="translate(-456.96 94.247)">
-                    <path d="M16.303 369.3h151.36v29.404H16.303z" />
-                    <path d="M167.73 369.37h298.49v29.259H167.73z" />
-                  </g>
-                  <g id="mem_chunk_2_bss" transform="translate(-456.96 63.844)">
-                    <path d="M16.303 369.3h151.36v29.404H16.303z" />
-                    <path d="M167.73 369.37h298.49v29.259H167.73z" />
-                  </g>
-                  <g id="mem_chunk_1_bss" transform="translate(-456.96 33.44)">
-                    <path d="M16.303 369.3h151.36v29.404H16.303z" />
-                    <path d="M167.73 369.37h298.49v29.259H167.73z" />
-                  </g>
-                  <g id="mem_chunk_0_bss" transform="translate(-456.96 3.036)">
-                    <path d="M16.303 369.3h151.36v29.404H16.303z" />
-                    <path d="M167.73 369.37h298.49v29.259H167.73z" />
-                  </g>
-                </g>
-              </g>
-              <g
-                id="mem_chunk_heap"
-                transform="matrix(.49079 0 0 .64092 501.38 65.585)"
-              >
-                <path
-                  id="mem_chunk_heap_ptr"
-                  fill="hsl(var(--b2))"
-                  stroke="none"
-                  d="m-440.63 373.81-31.991 254.37 31.991 47.356z"
-                />
-                <g>
                   <g
-                    id="mem_chunk_9_heap"
+                    id="schematic_mem_chunk_9_bss"
                     transform="translate(-456.96 276.67)"
                   >
                     <path d="M16.303 369.3h151.36v29.404H16.303z" />
                     <path d="M167.73 369.37h298.49v29.259H167.73z" />
                   </g>
                   <g
-                    id="mem_chunk_8_heap"
+                    id="schematic_mem_chunk_8_bss"
                     transform="translate(-456.96 246.27)"
                   >
                     <path d="M16.303 369.3h151.36v29.404H16.303z" />
                     <path d="M167.73 369.37h298.49v29.259H167.73z" />
                   </g>
                   <g
-                    id="mem_chunk_7_heap"
+                    id="schematic_mem_chunk_7_bss"
                     transform="translate(-456.96 215.86)"
                   >
                     <path d="M16.303 369.3h151.36v29.404H16.303z" />
                     <path d="M167.73 369.37h298.49v29.259H167.73z" />
                   </g>
-                  <g id="mem_chunk_6_heap">
+                  <g id="schematic_mem_chunk_6_bss">
                     <path d="M-440.66 554.76h151.36v29.404h-151.36z" />
                     <path d="M-289.23 554.83H9.26v29.259h-298.49z" />
                   </g>
                   <g
-                    id="mem_chunk_5_heap"
+                    id="schematic_mem_chunk_5_bss"
                     transform="translate(-456.96 155.05)"
                   >
                     <path d="M16.303 369.3h151.36v29.404H16.303z" />
                     <path d="M167.73 369.37h298.49v29.259H167.73z" />
                   </g>
                   <g
-                    id="mem_chunk_4_heap"
+                    id="schematic_mem_chunk_4_bss"
                     transform="translate(-456.96 124.65)"
                   >
                     <path d="M16.303 369.3h151.36v29.404H16.303z" />
                     <path d="M167.73 369.37h298.49v29.259H167.73z" />
                   </g>
                   <g
-                    id="mem_chunk_3_heap"
+                    id="schematic_mem_chunk_3_bss"
                     transform="translate(-456.96 94.247)"
                   >
                     <path d="M16.303 369.3h151.36v29.404H16.303z" />
                     <path d="M167.73 369.37h298.49v29.259H167.73z" />
                   </g>
                   <g
-                    id="mem_chunk_2_heap"
+                    id="schematic_mem_chunk_2_bss"
                     transform="translate(-456.96 63.844)"
                   >
                     <path d="M16.303 369.3h151.36v29.404H16.303z" />
                     <path d="M167.73 369.37h298.49v29.259H167.73z" />
                   </g>
-                  <g id="mem_chunk_1_heap" transform="translate(-456.96 33.44)">
+                  <g
+                    id="schematic_mem_chunk_1_bss"
+                    transform="translate(-456.96 33.44)"
+                  >
                     <path d="M16.303 369.3h151.36v29.404H16.303z" />
                     <path d="M167.73 369.37h298.49v29.259H167.73z" />
                   </g>
-                  <g id="mem_chunk_0_heap" transform="translate(-456.96 3.036)">
+                  <g
+                    id="schematic_mem_chunk_0_bss"
+                    transform="translate(-456.96 3.036)"
+                  >
                     <path d="M16.303 369.3h151.36v29.404H16.303z" />
                     <path d="M167.73 369.37h298.49v29.259H167.73z" />
                   </g>
                 </g>
               </g>
               <g
-                id="mem_chunk_stack"
+                id="schematic_mem_chunk_heap"
+                transform="matrix(.49079 0 0 .64092 501.38 65.585)"
+              >
+                <path
+                  id="schematic_mem_chunk_heap_ptr"
+                  fill="hsl(var(--b2))"
+                  stroke="none"
+                  d="m-440.63 373.81-31.991 254.37 31.991 47.356z"
+                />
+                <g>
+                  <g
+                    id="schematic_mem_chunk_9_heap"
+                    transform="translate(-456.96 276.67)"
+                  >
+                    <path d="M16.303 369.3h151.36v29.404H16.303z" />
+                    <path d="M167.73 369.37h298.49v29.259H167.73z" />
+                  </g>
+                  <g
+                    id="schematic_mem_chunk_8_heap"
+                    transform="translate(-456.96 246.27)"
+                  >
+                    <path d="M16.303 369.3h151.36v29.404H16.303z" />
+                    <path d="M167.73 369.37h298.49v29.259H167.73z" />
+                  </g>
+                  <g
+                    id="schematic_mem_chunk_7_heap"
+                    transform="translate(-456.96 215.86)"
+                  >
+                    <path d="M16.303 369.3h151.36v29.404H16.303z" />
+                    <path d="M167.73 369.37h298.49v29.259H167.73z" />
+                  </g>
+                  <g id="schematic_mem_chunk_6_heap">
+                    <path d="M-440.66 554.76h151.36v29.404h-151.36z" />
+                    <path d="M-289.23 554.83H9.26v29.259h-298.49z" />
+                  </g>
+                  <g
+                    id="schematic_mem_chunk_5_heap"
+                    transform="translate(-456.96 155.05)"
+                  >
+                    <path d="M16.303 369.3h151.36v29.404H16.303z" />
+                    <path d="M167.73 369.37h298.49v29.259H167.73z" />
+                  </g>
+                  <g
+                    id="schematic_mem_chunk_4_heap"
+                    transform="translate(-456.96 124.65)"
+                  >
+                    <path d="M16.303 369.3h151.36v29.404H16.303z" />
+                    <path d="M167.73 369.37h298.49v29.259H167.73z" />
+                  </g>
+                  <g
+                    id="schematic_mem_chunk_3_heap"
+                    transform="translate(-456.96 94.247)"
+                  >
+                    <path d="M16.303 369.3h151.36v29.404H16.303z" />
+                    <path d="M167.73 369.37h298.49v29.259H167.73z" />
+                  </g>
+                  <g
+                    id="schematic_mem_chunk_2_heap"
+                    transform="translate(-456.96 63.844)"
+                  >
+                    <path d="M16.303 369.3h151.36v29.404H16.303z" />
+                    <path d="M167.73 369.37h298.49v29.259H167.73z" />
+                  </g>
+                  <g
+                    id="schematic_mem_chunk_1_heap"
+                    transform="translate(-456.96 33.44)"
+                  >
+                    <path d="M16.303 369.3h151.36v29.404H16.303z" />
+                    <path d="M167.73 369.37h298.49v29.259H167.73z" />
+                  </g>
+                  <g
+                    id="schematic_mem_chunk_0_heap"
+                    transform="translate(-456.96 3.036)"
+                  >
+                    <path d="M16.303 369.3h151.36v29.404H16.303z" />
+                    <path d="M167.73 369.37h298.49v29.259H167.73z" />
+                  </g>
+                </g>
+              </g>
+              <g
+                id="schematic_mem_chunk_stack"
                 transform="matrix(.49079 0 0 .64092 501.38 1.154)"
               >
                 <path
-                  id="mem_chunk_stack_ptr"
+                  id="schematic_mem_chunk_stack_ptr"
                   fill="hsl(var(--b2))"
                   stroke="none"
                   d="m284.41 433.51-15.701-165.63 16.414-28.617z"
@@ -337,67 +378,67 @@ const Schematic: React.FC<TProps> = (): JSX.Element => {
                 />
                 <g>
                   <g
-                    id="mem_chunk_9_stack"
+                    id="schematic_mem_chunk_9_stack"
                     transform="translate(-456.96 276.67)"
                   >
                     <path d="M16.303 369.3h151.36v29.404H16.303z" />
                     <path d="M167.73 369.37h298.49v29.259H167.73z" />
                   </g>
                   <g
-                    id="mem_chunk_8_stack"
+                    id="schematic_mem_chunk_8_stack"
                     transform="translate(-456.96 246.27)"
                   >
                     <path d="M16.303 369.3h151.36v29.404H16.303z" />
                     <path d="M167.73 369.37h298.49v29.259H167.73z" />
                   </g>
                   <g
-                    id="mem_chunk_7_stack"
+                    id="schematic_mem_chunk_7_stack"
                     transform="translate(-456.96 215.86)"
                   >
                     <path d="M16.303 369.3h151.36v29.404H16.303z" />
                     <path d="M167.73 369.37h298.49v29.259H167.73z" />
                   </g>
-                  <g id="mem_chunk_6_stack">
+                  <g id="schematic_mem_chunk_6_stack">
                     <path d="M-440.66 554.76h151.36v29.404h-151.36z" />
                     <path d="M-289.23 554.83H9.26v29.259h-298.49z" />
                   </g>
                   <g
-                    id="mem_chunk_5_stack"
+                    id="schematic_mem_chunk_5_stack"
                     transform="translate(-456.96 155.05)"
                   >
                     <path d="M16.303 369.3h151.36v29.404H16.303z" />
                     <path d="M167.73 369.37h298.49v29.259H167.73z" />
                   </g>
                   <g
-                    id="mem_chunk_4_stack"
+                    id="schematic_mem_chunk_4_stack"
                     transform="translate(-456.96 124.65)"
                   >
                     <path d="M16.303 369.3h151.36v29.404H16.303z" />
                     <path d="M167.73 369.37h298.49v29.259H167.73z" />
                   </g>
                   <g
-                    id="mem_chunk_3_stack"
+                    id="schematic_mem_chunk_3_stack"
                     transform="translate(-456.96 94.247)"
                   >
                     <path d="M16.303 369.3h151.36v29.404H16.303z" />
                     <path d="M167.73 369.37h298.49v29.259H167.73z" />
                   </g>
                   <g
-                    id="mem_chunk_2_stack"
+                    id="schematic_mem_chunk_2_stack"
                     transform="translate(-456.96 63.844)"
                   >
                     <path d="M16.303 369.3h151.36v29.404H16.303z" />
                     <path d="M167.73 369.37h298.49v29.259H167.73z" />
                   </g>
                   <g
-                    id="mem_chunk_1_stack"
+                    id="schematic_mem_chunk_1_stack"
                     transform="translate(-456.96 33.44)"
                   >
                     <path d="M16.303 369.3h151.36v29.404H16.303z" />
                     <path d="M167.73 369.37h298.49v29.259H167.73z" />
                   </g>
                   <g
-                    id="mem_chunk_0_stack"
+                    id="schematic_mem_chunk_0_stack"
                     transform="translate(-456.96 3.036)"
                   >
                     <path d="M16.303 369.3h151.36v29.404H16.303z" />
@@ -406,11 +447,11 @@ const Schematic: React.FC<TProps> = (): JSX.Element => {
                 </g>
               </g>
               <g
-                id="mem_chunk_cli_arg"
+                id="schematic_mem_chunk_cli_arg"
                 transform="matrix(.49079 0 0 .64092 501.38 -29.911)"
               >
                 <path
-                  id="mem_chunk_cli_ptr"
+                  id="schematic_mem_chunk_cli_ptr"
                   fill="hsl(var(--b2))"
                   stroke="none"
                   d="m285.13 401.42-17.128-182.11 17.842-11.273z"
@@ -418,53 +459,53 @@ const Schematic: React.FC<TProps> = (): JSX.Element => {
                 />
                 <g>
                   <g
-                    id="mem_chunk_9_cli_arg"
+                    id="schematic_mem_chunk_9_cli_arg"
                     transform="translate(-456.96 276.67)"
                   >
                     <path d="M16.303 369.3h151.36v29.404H16.303z" />
                     <path d="M167.73 369.37h298.49v29.259H167.73z" />
                   </g>
                   <g
-                    id="mem_chunk_8_cli_arg"
+                    id="schematic_mem_chunk_8_cli_arg"
                     transform="translate(-456.96 246.27)"
                   >
                     <path d="M16.303 369.3h151.36v29.404H16.303z" />
                     <path d="M167.73 369.37h298.49v29.259H167.73z" />
                   </g>
                   <g
-                    id="mem_chunk_7_cli_arg"
+                    id="schematic_mem_chunk_7_cli_arg"
                     transform="translate(-456.96 215.86)"
                   >
                     <path d="M16.303 369.3h151.36v29.404H16.303z" />
                     <path d="M167.73 369.37h298.49v29.259H167.73z" />
                   </g>
-                  <g id="mem_chunk_6_cli_arg">
+                  <g id="schematic_mem_chunk_6_cli_arg">
                     <path d="M-440.66 554.76h151.36v29.404h-151.36z" />
                     <path d="M-289.23 554.83H9.26v29.259h-298.49z" />
                   </g>
                   <g
-                    id="mem_chunk_5_cli_arg"
+                    id="schematic_mem_chunk_5_cli_arg"
                     transform="translate(-456.96 155.05)"
                   >
                     <path d="M16.303 369.3h151.36v29.404H16.303z" />
                     <path d="M167.73 369.37h298.49v29.259H167.73z" />
                   </g>
                   <g
-                    id="mem_chunk_4_cli_arg"
+                    id="schematic_mem_chunk_4_cli_arg"
                     transform="translate(-456.96 124.65)"
                   >
                     <path d="M16.303 369.3h151.36v29.404H16.303z" />
                     <path d="M167.73 369.37h298.49v29.259H167.73z" />
                   </g>
                   <g
-                    id="mem_chunk_3_cli_arg"
+                    id="schematic_mem_chunk_3_cli_arg"
                     transform="translate(-456.96 94.247)"
                   >
                     <path d="M16.303 369.3h151.36v29.404H16.303z" />
                     <path d="M167.73 369.37h298.49v29.259H167.73z" />
                   </g>
                   <g
-                    id="mem_chunk_2_cli_arg"
+                    id="schematic_mem_chunk_2_cli_arg"
                     transform="translate(-456.96 63.844)"
                   >
                     <path d="M16.303 369.3h151.36v29.404H16.303z" />
@@ -482,130 +523,149 @@ const Schematic: React.FC<TProps> = (): JSX.Element => {
               </g>
             </g>
             <g
-              id="mem_layout"
+              id="schematic_mem_layout"
               transform="matrix(.62692 0 0 .84382 368.57 57.427)"
             >
-              <g id="mem_layout_text">
+              <g id="schematic_mem_layout_text">
                 <path
-                  id="mem_layout_text_box"
+                  id="schematic_mem_layout_text_box"
                   fill="none"
-                  stroke="#1a1a1a"
+                  stroke="hsl(var(--bc))"
                   strokeLinecap="round"
                   strokeWidth="1.082"
                   d="M-381.26 647.11h220.84v72.964h-220.84z"
                 />
                 <path
-                  id="mem_layout_text_label"
+                  id="schematic_mem_layout_text_label"
                   fill="hsl(var(--bc))"
                   stroke="none"
                   d="M-298.84 677.37v1.586h4.14v9.975h2.415v-9.975h4.14v-1.586zm17.311 0v11.561h7.595v-1.64h-5.187v-3.563h3.953v-1.547h-3.953v-3.225h4.82v-1.586zm13.712 0 3.54 5.867-3.705 5.694h1.946l2.688-4.133 2.508 4.133h2.797l-3.673-6.108 3.548-5.453h-1.945l-2.548 3.89-2.35-3.89zm15.297 0v1.586h4.14v9.975h2.414v-9.975h4.143v-1.586z"
                 />
               </g>
-              <g id="mem_layout_init_data">
+              <g id="schematic_mem_layout_init_data">
                 <path
-                  id="mem_layout_init_data_box"
+                  id="schematic_mem_layout_init_data_box"
                   fill="none"
-                  stroke="#1a1a1a"
+                  stroke="hsl(var(--bc))"
                   strokeLinecap="round"
                   strokeWidth="1.082"
                   d="M-381.26 586.48h220.84v59.605h-220.84z"
                 />
                 <path
-                  id="mem_layout_init_data_label"
+                  id="schematic_mem_layout_init_data_label"
                   fill="hsl(var(--bc))"
                   stroke="none"
                   d="M-332.77 613.37v11.563h2.406V613.37zm10.305 0v11.563h1.93v-7.898l5.32 7.898h2.157V613.37h-1.93v7.898l-5.36-7.898zm17.296 0v11.563h2.408V613.37zm9.031 0v1.586h4.143v9.977h2.412v-9.977h4.142v-1.586zm27.588 0v11.563h4.765c1.818 0 3.232-.528 4.242-1.58 1.01-1.057 1.517-2.537 1.517-4.443 0-1.792-.477-3.163-1.43-4.111-.953-.953-2.326-1.43-4.118-1.43zm20.922 0-4.5 11.563h1.75l1.203-3.087h4.78l1.203 3.087h2.47l-4.5-11.563zm12.273 0v1.586h4.14v9.977h2.415v-9.977h4.14v-1.586zm20.546 0-4.5 11.563h1.75l1.203-3.087h4.782l1.203 3.087h2.468l-4.5-11.563zm-51.336 1.586h1.452c.927 0 1.635.096 2.12.289.484.192.896.542 1.24 1.047.5.735.751 1.654.751 2.758 0 1.427-.313 2.493-.938 3.196-.62.698-1.562 1.045-2.828 1.045h-1.797zm19.36.742 1.796 4.609h-3.593zm32.818 0 1.8 4.609h-3.596z"
                 />
               </g>
-              <g id="mem_layout_bss">
+              <g id="schematic_mem_layout_bss">
                 <path
-                  id="mem_layout_bss_box"
+                  id="schematic_mem_layout_bss_box"
                   fill="none"
-                  stroke="#1a1a1a"
+                  stroke="hsl(var(--bc))"
                   strokeLinecap="round"
                   strokeWidth="1.075"
                   d="M-381.26 523.27v62.181h220.85V523.27z"
                 />
                 <path
-                  id="mem_layout_bss_label"
+                  id="schematic_mem_layout_bss_label"
                   fill="hsl(var(--bc))"
                   stroke="none"
                   d="M-270.25 551.08c-1.151 0-2.078.289-2.781.867-.698.578-1.045 1.343-1.045 2.296 0 .714.213 1.338.64 1.875.427.531 1.158 1.089 2.194 1.672l.774.43c.625.354 1.05.662 1.274.923.224.255.336.57.336.945 0 .474-.181.848-.54 1.124-.355.276-.841.414-1.461.414-.886 0-1.95-.26-3.195-.781v1.985c1.229.26 2.308.39 3.235.39 1.4 0 2.5-.305 3.297-.914.797-.61 1.194-1.45 1.194-2.523 0-.755-.21-1.397-.631-1.923-.422-.526-1.191-1.101-2.306-1.726l-.827-.462c-.62-.349-1.043-.641-1.267-.88a1.188 1.188 0 0 1-.336-.838c0-.385.16-.695.478-.93.323-.239.75-.358 1.28-.358.688 0 1.622.221 2.804.664v-1.853c-1.156-.265-2.195-.397-3.117-.397zm14.141 0c-1.151 0-2.078.289-2.781.867-.698.578-1.045 1.343-1.045 2.296 0 .714.213 1.338.64 1.875.427.531 1.158 1.089 2.194 1.672l.774.43c.625.354 1.05.662 1.274.923.224.255.336.57.336.945 0 .474-.181.848-.54 1.124-.355.276-.841.414-1.461.414-.886 0-1.95-.26-3.195-.781v1.985c1.229.26 2.308.39 3.235.39 1.4 0 2.5-.305 3.297-.914.797-.61 1.194-1.45 1.194-2.523 0-.755-.21-1.397-.631-1.923-.422-.526-1.191-1.101-2.306-1.726l-.827-.462c-.62-.349-1.043-.641-1.267-.88s-.336-.52-.336-.838c0-.385.16-.695.478-.93.323-.239.75-.358 1.28-.358.688 0 1.622.221 2.804.664v-1.853c-1.156-.265-2.195-.397-3.117-.397zm-32.375.289v11.561h4.289c1.182 0 2.089-.245 2.72-.735.635-.494.953-1.201.953-2.123 0-1.594-1.083-2.653-3.244-3.18 1.849-.578 2.775-1.563 2.775-2.954 0-.839-.305-1.475-.914-1.913-.604-.437-1.487-.656-2.648-.656zm2.266 1.586h.484c.89 0 1.495.096 1.812.289.323.187.485.546.485 1.078 0 .572-.202 1.025-.603 1.358-.395.334-.93.5-1.607.5h-.571zm0 4.773h.469c.781 0 1.426.195 1.936.586.516.39.774.88.774 1.469 0 .573-.193.968-.578 1.186-.38.214-1.075.321-2.086.321h-.515z"
                 />
               </g>
-              <g id="mem_layout_heap" stroke="none">
+              <g id="schematic_mem_layout_heap" stroke="none">
                 <path
-                  id="mem_layout_heap_box"
-                  fill="#1a1a1a"
+                  id="schematic_mem_layout_heap_box"
+                  fill="hsl(var(--bc))"
                   d="M-381.26 454.4a.54.54 0 0 0-.54.542v67.826a.54.54 0 0 0 .54.54h220.84a.54.54 0 0 0 .54-.54v-67.312a.54.54 0 0 0-.54-.542.54.54 0 0 0-.54.542v66.77h-219.76v-66.148h.816a.5.5 0 0 0 .5-.5.5.5 0 0 0-.5-.5h-.816v-.136a.54.54 0 0 0-.54-.542zm7.357.678a.5.5 0 0 0-.5.5.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .501-.5.5.5 0 0 0-.5-.5zm7 0a.5.5 0 0 0-.499.5.5.5 0 0 0 .498.5h1a.5.5 0 0 0 .501-.5.5.5 0 0 0-.5-.5zm7 0a.5.5 0 0 0-.5.5.5.5 0 0 0 .5.5h1.001a.5.5 0 0 0 .498-.5.5.5 0 0 0-.498-.5zm7 0a.5.5 0 0 0-.5.5.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5.5.5 0 0 0-.5-.5zm7 0a.5.5 0 0 0-.499.5.5.5 0 0 0 .498.5h1a.5.5 0 0 0 .501-.5.5.5 0 0 0-.5-.5zm7 0a.5.5 0 0 0-.5.5.5.5 0 0 0 .5.5h1.001a.5.5 0 0 0 .498-.5.5.5 0 0 0-.498-.5zm7 0a.5.5 0 0 0-.5.5.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5.5.5 0 0 0-.5-.5zm7.001 0a.5.5 0 0 0-.5.5.5.5 0 0 0 .5.5h.998a.5.5 0 0 0 .5-.5.5.5 0 0 0-.5-.5zm7 0a.5.5 0 0 0-.5.5.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5.5.5 0 0 0-.5-.5zm6.999 0a.5.5 0 0 0-.5.5.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5.5.5 0 0 0-.5-.5zm7.001 0a.5.5 0 0 0-.5.5.5.5 0 0 0 .5.5h.998a.5.5 0 0 0 .5-.5.5.5 0 0 0-.5-.5zm7 0a.5.5 0 0 0-.501.5.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .501-.5.5.5 0 0 0-.5-.5zm6.998 0a.5.5 0 0 0-.5.5.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .501-.5.5.5 0 0 0-.5-.5zm7.002 0a.5.5 0 0 0-.5.5.5.5 0 0 0 .5.5h.998a.5.5 0 0 0 .5-.5.5.5 0 0 0-.5-.5zm6.999 0a.5.5 0 0 0-.5.5.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5.5.5 0 0 0-.5-.5zm7 0a.5.5 0 0 0-.499.5.5.5 0 0 0 .498.5h1a.5.5 0 0 0 .501-.5.5.5 0 0 0-.5-.5zm7 0a.5.5 0 0 0-.5.5.5.5 0 0 0 .5.5h1.001a.5.5 0 0 0 .498-.5.5.5 0 0 0-.498-.5zm7 0a.5.5 0 0 0-.5.5.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5.5.5 0 0 0-.5-.5zm7.001 0a.5.5 0 0 0-.5.5.5.5 0 0 0 .5.5h.998a.5.5 0 0 0 .5-.5.5.5 0 0 0-.5-.5zm7 0a.5.5 0 0 0-.5.5.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5.5.5 0 0 0-.5-.5zm6.999 0a.5.5 0 0 0-.5.5.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5.5.5 0 0 0-.5-.5zm7.001 0a.5.5 0 0 0-.5.5.5.5 0 0 0 .5.5h.998a.5.5 0 0 0 .5-.5.5.5 0 0 0-.5-.5zm7 0a.5.5 0 0 0-.501.5.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .501-.5.5.5 0 0 0-.5-.5zm6.998 0a.5.5 0 0 0-.5.5.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .501-.5.5.5 0 0 0-.5-.5zm7.002 0a.5.5 0 0 0-.5.5.5.5 0 0 0 .5.5h.998a.5.5 0 0 0 .5-.5.5.5 0 0 0-.5-.5zm6.999 0a.5.5 0 0 0-.5.5.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5.5.5 0 0 0-.5-.5zm7 0a.5.5 0 0 0-.499.5.5.5 0 0 0 .498.5h1a.5.5 0 0 0 .501-.5.5.5 0 0 0-.5-.5zm7 0a.5.5 0 0 0-.5.5.5.5 0 0 0 .5.5h1.001a.5.5 0 0 0 .498-.5.5.5 0 0 0-.498-.5zm7 0a.5.5 0 0 0-.5.5.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5.5.5 0 0 0-.5-.5zm6.999 0a.5.5 0 0 0-.498.5.5.5 0 0 0 .498.5h1a.5.5 0 0 0 .5-.5.5.5 0 0 0-.5-.5zm7.001 0a.5.5 0 0 0-.5.5.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .499-.5.5.5 0 0 0-.498-.5z"
-                  color="#1a1a1a"
+                  color="hsl(var(--bc))"
                 />
                 <path
-                  id="mem_layout_heap_label"
+                  id="schematic_mem_layout_heap_label"
                   fill="hsl(var(--bc))"
                   d="M-298.75 481.37v11.561h2.406v-5.273h4.78v5.273h2.408V481.37h-2.408v4.695h-4.78v-4.695zm17.485 0v11.561h7.593v-1.64h-5.187v-3.563h3.953v-1.547h-3.953v-3.226h4.82v-1.585zm17.843 0-4.5 11.561h1.75l1.203-3.085h4.782l1.203 3.085h2.468l-4.5-11.561zm13.547 0v11.561h2.359v-4.53h1c1.448 0 2.574-.347 3.376-1.04.807-.698 1.211-1.672 1.211-2.922 0-1.104-.303-1.89-.907-2.359-.599-.474-1.602-.71-3.008-.71zm2.359 1.586h.938c1.464 0 2.195.575 2.195 1.726 0 .656-.24 1.176-.718 1.561-.474.38-1.123.573-1.946.573h-.469zm-15.061.742 1.797 4.609h-3.596z"
                 />
                 <path
-                  id="mem_layout_heap_arrow"
+                  id="schematic_mem_layout_heap_arrow"
                   fill="hsl(var(--bc))"
                   d="m-270.93 443.28-.007.186-5.592 5.373 3.732.169v5.391h3.92v-5.391l3.732-.169-5.592-5.373-.007-.186-.094.09z"
                 />
               </g>
-              <g id="mem_layout_stack" stroke="none">
+              <g id="schematic_mem_layout_stack" stroke="none">
                 <path
-                  id="mem_layout_stack_box"
-                  fill="#1a1a1a"
+                  id="schematic_mem_layout_stack_box"
+                  fill="hsl(var(--bc))"
                   d="M-381.26 286.94a.54.54 0 0 1-.54-.542v-67.826a.54.54 0 0 1 .54-.54h220.84a.54.54 0 0 1 .54.54v67.312a.54.54 0 0 1-.54.542.54.54 0 0 1-.54-.542v-66.77h-219.76v66.148h.816a.5.5 0 0 1 .5.5.5.5 0 0 1-.5.5h-.816v.136a.54.54 0 0 1-.54.542zm7.357-.678a.5.5 0 0 1-.5-.5.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .501.5.5.5 0 0 1-.5.5zm7 0a.5.5 0 0 1-.499-.5.5.5 0 0 1 .498-.5h1a.5.5 0 0 1 .501.5.5.5 0 0 1-.5.5zm7 0a.5.5 0 0 1-.5-.5.5.5 0 0 1 .5-.5h1.001a.5.5 0 0 1 .498.5.5.5 0 0 1-.498.5zm7 0a.5.5 0 0 1-.5-.5.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5.5.5 0 0 1-.5.5zm7 0a.5.5 0 0 1-.499-.5.5.5 0 0 1 .498-.5h1a.5.5 0 0 1 .501.5.5.5 0 0 1-.5.5zm7 0a.5.5 0 0 1-.5-.5.5.5 0 0 1 .5-.5h1.001a.5.5 0 0 1 .498.5.5.5 0 0 1-.498.5zm7 0a.5.5 0 0 1-.5-.5.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5.5.5 0 0 1-.5.5zm7.001 0a.5.5 0 0 1-.5-.5.5.5 0 0 1 .5-.5h.998a.5.5 0 0 1 .5.5.5.5 0 0 1-.5.5zm7 0a.5.5 0 0 1-.5-.5.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5.5.5 0 0 1-.5.5zm6.999 0a.5.5 0 0 1-.5-.5.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5.5.5 0 0 1-.5.5zm7.001 0a.5.5 0 0 1-.5-.5.5.5 0 0 1 .5-.5h.998a.5.5 0 0 1 .5.5.5.5 0 0 1-.5.5zm7 0a.5.5 0 0 1-.501-.5.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .501.5.5.5 0 0 1-.5.5zm6.998 0a.5.5 0 0 1-.5-.5.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .501.5.5.5 0 0 1-.5.5zm7.002 0a.5.5 0 0 1-.5-.5.5.5 0 0 1 .5-.5h.998a.5.5 0 0 1 .5.5.5.5 0 0 1-.5.5zm6.999 0a.5.5 0 0 1-.5-.5.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5.5.5 0 0 1-.5.5zm7 0a.5.5 0 0 1-.499-.5.5.5 0 0 1 .498-.5h1a.5.5 0 0 1 .501.5.5.5 0 0 1-.5.5zm7 0a.5.5 0 0 1-.5-.5.5.5 0 0 1 .5-.5h1.001a.5.5 0 0 1 .498.5.5.5 0 0 1-.498.5zm7 0a.5.5 0 0 1-.5-.5.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5.5.5 0 0 1-.5.5zm7.001 0a.5.5 0 0 1-.5-.5.5.5 0 0 1 .5-.5h.998a.5.5 0 0 1 .5.5.5.5 0 0 1-.5.5zm7 0a.5.5 0 0 1-.5-.5.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5.5.5 0 0 1-.5.5zm6.999 0a.5.5 0 0 1-.5-.5.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5.5.5 0 0 1-.5.5zm7.001 0a.5.5 0 0 1-.5-.5.5.5 0 0 1 .5-.5h.998a.5.5 0 0 1 .5.5.5.5 0 0 1-.5.5zm7 0a.5.5 0 0 1-.501-.5.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .501.5.5.5 0 0 1-.5.5zm6.998 0a.5.5 0 0 1-.5-.5.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .501.5.5.5 0 0 1-.5.5zm7.002 0a.5.5 0 0 1-.5-.5.5.5 0 0 1 .5-.5h.998a.5.5 0 0 1 .5.5.5.5 0 0 1-.5.5zm6.999 0a.5.5 0 0 1-.5-.5.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5.5.5 0 0 1-.5.5zm7 0a.5.5 0 0 1-.499-.5.5.5 0 0 1 .498-.5h1a.5.5 0 0 1 .501.5.5.5 0 0 1-.5.5zm7 0a.5.5 0 0 1-.5-.5.5.5 0 0 1 .5-.5h1.001a.5.5 0 0 1 .498.5.5.5 0 0 1-.498.5zm7 0a.5.5 0 0 1-.5-.5.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5.5.5 0 0 1-.5.5zm6.999 0a.5.5 0 0 1-.498-.5.5.5 0 0 1 .498-.5h1a.5.5 0 0 1 .5.5.5.5 0 0 1-.5.5zm7.001 0a.5.5 0 0 1-.5-.5.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .499.5.5.5 0 0 1-.498.5z"
-                  color="#1a1a1a"
+                  color="hsl(var(--bc))"
                 />
                 <path
-                  id="mem_layout_stack_label"
+                  id="schematic_mem_layout_stack_label"
                   fill="hsl(var(--bc))"
                   d="M-303.37 243.08c-1.151 0-2.078.289-2.781.867-.698.578-1.048 1.343-1.048 2.296 0 .714.214 1.338.64 1.875.428.531 1.16 1.089 2.197 1.672l.772.43c.625.354 1.05.66 1.274.92.224.256.336.571.336.946 0 .474-.179.85-.538 1.126-.355.276-.841.414-1.461.414-.886 0-1.95-.26-3.195-.781v1.985c1.229.26 2.306.39 3.233.39 1.4 0 2.5-.305 3.297-.914.797-.61 1.196-1.45 1.196-2.523 0-.755-.212-1.397-.634-1.923-.421-.526-1.188-1.101-2.303-1.726l-.83-.462c-.62-.349-1.04-.643-1.264-.883s-.336-.517-.336-.835a1.1 1.1 0 0 1 .476-.93c.323-.239.75-.358 1.28-.358.688 0 1.624.22 2.806.662v-1.85c-1.156-.266-2.195-.398-3.117-.398zm49.241 0c-1.974 0-3.495.526-4.562 1.578-1.063 1.047-1.595 2.544-1.595 4.492 0 1.911.53 3.4 1.588 4.468 1.057 1.067 2.533 1.601 4.429 1.601 1.552 0 2.889-.25 4.009-.75v-1.773c-1.157.573-2.302.86-3.438.86-1.265 0-2.257-.392-2.97-1.173-.708-.781-1.063-1.87-1.063-3.266 0-1.421.332-2.516.994-3.287.661-.776 1.6-1.164 2.82-1.164.952 0 2.134.245 3.545.74v-1.882a16.14 16.14 0 0 0-3.757-.444zm-39.532.289v1.586h4.142v9.975h2.415v-9.975h4.14v-1.586zm20.548 0-4.5 11.561h1.75l1.203-3.085h4.78l1.205 3.085h2.468l-4.5-11.561zm29.944 0v11.561h2.312v-5.686l4.383 5.686h3.008l-4.976-6.375 4.009-5.186h-2.001l-4.423 5.608v-5.608zm-29.102 2.326 1.796 4.61h-3.593z"
                 />
                 <path
-                  id="mem_layout_stack_arrow"
+                  id="schematic_mem_layout_stack_arrow"
                   fill="hsl(var(--bc))"
                   d="m-270.93 298.19-.007-.186-5.592-5.373 3.732-.169v-5.391h3.92v5.391l3.732.169-5.592 5.373-.007.186-.094-.09z"
                 />
               </g>
-              <g id="mem_layout_cli_arg">
+              <g id="schematic_mem_layout_cli_arg">
                 <path
-                  id="mem_layout_cli_arg_box"
+                  id="schematic_mem_layout_cli_arg_box"
                   fill="none"
-                  stroke="#1a1a1a"
+                  stroke="hsl(var(--bc))"
                   strokeLinecap="round"
                   strokeWidth="1.082"
                   d="M-381.26 176.44v41.621h220.84V176.44z"
                 />
                 <path
-                  id="mem_layout_cli_arg_label"
+                  id="schematic_mem_layout_cli_arg_label"
                   fill="hsl(var(--bc))"
                   stroke="none"
                   d="M-287.89 191.08c-1.974 0-3.495.528-4.562 1.58-1.063 1.047-1.595 2.544-1.595 4.492 0 1.911.528 3.4 1.586 4.468 1.057 1.067 2.535 1.601 4.43 1.601 1.553 0 2.888-.25 4.007-.75v-1.773c-1.156.573-2.301.86-3.437.86-1.265 0-2.255-.392-2.968-1.173-.708-.781-1.063-1.87-1.063-3.266 0-1.421.33-2.518.992-3.29.661-.775 1.602-1.164 2.821-1.164.953 0 2.135.248 3.547.743v-1.883a16.143 16.143 0 0 0-3.758-.445zm84.124 0c-1.98 0-3.505.525-4.578 1.572-1.068 1.047-1.6 2.54-1.6 4.484 0 1.958.532 3.464 1.6 4.516 1.073 1.047 2.608 1.57 4.603 1.57 1.052 0 2.302-.188 3.75-.563v-4.977h-2.408v3.805c-.37.078-.69.117-.967.117-1.255 0-2.241-.392-2.955-1.179-.713-.791-1.07-1.88-1.07-3.265 0-1.433.335-2.541 1.001-3.322.667-.782 1.611-1.172 2.835-1.172.927 0 2.113.247 3.555.742v-1.883a16.185 16.185 0 0 0-3.766-.445zm14.625 0c-1.151 0-2.078.289-2.781.867-.698.578-1.045 1.345-1.045 2.298 0 .714.213 1.339.64 1.875.427.531 1.158 1.089 2.194 1.672l.774.43c.625.354 1.05.66 1.274.92.224.256.336.571.336.946 0 .474-.181.85-.54 1.126-.355.276-.841.414-1.461.414-.886 0-1.95-.26-3.195-.781v1.983c1.229.26 2.308.391 3.235.391 1.4 0 2.5-.304 3.297-.913.797-.61 1.194-1.452 1.194-2.525 0-.755-.21-1.395-.631-1.92-.422-.527-1.191-1.102-2.306-1.727l-.827-.462c-.62-.349-1.043-.643-1.267-.883a1.184 1.184 0 0 1-.336-.835c0-.385.16-.695.478-.93.323-.239.75-.36 1.28-.36.688 0 1.622.221 2.804.664v-1.85c-1.156-.266-2.195-.4-3.117-.4zm-166.32.289v11.563h7.595v-1.64h-5.19v-3.562h3.954v-1.548h-3.953v-3.227h4.82v-1.586zm14.61 0v11.563h1.93v-7.898l5.32 7.898h2.157v-11.563h-1.93v7.898l-5.36-7.898zm16.046 0 4.273 11.563h2.415l4.133-11.563h-1.734l-3.204 8.946-3.313-8.946zm21.882 0-4.162 13.876h1.405l4.164-13.876zm25.994 0v11.563h7.617v-1.64h-5.211v-9.923zm14.305 0v11.563h2.406v-11.563zm23.812 0-4.5 11.563h1.75l1.203-3.087h4.78l1.203 3.087h2.47l-4.5-11.563zm13.547 0v11.563h2.266v-4.727h1.327l2.866 4.727h2.93l-3.782-5.4c.698-.312 1.245-.759 1.641-1.342.401-.589.603-1.24.603-1.953 0-1.911-1.175-2.868-3.524-2.868zm2.266 1.586h.833c1.558 0 2.337.516 2.337 1.547 0 1.412-.872 2.118-2.617 2.118h-.553zm-14.97.742 1.796 4.61h-3.593z"
                 />
               </g>
               <path
-                id="mem_layout_dynamic_section"
-                fill="#1a1a1a"
+                id="schematic_mem_layout_dynamic_section"
+                fill="hsl(var(--bc))"
                 stroke="none"
                 d="M-381.26 284.32a.54.54 0 0 0-.54.54v170.59a.54.54 0 0 0 .54.54.54.54 0 0 0 .54-.54V284.86a.54.54 0 0 0-.54-.54zm220.84 0a.54.54 0 0 0-.54.54v170.59a.54.54 0 0 0 .54.54.54.54 0 0 0 .54-.54V284.86a.54.54 0 0 0-.54-.54z"
-                color="#1a1a1a"
+                color="hsl(var(--bc))"
               />
             </g>
           </g>
-          <g id="cpu" stroke="#1a1a1a" transform="translate(-96)">
-            <path id="cpu_box" d="M148 90.611h531.55v586.78H148z" />
-            <g id="cpu_bridge" fill="none" stroke="hsl(var(--b2))">
+          <g
+            id="schematic_cpu"
+            stroke="hsl(var(--bc))"
+            transform="translate(-96)"
+          >
+            <path id="schematic_cpu_box" d="M148 90.611h531.55v586.78H148z" />
+            <g id="schematic_cpu_bridge" fill="none" stroke="hsl(var(--b2))">
               <g strokeWidth="12">
-                <path id="bridge_alu_n_dec" d="M503.11 589.84v-411.5" />
-                <path id="bridge_alu_n_cspr" d="M503.26 178.75v182.96h21.707" />
-                <path id="bridge_dec_n_cspr" d="M503.26 591.25v-230.5h21.707" />
-                <path id="bridge_dec_n_pc" d="M503.26 585.04V409.32h21.707" />
-                <path id="bridge_dec_n_sp" d="M503.26 584.01V384.52h21.707" />
+                <path
+                  id="schematic_bridge_alu_n_dec"
+                  d="M503.11 589.84v-411.5"
+                />
+                <path
+                  id="schematic_bridge_alu_n_cspr"
+                  d="M503.26 178.75v182.96h21.707"
+                />
+                <path
+                  id="schematic_bridge_dec_n_cspr"
+                  d="M503.26 591.25v-230.5h21.707"
+                />
+                <path
+                  id="schematic_bridge_dec_n_pc"
+                  d="M503.26 585.04V409.32h21.707"
+                />
+                <path
+                  id="schematic_bridge_dec_n_sp"
+                  d="M503.26 584.01V384.52h21.707"
+                />
               </g>
               <path
-                id="bridge_dec_n_lr"
+                id="schematic_bridge_dec_n_lr"
                 strokeWidth="11.368"
                 d="M407.43 589.79V383.78h-18.174"
                 transform="translate(96)"
@@ -628,130 +688,130 @@ const Schematic: React.FC<TProps> = (): JSX.Element => {
                 d="M503.86 588.93V341.6H326.94V215.4h-23.394"
               />
               <path
-                id="bridge_cu_n_pc"
+                id="schematic_bridge_cu_n_pc"
                 strokeWidth="12"
                 d="M631.43 409.32h11.37"
               />
               <path
-                id="bridge_cu_n_mmu"
+                id="schematic_bridge_cu_n_mmu"
                 strokeWidth="12.158"
                 d="M653.09 418.47v-67.903"
               />
               <path
-                id="bridge_cu_n_dec"
+                id="schematic_bridge_cu_n_dec"
                 strokeWidth="12"
                 d="M408.29 585.11h117.84v-15.505"
                 transform="translate(96)"
               />
             </g>
             <g
-              id="cpu_clk"
+              id="schematic_cpu_clk"
               stroke="hsl(var(--bc))"
               transform="translate(-60.099 -184.99) scale(1.4844)"
             >
               <g
-                id="cpu_clk_execute"
+                id="schematic_cpu_clk_execute"
                 transform="rotate(-25.558 -263.86 548.47)"
               >
                 <path
-                  id="cpu_clk_circle_execute"
+                  id="schematic_cpu_clk_circle_execute"
                   strokeWidth="2.5"
                   d="M199.74 603.4a12.083 12.083 0 0 1 16.327-5.043 12.083 12.083 0 0 1 5.043 16.327 12.083 12.083 0 0 1-16.327 5.043 12.083 12.083 0 0 1-5.043-16.327z"
                 />
                 <path
-                  id="cpu_clk_label_execute"
+                  id="schematic_cpu_clk_label_execute"
                   fill="hsl(var(--bc))"
                   d="M229.83 567.33c-.123-.057-.246-.11-.365-.16-1.674-.697-3.176-.746-4.507-.15-1.327.598-2.36 1.787-3.102 3.565-.743 1.784-.865 3.352-.368 4.704.5 1.348 1.579 2.369 3.237 3.06 1.246.518 2.508.724 3.787.62l.54-1.299c-1.412.14-2.623 0-3.632-.42-1.173-.49-1.937-1.267-2.288-2.333-.35-1.071-.24-2.287.326-3.648.595-1.428 1.374-2.402 2.335-2.921.96-.52 2.02-.536 3.18-.053.793.33 1.815 1.052 3.066 2.165l.591-1.42c-1.009-.742-1.941-1.312-2.8-1.71zm9.346 6.496-5.671 4.566c-1.213.977-1.893 1.968-2.042 2.97-.149 1.003.228 2.067 1.133 3.19.889 1.104 1.816 1.68 2.78 1.733.969.056 2.067-.41 3.296-1.4l5.708-4.596-.902-1.12-5.725 4.61c-.925.745-1.704 1.124-2.335 1.138-.624.014-1.223-.334-1.798-1.048-.588-.73-.812-1.429-.673-2.096.145-.665.67-1.363 1.574-2.092l5.685-4.577zm-21.79-9.507-6.452.324.578 11.548 6.79-.338-.062-1.227-5.15.259-.211-4.182 4.035-.203-.06-1.209-4.036.203-.186-3.707 4.815-.241zm30.193 22.358-1.202.246.822 4.017-10.127 2.072.329 1.608 10.127-2.072.821 4.019 1.202-.246zm-43.414-20.59-1.378.7-.635 5.209-4.451-2.631-1.73.877 5.86 3.486-.8 6.912 1.387-.704.639-5.464 4.693 2.762 1.728-.875-6.082-3.619zm-12.706 8.09-4.064 5.022 8.99 7.272 4.274-5.284-.953-.772-3.242 4.01-3.257-2.634 2.54-3.141-.941-.76-2.54 3.139-2.885-2.334 3.032-3.746zm57.594 28.725-11.28-2.54-1.493 6.63 1.195.27 1.135-5.03 4.084.92-.888 3.94 1.183.267.886-3.94 3.621.815-1.06 4.702 1.197.27z"
                 />
               </g>
               <g
-                id="cpu_clk_decode"
+                id="schematic_cpu_clk_decode"
                 fill="none"
                 transform="rotate(-20.868 -360.23 534.34)"
               >
                 <path
-                  id="cpu_clk_circle_decode"
+                  id="schematic_cpu_clk_circle_decode"
                   strokeWidth="2.5"
                   d="M191.37 597.46a12.082 12.082 0 0 1 16.326-5.043 12.082 12.082 0 0 1 5.043 16.326 12.082 12.082 0 0 1-16.327 5.043 12.082 12.082 0 0 1-5.042-16.326z"
                 />
                 <path
-                  id="cpu_clk_label_decode"
+                  id="schematic_cpu_clk_label_decode"
                   fill="hsl(var(--bc))"
                   d="M213.22 560.49c-1.353-.466-2.545-.747-3.577-.843-1.805-.168-3.254.23-4.348 1.196-1.089.965-1.723 2.408-1.902 4.326-.18 1.924.17 3.46 1.046 4.603.878 1.138 2.212 1.791 4 1.958 1.344.125 2.612-.055 3.802-.535l.13-1.399c-1.307.553-2.505.778-3.594.676-1.265-.118-2.225-.633-2.878-1.546-.652-.919-.909-2.11-.772-3.578.143-1.54.596-2.701 1.359-3.483s1.77-1.114 3.02-.997c.856.08 2.047.463 3.573 1.155zm10.855 4.588a4.758 4.758 0 0 0-2.898-.238c-1.436.324-2.69 1.234-3.76 2.729-1.064 1.486-1.525 2.966-1.381 4.44.15 1.471.877 2.674 2.182 3.607 1.368.98 2.772 1.311 4.209.995 1.44-.321 2.703-1.242 3.791-2.763 1.067-1.49 1.52-2.97 1.359-4.436-.161-1.466-.905-2.676-2.235-3.628a6.152 6.152 0 0 0-1.267-.706zm-.338 1.221c.3.113.597.274.89.484.932.667 1.413 1.532 1.444 2.599.036 1.069-.383 2.217-1.26 3.44-.903 1.263-1.866 2.052-2.889 2.371-1.02.315-2.008.129-2.97-.56-.919-.657-1.388-1.525-1.406-2.6-.018-1.076.414-2.228 1.293-3.456.882-1.233 1.832-2.006 2.851-2.32a3.069 3.069 0 0 1 2.047.042zm-26.462-5.78-6.066 2.221 3.973 10.858 6.381-2.335-.42-1.15-4.843 1.77-1.438-3.933 3.792-1.387-.415-1.138-3.794 1.388-1.274-3.485 4.526-1.657zm37.593 15.665-10.651 4.503 1.506 3.562c.718 1.698 1.761 2.81 3.13 3.334s2.941.41 4.712-.339c1.458-.616 2.473-1.489 3.047-2.62a4.28 4.28 0 0 0 .48-2.195c-.04-.747-.281-1.649-.728-2.704zm-.49 1.989.524 1.245c.436 1.031.682 1.839.736 2.421a3.023 3.023 0 0 1-.332 1.7c-.457.912-1.312 1.633-2.564 2.163-1.333.564-2.528.703-3.581.42-.987-.262-1.773-1.083-2.357-2.465l-.817-1.936zm-48.16-9.28a4.788 4.788 0 0 0-1.401-.291 4.28 4.28 0 0 0-2.202.448c-.668.337-1.394.922-2.18 1.757l-2.634 2.8 8.42 7.923 2.65-2.815c1.264-1.343 1.859-2.746 1.785-4.21-.074-1.465-.81-2.856-2.21-4.173-.72-.678-1.464-1.158-2.229-1.44zm-.726 1.584c.63.238 1.255.648 1.874 1.23 1.055.993 1.665 2.028 1.83 3.106.16 1.009-.275 2.058-1.303 3.15l-1.44 1.531-6.634-6.24.927-.985c.767-.816 1.405-1.366 1.916-1.65a3.03 3.03 0 0 1 1.691-.384c.382.019.761.1 1.14.242zm53.917 22.346-11.539-.737-.433 6.783 1.225.078.327-5.147 4.179.268-.257 4.03 1.21.079.257-4.032 3.702.236-.307 4.812 1.225.078z"
                 />
               </g>
               <g
-                id="cpu_clk_fetch"
+                id="schematic_cpu_clk_fetch"
                 fill="none"
                 transform="translate(-15.898 -197.94)"
               >
                 <path
-                  id="cpu_clk_circle_fetch"
+                  id="schematic_cpu_clk_circle_fetch"
                   strokeWidth="2.5"
                   d="M195.46 590.64a12.083 12.083 0 0 1 16.327-5.043 12.083 12.083 0 0 1 5.043 16.327 12.083 12.083 0 0 1-16.327 5.043 12.083 12.083 0 0 1-5.043-16.327z"
                 />
                 <path
-                  id="cpu_clk_label_fetch"
+                  id="schematic_cpu_clk_label_fetch"
                   fill="hsl(var(--bc))"
                   d="m207.65 559.41-9.81.809.1 1.222 4.087-.336.85 10.301 1.634-.134-.85-10.301 4.089-.338zm9.217 2.443a4.708 4.708 0 0 0-1.846.413c-1.327.597-2.362 1.785-3.103 3.564-.744 1.783-.868 3.35-.371 4.703.498 1.348 1.577 2.37 3.236 3.06 1.245.52 2.508.726 3.787.622l.54-1.297c-1.411.139-2.622-.003-3.632-.424-1.173-.489-1.934-1.266-2.285-2.332-.35-1.07-.241-2.286.326-3.646.595-1.428 1.375-2.403 2.336-2.922s2.021-.536 3.18-.053c.793.33 1.813 1.052 3.064 2.166l.594-1.42c-1.153-.848-2.21-1.47-3.166-1.869-.941-.392-1.827-.581-2.66-.564zm-24.516.305-5.658 3.117 5.578 10.13 5.953-3.28-.592-1.074-4.516 2.486-2.021-3.666 3.539-1.95-.586-1.06-3.537 1.948-1.791-3.25 4.223-2.327zm37.102 7.09-9.115 7.111 1.007 1.293 4.307-3.357 3.383 4.336-4.307 3.36 1.01 1.292 9.117-7.111-1.01-1.293-3.843 2.998-3.383-4.338 3.844-2.998zm-47.963.185-4.055 5.032 9.006 7.252 1.03-1.278-4.09-3.293 2.539-3.152-.944-.758-2.537 3.15-3.02-2.43 3.026-3.753z"
                 />
               </g>
             </g>
-            <g id="cpu_reg_cspr">
+            <g id="schematic_cpu_reg_cspr">
               <path
-                id="cpu_reg_box_cspr"
+                id="schematic_cpu_reg_box_cspr"
                 fill="none"
-                stroke="#1a1a1a"
+                stroke="hsl(var(--bc))"
                 strokeWidth=".634"
                 d="M531.53 354.51h95.486v14.573H531.53z"
               />
               <path
-                id="cpu_reg_label_cspr"
+                id="schematic_cpu_reg_label_cspr"
                 fill="hsl(var(--bc))"
                 stroke="hsl(var(--bc))"
                 d="M536.49 347.06c-.906 0-1.61.266-2.11.797-.497.531-.746 1.278-.746 2.242 0 .966.245 1.714.735 2.242.49.526 1.183.79 2.082.79.674 0 1.297-.148 1.867-.442v-.703c-.625.336-1.21.504-1.758.504-.635 0-1.136-.213-1.504-.637-.367-.427-.55-1.01-.55-1.746 0-.774.171-1.372.515-1.797s.83-.637 1.457-.637c.43 0 1.04.137 1.832.41v-.77c-.695-.168-1.302-.253-1.82-.253zm4.414 0c-.5 0-.911.145-1.234.434a1.402 1.402 0 0 0-.485 1.097c0 .331.1.621.301.871.203.248.55.512 1.043.793l.399.23c.346.196.583.373.71.532.13.159.196.352.196.578a.836.836 0 0 1-.297.668c-.195.17-.455.254-.777.254-.42 0-.955-.151-1.606-.453v.812c.604.17 1.1.254 1.488.254.612 0 1.103-.152 1.473-.457.372-.304.559-.708.559-1.21 0-.355-.1-.658-.297-.91-.198-.253-.547-.522-1.047-.805l-.414-.235c-.36-.206-.607-.383-.742-.531a.737.737 0 0 1 .074-1.082c.185-.151.42-.227.703-.227.3 0 .754.12 1.363.36v-.75a4.91 4.91 0 0 0-1.41-.223zm2.914.145v5.78h.813v-2.296h.363c.74 0 1.318-.175 1.734-.524.417-.349.625-.83.625-1.445 0-.539-.152-.926-.457-1.16-.304-.237-.806-.356-1.504-.356zm4.422 0v5.78h.813v-2.445h.765l1.645 2.446h1.008l-1.93-2.707c.778-.323 1.168-.87 1.168-1.64 0-.467-.149-.822-.445-1.067-.295-.245-.72-.367-1.274-.367zm-3.61.613h.505c.487 0 .834.074 1.043.222.208.149.312.396.312.743 0 .409-.133.725-.398.949-.266.224-.642.336-1.13.336h-.331zm4.423 0h.515c.865 0 1.297.298 1.297.894 0 .81-.515 1.215-1.547 1.215h-.265z"
               />
             </g>
-            <g id="cpu_reg_pc">
+            <g id="schematic_cpu_reg_pc">
               <path
-                id="cpu_reg_box_pc"
+                id="schematic_cpu_reg_box_pc"
                 fill="none"
-                stroke="#1a1a1a"
+                stroke="hsl(var(--bc))"
                 strokeWidth=".634"
                 d="M531.53 402.51h95.486v14.573H531.53z"
               />
               <path
-                id="cpu_reg_label_pc"
+                id="schematic_cpu_reg_label_pc"
                 fill="hsl(var(--bc))"
                 stroke="hsl(var(--bc))"
                 d="m541.42 395.06-1.93.48v.594l1.156-.289v4.563h-1.156v.578h3.086v-.578h-1.156zm21.395 0c-.906 0-1.61.266-2.11.797-.497.531-.745 1.278-.745 2.242 0 .966.244 1.714.734 2.242.49.526 1.183.79 2.082.79.674 0 1.297-.148 1.867-.442v-.703c-.625.336-1.21.504-1.758.504-.635 0-1.136-.213-1.504-.637-.367-.427-.55-1.01-.55-1.746 0-.774.171-1.372.515-1.797s.83-.637 1.457-.637c.43 0 1.04.137 1.832.41v-.77c-.695-.168-1.302-.253-1.82-.253zm-28.84.145v5.78h.812v-2.445h.766l1.645 2.446h1.007l-1.93-2.707c.78-.323 1.169-.87 1.169-1.64 0-.467-.149-.822-.446-1.067-.294-.245-.718-.367-1.273-.367zm10.441 0v2.812c.148-.018.29-.027.426-.027 1.195 0 1.793.433 1.793 1.3 0 .394-.11.702-.328.926-.216.224-.515.336-.895.336-.346 0-.71-.077-1.094-.23v.687c.37.081.7.121.993.121.671 0 1.196-.158 1.574-.476.38-.32.57-.762.57-1.324 0-.605-.208-1.077-.625-1.418-.417-.342-.996-.512-1.738-.512v-1.524h2.25v-.671zm6.824 0-2.082 6.937h.606l2.082-6.937zm4.637 0v5.78h.812v-2.296h.364c.74 0 1.317-.175 1.734-.524.417-.349.625-.83.625-1.445 0-.539-.152-.926-.457-1.16-.305-.237-.806-.356-1.504-.356zm-21.09.613h.516c.864 0 1.296.298 1.296.894 0 .81-.515 1.215-1.546 1.215h-.266zm21.902 0h.504c.487 0 .834.074 1.043.222.208.149.312.396.312.743 0 .409-.132.725-.398.949-.266.224-.642.336-1.129.336h-.332z"
               />
             </g>
-            <g id="cpu_reg_lr">
+            <g id="schematic_cpu_reg_lr">
               <path
-                id="cpu_reg_box_lr"
+                id="schematic_cpu_reg_box_lr"
                 fill="none"
-                stroke="#1a1a1a"
+                stroke="hsl(var(--bc))"
                 strokeWidth=".933"
                 d="M340.18 373.44h140.51v21.445H340.18z"
               />
               <path
-                id="cpu_reg_label_lr"
+                id="schematic_cpu_reg_label_lr"
                 fill="hsl(var(--bc))"
                 stroke="hsl(var(--bc))"
                 d="m355.41 361.64-2.894.72v.891l1.734-.433v6.844h-1.734v.867h4.628v-.867h-1.734zm-11.168.217v8.672h1.219v-3.668h1.148l2.467 3.668h1.512l-2.895-4.06c1.168-.485 1.752-1.306 1.752-2.462 0-.699-.222-1.232-.668-1.6-.441-.366-1.078-.55-1.91-.55zm18.574 0-3.902 5.344v.873h3.902v2.455h1.084v-2.455h1.16v-.944h-1.16v-5.273zm7.324 0-3.123 10.406h.908l3.123-10.406zm6.955 0v8.672h5.133v-.92h-3.902v-7.752zm6.399 0v8.672h1.219v-3.668h1.148l2.467 3.668h1.511l-2.894-4.06c1.168-.485 1.752-1.306 1.752-2.462 0-.699-.223-1.232-.668-1.6-.441-.366-1.078-.55-1.91-.55zm-38.033.92h.773c1.297 0 1.945.447 1.945 1.342 0 1.214-.773 1.822-2.32 1.822h-.398zm39.252 0h.773c1.297 0 1.945.447 1.945 1.342 0 1.214-.773 1.822-2.32 1.822h-.398zm-21.82.498v3.855h-2.848z"
               />
             </g>
-            <g id="cpu_reg_sp">
+            <g id="schematic_cpu_reg_sp">
               <path
-                id="cpu_reg_box_sp"
+                id="schematic_cpu_reg_box_sp"
                 fill="none"
-                stroke="#1a1a1a"
+                stroke="hsl(var(--bc))"
                 strokeWidth=".634"
                 d="M531.53 378.51h95.486v14.573H531.53z"
               />
               <path
-                id="cpu_reg_label_sp"
+                id="schematic_cpu_reg_label_sp"
                 fill="hsl(var(--bc))"
                 stroke="hsl(var(--bc))"
                 d="m541.42 371.06-1.93.48v.594l1.156-.289v4.563h-1.156v.578h3.086v-.578h-1.156zm4.144 0c-.43 0-.872.077-1.328.23v.672c.464-.216.888-.324 1.274-.324.703 0 1.055.296 1.055.887 0 .752-.534 1.129-1.602 1.129l-.27.004v.52h.305c1.138 0 1.707.406 1.707 1.218 0 .341-.116.62-.348.836-.229.214-.527.32-.894.32-.318 0-.753-.11-1.305-.328v.719c.544.125.995.187 1.352.187.627 0 1.12-.154 1.48-.464.36-.31.54-.737.54-1.282 0-.804-.467-1.315-1.4-1.53.806-.29 1.208-.774 1.208-1.454 0-.893-.591-1.34-1.773-1.34zm11.707 0c-.5 0-.911.145-1.234.434a1.402 1.402 0 0 0-.484 1.097c0 .331.1.621.3.871.204.248.551.512 1.043.793l.399.23c.346.196.583.373.71.532a.88.88 0 0 1 .196.578.836.836 0 0 1-.297.668c-.195.17-.454.254-.777.254-.42 0-.954-.151-1.606-.453v.812c.605.17 1.1.254 1.489.254.612 0 1.103-.152 1.472-.457.373-.304.56-.708.56-1.21 0-.355-.1-.658-.298-.91-.198-.253-.547-.522-1.047-.805l-.414-.235c-.36-.206-.607-.383-.742-.531a.737.737 0 0 1-.203-.512c0-.229.092-.419.277-.57.185-.151.42-.227.703-.227.3 0 .754.12 1.364.36v-.75a4.91 4.91 0 0 0-1.41-.223zm-23.297.145v5.78h.813v-2.445h.766l1.644 2.446h1.008l-1.93-2.707c.779-.323 1.168-.87 1.168-1.64 0-.467-.148-.822-.445-1.067-.294-.245-.719-.367-1.274-.367zm17.266 0-2.082 6.937h.606l2.082-6.937zm8.946 0v5.78h.812v-2.296h.364c.74 0 1.317-.175 1.734-.524s.625-.83.625-1.445c0-.539-.152-.926-.457-1.16-.305-.237-.806-.356-1.504-.356zm-25.398.613h.515c.865 0 1.297.298 1.297.894 0 .81-.515 1.215-1.547 1.215h-.265zm26.21 0h.505c.487 0 .834.074 1.043.222.208.149.312.396.312.743 0 .409-.133.725-.398.949-.266.224-.642.336-1.13.336H561z"
@@ -829,50 +889,50 @@ const Schematic: React.FC<TProps> = (): JSX.Element => {
               stroke="hsl(var(--bc))"
               d="m173.41 192.4-2.894.72v.891l1.734-.433v6.844h-1.735v.867h4.63v-.867h-1.735zm-11.168.217v8.672h1.219v-3.668h1.148l2.467 3.668h1.512l-2.895-4.06c1.168-.485 1.752-1.306 1.752-2.462 0-.699-.222-1.232-.668-1.6-.441-.367-1.078-.55-1.91-.55zm1.219.92h.773c1.297 0 1.946.447 1.946 1.342 0 1.214-.774 1.822-2.32 1.822h-.4z"
             />
-            <g fill="#1a1a1a" stroke="#1a1a1a">
-              <g id="cpu_alu" aria-label="ARITHMETIC LOGIC UNIT">
+            <g fill="hsl(var(--bc))" stroke="hsl(var(--bc))">
+              <g id="schematic_cpu_alu" aria-label="ARITHMETIC LOGIC UNIT">
                 <path
-                  id="cpu_alu_box"
+                  id="schematic_cpu_alu_box"
                   fill="none"
                   d="M63 103h511v70H63z"
                   transform="translate(96)"
                 />
                 <path
-                  id="cpu_alu_label"
+                  id="schematic_cpu_alu_label"
                   fill="hsl(var(--bc))"
                   stroke="hsl(var(--bc))"
                   d="M310.9 118.39c-1.813 0-3.219.531-4.219 1.594-.995 1.062-1.492 2.557-1.492 4.484 0 1.932.49 3.427 1.469 4.485.979 1.052 2.367 1.578 4.164 1.578 1.349 0 2.594-.295 3.734-.883v-1.406c-1.25.672-2.422 1.007-3.515 1.007-1.271 0-2.274-.424-3.008-1.273-.734-.854-1.102-2.018-1.102-3.492 0-1.547.344-2.745 1.031-3.594.688-.849 1.66-1.273 2.915-1.273.859 0 2.08.273 3.664.82v-1.54c-1.39-.338-2.604-.507-3.64-.507zm39.359 0c-1.64 0-2.953.552-3.938 1.656-.979 1.1-1.468 2.568-1.468 4.406 0 1.828.487 3.3 1.46 4.414.98 1.11 2.271 1.665 3.876 1.665 1.682 0 3.015-.547 4-1.641.984-1.099 1.476-2.583 1.476-4.453 0-1.833-.492-3.3-1.476-4.399-.985-1.099-2.295-1.648-3.93-1.648zm17.703 0c-1.797 0-3.193.534-4.188 1.602-.994 1.062-1.492 2.552-1.492 4.468 0 1.954.49 3.454 1.47 4.5.983 1.047 2.395 1.57 4.233 1.57 1.042 0 2.263-.2 3.665-.6v-4.68h-1.633v3.765c-.636.193-1.227.29-1.774.29-1.333 0-2.37-.423-3.109-1.267-.74-.848-1.11-2.036-1.11-3.562 0-1.542.344-2.737 1.032-3.586.693-.849 1.664-1.273 2.914-1.273.849 0 2.07.27 3.664.812v-1.515c-1.27-.35-2.495-.524-3.672-.524zm26.203 0c-1.813 0-3.219.531-4.219 1.594-.995 1.062-1.492 2.557-1.492 4.484 0 1.932.49 3.427 1.469 4.485.979 1.052 2.367 1.578 4.164 1.578 1.349 0 2.594-.295 3.734-.883v-1.406c-1.25.672-2.422 1.007-3.515 1.007-1.271 0-2.274-.424-3.008-1.273-.734-.854-1.102-2.018-1.102-3.492 0-1.547.344-2.745 1.031-3.594.688-.849 1.66-1.273 2.915-1.273.859 0 2.08.273 3.664.82v-1.54c-1.39-.338-2.605-.507-3.64-.507zm-214.89.29-4.586 11.561h1.523l1.274-3.203h4.898l1.258 3.203h1.773L180.9 118.68h-1.625zm12.812 0v11.561h1.625v-4.89h1.531l3.29 4.89h2.015l-3.86-5.414c1.558-.646 2.336-1.74 2.336-3.281 0-.933-.296-1.643-.89-2.133-.589-.49-1.438-.734-2.547-.734h-3.5zm15.109 0v11.561h1.64V118.68h-1.64zm8.266 0v1.226h4.101v10.336h1.64v-10.336h4.102v-1.227h-9.843zm16.469 0v11.561h1.64v-5.46h5.5v5.46h1.64V118.68h-1.64v4.875h-5.5v-4.875h-1.64zm16.758 0v11.561h1.406v-9.43l3.094 8.657h1.585l3.188-8.633v9.406h1.531v-11.562h-2.031l-3.297 8.945-3.203-8.945h-2.273zm18.78 0v11.561h6.797v-1.227h-5.156v-4.187h4.04v-1.21h-4.04v-3.712h4.82v-1.226h-6.46zm12.32 0v1.226h4.102v10.336h1.64v-10.336h4.102v-1.227h-9.843zm16.462 0v11.561h1.64V118.68h-1.64zm35.75 0v11.561h6.843v-1.227h-5.203v-10.336h-1.64zm47.516 0v11.561h1.64V118.68h-1.64zm35.656 0v7.28c0 1.558.343 2.709 1.03 3.453s1.753 1.118 3.196 1.118c1.417 0 2.448-.36 3.094-1.079.65-.718.976-1.867.976-3.445v-7.328h-1.437v7.352c0 1.187-.193 2.03-.578 2.53-.38.496-1.029.743-1.945.743-.938 0-1.623-.263-2.055-.789-.427-.531-.64-1.378-.64-2.54v-7.296h-1.641zm16.18 0v11.561h1.406v-8.93l5.828 8.93h1.602V118.68h-1.407v8.93l-5.82-8.93h-1.61zm16.812 0v11.561h1.64V118.68h-1.64zm8.265 0v1.226h4.102v10.336h1.64v-10.336h4.102v-1.227h-9.844zm-106.17.937c1.146 0 2.042.424 2.688 1.273.65.849.976 2.026.976 3.531 0 1.552-.323 2.755-.968 3.61-.646.849-1.56 1.273-2.743 1.273-1.13 0-2.015-.432-2.656-1.297-.64-.865-.96-2.052-.96-3.562 0-1.516.322-2.698.968-3.547.646-.854 1.544-1.282 2.695-1.282zm-156.55.289h1.031c1.73 0 2.594.596 2.594 1.789 0 1.62-1.031 2.43-3.094 2.43h-.53v-4.22zm-13.773.93 1.969 4.984h-3.945l1.976-4.985z"
                 />
               </g>
-              <g id="cpu_dec" aria-label="INSTRUCTION DECODER">
+              <g id="schematic_cpu_dec" aria-label="INSTRUCTION DECODER">
                 <path
-                  id="cpu_dec_box"
+                  id="schematic_cpu_dec_box"
                   fill="none"
                   d="M63 595h511v70H63z"
                   transform="translate(96)"
                 />
                 <path
-                  id="cpu_dec_label"
+                  id="schematic_cpu_dec_label"
                   fill="hsl(var(--bc))"
                   stroke="hsl(var(--bc))"
                   d="M202.17 611.15c-1 0-1.823.29-2.469.867-.646.573-.969 1.305-.969 2.195 0 .662.201 1.243.602 1.743.406.494 1.102 1.023 2.086 1.586l.797.46c.692.391 1.166.745 1.422 1.063.26.318.39.703.39 1.156 0 .552-.198.998-.593 1.336-.391.339-.91.508-1.555.508-.839 0-1.909-.302-3.211-.906v1.625c1.208.338 2.2.508 2.977.508 1.224 0 2.205-.305 2.945-.915.745-.609 1.117-1.416 1.117-2.421 0-.709-.198-1.316-.594-1.82-.396-.506-1.093-1.042-2.093-1.61l-.829-.469c-.718-.411-1.213-.766-1.484-1.062s-.406-.638-.406-1.024c0-.458.185-.838.554-1.14.37-.302.839-.454 1.407-.454.599 0 1.507.24 2.726.72v-1.5c-.99-.298-1.93-.446-2.82-.446zm62.18 0c-1.813 0-3.219.531-4.219 1.594-.995 1.062-1.492 2.557-1.492 4.484 0 1.933.49 3.427 1.469 4.485.979 1.052 2.367 1.578 4.164 1.578 1.349 0 2.594-.295 3.734-.883v-1.406c-1.25.672-2.422 1.007-3.515 1.007-1.271 0-2.274-.424-3.008-1.273-.734-.854-1.102-2.018-1.102-3.492 0-1.547.344-2.745 1.031-3.594s1.66-1.273 2.915-1.273c.859 0 2.08.273 3.664.82v-1.54c-1.39-.338-2.604-.507-3.64-.507zm40.492 0c-1.64 0-2.953.552-3.938 1.656-.979 1.1-1.468 2.568-1.468 4.406 0 1.829.487 3.3 1.46 4.415.98 1.109 2.271 1.664 3.876 1.664 1.682 0 3.015-.547 4-1.641.984-1.099 1.476-2.583 1.476-4.453 0-1.833-.492-3.3-1.476-4.398-.985-1.1-2.295-1.649-3.93-1.649zm75.273 0c-1.813 0-3.219.531-4.219 1.594-.995 1.062-1.492 2.557-1.492 4.484 0 1.933.49 3.427 1.469 4.485.979 1.052 2.367 1.578 4.164 1.578 1.349 0 2.594-.295 3.734-.883v-1.406c-1.25.672-2.422 1.007-3.515 1.007-1.271 0-2.274-.424-3.008-1.273-.734-.854-1.102-2.018-1.102-3.492 0-1.547.344-2.745 1.031-3.594s1.66-1.273 2.915-1.273c.859 0 2.08.273 3.664.82v-1.54c-1.39-.338-2.604-.507-3.64-.507zm15.766 0c-1.64 0-2.953.552-3.937 1.656-.98 1.1-1.47 2.568-1.47 4.406 0 1.829.488 3.3 1.462 4.415.979 1.109 2.27 1.664 3.875 1.664 1.682 0 3.015-.547 4-1.641.984-1.099 1.476-2.583 1.476-4.453 0-1.833-.492-3.3-1.476-4.398-.985-1.1-2.295-1.649-3.93-1.649zm-222.94.29V623h1.64v-11.56h-1.64zm9.617 0V623h1.406v-8.93l5.829 8.93h1.601v-11.56h-1.406v8.93l-5.82-8.93h-1.61zm29.086 0v1.226h4.102v10.336h1.64v-10.336h4.102v-1.227h-9.844zm16.47 0V623h1.624v-4.89h1.531l3.29 4.89h2.015l-3.86-5.414c1.558-.646 2.337-1.74 2.337-3.281 0-.933-.297-1.643-.891-2.133-.589-.49-1.438-.734-2.547-.734h-3.5zm15.022 0v7.28c0 1.558.344 2.709 1.031 3.453.688.745 1.753 1.118 3.196 1.118 1.416 0 2.448-.36 3.094-1.079.65-.718.976-1.867.976-3.445v-7.328h-1.437v7.352c0 1.187-.193 2.03-.579 2.53-.38.496-1.028.743-1.945.743-.937 0-1.622-.263-2.055-.789-.427-.531-.64-1.378-.64-2.54v-7.296h-1.64zm30.898 0v1.226h4.102v10.336h1.64v-10.336h4.102v-1.227h-9.844zm16.461 0V623h1.64v-11.56h-1.64zm27.047 0V623h1.406v-8.93l5.829 8.93h1.601v-11.56h-1.406v8.93l-5.82-8.93h-1.61zm26.883 0V623h3.867c1.844 0 3.274-.529 4.29-1.586 1.015-1.057 1.523-2.547 1.523-4.469 0-1.583-.409-2.859-1.227-3.828a4.28 4.28 0 0 0-1.836-1.297c-.703-.255-1.627-.382-2.773-.382h-3.844zm16.984 0V623h6.797v-1.227h-5.156v-4.187h4.039v-1.21h-4.04v-3.712h4.821v-1.226h-6.46zm47.172 0V623h3.867c1.844 0 3.274-.529 4.29-1.586 1.015-1.057 1.523-2.547 1.523-4.469 0-1.583-.409-2.859-1.227-3.828a4.28 4.28 0 0 0-1.836-1.297c-.703-.255-1.627-.382-2.773-.382h-3.844zm16.984 0V623h6.797v-1.227h-5.156v-4.187h4.039v-1.21h-4.04v-3.712h4.821v-1.226h-6.46zm13.672 0V623h1.625v-4.89h1.531l3.29 4.89h2.015l-3.86-5.414c1.558-.646 2.337-1.74 2.337-3.281 0-.933-.297-1.643-.891-2.133-.589-.49-1.438-.734-2.547-.734h-3.5zm-134.4.937c1.146 0 2.042.424 2.688 1.273.65.849.976 2.026.976 3.531 0 1.552-.323 2.755-.968 3.61-.646.849-1.56 1.273-2.743 1.273-1.13 0-2.015-.432-2.656-1.297-.64-.865-.96-2.052-.96-3.562 0-1.516.322-2.698.968-3.547.646-.854 1.544-1.282 2.695-1.282zm91.04 0c1.145 0 2.04.424 2.687 1.273.65.849.976 2.026.976 3.531 0 1.552-.323 2.755-.968 3.61-.646.849-1.56 1.273-2.743 1.273-1.13 0-2.015-.432-2.656-1.297-.64-.865-.96-2.052-.96-3.562 0-1.516.322-2.698.968-3.547.646-.854 1.544-1.282 2.695-1.282zm-166.14.289h1.03c1.73 0 2.594.596 2.594 1.789 0 1.62-1.031 2.43-3.094 2.43h-.53v-4.22zm116.33 0h1.35c1.12 0 1.96.088 2.516.265a3.027 3.027 0 0 1 1.438.969c.661.776.992 1.844.992 3.203 0 1.448-.336 2.602-1.008 3.461-.625.807-1.687 1.21-3.187 1.21h-2.102v-9.108zm64.155 0h1.352c1.12 0 1.958.088 2.515.265a3.027 3.027 0 0 1 1.438.969c.661.776.992 1.844.992 3.203 0 1.448-.336 2.602-1.008 3.461-.625.807-1.687 1.21-3.187 1.21h-2.102v-9.108zm30.641 0h1.031c1.73 0 2.594.596 2.594 1.789 0 1.62-1.031 2.43-3.094 2.43h-.53v-4.22z"
                 />
               </g>
               <g
-                id="cpu_mmu"
+                id="schematic_cpu_mmu"
                 aria-label="MEMORY MANAGEMENT UNIT"
                 transform="rotate(90.013)"
               >
                 <path
-                  id="cpu_mmu_box"
+                  id="schematic_cpu_mmu_box"
                   fill="none"
-                  stroke="#1a1a1a"
+                  stroke="hsl(var(--bc))"
                   strokeWidth=".81"
                   d="M576.58 204.03h92.184V344.8H576.58z"
                   transform="rotate(269.99)"
                 />
                 <path
-                  id="cpu_mmu_label"
+                  id="schematic_cpu_mmu_label"
                   fill="hsl(var(--bc))"
                   stroke="hsl(var(--bc))"
                   strokeWidth=".805"
@@ -880,15 +940,15 @@ const Schematic: React.FC<TProps> = (): JSX.Element => {
                 />
               </g>
             </g>
-            <g id="cpu_cu">
+            <g id="schematic_cpu_cu">
               <path
-                id="cpu_cu_box"
-                stroke="#1a1a1a"
+                id="schematic_cpu_cu_box"
+                stroke="hsl(var(--bc))"
                 strokeWidth=".81"
                 d="M576.58 424.03h92.184V564.8H576.58z"
               />
               <path
-                id="cpu_cu_label"
+                id="schematic_cpu_cu_label"
                 fill="hsl(var(--bc))"
                 stroke="hsl(var(--bc))"
                 strokeWidth=".805"
