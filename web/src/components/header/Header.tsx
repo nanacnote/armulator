@@ -247,7 +247,7 @@ const Header: React.FC<TProps> = (): JSX.Element => {
           </ul>
         </div>
       </div>
-      <div className="hidden bg-base-300 shadow-inner dropdown-item-for-menu">
+      <div className="hidden lg:hidden bg-base-300 shadow-inner dropdown-item-for-menu">
         <div className="flex flex-row-reverse pb-4 pt-2">
           <div className="mr-6">
             <div className="btn-group">
