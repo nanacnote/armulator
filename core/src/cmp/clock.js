@@ -1,9 +1,5 @@
 import {
-  FETCH_CYCLE_KEY,
-  DECODE_CYCLE_KEY,
-  EXECUTE_CYCLE_KEY,
   NORMAL_CLOCK_SPEED,
-  CYCLE_SIZE,
   PAUSE_CLOCK_KEY,
   START_CLOCK_KEY,
   STOP_CLOCK_KEY,
@@ -12,6 +8,9 @@ import {
   ON_PAUSE_EVENT,
   ON_RESUME_EVENT,
   ON_SPEED_CHANGE_EVENT,
+  ON_FETCH_CYCLE,
+  ON_DECODE_CYCLE,
+  ON_EXECUTE_CYCLE,
 } from "../var/def.js";
 
 /**
@@ -28,17 +27,6 @@ export class Clk extends EventTarget {
     super();
 
     /**
-     *An object containing arrays of observer functions that are called during different clock cycles.
-     *The keys represent the clock cycle, and the values are arrays of observer functions.
-     *@type {Object.<string, function[]>}
-     */
-    this.OBSERVERS = {
-      [FETCH_CYCLE_KEY]: [],
-      [DECODE_CYCLE_KEY]: [],
-      [EXECUTE_CYCLE_KEY]: [],
-    };
-
-    /**
      *The ID of the current interval timer, or null if the clock is not currently running.
      *@type {?number}
      */
@@ -52,11 +40,16 @@ export class Clk extends EventTarget {
 
     /**
      * The current cycle of the clock.
-     * Can be one of FETCH_CYCLE_KEY, DECODE_CYCLE_KEY, or EXECUTE_CYCLE_KEY.
      * @type {number}
-     * @default FETCH_CYCLE_KEY
      */
-    this.CYCLE = FETCH_CYCLE_KEY;
+    this.CYCLE = 0;
+
+    /**
+     * @property {Array} CYCLE_EVENTS - A list of constants representing the different cycles in the processor.
+     * @constant
+     * @default
+     */
+    this.CYCLE_EVENTS = [ON_FETCH_CYCLE, ON_DECODE_CYCLE, ON_EXECUTE_CYCLE];
 
     /**
      * The current state of the clock.
@@ -75,17 +68,6 @@ export class Clk extends EventTarget {
     this.SPEED = NORMAL_CLOCK_SPEED;
 
     this._trigger_observers = this._trigger_observers.bind(this);
-  }
-
-  /**
-   * Adds one or more observer functions to be called during a specific clock cycle.
-   * @param {number} cycleKey - The key of the clock cycle to observe (one of the FETCH_CYCLE_KEY, DECODE_CYCLE_KEY, or EXECUTE_CYCLE_KEY constants).
-   * @param {Function|Function[]} obsFuncs - A single observer function or an array of observer functions to be called during the specified clock cycle.
-   */
-  addObserver(cycleKey, obsFuncs) {
-    this.OBSERVERS[cycleKey].push(
-      ...(Array.isArray(obsFuncs) ? obsFuncs : [obsFuncs])
-    );
   }
 
   /**
@@ -109,9 +91,9 @@ export class Clk extends EventTarget {
   stop() {
     if (this.STATE != STOP_CLOCK_KEY) {
       clearInterval(this.TICKER);
+      this.CYCLE = 0;
       this.COUNTER = 0;
       this.TICKER = null;
-      this.CYCLE = FETCH_CYCLE_KEY;
       this.STATE = STOP_CLOCK_KEY;
       this.dispatchEvent(new Event(ON_STOP_EVENT));
     }
@@ -162,16 +144,14 @@ export class Clk extends EventTarget {
   }
 
   /**
-   * Triggers the registered observers for the current clock cycle.
+   * Triggers all registered observers for the current cycle and updates the counter and cycle state.
    * @private
    */
   _trigger_observers() {
-    for (const func of this.OBSERVERS[this.CYCLE]) {
-      func.call();
-    }
+    this.dispatchEvent(new Event(this.CYCLE_EVENTS[this.CYCLE]));
     if (this.STATE === START_CLOCK_KEY) {
       this.COUNTER++;
-      this.CYCLE = this.COUNTER % CYCLE_SIZE;
+      this.CYCLE = this.COUNTER % this.CYCLE_EVENTS.length;
     }
   }
 }

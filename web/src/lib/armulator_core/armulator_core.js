@@ -8,6 +8,9 @@ const ON_RAM_WRITE_EVENT = "ram-write";
 const ON_RAM_READ_EVENT = "ram-read";
 const ON_BUFFER_32_WRITE_EVENT = "buffer-32-write";
 const ON_BUFFER_32_READ_EVENT = "buffer-32-write";
+const ON_FETCH_CYCLE = "fetch-cycle";
+const ON_DECODE_CYCLE = "decode-cycle";
+const ON_EXECUTE_CYCLE = "execute-cycle";
 
 // Constant values that represent the status of an operation
 const OK_CODE = 1; // indicates everything went right
@@ -19,12 +22,6 @@ const INTERRUPT_KEY = 0b0000000100000000; // indicates interrupt execution
 
 // Constants used to identify specific interrupt types
 const UNDEFINED_INSTRUCTION_INTERRUPT = INTERRUPT_KEY + 0b00000001; // indicates an undefined instruction interrupt
-
-// Constants used to identify different clock cycles
-const FETCH_CYCLE_KEY = 0; // the state of the machine is set to fetch
-const DECODE_CYCLE_KEY = 1; // the state of the machine is set to decode
-const EXECUTE_CYCLE_KEY = 2; // the state of the machine is set to execute
-const CYCLE_SIZE = 3; // the number of states the machine can exist in
 
 // Constants used to identify different clock states
 const STOP_CLOCK_KEY = 0; // indicates the system is in stop/idle state
@@ -62,15 +59,14 @@ var def = {
   ON_RAM_READ_EVENT: ON_RAM_READ_EVENT,
   ON_BUFFER_32_WRITE_EVENT: ON_BUFFER_32_WRITE_EVENT,
   ON_BUFFER_32_READ_EVENT: ON_BUFFER_32_READ_EVENT,
+  ON_FETCH_CYCLE: ON_FETCH_CYCLE,
+  ON_DECODE_CYCLE: ON_DECODE_CYCLE,
+  ON_EXECUTE_CYCLE: ON_EXECUTE_CYCLE,
   OK_CODE: OK_CODE,
   ERROR_CODE: ERROR_CODE,
   EXECUTION_KEY: EXECUTION_KEY,
   INTERRUPT_KEY: INTERRUPT_KEY,
   UNDEFINED_INSTRUCTION_INTERRUPT: UNDEFINED_INSTRUCTION_INTERRUPT,
-  FETCH_CYCLE_KEY: FETCH_CYCLE_KEY,
-  DECODE_CYCLE_KEY: DECODE_CYCLE_KEY,
-  EXECUTE_CYCLE_KEY: EXECUTE_CYCLE_KEY,
-  CYCLE_SIZE: CYCLE_SIZE,
   STOP_CLOCK_KEY: STOP_CLOCK_KEY,
   START_CLOCK_KEY: START_CLOCK_KEY,
   PAUSE_CLOCK_KEY: PAUSE_CLOCK_KEY,
@@ -102,17 +98,6 @@ class Clk extends EventTarget {
     super();
 
     /**
-     *An object containing arrays of observer functions that are called during different clock cycles.
-     *The keys represent the clock cycle, and the values are arrays of observer functions.
-     *@type {Object.<string, function[]>}
-     */
-    this.OBSERVERS = {
-      [FETCH_CYCLE_KEY]: [],
-      [DECODE_CYCLE_KEY]: [],
-      [EXECUTE_CYCLE_KEY]: []
-    };
-
-    /**
      *The ID of the current interval timer, or null if the clock is not currently running.
      *@type {?number}
      */
@@ -126,11 +111,16 @@ class Clk extends EventTarget {
 
     /**
      * The current cycle of the clock.
-     * Can be one of FETCH_CYCLE_KEY, DECODE_CYCLE_KEY, or EXECUTE_CYCLE_KEY.
      * @type {number}
-     * @default FETCH_CYCLE_KEY
      */
-    this.CYCLE = FETCH_CYCLE_KEY;
+    this.CYCLE = 0;
+
+    /**
+     * @property {Array} CYCLE_EVENTS - A list of constants representing the different cycles in the processor.
+     * @constant
+     * @default
+     */
+    this.CYCLE_EVENTS = [ON_FETCH_CYCLE, ON_DECODE_CYCLE, ON_EXECUTE_CYCLE];
 
     /**
      * The current state of the clock.
@@ -148,15 +138,6 @@ class Clk extends EventTarget {
      */
     this.SPEED = NORMAL_CLOCK_SPEED;
     this._trigger_observers = this._trigger_observers.bind(this);
-  }
-
-  /**
-   * Adds one or more observer functions to be called during a specific clock cycle.
-   * @param {number} cycleKey - The key of the clock cycle to observe (one of the FETCH_CYCLE_KEY, DECODE_CYCLE_KEY, or EXECUTE_CYCLE_KEY constants).
-   * @param {Function|Function[]} obsFuncs - A single observer function or an array of observer functions to be called during the specified clock cycle.
-   */
-  addObserver(cycleKey, obsFuncs) {
-    this.OBSERVERS[cycleKey].push(...(Array.isArray(obsFuncs) ? obsFuncs : [obsFuncs]));
   }
 
   /**
@@ -180,9 +161,9 @@ class Clk extends EventTarget {
   stop() {
     if (this.STATE != STOP_CLOCK_KEY) {
       clearInterval(this.TICKER);
+      this.CYCLE = 0;
       this.COUNTER = 0;
       this.TICKER = null;
-      this.CYCLE = FETCH_CYCLE_KEY;
       this.STATE = STOP_CLOCK_KEY;
       this.dispatchEvent(new Event(ON_STOP_EVENT));
     }
@@ -233,16 +214,14 @@ class Clk extends EventTarget {
   }
 
   /**
-   * Triggers the registered observers for the current clock cycle.
+   * Triggers all registered observers for the current cycle and updates the counter and cycle state.
    * @private
    */
   _trigger_observers() {
-    for (const func of this.OBSERVERS[this.CYCLE]) {
-      func.call();
-    }
+    this.dispatchEvent(new Event(this.CYCLE_EVENTS[this.CYCLE]));
     if (this.STATE === START_CLOCK_KEY) {
       this.COUNTER++;
-      this.CYCLE = this.COUNTER % CYCLE_SIZE;
+      this.CYCLE = this.COUNTER % this.CYCLE_EVENTS.length;
     }
   }
 }
@@ -617,9 +596,12 @@ class Cpu {
     this._decode = this._decode.bind(this);
     this._execute = this._execute.bind(this);
     this.MMU.conn2bus(this.BUS);
-    this.CLK.addObserver(FETCH_CYCLE_KEY, [this._fetch, this.BUS.onTick]);
-    this.CLK.addObserver(DECODE_CYCLE_KEY, [this._decode, this.BUS.onTick]);
-    this.CLK.addObserver(EXECUTE_CYCLE_KEY, [this._execute, this.BUS.onTick]);
+    this.CLK.addEventListener(ON_FETCH_CYCLE, this._fetch);
+    this.CLK.addEventListener(ON_DECODE_CYCLE, this._decode);
+    this.CLK.addEventListener(ON_EXECUTE_CYCLE, this._execute);
+    this.CLK.addEventListener(ON_FETCH_CYCLE, this.BUS.onTick);
+    this.CLK.addEventListener(ON_DECODE_CYCLE, this.BUS.onTick);
+    this.CLK.addEventListener(ON_EXECUTE_CYCLE, this.BUS.onTick);
   }
   loadProg(ctx) {
     this.PROG_BYTE_SIZE = ctx.progSize;
@@ -807,7 +789,7 @@ class Reg {
   }
 
   /**
-   * @returns {Buffer32Bit} The r13 stack pointer register. Points to the top of the stack.[SP]
+   * @returns {Buffer32Bit} The r13 stack pointer register. Points to the top of the stack.
    * @alias sp
    */
   get sp() {

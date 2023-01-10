@@ -8,6 +8,9 @@ export const ON_RAM_WRITE_EVENT = "ram-write";
 export const ON_RAM_READ_EVENT = "ram-read";
 export const ON_BUFFER_32_WRITE_EVENT = "buffer-32-write";
 export const ON_BUFFER_32_READ_EVENT = "buffer-32-write";
+export const ON_FETCH_CYCLE = "fetch-cycle";
+export const ON_DECODE_CYCLE = "decode-cycle";
+export const ON_EXECUTE_CYCLE = "execute-cycle";
 
 // Constant values that represent the status of an operation
 export const OK_CODE = 1; // indicates everything went right
@@ -19,12 +22,6 @@ export const INTERRUPT_KEY = 0b0000000100000000; // indicates interrupt executio
 
 // Constants used to identify specific interrupt types
 export const UNDEFINED_INSTRUCTION_INTERRUPT = INTERRUPT_KEY + 0b00000001; // indicates an undefined instruction interrupt
-
-// Constants used to identify different clock cycles
-export const FETCH_CYCLE_KEY = 0; // the state of the machine is set to fetch
-export const DECODE_CYCLE_KEY = 1; // the state of the machine is set to decode
-export const EXECUTE_CYCLE_KEY = 2; // the state of the machine is set to execute
-export const CYCLE_SIZE = 3; // the number of states the machine can exist in
 
 // Constants used to identify different clock states
 export const STOP_CLOCK_KEY = 0; // indicates the system is in stop/idle state

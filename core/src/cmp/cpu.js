@@ -1,9 +1,9 @@
 import {
   C_BUS_READ_32_VAL,
-  DECODE_CYCLE_KEY,
-  EXECUTE_CYCLE_KEY,
+  ON_FETCH_CYCLE,
+  ON_DECODE_CYCLE,
+  ON_EXECUTE_CYCLE,
   EXECUTION_KEY,
-  FETCH_CYCLE_KEY,
   INTERRUPT_KEY,
 } from "../var/def.js";
 
@@ -29,9 +29,14 @@ export class Cpu {
     this._execute = this._execute.bind(this);
 
     this.MMU.conn2bus(this.BUS);
-    this.CLK.addObserver(FETCH_CYCLE_KEY, [this._fetch, this.BUS.onTick]);
-    this.CLK.addObserver(DECODE_CYCLE_KEY, [this._decode, this.BUS.onTick]);
-    this.CLK.addObserver(EXECUTE_CYCLE_KEY, [this._execute, this.BUS.onTick]);
+
+    this.CLK.addEventListener(ON_FETCH_CYCLE, this._fetch);
+    this.CLK.addEventListener(ON_DECODE_CYCLE, this._decode);
+    this.CLK.addEventListener(ON_EXECUTE_CYCLE, this._execute);
+
+    this.CLK.addEventListener(ON_FETCH_CYCLE, this.BUS.onTick);
+    this.CLK.addEventListener(ON_DECODE_CYCLE, this.BUS.onTick);
+    this.CLK.addEventListener(ON_EXECUTE_CYCLE, this.BUS.onTick);
   }
 
   loadProg(ctx) {
