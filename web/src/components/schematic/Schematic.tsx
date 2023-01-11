@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { useSchematicAnimation } from '../../hooks';
+import { useSchematicSVG } from '../../hooks';
 
 interface TProps {}
 
@@ -8,7 +8,7 @@ interface TProps {}
  */
 const Schematic: React.FC<TProps> = (): JSX.Element => {
   const thisComponent = React.useRef<HTMLDivElement>(null);
-  useSchematicAnimation();
+  useSchematicSVG(thisComponent);
 
   return (
     <div ref={thisComponent}>
