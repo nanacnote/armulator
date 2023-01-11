@@ -20,7 +20,7 @@ const Numeral: React.FC<TProps> = ({ binStr }): JSX.Element => {
       case NUMERAL_TYPE_HEX:
         setInnerText(
           '0x' +
-            parseInt(origBinStr.current)
+            parseInt(origBinStr.current, 2)
               .toString(16)
               .padStart(8, '0')
               .toUpperCase()

@@ -67,7 +67,7 @@ const Memory: React.FC<TProps> = (): JSX.Element => {
         tableEntries.push(
           <tr key={`ram-${address}`}>
             <th>
-              {React.createElement(Numeral, { binStr: address.toString() })}
+              {React.createElement(Numeral, { binStr: address.toString(2) })}
             </th>
             <td>
               {React.createElement(Numeral, { binStr: batch.slice(0, 9) })}

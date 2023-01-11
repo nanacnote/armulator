@@ -148,6 +148,7 @@ export class Clk extends EventTarget {
    * @private
    */
   _trigger_observers() {
+    // TODO: suspend on visibility change ie user leave current browser tab
     this.dispatchEvent(new Event(this.CYCLE_EVENTS[this.CYCLE]));
     if (this.STATE === START_CLOCK_KEY) {
       this.COUNTER++;
