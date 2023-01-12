@@ -40,6 +40,7 @@ export function useSchematicSVG(root: React.RefObject<HTMLDivElement>) {
         obs: value,
         round: 1,
         easing: 'linear',
+        duration: clk.SPEED,
         update: function () {
           element.innerHTML = counterAnimeObj.obs.toString();
         }
