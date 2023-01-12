@@ -18,17 +18,56 @@ import {
  *
  */
 export function useSchematicSVG(root: React.RefObject<HTMLDivElement>) {
+  const showTextAt = (function () {
+    // TODO: rehydrate via session storage where all inserted text are tracked
+    const location: { [key: string]: any } = {};
+    return (key: string, value: string) => {
+      const coord = _getObjectCoord(key as any);
+      const descriptor = location[key];
+      if (location[key]) descriptor.element.remove();
+      const element = document.createElement('div');
+      // element.innerText = value;  // remove animation and uncomment this if issues arise with hex/bin values
+      element.classList.add('font-mono');
+      element.style.position = 'absolute';
+      element.style.fontSize = coord.fontSize;
+      element.style.top = coord.top;
+      element.style.left = coord.left;
+      element.style.color = 'hsl(var(--su))';
+      root.current?.prepend(element);
+      const counterAnimeObj = { obs: 0 };
+      anime({
+        targets: counterAnimeObj,
+        obs: value,
+        round: 1,
+        easing: 'linear',
+        update: function () {
+          element.innerHTML = counterAnimeObj.obs.toString();
+        }
+      });
+
+      location[key] = { value, element };
+      console.log(location);
+      return location[key];
+    };
+  })();
+
   const showSignalAlongPath = (id: string) => {
-    const sigEl = _genSignalElementForPath();
+    const element = document.createElement('div');
+    element.style.position = 'absolute';
+    element.style.width = '1%'; // calc relative to viewBox of svg
+    element.style.height = '1.6%'; // calc relative to viewBox of svg
+    element.style.borderRadius = '50%';
+    element.style.backgroundColor = 'hsl(var(--su))';
+    root.current?.prepend(element);
     const path = anime.path('#' + id);
     anime({
-      targets: sigEl,
+      targets: element,
       translateX: path('x'),
       translateY: path('y'),
       rotate: path('angle'),
       easing: 'linear',
       duration: clk.SPEED
-    }).finished.then(() => sigEl.remove());
+    }).finished.then(() => element.remove());
   };
 
   const showMemSeg = (
@@ -121,16 +160,6 @@ export function useSchematicSVG(root: React.RefObject<HTMLDivElement>) {
     });
   };
 
-  const _getObjectCoord = (id: string) => {
-    // TODO: implement
-    const rootCoord = root.current!.getBoundingClientRect()!;
-    const objCoord = ((document.getElementById(
-      id
-    )! as unknown) as SVGAElement).getBBox();
-    console.log(rootCoord);
-    console.log(objCoord);
-  };
-
   const _parseThemeColorVar = (val: string) => {
     return `hsl(${getComputedStyle(document.documentElement)
       .getPropertyValue(val)
@@ -138,15 +167,22 @@ export function useSchematicSVG(root: React.RefObject<HTMLDivElement>) {
       .replaceAll(' ', ',')})`;
   };
 
-  const _genSignalElementForPath = () => {
-    const el = document.createElement('div');
-    el.style.position = 'absolute';
-    el.style.width = '1.2%'; // calc relative to viewBox of svg
-    el.style.height = '1.8%'; // calc relative to viewBox of svg
-    el.style.borderRadius = '50%';
-    el.style.backgroundColor = 'hsl(var(--su))';
-    root.current!.prepend(el);
-    return el;
+  const _getObjectCoord = (key: keyof typeof showTextLookupTable) => {
+    // TODO:
+    // refactor this function if ever the schematic svg is remade to
+    // be precise in which case the objCoord values can be used directly
+    // *** SVG creation in inkscape is a pain atm so I will leave it***
+    const entry = showTextLookupTable[key];
+    const objCoord = ((document.getElementById(
+      entry.id
+    ) as unknown) as SVGAElement)?.getBBox();
+    return {
+      top: entry.y + '%',
+      left: entry.x + '%',
+      width: objCoord.width,
+      height: objCoord.height,
+      fontSize: 1 + 'vw' // heuristically determined X-)
+    };
   };
 
   const _initBaseAnimation = (function () {
@@ -194,26 +230,151 @@ export function useSchematicSVG(root: React.RefObject<HTMLDivElement>) {
   }, []);
 
   //TODO: remove before production
-  // useEffect(() => {
-  //   // const callback = _getObjectCoord;
-  //   const callback = showSignalAlongPath;
-  //   let input: any = document.getElementById('dev-test-input-id');
-  //   let btn: any = document.getElementById('dev-test-btn-id');
-  //   if (!input) {
-  //     input = document.body.appendChild(document.createElement('input'));
-  //     input.classList.add('input');
-  //     input.id = 'dev-test-input-id';
-  //     input.style.cssText = 'position: absolute; top: 10px; left: 100px';
-  //   }
-  //   if (!btn) {
-  //     btn = document.body.appendChild(document.createElement('button'));
-  //     btn.classList.add('btn');
-  //     btn.id = 'dev-test-btn-id';
-  //     btn.innerText = 'click';
-  //     btn.style.cssText = 'position: absolute; top: 10px; left: 10px';
-  //     btn.onclick = () => callback(input.value);
-  //   } else {
-  //     btn.onclick = () => callback(input.value);
-  //   }
-  // }, []);
+  useEffect(() => {
+    // const callback = showTextAt;
+    // let input: any = document.getElementById('dev-test-input-id');
+    // let btn: any = document.getElementById('dev-test-btn-id');
+    // if (!input) {
+    //   input = document.body.appendChild(document.createElement('input'));
+    //   input.classList.add('input');
+    //   input.id = 'dev-test-input-id';
+    //   input.style.cssText = 'position: absolute; top: 10px; left: 100px';
+    // }
+    // if (!btn) {
+    //   btn = document.body.appendChild(document.createElement('button'));
+    //   btn.classList.add('btn');
+    //   btn.id = 'dev-test-btn-id';
+    //   btn.innerText = 'click';
+    //   btn.style.cssText = 'position: absolute; top: 10px; left: 10px';
+    //   btn.onclick = () =>
+    //     callback(input.value, Math.ceil(Math.random() * 50000000).toString());
+    // } else {
+    //   btn.onclick = () =>
+    //     callback(input.value, Math.ceil(Math.random() * 50000000).toString());
+    // }
+    showMemSeg('text');
+    ['r1', 'r2', 'r3', 'r4', 'r5', 'r6'].map((e) =>
+      showTextAt(e, Math.ceil(Math.random() * 500000000).toString())
+    );
+    setInterval(() => {
+      showSignalAlongPath(
+        [
+          'sch_bus_address_end',
+          'sch_bus_control_end',
+          'sch_bus_data_end',
+          'sch_bridge_dec_n_cspr_end',
+          'sch_bridge_dec_n_sp_end',
+          'sch_bridge_dec_n_lr_end',
+          'sch_bridge_dec_n_pc_end'
+        ].concat(
+          [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12].map(
+            (num) => `sch_bridge_dec_n_r${num}_end`
+          )
+        )[
+          Math.floor(Math.random() * (Math.floor(18) - Math.ceil(0) + 1)) +
+            Math.ceil(0)
+        ]
+      );
+    }, clk.SPEED);
+  }, []);
 }
+
+const showTextLookupTable = {
+  r1: {
+    id: 'sch_cpu_reg_box_r1_end',
+    x: 6.5,
+    y: 26.8
+  },
+  r2: {
+    id: 'sch_cpu_reg_box_r2_end',
+    x: 6.5,
+    y: 31.7
+  },
+  r3: {
+    id: 'sch_cpu_reg_box_r3_end',
+    x: 6.5,
+    y: 36.6
+  },
+  r4: {
+    id: 'sch_cpu_reg_box_r4_end',
+    x: 19,
+    y: 26.8
+  },
+  r5: {
+    id: 'sch_cpu_reg_box_r5_end',
+    x: 19,
+    y: 31.7
+  },
+  r6: {
+    id: 'sch_cpu_reg_box_r6_end',
+    x: 19,
+    y: 36.6
+  },
+  r7: {
+    id: 'sch_cpu_reg_box_r7_end',
+    x: 6.5,
+    y: 10
+  },
+  r8: {
+    id: 'sch_cpu_reg_box_r8_end',
+    x: 6.5,
+    y: 10
+  },
+  r9: {
+    id: 'sch_cpu_reg_box_r9_end',
+    x: 6.5,
+    y: 10
+  },
+  r10: {
+    id: 'sch_cpu_reg_box_r10_end',
+    x: 19,
+    y: 10
+  },
+  r11: {
+    id: 'sch_cpu_reg_box_r11_end',
+    x: 19,
+    y: 10
+  },
+  r12: {
+    id: 'sch_cpu_reg_box_r12_end',
+    x: 19,
+    y: 10
+  },
+  lr: {
+    id: 'sch_cpu_reg_box_lr_end',
+    x: 19,
+    y: 10
+  },
+  cspr: {
+    id: 'sch_cpu_reg_box_cspr_end',
+    x: 32.2,
+    y: 10
+  },
+  sp: {
+    id: 'sch_cpu_reg_box_sp_end',
+    x: 32.2,
+    y: 10
+  },
+  pc: {
+    id: 'sch_cpu_reg_box_pc_end',
+    x: 32.2,
+    y: 10
+  }
+};
+
+// var svg = document.querySelector('svg');
+// var viewBox = svg.viewBox.baseVal;
+
+// function zoomIn(){
+//     viewBox.x = viewBox.x + viewBox.width / 4;
+//     viewBox.y = viewBox.y + viewBox.height / 4;
+//     viewBox.width = viewBox.width / 2;
+//     viewBox.height = viewBox.height / 2;
+// }
+
+// function zoomOut(){
+//     viewBox.x = viewBox.x - viewBox.width / 2;
+//     viewBox.y = viewBox.y - viewBox.height / 2;
+//     viewBox.width = viewBox.width * 2;
+//     viewBox.height = viewBox.height * 2;
+// }

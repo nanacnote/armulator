@@ -11,7 +11,7 @@ const Schematic: React.FC<TProps> = (): JSX.Element => {
   useSchematicSVG(thisComponent);
 
   return (
-    <div ref={thisComponent}>
+    <div ref={thisComponent} className="relative">
       <svg
         version="1.1"
         viewBox="0 0 1366 768"
