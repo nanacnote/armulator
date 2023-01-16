@@ -54,7 +54,7 @@ export class Clk extends EventTarget {
     /**
      * The current state of the clock.
      * Can be one of STOP_CLOCK_KEY, START_CLOCK_KEY, or PAUSE_CLOCK_KEY.
-     * @type {string}
+     * @type {number}
      * @default STOP_CLOCK_KEY
      */
     this.STATE = STOP_CLOCK_KEY;
@@ -148,6 +148,7 @@ export class Clk extends EventTarget {
    * @private
    */
   _trigger_observers() {
+    // TODO: suspend on visibility change ie user leave current browser tab
     this.dispatchEvent(new Event(this.CYCLE_EVENTS[this.CYCLE]));
     if (this.STATE === START_CLOCK_KEY) {
       this.COUNTER++;

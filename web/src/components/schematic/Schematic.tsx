@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { useSchematicAnimation } from '../../hooks';
+import { useSchematicSVG } from '../../hooks';
 
 interface TProps {}
 
@@ -8,954 +8,690 @@ interface TProps {}
  */
 const Schematic: React.FC<TProps> = (): JSX.Element => {
   const thisComponent = React.useRef<HTMLDivElement>(null);
-  const {} = useSchematicAnimation();
+  useSchematicSVG(thisComponent);
 
   return (
-    <div ref={thisComponent}>
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1366 768">
-        <g id="schematic_container" fill="none">
-          <g
-            id="schematic_bus"
-            stroke="hsl(var(--b2))"
-            transform="matrix(.70638 0 0 .97308 1057 -52.689)"
-          >
+    <div ref={thisComponent} className="relative">
+      <svg
+        version="1.1"
+        viewBox="0 0 1366 768"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <g id="sch_bus_group_end" fill="hsl(var(--b2))">
+          <path
+            id="sch_bus_data_end"
+            d="m570.78 487.05v12.076h173.82v193.38a6.0385 6.0385 0 0 0 6.0371 6.0371h141.36a6.0385 6.0385 0 0 0 6.0371-6.0371v-44.268h-12.074v38.23h-129.29v-193.38a6.0385 6.0385 0 0 0-6.0391-6.0391h-173.82z"
+          />
+          <path
+            id="sch_bus_control_end"
+            d="m570.66 320.52v11.859h219.86v-11.859h-213.93z"
+          />
+          <path
+            id="sch_bus_address_end"
+            d="m752.5 73.592a6.0006 6.0006 0 0 0-6 6v136.64h-174.69v12h180.69a6.0006 6.0006 0 0 0 6-6v-136.64h127.54v33.076h12v-39.076a6.0006 6.0006 0 0 0-6-6z"
+          />
+        </g>
+        <g
+          id="sch_mem_unit_group_end"
+          fill="none"
+          stroke="hsl(var(--bc))"
+          strokeWidth="1"
+        >
+          <path
+            id="sch_mem_unit_addr_19_end"
+            d="m1006 586.74h104.09v21.732h-104.09z"
+          />
+          <path
+            id="sch_mem_unit_data_19_end"
+            d="m1110.1 586.79h205.27v21.625h-205.27z"
+          />
+          <path
+            id="sch_mem_unit_addr_18_end"
+            d="m1006 564.27h104.09v21.732h-104.09z"
+          />
+          <path
+            id="sch_mem_unit_data_18_end"
+            d="m1110.1 564.32h205.27v21.625h-205.27z"
+          />
+          <path
+            id="sch_mem_unit_addr_17_end"
+            d="m1006 541.79h104.09v21.732h-104.09z"
+          />
+          <path
+            id="sch_mem_unit_data_17_end"
+            d="m1110.1 541.85h205.27v21.625h-205.27z"
+          />
+          <path
+            id="sch_mem_unit_addr_6_end"
+            d="m1006 519.32h104.09v21.732h-104.09z"
+          />
+          <path
+            id="sch_mem_unit_data_16_end"
+            d="m1110.1 519.38h205.27v21.625h-205.27z"
+          />
+          <path
+            id="sch_mem_unit_addr_15_end"
+            d="m1006 496.85h104.09v21.732h-104.09z"
+          />
+          <path
+            id="sch_mem_unit_data_15_end"
+            d="m1110.1 496.91h205.27v21.625h-205.27z"
+          />
+          <path
+            id="sch_mem_unit_addr_14_end"
+            d="m1006 474.38h104.09v21.732h-104.09z"
+          />
+          <path
+            id="sch_mem_unit_data_14_end"
+            d="m1110.1 474.44h205.27v21.625h-205.27z"
+          />
+          <path
+            id="sch_mem_unit_addr_13_end"
+            d="m1006 451.91h104.09v21.732h-104.09z"
+          />
+          <path
+            id="sch_mem_unit_data_13_end"
+            d="m1110.1 451.96h205.27v21.625h-205.27z"
+          />
+          <path
+            id="sch_mem_unit_addr_12_end"
+            d="m1006 429.44h104.09v21.732h-104.09z"
+          />
+          <path
+            id="sch_mem_unit_data_12_end"
+            d="m1110.1 429.49h205.27v21.625h-205.27z"
+          />
+          <path
+            id="sch_mem_unit_addr_11_end"
+            d="m1006 406.97h104.09v21.732h-104.09z"
+          />
+          <path
+            id="sch_mem_unit_data_11_end"
+            d="m1110.1 407.02h205.27v21.625h-205.27z"
+          />
+          <path
+            id="sch_mem_unit_addr_10_end"
+            d="m1006 384.5h104.09v21.732h-104.09z"
+          />
+          <path
+            id="sch_mem_unit_data_10_end"
+            d="m1110.1 384.55h205.27v21.625h-205.27z"
+          />
+          <path
+            id="sch_mem_unit_addr_9_end"
+            d="m1006 361.77h104.09v21.732h-104.09z"
+          />
+          <path
+            id="sch_mem_unit_data_9_end"
+            d="m1110.1 361.82h205.27v21.625h-205.27z"
+          />
+          <path
+            id="sch_mem_unit_addr_8_end"
+            d="m1006 339.3h104.09v21.732h-104.09z"
+          />
+          <path
+            id="sch_mem_unit_data_8_end"
+            d="m1110.1 339.35h205.27v21.625h-205.27z"
+          />
+          <path
+            id="sch_mem_unit_addr_7_end"
+            d="m1006 316.83h104.09v21.732h-104.09z"
+          />
+          <path
+            id="sch_mem_unit_data_7_end"
+            d="m1110.1 316.88h205.27v21.625h-205.27z"
+          />
+          <path
+            id="sch_mem_unit_addr_6_end"
+            d="m1006 294.36h104.09v21.732h-104.09z"
+          />
+          <path
+            id="sch_mem_unit_data_6_end"
+            d="m1110.1 294.41h205.27v21.625h-205.27z"
+          />
+          <path
+            id="sch_mem_unit_addr_5_end"
+            d="m1006 271.89h104.09v21.732h-104.09z"
+          />
+          <path
+            id="sch_mem_unit_data_5_end"
+            d="m1110.1 271.94h205.27v21.625h-205.27z"
+          />
+          <path
+            id="sch_mem_unit_addr_4_end"
+            d="m1006 249.42h104.09v21.732h-104.09z"
+          />
+          <path
+            id="sch_mem_unit_data_4_end"
+            d="m1110.1 249.47h205.27v21.625h-205.27z"
+          />
+          <path
+            id="sch_mem_unit_addr_3_end"
+            d="m1006 226.94h104.09v21.732h-104.09z"
+          />
+          <path
+            id="sch_mem_unit_data_3_end"
+            d="m1110.1 227h205.27v21.625h-205.27z"
+          />
+          <path
+            id="sch_mem_unit_addr_2_end"
+            d="m1006 204.47h104.09v21.732h-104.09z"
+          />
+          <path
+            id="sch_mem_unit_data_2_end"
+            d="m1110.1 204.53h205.27v21.625h-205.27z"
+          />
+          <path
+            id="sch_mem_unit_addr_1_end"
+            d="m1006 182h104.09v21.732h-104.09z"
+          />
+          <path
+            id="sch_mem_unit_data_1_end"
+            d="m1110.1 182.06h205.27v21.625h-205.27z"
+          />
+          <path
+            id="sch_mem_unit_addr_0_end"
+            d="m1006 159.53h104.09v21.732h-104.09z"
+          />
+          <path
+            id="sch_mem_unit_data_0_end"
+            d="m1110.1 159.58h205.27v21.625h-205.27z"
+          />
+        </g>
+        <g id="sch_mem_layout_group_end">
+          <g id="sch_mem_layout_text_group_end">
             <path
-              id="schematic_bus_data"
-              strokeWidth="14.565"
-              d="M-233.61 726.53v39.288h-200.12v-204.94h-246.08"
+              id="sch_mem_layout_text_ptr_end"
+              fill="hsl(var(--b2))"
+              fillOpacity="0"
+              d="m981.46 620.13 24.749-12.021-0.7071-450.43z"
             />
             <path
-              id="schematic_bus_control"
-              strokeWidth="14.305"
-              d="M-385.67 389.63h-294.46"
+              id="sch_mem_layout_text_box_end"
+              fill="none"
+              stroke="hsl(var(--bc))"
+              d="m788 577h194v71h-194z"
             />
             <path
-              id="schematic_bus_address"
-              strokeWidth="12"
-              d="M892.04 112.67V79.593H752.5v142.64H577.81"
-              transform="matrix(1.4157 0 0 1.0277 -1496.4 54.147)"
+              id="sch_mem_layout_text_label_end"
+              fill="hsl(var(--bc))"
+              d="m860.4 606.44v1.543h3.6367v9.707h2.1211v-9.707h3.6367v-1.543zm15.207 0v11.25h6.6719v-1.5957h-4.5566v-3.4668h3.4726v-1.5059h-3.4726v-3.1387h4.2344v-1.543zm12.045 0 3.1094 5.709-3.2539 5.541h1.709l2.3613-4.0215 2.2031 4.0215h2.457l-3.2266-5.9434 3.1172-5.3066h-1.709l-2.2383 3.7852-2.0644-3.7852zm13.438 0v1.543h3.6367v9.707h2.1211v-9.707h3.6387v-1.543z"
             />
           </g>
-          <g
-            id="schematic_mem"
-            stroke="hsl(var(--bc))"
-            transform="matrix(1.4012 0 0 1.1532 606.48 -118.91)"
-          >
-            <g id="schematic_mem_chunk" strokeWidth="1.783">
-              <g
-                id="schematic_mem_chunk_text"
-                transform="matrix(.49079 0 0 .64092 501.38 232.41)"
-              >
-                <path
-                  id="schematic_mem_chunk_text_ptr"
-                  fill="hsl(var(--b2))"
-                  stroke="none"
-                  d="m285.13 470.8-16.414 162.16 15.701 32.085z"
-                  transform="matrix(2.0375 0 0 1.5603 -1021.6 -362.63)"
-                />
-                <g>
-                  <g
-                    id="schematic_mem_chunk_9_text"
-                    transform="translate(-456.96 276.67)"
-                  >
-                    <path d="M16.303 369.3h151.36v29.404H16.303z" />
-                    <path d="M167.73 369.37h298.49v29.259H167.73z" />
-                  </g>
-                  <g
-                    id="schematic_mem_chunk_8_text"
-                    transform="translate(-456.96 246.27)"
-                  >
-                    <path d="M16.303 369.3h151.36v29.404H16.303z" />
-                    <path d="M167.73 369.37h298.49v29.259H167.73z" />
-                  </g>
-                  <g
-                    id="schematic_mem_chunk_7_text"
-                    transform="translate(-456.96 215.86)"
-                  >
-                    <path d="M16.303 369.3h151.36v29.404H16.303z" />
-                    <path d="M167.73 369.37h298.49v29.259H167.73z" />
-                  </g>
-                  <g id="schematic_mem_chunk_6_text">
-                    <path d="M-440.66 554.76h151.36v29.404h-151.36z" />
-                    <path d="M-289.23 554.83H9.26v29.259h-298.49z" />
-                  </g>
-                  <g
-                    id="schematic_mem_chunk_5_text"
-                    transform="translate(-456.96 155.05)"
-                  >
-                    <path d="M16.303 369.3h151.36v29.404H16.303z" />
-                    <path d="M167.73 369.37h298.49v29.259H167.73z" />
-                  </g>
-                  <g
-                    id="schematic_mem_chunk_4_text"
-                    transform="translate(-456.96 124.65)"
-                  >
-                    <path d="M16.303 369.3h151.36v29.404H16.303z" />
-                    <path d="M167.73 369.37h298.49v29.259H167.73z" />
-                  </g>
-                  <g
-                    id="schematic_mem_chunk_3_text"
-                    transform="translate(-456.96 94.247)"
-                  >
-                    <path d="M16.303 369.3h151.36v29.404H16.303z" />
-                    <path d="M167.73 369.37h298.49v29.259H167.73z" />
-                  </g>
-                  <g
-                    id="schematic_mem_chunk_2_text"
-                    transform="translate(-456.96 63.844)"
-                  >
-                    <path d="M16.303 369.3h151.36v29.404H16.303z" />
-                    <path d="M167.73 369.37h298.49v29.259H167.73z" />
-                  </g>
-                  <g
-                    id="schematic_mem_chunk_1_text"
-                    transform="translate(-456.96 33.44)"
-                  >
-                    <path d="M16.303 369.3h151.36v29.404H16.303z" />
-                    <path d="M167.73 369.37h298.49v29.259H167.73z" />
-                  </g>
-                  <g
-                    id="schematic_mem_chunk_0_text"
-                    transform="translate(-456.96 3.036)"
-                  >
-                    <path d="M16.303 369.3h151.36v29.404H16.303z" />
-                    <path d="M167.73 369.37h298.49v29.259H167.73z" />
-                  </g>
-                </g>
-              </g>
-              <g
-                id="schematic_mem_chunk_init_data"
-                transform="matrix(.49079 0 0 .64092 501.38 171.43)"
-              >
-                <path
-                  id="schematic_mem_chunk_init_ptr"
-                  fill="hsl(var(--b2))"
-                  stroke="none"
-                  d="m1005 354-22 192 23 33z"
-                  transform="matrix(1.4541 0 0 1.353 -1903.5 -106.59)"
-                />
-                <g>
-                  <g
-                    id="schematic_mem_chunk_9_init_data"
-                    transform="translate(-456.96 276.67)"
-                  >
-                    <path d="M16.303 369.3h151.36v29.404H16.303z" />
-                    <path d="M167.73 369.37h298.49v29.259H167.73z" />
-                  </g>
-                  <g
-                    id="schematic_mem_chunk_8_init_data"
-                    transform="translate(-456.96 246.27)"
-                  >
-                    <path d="M16.303 369.3h151.36v29.404H16.303z" />
-                    <path d="M167.73 369.37h298.49v29.259H167.73z" />
-                  </g>
-                  <g
-                    id="schematic_mem_chunk_7_init_data"
-                    transform="translate(-456.96 215.86)"
-                  >
-                    <path d="M16.303 369.3h151.36v29.404H16.303z" />
-                    <path d="M167.73 369.37h298.49v29.259H167.73z" />
-                  </g>
-                  <g id="schematic_mem_chunk_6_init_data">
-                    <path d="M-440.66 554.76h151.36v29.404h-151.36z" />
-                    <path d="M-289.23 554.83H9.26v29.259h-298.49z" />
-                  </g>
-                  <g
-                    id="schematic_mem_chunk_5_init_data"
-                    transform="translate(-456.96 155.05)"
-                  >
-                    <path d="M16.303 369.3h151.36v29.404H16.303z" />
-                    <path d="M167.73 369.37h298.49v29.259H167.73z" />
-                  </g>
-                  <g
-                    id="schematic_mem_chunk_4_init_data"
-                    transform="translate(-456.96 124.65)"
-                  >
-                    <path d="M16.303 369.3h151.36v29.404H16.303z" />
-                    <path d="M167.73 369.37h298.49v29.259H167.73z" />
-                  </g>
-                  <g
-                    id="schematic_mem_chunk_3_init_data"
-                    transform="translate(-456.96 94.247)"
-                  >
-                    <path d="M16.303 369.3h151.36v29.404H16.303z" />
-                    <path d="M167.73 369.37h298.49v29.259H167.73z" />
-                  </g>
-                  <g
-                    id="schematic_mem_chunk_2_init_data"
-                    transform="translate(-456.96 63.844)"
-                  >
-                    <path d="M16.303 369.3h151.36v29.404H16.303z" />
-                    <path d="M167.73 369.37h298.49v29.259H167.73z" />
-                  </g>
-                  <g
-                    id="schematic_mem_chunk_1_init_data"
-                    transform="translate(-456.96 33.44)"
-                  >
-                    <path d="M16.303 369.3h151.36v29.404H16.303z" />
-                    <path d="M167.73 369.37h298.49v29.259H167.73z" />
-                  </g>
-                  <g
-                    id="schematic_mem_chunk_0_init_data"
-                    transform="translate(-456.96 3.036)"
-                  >
-                    <path d="M16.303 369.3h151.36v29.404H16.303z" />
-                    <path d="M167.73 369.37h298.49v29.259H167.73z" />
-                  </g>
-                </g>
-              </g>
-              <g
-                id="schematic_mem_chunk_bss"
-                transform="matrix(.49079 0 0 .64092 501.38 119.66)"
-              >
-                <path
-                  id="schematic_mem_chunk_bss_ptr"
-                  fill="hsl(var(--b2))"
-                  stroke="none"
-                  d="m284.41 358.06-15.701 163.03 15.701 30.351z"
-                  transform="matrix(2.0375 0 0 1.5603 -1021.6 -186.7)"
-                />
-                <g>
-                  <g
-                    id="schematic_mem_chunk_9_bss"
-                    transform="translate(-456.96 276.67)"
-                  >
-                    <path d="M16.303 369.3h151.36v29.404H16.303z" />
-                    <path d="M167.73 369.37h298.49v29.259H167.73z" />
-                  </g>
-                  <g
-                    id="schematic_mem_chunk_8_bss"
-                    transform="translate(-456.96 246.27)"
-                  >
-                    <path d="M16.303 369.3h151.36v29.404H16.303z" />
-                    <path d="M167.73 369.37h298.49v29.259H167.73z" />
-                  </g>
-                  <g
-                    id="schematic_mem_chunk_7_bss"
-                    transform="translate(-456.96 215.86)"
-                  >
-                    <path d="M16.303 369.3h151.36v29.404H16.303z" />
-                    <path d="M167.73 369.37h298.49v29.259H167.73z" />
-                  </g>
-                  <g id="schematic_mem_chunk_6_bss">
-                    <path d="M-440.66 554.76h151.36v29.404h-151.36z" />
-                    <path d="M-289.23 554.83H9.26v29.259h-298.49z" />
-                  </g>
-                  <g
-                    id="schematic_mem_chunk_5_bss"
-                    transform="translate(-456.96 155.05)"
-                  >
-                    <path d="M16.303 369.3h151.36v29.404H16.303z" />
-                    <path d="M167.73 369.37h298.49v29.259H167.73z" />
-                  </g>
-                  <g
-                    id="schematic_mem_chunk_4_bss"
-                    transform="translate(-456.96 124.65)"
-                  >
-                    <path d="M16.303 369.3h151.36v29.404H16.303z" />
-                    <path d="M167.73 369.37h298.49v29.259H167.73z" />
-                  </g>
-                  <g
-                    id="schematic_mem_chunk_3_bss"
-                    transform="translate(-456.96 94.247)"
-                  >
-                    <path d="M16.303 369.3h151.36v29.404H16.303z" />
-                    <path d="M167.73 369.37h298.49v29.259H167.73z" />
-                  </g>
-                  <g
-                    id="schematic_mem_chunk_2_bss"
-                    transform="translate(-456.96 63.844)"
-                  >
-                    <path d="M16.303 369.3h151.36v29.404H16.303z" />
-                    <path d="M167.73 369.37h298.49v29.259H167.73z" />
-                  </g>
-                  <g
-                    id="schematic_mem_chunk_1_bss"
-                    transform="translate(-456.96 33.44)"
-                  >
-                    <path d="M16.303 369.3h151.36v29.404H16.303z" />
-                    <path d="M167.73 369.37h298.49v29.259H167.73z" />
-                  </g>
-                  <g
-                    id="schematic_mem_chunk_0_bss"
-                    transform="translate(-456.96 3.036)"
-                  >
-                    <path d="M16.303 369.3h151.36v29.404H16.303z" />
-                    <path d="M167.73 369.37h298.49v29.259H167.73z" />
-                  </g>
-                </g>
-              </g>
-              <g
-                id="schematic_mem_chunk_heap"
-                transform="matrix(.49079 0 0 .64092 501.38 65.585)"
-              >
-                <path
-                  id="schematic_mem_chunk_heap_ptr"
-                  fill="hsl(var(--b2))"
-                  stroke="none"
-                  d="m-440.63 373.81-31.991 254.37 31.991 47.356z"
-                />
-                <g>
-                  <g
-                    id="schematic_mem_chunk_9_heap"
-                    transform="translate(-456.96 276.67)"
-                  >
-                    <path d="M16.303 369.3h151.36v29.404H16.303z" />
-                    <path d="M167.73 369.37h298.49v29.259H167.73z" />
-                  </g>
-                  <g
-                    id="schematic_mem_chunk_8_heap"
-                    transform="translate(-456.96 246.27)"
-                  >
-                    <path d="M16.303 369.3h151.36v29.404H16.303z" />
-                    <path d="M167.73 369.37h298.49v29.259H167.73z" />
-                  </g>
-                  <g
-                    id="schematic_mem_chunk_7_heap"
-                    transform="translate(-456.96 215.86)"
-                  >
-                    <path d="M16.303 369.3h151.36v29.404H16.303z" />
-                    <path d="M167.73 369.37h298.49v29.259H167.73z" />
-                  </g>
-                  <g id="schematic_mem_chunk_6_heap">
-                    <path d="M-440.66 554.76h151.36v29.404h-151.36z" />
-                    <path d="M-289.23 554.83H9.26v29.259h-298.49z" />
-                  </g>
-                  <g
-                    id="schematic_mem_chunk_5_heap"
-                    transform="translate(-456.96 155.05)"
-                  >
-                    <path d="M16.303 369.3h151.36v29.404H16.303z" />
-                    <path d="M167.73 369.37h298.49v29.259H167.73z" />
-                  </g>
-                  <g
-                    id="schematic_mem_chunk_4_heap"
-                    transform="translate(-456.96 124.65)"
-                  >
-                    <path d="M16.303 369.3h151.36v29.404H16.303z" />
-                    <path d="M167.73 369.37h298.49v29.259H167.73z" />
-                  </g>
-                  <g
-                    id="schematic_mem_chunk_3_heap"
-                    transform="translate(-456.96 94.247)"
-                  >
-                    <path d="M16.303 369.3h151.36v29.404H16.303z" />
-                    <path d="M167.73 369.37h298.49v29.259H167.73z" />
-                  </g>
-                  <g
-                    id="schematic_mem_chunk_2_heap"
-                    transform="translate(-456.96 63.844)"
-                  >
-                    <path d="M16.303 369.3h151.36v29.404H16.303z" />
-                    <path d="M167.73 369.37h298.49v29.259H167.73z" />
-                  </g>
-                  <g
-                    id="schematic_mem_chunk_1_heap"
-                    transform="translate(-456.96 33.44)"
-                  >
-                    <path d="M16.303 369.3h151.36v29.404H16.303z" />
-                    <path d="M167.73 369.37h298.49v29.259H167.73z" />
-                  </g>
-                  <g
-                    id="schematic_mem_chunk_0_heap"
-                    transform="translate(-456.96 3.036)"
-                  >
-                    <path d="M16.303 369.3h151.36v29.404H16.303z" />
-                    <path d="M167.73 369.37h298.49v29.259H167.73z" />
-                  </g>
-                </g>
-              </g>
-              <g
-                id="schematic_mem_chunk_stack"
-                transform="matrix(.49079 0 0 .64092 501.38 1.154)"
-              >
-                <path
-                  id="schematic_mem_chunk_stack_ptr"
-                  fill="hsl(var(--b2))"
-                  stroke="none"
-                  d="m284.41 433.51-15.701-165.63 16.414-28.617z"
-                  transform="matrix(2.0375 0 0 1.5603 -1021.6 -1.8)"
-                />
-                <g>
-                  <g
-                    id="schematic_mem_chunk_9_stack"
-                    transform="translate(-456.96 276.67)"
-                  >
-                    <path d="M16.303 369.3h151.36v29.404H16.303z" />
-                    <path d="M167.73 369.37h298.49v29.259H167.73z" />
-                  </g>
-                  <g
-                    id="schematic_mem_chunk_8_stack"
-                    transform="translate(-456.96 246.27)"
-                  >
-                    <path d="M16.303 369.3h151.36v29.404H16.303z" />
-                    <path d="M167.73 369.37h298.49v29.259H167.73z" />
-                  </g>
-                  <g
-                    id="schematic_mem_chunk_7_stack"
-                    transform="translate(-456.96 215.86)"
-                  >
-                    <path d="M16.303 369.3h151.36v29.404H16.303z" />
-                    <path d="M167.73 369.37h298.49v29.259H167.73z" />
-                  </g>
-                  <g id="schematic_mem_chunk_6_stack">
-                    <path d="M-440.66 554.76h151.36v29.404h-151.36z" />
-                    <path d="M-289.23 554.83H9.26v29.259h-298.49z" />
-                  </g>
-                  <g
-                    id="schematic_mem_chunk_5_stack"
-                    transform="translate(-456.96 155.05)"
-                  >
-                    <path d="M16.303 369.3h151.36v29.404H16.303z" />
-                    <path d="M167.73 369.37h298.49v29.259H167.73z" />
-                  </g>
-                  <g
-                    id="schematic_mem_chunk_4_stack"
-                    transform="translate(-456.96 124.65)"
-                  >
-                    <path d="M16.303 369.3h151.36v29.404H16.303z" />
-                    <path d="M167.73 369.37h298.49v29.259H167.73z" />
-                  </g>
-                  <g
-                    id="schematic_mem_chunk_3_stack"
-                    transform="translate(-456.96 94.247)"
-                  >
-                    <path d="M16.303 369.3h151.36v29.404H16.303z" />
-                    <path d="M167.73 369.37h298.49v29.259H167.73z" />
-                  </g>
-                  <g
-                    id="schematic_mem_chunk_2_stack"
-                    transform="translate(-456.96 63.844)"
-                  >
-                    <path d="M16.303 369.3h151.36v29.404H16.303z" />
-                    <path d="M167.73 369.37h298.49v29.259H167.73z" />
-                  </g>
-                  <g
-                    id="schematic_mem_chunk_1_stack"
-                    transform="translate(-456.96 33.44)"
-                  >
-                    <path d="M16.303 369.3h151.36v29.404H16.303z" />
-                    <path d="M167.73 369.37h298.49v29.259H167.73z" />
-                  </g>
-                  <g
-                    id="schematic_mem_chunk_0_stack"
-                    transform="translate(-456.96 3.036)"
-                  >
-                    <path d="M16.303 369.3h151.36v29.404H16.303z" />
-                    <path d="M167.73 369.37h298.49v29.259H167.73z" />
-                  </g>
-                </g>
-              </g>
-              <g
-                id="schematic_mem_chunk_cli_arg"
-                transform="matrix(.49079 0 0 .64092 501.38 -29.911)"
-              >
-                <path
-                  id="schematic_mem_chunk_cli_ptr"
-                  fill="hsl(var(--b2))"
-                  stroke="none"
-                  d="m285.13 401.42-17.128-182.11 17.842-11.273z"
-                  transform="matrix(2.0375 0 0 1.5603 -1021.6 46.669)"
-                />
-                <g>
-                  <g
-                    id="schematic_mem_chunk_9_cli_arg"
-                    transform="translate(-456.96 276.67)"
-                  >
-                    <path d="M16.303 369.3h151.36v29.404H16.303z" />
-                    <path d="M167.73 369.37h298.49v29.259H167.73z" />
-                  </g>
-                  <g
-                    id="schematic_mem_chunk_8_cli_arg"
-                    transform="translate(-456.96 246.27)"
-                  >
-                    <path d="M16.303 369.3h151.36v29.404H16.303z" />
-                    <path d="M167.73 369.37h298.49v29.259H167.73z" />
-                  </g>
-                  <g
-                    id="schematic_mem_chunk_7_cli_arg"
-                    transform="translate(-456.96 215.86)"
-                  >
-                    <path d="M16.303 369.3h151.36v29.404H16.303z" />
-                    <path d="M167.73 369.37h298.49v29.259H167.73z" />
-                  </g>
-                  <g id="schematic_mem_chunk_6_cli_arg">
-                    <path d="M-440.66 554.76h151.36v29.404h-151.36z" />
-                    <path d="M-289.23 554.83H9.26v29.259h-298.49z" />
-                  </g>
-                  <g
-                    id="schematic_mem_chunk_5_cli_arg"
-                    transform="translate(-456.96 155.05)"
-                  >
-                    <path d="M16.303 369.3h151.36v29.404H16.303z" />
-                    <path d="M167.73 369.37h298.49v29.259H167.73z" />
-                  </g>
-                  <g
-                    id="schematic_mem_chunk_4_cli_arg"
-                    transform="translate(-456.96 124.65)"
-                  >
-                    <path d="M16.303 369.3h151.36v29.404H16.303z" />
-                    <path d="M167.73 369.37h298.49v29.259H167.73z" />
-                  </g>
-                  <g
-                    id="schematic_mem_chunk_3_cli_arg"
-                    transform="translate(-456.96 94.247)"
-                  >
-                    <path d="M16.303 369.3h151.36v29.404H16.303z" />
-                    <path d="M167.73 369.37h298.49v29.259H167.73z" />
-                  </g>
-                  <g
-                    id="schematic_mem_chunk_2_cli_arg"
-                    transform="translate(-456.96 63.844)"
-                  >
-                    <path d="M16.303 369.3h151.36v29.404H16.303z" />
-                    <path d="M167.73 369.37h298.49v29.259H167.73z" />
-                  </g>
-                  <g transform="translate(-456.96 33.44)">
-                    <path d="M16.303 369.3h151.36v29.404H16.303z" />
-                    <path d="M167.73 369.37h298.49v29.259H167.73z" />
-                  </g>
-                  <g transform="translate(-456.96 3.036)">
-                    <path d="M16.303 369.3h151.36v29.404H16.303z" />
-                    <path d="M167.73 369.37h298.49v29.259H167.73z" />
-                  </g>
-                </g>
-              </g>
-            </g>
-            <g
-              id="schematic_mem_layout"
-              transform="matrix(.62692 0 0 .84382 368.57 57.427)"
-            >
-              <g id="schematic_mem_layout_text">
-                <path
-                  id="schematic_mem_layout_text_box"
-                  fill="none"
-                  stroke="hsl(var(--bc))"
-                  strokeLinecap="round"
-                  strokeWidth="1.082"
-                  d="M-381.26 647.11h220.84v72.964h-220.84z"
-                />
-                <path
-                  id="schematic_mem_layout_text_label"
-                  fill="hsl(var(--bc))"
-                  stroke="none"
-                  d="M-298.84 677.37v1.586h4.14v9.975h2.415v-9.975h4.14v-1.586zm17.311 0v11.561h7.595v-1.64h-5.187v-3.563h3.953v-1.547h-3.953v-3.225h4.82v-1.586zm13.712 0 3.54 5.867-3.705 5.694h1.946l2.688-4.133 2.508 4.133h2.797l-3.673-6.108 3.548-5.453h-1.945l-2.548 3.89-2.35-3.89zm15.297 0v1.586h4.14v9.975h2.414v-9.975h4.143v-1.586z"
-                />
-              </g>
-              <g id="schematic_mem_layout_init_data">
-                <path
-                  id="schematic_mem_layout_init_data_box"
-                  fill="none"
-                  stroke="hsl(var(--bc))"
-                  strokeLinecap="round"
-                  strokeWidth="1.082"
-                  d="M-381.26 586.48h220.84v59.605h-220.84z"
-                />
-                <path
-                  id="schematic_mem_layout_init_data_label"
-                  fill="hsl(var(--bc))"
-                  stroke="none"
-                  d="M-332.77 613.37v11.563h2.406V613.37zm10.305 0v11.563h1.93v-7.898l5.32 7.898h2.157V613.37h-1.93v7.898l-5.36-7.898zm17.296 0v11.563h2.408V613.37zm9.031 0v1.586h4.143v9.977h2.412v-9.977h4.142v-1.586zm27.588 0v11.563h4.765c1.818 0 3.232-.528 4.242-1.58 1.01-1.057 1.517-2.537 1.517-4.443 0-1.792-.477-3.163-1.43-4.111-.953-.953-2.326-1.43-4.118-1.43zm20.922 0-4.5 11.563h1.75l1.203-3.087h4.78l1.203 3.087h2.47l-4.5-11.563zm12.273 0v1.586h4.14v9.977h2.415v-9.977h4.14v-1.586zm20.546 0-4.5 11.563h1.75l1.203-3.087h4.782l1.203 3.087h2.468l-4.5-11.563zm-51.336 1.586h1.452c.927 0 1.635.096 2.12.289.484.192.896.542 1.24 1.047.5.735.751 1.654.751 2.758 0 1.427-.313 2.493-.938 3.196-.62.698-1.562 1.045-2.828 1.045h-1.797zm19.36.742 1.796 4.609h-3.593zm32.818 0 1.8 4.609h-3.596z"
-                />
-              </g>
-              <g id="schematic_mem_layout_bss">
-                <path
-                  id="schematic_mem_layout_bss_box"
-                  fill="none"
-                  stroke="hsl(var(--bc))"
-                  strokeLinecap="round"
-                  strokeWidth="1.075"
-                  d="M-381.26 523.27v62.181h220.85V523.27z"
-                />
-                <path
-                  id="schematic_mem_layout_bss_label"
-                  fill="hsl(var(--bc))"
-                  stroke="none"
-                  d="M-270.25 551.08c-1.151 0-2.078.289-2.781.867-.698.578-1.045 1.343-1.045 2.296 0 .714.213 1.338.64 1.875.427.531 1.158 1.089 2.194 1.672l.774.43c.625.354 1.05.662 1.274.923.224.255.336.57.336.945 0 .474-.181.848-.54 1.124-.355.276-.841.414-1.461.414-.886 0-1.95-.26-3.195-.781v1.985c1.229.26 2.308.39 3.235.39 1.4 0 2.5-.305 3.297-.914.797-.61 1.194-1.45 1.194-2.523 0-.755-.21-1.397-.631-1.923-.422-.526-1.191-1.101-2.306-1.726l-.827-.462c-.62-.349-1.043-.641-1.267-.88a1.188 1.188 0 0 1-.336-.838c0-.385.16-.695.478-.93.323-.239.75-.358 1.28-.358.688 0 1.622.221 2.804.664v-1.853c-1.156-.265-2.195-.397-3.117-.397zm14.141 0c-1.151 0-2.078.289-2.781.867-.698.578-1.045 1.343-1.045 2.296 0 .714.213 1.338.64 1.875.427.531 1.158 1.089 2.194 1.672l.774.43c.625.354 1.05.662 1.274.923.224.255.336.57.336.945 0 .474-.181.848-.54 1.124-.355.276-.841.414-1.461.414-.886 0-1.95-.26-3.195-.781v1.985c1.229.26 2.308.39 3.235.39 1.4 0 2.5-.305 3.297-.914.797-.61 1.194-1.45 1.194-2.523 0-.755-.21-1.397-.631-1.923-.422-.526-1.191-1.101-2.306-1.726l-.827-.462c-.62-.349-1.043-.641-1.267-.88s-.336-.52-.336-.838c0-.385.16-.695.478-.93.323-.239.75-.358 1.28-.358.688 0 1.622.221 2.804.664v-1.853c-1.156-.265-2.195-.397-3.117-.397zm-32.375.289v11.561h4.289c1.182 0 2.089-.245 2.72-.735.635-.494.953-1.201.953-2.123 0-1.594-1.083-2.653-3.244-3.18 1.849-.578 2.775-1.563 2.775-2.954 0-.839-.305-1.475-.914-1.913-.604-.437-1.487-.656-2.648-.656zm2.266 1.586h.484c.89 0 1.495.096 1.812.289.323.187.485.546.485 1.078 0 .572-.202 1.025-.603 1.358-.395.334-.93.5-1.607.5h-.571zm0 4.773h.469c.781 0 1.426.195 1.936.586.516.39.774.88.774 1.469 0 .573-.193.968-.578 1.186-.38.214-1.075.321-2.086.321h-.515z"
-                />
-              </g>
-              <g id="schematic_mem_layout_heap" stroke="none">
-                <path
-                  id="schematic_mem_layout_heap_box"
-                  fill="hsl(var(--bc))"
-                  d="M-381.26 454.4a.54.54 0 0 0-.54.542v67.826a.54.54 0 0 0 .54.54h220.84a.54.54 0 0 0 .54-.54v-67.312a.54.54 0 0 0-.54-.542.54.54 0 0 0-.54.542v66.77h-219.76v-66.148h.816a.5.5 0 0 0 .5-.5.5.5 0 0 0-.5-.5h-.816v-.136a.54.54 0 0 0-.54-.542zm7.357.678a.5.5 0 0 0-.5.5.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .501-.5.5.5 0 0 0-.5-.5zm7 0a.5.5 0 0 0-.499.5.5.5 0 0 0 .498.5h1a.5.5 0 0 0 .501-.5.5.5 0 0 0-.5-.5zm7 0a.5.5 0 0 0-.5.5.5.5 0 0 0 .5.5h1.001a.5.5 0 0 0 .498-.5.5.5 0 0 0-.498-.5zm7 0a.5.5 0 0 0-.5.5.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5.5.5 0 0 0-.5-.5zm7 0a.5.5 0 0 0-.499.5.5.5 0 0 0 .498.5h1a.5.5 0 0 0 .501-.5.5.5 0 0 0-.5-.5zm7 0a.5.5 0 0 0-.5.5.5.5 0 0 0 .5.5h1.001a.5.5 0 0 0 .498-.5.5.5 0 0 0-.498-.5zm7 0a.5.5 0 0 0-.5.5.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5.5.5 0 0 0-.5-.5zm7.001 0a.5.5 0 0 0-.5.5.5.5 0 0 0 .5.5h.998a.5.5 0 0 0 .5-.5.5.5 0 0 0-.5-.5zm7 0a.5.5 0 0 0-.5.5.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5.5.5 0 0 0-.5-.5zm6.999 0a.5.5 0 0 0-.5.5.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5.5.5 0 0 0-.5-.5zm7.001 0a.5.5 0 0 0-.5.5.5.5 0 0 0 .5.5h.998a.5.5 0 0 0 .5-.5.5.5 0 0 0-.5-.5zm7 0a.5.5 0 0 0-.501.5.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .501-.5.5.5 0 0 0-.5-.5zm6.998 0a.5.5 0 0 0-.5.5.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .501-.5.5.5 0 0 0-.5-.5zm7.002 0a.5.5 0 0 0-.5.5.5.5 0 0 0 .5.5h.998a.5.5 0 0 0 .5-.5.5.5 0 0 0-.5-.5zm6.999 0a.5.5 0 0 0-.5.5.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5.5.5 0 0 0-.5-.5zm7 0a.5.5 0 0 0-.499.5.5.5 0 0 0 .498.5h1a.5.5 0 0 0 .501-.5.5.5 0 0 0-.5-.5zm7 0a.5.5 0 0 0-.5.5.5.5 0 0 0 .5.5h1.001a.5.5 0 0 0 .498-.5.5.5 0 0 0-.498-.5zm7 0a.5.5 0 0 0-.5.5.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5.5.5 0 0 0-.5-.5zm7.001 0a.5.5 0 0 0-.5.5.5.5 0 0 0 .5.5h.998a.5.5 0 0 0 .5-.5.5.5 0 0 0-.5-.5zm7 0a.5.5 0 0 0-.5.5.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5.5.5 0 0 0-.5-.5zm6.999 0a.5.5 0 0 0-.5.5.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5.5.5 0 0 0-.5-.5zm7.001 0a.5.5 0 0 0-.5.5.5.5 0 0 0 .5.5h.998a.5.5 0 0 0 .5-.5.5.5 0 0 0-.5-.5zm7 0a.5.5 0 0 0-.501.5.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .501-.5.5.5 0 0 0-.5-.5zm6.998 0a.5.5 0 0 0-.5.5.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .501-.5.5.5 0 0 0-.5-.5zm7.002 0a.5.5 0 0 0-.5.5.5.5 0 0 0 .5.5h.998a.5.5 0 0 0 .5-.5.5.5 0 0 0-.5-.5zm6.999 0a.5.5 0 0 0-.5.5.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5.5.5 0 0 0-.5-.5zm7 0a.5.5 0 0 0-.499.5.5.5 0 0 0 .498.5h1a.5.5 0 0 0 .501-.5.5.5 0 0 0-.5-.5zm7 0a.5.5 0 0 0-.5.5.5.5 0 0 0 .5.5h1.001a.5.5 0 0 0 .498-.5.5.5 0 0 0-.498-.5zm7 0a.5.5 0 0 0-.5.5.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5.5.5 0 0 0-.5-.5zm6.999 0a.5.5 0 0 0-.498.5.5.5 0 0 0 .498.5h1a.5.5 0 0 0 .5-.5.5.5 0 0 0-.5-.5zm7.001 0a.5.5 0 0 0-.5.5.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .499-.5.5.5 0 0 0-.498-.5z"
-                  color="hsl(var(--bc))"
-                />
-                <path
-                  id="schematic_mem_layout_heap_label"
-                  fill="hsl(var(--bc))"
-                  d="M-298.75 481.37v11.561h2.406v-5.273h4.78v5.273h2.408V481.37h-2.408v4.695h-4.78v-4.695zm17.485 0v11.561h7.593v-1.64h-5.187v-3.563h3.953v-1.547h-3.953v-3.226h4.82v-1.585zm17.843 0-4.5 11.561h1.75l1.203-3.085h4.782l1.203 3.085h2.468l-4.5-11.561zm13.547 0v11.561h2.359v-4.53h1c1.448 0 2.574-.347 3.376-1.04.807-.698 1.211-1.672 1.211-2.922 0-1.104-.303-1.89-.907-2.359-.599-.474-1.602-.71-3.008-.71zm2.359 1.586h.938c1.464 0 2.195.575 2.195 1.726 0 .656-.24 1.176-.718 1.561-.474.38-1.123.573-1.946.573h-.469zm-15.061.742 1.797 4.609h-3.596z"
-                />
-                <path
-                  id="schematic_mem_layout_heap_arrow"
-                  fill="hsl(var(--bc))"
-                  d="m-270.93 443.28-.007.186-5.592 5.373 3.732.169v5.391h3.92v-5.391l3.732-.169-5.592-5.373-.007-.186-.094.09z"
-                />
-              </g>
-              <g id="schematic_mem_layout_stack" stroke="none">
-                <path
-                  id="schematic_mem_layout_stack_box"
-                  fill="hsl(var(--bc))"
-                  d="M-381.26 286.94a.54.54 0 0 1-.54-.542v-67.826a.54.54 0 0 1 .54-.54h220.84a.54.54 0 0 1 .54.54v67.312a.54.54 0 0 1-.54.542.54.54 0 0 1-.54-.542v-66.77h-219.76v66.148h.816a.5.5 0 0 1 .5.5.5.5 0 0 1-.5.5h-.816v.136a.54.54 0 0 1-.54.542zm7.357-.678a.5.5 0 0 1-.5-.5.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .501.5.5.5 0 0 1-.5.5zm7 0a.5.5 0 0 1-.499-.5.5.5 0 0 1 .498-.5h1a.5.5 0 0 1 .501.5.5.5 0 0 1-.5.5zm7 0a.5.5 0 0 1-.5-.5.5.5 0 0 1 .5-.5h1.001a.5.5 0 0 1 .498.5.5.5 0 0 1-.498.5zm7 0a.5.5 0 0 1-.5-.5.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5.5.5 0 0 1-.5.5zm7 0a.5.5 0 0 1-.499-.5.5.5 0 0 1 .498-.5h1a.5.5 0 0 1 .501.5.5.5 0 0 1-.5.5zm7 0a.5.5 0 0 1-.5-.5.5.5 0 0 1 .5-.5h1.001a.5.5 0 0 1 .498.5.5.5 0 0 1-.498.5zm7 0a.5.5 0 0 1-.5-.5.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5.5.5 0 0 1-.5.5zm7.001 0a.5.5 0 0 1-.5-.5.5.5 0 0 1 .5-.5h.998a.5.5 0 0 1 .5.5.5.5 0 0 1-.5.5zm7 0a.5.5 0 0 1-.5-.5.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5.5.5 0 0 1-.5.5zm6.999 0a.5.5 0 0 1-.5-.5.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5.5.5 0 0 1-.5.5zm7.001 0a.5.5 0 0 1-.5-.5.5.5 0 0 1 .5-.5h.998a.5.5 0 0 1 .5.5.5.5 0 0 1-.5.5zm7 0a.5.5 0 0 1-.501-.5.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .501.5.5.5 0 0 1-.5.5zm6.998 0a.5.5 0 0 1-.5-.5.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .501.5.5.5 0 0 1-.5.5zm7.002 0a.5.5 0 0 1-.5-.5.5.5 0 0 1 .5-.5h.998a.5.5 0 0 1 .5.5.5.5 0 0 1-.5.5zm6.999 0a.5.5 0 0 1-.5-.5.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5.5.5 0 0 1-.5.5zm7 0a.5.5 0 0 1-.499-.5.5.5 0 0 1 .498-.5h1a.5.5 0 0 1 .501.5.5.5 0 0 1-.5.5zm7 0a.5.5 0 0 1-.5-.5.5.5 0 0 1 .5-.5h1.001a.5.5 0 0 1 .498.5.5.5 0 0 1-.498.5zm7 0a.5.5 0 0 1-.5-.5.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5.5.5 0 0 1-.5.5zm7.001 0a.5.5 0 0 1-.5-.5.5.5 0 0 1 .5-.5h.998a.5.5 0 0 1 .5.5.5.5 0 0 1-.5.5zm7 0a.5.5 0 0 1-.5-.5.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5.5.5 0 0 1-.5.5zm6.999 0a.5.5 0 0 1-.5-.5.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5.5.5 0 0 1-.5.5zm7.001 0a.5.5 0 0 1-.5-.5.5.5 0 0 1 .5-.5h.998a.5.5 0 0 1 .5.5.5.5 0 0 1-.5.5zm7 0a.5.5 0 0 1-.501-.5.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .501.5.5.5 0 0 1-.5.5zm6.998 0a.5.5 0 0 1-.5-.5.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .501.5.5.5 0 0 1-.5.5zm7.002 0a.5.5 0 0 1-.5-.5.5.5 0 0 1 .5-.5h.998a.5.5 0 0 1 .5.5.5.5 0 0 1-.5.5zm6.999 0a.5.5 0 0 1-.5-.5.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5.5.5 0 0 1-.5.5zm7 0a.5.5 0 0 1-.499-.5.5.5 0 0 1 .498-.5h1a.5.5 0 0 1 .501.5.5.5 0 0 1-.5.5zm7 0a.5.5 0 0 1-.5-.5.5.5 0 0 1 .5-.5h1.001a.5.5 0 0 1 .498.5.5.5 0 0 1-.498.5zm7 0a.5.5 0 0 1-.5-.5.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5.5.5 0 0 1-.5.5zm6.999 0a.5.5 0 0 1-.498-.5.5.5 0 0 1 .498-.5h1a.5.5 0 0 1 .5.5.5.5 0 0 1-.5.5zm7.001 0a.5.5 0 0 1-.5-.5.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .499.5.5.5 0 0 1-.498.5z"
-                  color="hsl(var(--bc))"
-                />
-                <path
-                  id="schematic_mem_layout_stack_label"
-                  fill="hsl(var(--bc))"
-                  d="M-303.37 243.08c-1.151 0-2.078.289-2.781.867-.698.578-1.048 1.343-1.048 2.296 0 .714.214 1.338.64 1.875.428.531 1.16 1.089 2.197 1.672l.772.43c.625.354 1.05.66 1.274.92.224.256.336.571.336.946 0 .474-.179.85-.538 1.126-.355.276-.841.414-1.461.414-.886 0-1.95-.26-3.195-.781v1.985c1.229.26 2.306.39 3.233.39 1.4 0 2.5-.305 3.297-.914.797-.61 1.196-1.45 1.196-2.523 0-.755-.212-1.397-.634-1.923-.421-.526-1.188-1.101-2.303-1.726l-.83-.462c-.62-.349-1.04-.643-1.264-.883s-.336-.517-.336-.835a1.1 1.1 0 0 1 .476-.93c.323-.239.75-.358 1.28-.358.688 0 1.624.22 2.806.662v-1.85c-1.156-.266-2.195-.398-3.117-.398zm49.241 0c-1.974 0-3.495.526-4.562 1.578-1.063 1.047-1.595 2.544-1.595 4.492 0 1.911.53 3.4 1.588 4.468 1.057 1.067 2.533 1.601 4.429 1.601 1.552 0 2.889-.25 4.009-.75v-1.773c-1.157.573-2.302.86-3.438.86-1.265 0-2.257-.392-2.97-1.173-.708-.781-1.063-1.87-1.063-3.266 0-1.421.332-2.516.994-3.287.661-.776 1.6-1.164 2.82-1.164.952 0 2.134.245 3.545.74v-1.882a16.14 16.14 0 0 0-3.757-.444zm-39.532.289v1.586h4.142v9.975h2.415v-9.975h4.14v-1.586zm20.548 0-4.5 11.561h1.75l1.203-3.085h4.78l1.205 3.085h2.468l-4.5-11.561zm29.944 0v11.561h2.312v-5.686l4.383 5.686h3.008l-4.976-6.375 4.009-5.186h-2.001l-4.423 5.608v-5.608zm-29.102 2.326 1.796 4.61h-3.593z"
-                />
-                <path
-                  id="schematic_mem_layout_stack_arrow"
-                  fill="hsl(var(--bc))"
-                  d="m-270.93 298.19-.007-.186-5.592-5.373 3.732-.169v-5.391h3.92v5.391l3.732.169-5.592 5.373-.007.186-.094-.09z"
-                />
-              </g>
-              <g id="schematic_mem_layout_cli_arg">
-                <path
-                  id="schematic_mem_layout_cli_arg_box"
-                  fill="none"
-                  stroke="hsl(var(--bc))"
-                  strokeLinecap="round"
-                  strokeWidth="1.082"
-                  d="M-381.26 176.44v41.621h220.84V176.44z"
-                />
-                <path
-                  id="schematic_mem_layout_cli_arg_label"
-                  fill="hsl(var(--bc))"
-                  stroke="none"
-                  d="M-287.89 191.08c-1.974 0-3.495.528-4.562 1.58-1.063 1.047-1.595 2.544-1.595 4.492 0 1.911.528 3.4 1.586 4.468 1.057 1.067 2.535 1.601 4.43 1.601 1.553 0 2.888-.25 4.007-.75v-1.773c-1.156.573-2.301.86-3.437.86-1.265 0-2.255-.392-2.968-1.173-.708-.781-1.063-1.87-1.063-3.266 0-1.421.33-2.518.992-3.29.661-.775 1.602-1.164 2.821-1.164.953 0 2.135.248 3.547.743v-1.883a16.143 16.143 0 0 0-3.758-.445zm84.124 0c-1.98 0-3.505.525-4.578 1.572-1.068 1.047-1.6 2.54-1.6 4.484 0 1.958.532 3.464 1.6 4.516 1.073 1.047 2.608 1.57 4.603 1.57 1.052 0 2.302-.188 3.75-.563v-4.977h-2.408v3.805c-.37.078-.69.117-.967.117-1.255 0-2.241-.392-2.955-1.179-.713-.791-1.07-1.88-1.07-3.265 0-1.433.335-2.541 1.001-3.322.667-.782 1.611-1.172 2.835-1.172.927 0 2.113.247 3.555.742v-1.883a16.185 16.185 0 0 0-3.766-.445zm14.625 0c-1.151 0-2.078.289-2.781.867-.698.578-1.045 1.345-1.045 2.298 0 .714.213 1.339.64 1.875.427.531 1.158 1.089 2.194 1.672l.774.43c.625.354 1.05.66 1.274.92.224.256.336.571.336.946 0 .474-.181.85-.54 1.126-.355.276-.841.414-1.461.414-.886 0-1.95-.26-3.195-.781v1.983c1.229.26 2.308.391 3.235.391 1.4 0 2.5-.304 3.297-.913.797-.61 1.194-1.452 1.194-2.525 0-.755-.21-1.395-.631-1.92-.422-.527-1.191-1.102-2.306-1.727l-.827-.462c-.62-.349-1.043-.643-1.267-.883a1.184 1.184 0 0 1-.336-.835c0-.385.16-.695.478-.93.323-.239.75-.36 1.28-.36.688 0 1.622.221 2.804.664v-1.85c-1.156-.266-2.195-.4-3.117-.4zm-166.32.289v11.563h7.595v-1.64h-5.19v-3.562h3.954v-1.548h-3.953v-3.227h4.82v-1.586zm14.61 0v11.563h1.93v-7.898l5.32 7.898h2.157v-11.563h-1.93v7.898l-5.36-7.898zm16.046 0 4.273 11.563h2.415l4.133-11.563h-1.734l-3.204 8.946-3.313-8.946zm21.882 0-4.162 13.876h1.405l4.164-13.876zm25.994 0v11.563h7.617v-1.64h-5.211v-9.923zm14.305 0v11.563h2.406v-11.563zm23.812 0-4.5 11.563h1.75l1.203-3.087h4.78l1.203 3.087h2.47l-4.5-11.563zm13.547 0v11.563h2.266v-4.727h1.327l2.866 4.727h2.93l-3.782-5.4c.698-.312 1.245-.759 1.641-1.342.401-.589.603-1.24.603-1.953 0-1.911-1.175-2.868-3.524-2.868zm2.266 1.586h.833c1.558 0 2.337.516 2.337 1.547 0 1.412-.872 2.118-2.617 2.118h-.553zm-14.97.742 1.796 4.61h-3.593z"
-                />
-              </g>
-              <path
-                id="schematic_mem_layout_dynamic_section"
-                fill="hsl(var(--bc))"
-                stroke="none"
-                d="M-381.26 284.32a.54.54 0 0 0-.54.54v170.59a.54.54 0 0 0 .54.54.54.54 0 0 0 .54-.54V284.86a.54.54 0 0 0-.54-.54zm220.84 0a.54.54 0 0 0-.54.54v170.59a.54.54 0 0 0 .54.54.54.54 0 0 0 .54-.54V284.86a.54.54 0 0 0-.54-.54z"
-                color="hsl(var(--bc))"
-              />
-            </g>
+          <g id="sch_mem_layout_init_data_group_end">
+            <path
+              id="sch_mem_layout_init_data_ptr_end"
+              fill="hsl(var(--b2))"
+              fillOpacity="0"
+              d="m980.76 543.77 24.749 63.64v-449.01z"
+            />
+            <path
+              id="sch_mem_layout_init_data_box_end"
+              fill="none"
+              stroke="hsl(var(--bc))"
+              d="m788 518h194v58h-194z"
+            />
+            <path
+              id="sch_mem_layout_init_data_label_end"
+              fill="hsl(var(--bc))"
+              d="m830.6 544.17v11.252h2.1133v-11.252zm9.0527 0v11.252h1.6953v-7.6856l4.6738 7.6856h1.8945v-11.252h-1.6953v7.6856l-4.709-7.6856zm15.193 0v11.252h2.1152v-11.252zm7.9336 0v1.543h3.6387v9.709h2.1191v-9.709h3.6387v-1.543zm24.234 0v11.252h4.1855c1.5968 0 2.839-0.51336 3.7266-1.5371 0.88761-1.0288 1.332-2.4693 1.332-4.3242 0-1.7434-0.41858-3.0776-1.2559-4-0.83726-0.92746-2.0433-1.3906-3.6172-1.3906zm18.379 0-3.9531 11.252h1.5371l1.0566-3.0039h4.1992l1.0566 3.0039h2.1699l-3.9531-11.252zm10.781 0v1.543h3.6367v9.709h2.1211v-9.709h3.6367v-1.543zm18.049 0-3.9531 11.252h1.5371l1.0566-3.0039h4.2012l1.0566 3.0039h2.168l-3.9531-11.252zm-45.096 1.543h1.2754c0.81441 0 1.4358 0.0937 1.8613 0.28124 0.4255 0.18752 0.78788 0.52793 1.0898 1.0195 0.43922 0.71459 0.66015 1.6092 0.66015 2.6836 0 1.3887-0.27519 2.4252-0.82422 3.1094-0.54445 0.67913-1.3726 1.0176-2.4844 1.0176h-1.5781zm17.006 0.72265 1.5781 4.4844h-3.1562zm28.83 0 1.5801 4.4844h-3.1582z"
+            />
           </g>
-          <g
-            id="schematic_cpu"
+          <g id="sch_mem_layout_bss_group_end">
+            <path
+              id="sch_mem_layout_bss_ptr_end"
+              fill="hsl(var(--b2))"
+              fillOpacity="0"
+              d="m981.46 487.9 24.042 120.21v-449.72z"
+            />
+            <path
+              id="sch_mem_layout_bss_box_end"
+              fill="none"
+              stroke="hsl(var(--bc))"
+              strokeWidth="1"
+              d="m788 456.5v60.507h194.01v-60.507z"
+            />
+            <path
+              id="sch_mem_layout_bss_label_end"
+              fill="hsl(var(--bc))"
+              d="m885.52 483.55c-1.0111 0-1.8257 0.28119-2.4434 0.84374-0.61309 0.56257-0.91797 1.3069-0.91797 2.2344 0 0.69433 0.18733 1.3022 0.5625 1.8242 0.37517 0.51695 1.0173 1.0593 1.9277 1.627l0.67969 0.41797c0.54903 0.34463 0.9224 0.64504 1.1191 0.89843 0.19674 0.24835 0.29492 0.55503 0.29492 0.91993 0 0.46119-0.15891 0.82514-0.47461 1.0938-0.31112 0.26861-0.73876 0.40235-1.2832 0.40235-0.7778 0-1.7132-0.25297-2.8066-0.75977v1.9316c1.0798 0.25341 2.0274 0.37891 2.8418 0.37891 1.2307 0 2.1965-0.29571 2.8965-0.88867 0.70002-0.59298 1.0488-1.4111 1.0488-2.4551 0-0.73488-0.18409-1.3592-0.55469-1.8711-0.37059-0.51187-1.0463-1.0715-2.0254-1.6797l-0.72657-0.44922c-0.54445-0.33955-0.91654-0.62428-1.1133-0.85741-0.19674-0.23313-0.29492-0.5053-0.29492-0.81446 0-0.37503 0.14083-0.67624 0.41991-0.9043 0.28367-0.23313 0.65833-0.3496 1.125-0.3496 0.60394 0 1.4243 0.21569 2.4629 0.64648v-1.8027c-1.0157-0.25848-1.9285-0.38672-2.7383-0.38672zm12.422 0c-1.0111 0-1.8257 0.28119-2.4434 0.84374-0.61309 0.56257-0.91797 1.3069-0.91797 2.2344 0 0.69433 0.18733 1.3022 0.5625 1.8242 0.37516 0.51695 1.0173 1.0593 1.9277 1.627l0.6797 0.41797c0.54903 0.34463 0.9224 0.64504 1.1191 0.89843 0.19674 0.24835 0.29492 0.55503 0.29492 0.91993 0 0.46119-0.15892 0.82514-0.47461 1.0938-0.31111 0.26861-0.73875 0.40235-1.2832 0.40235-0.77779 0-1.7132-0.25297-2.8066-0.75977v1.9316c1.0798 0.25341 2.0274 0.37891 2.8418 0.37891 1.2308 0 2.1965-0.29571 2.8965-0.88867 0.70002-0.59298 1.0488-1.4111 1.0488-2.4551 0-0.73488-0.18409-1.3592-0.55469-1.8711-0.37059-0.51187-1.0463-1.0715-2.0254-1.6797l-0.72656-0.44922c-0.54446-0.33955-0.91654-0.62428-1.1133-0.85741s-0.29492-0.5053-0.29492-0.81446c0-0.37503 0.14082-0.67624 0.41992-0.9043 0.28366-0.23313 0.65832-0.3496 1.125-0.3496 0.60393 0 1.4243 0.21569 2.4629 0.64648v-1.8027c-1.0157-0.25848-1.9285-0.38672-2.7383-0.38672zm-28.439 0.28125v11.25h3.7676c1.0386 0 1.8351-0.23844 2.3887-0.71485 0.55817-0.48147 0.83789-1.1694 0.83789-2.0664 0-1.5508-0.95089-2.5819-2.8496-3.0938 1.6242-0.56255 2.4375-1.5218 2.4375-2.875 0-0.81596-0.26744-1.4356-0.80274-1.8613-0.53073-0.42572-1.3059-0.63866-2.3262-0.63866zm1.9902 1.543h0.42578c0.78237 0 1.3127 0.0937 1.5918 0.28125 0.28366 0.18245 0.42578 0.53188 0.42578 1.0488 0 0.5575-0.17701 0.99791-0.5293 1.3223-0.34772 0.32436-0.81732 0.48633-1.4121 0.48633h-0.50195zm0 4.6445h0.41211c0.68629 0 1.2528 0.19021 1.7012 0.57031 0.45295 0.38012 0.67969 0.857 0.67969 1.4297 0 0.55748-0.16925 0.94143-0.50782 1.1543-0.33398 0.20778-0.94443 0.31249-1.832 0.31249h-0.45312z"
+            />
+          </g>
+          <g id="sch_mem_layout_heap_group_end">
+            <path
+              id="sch_mem_layout_heap_ptr_end"
+              fill="hsl(var(--b2))"
+              fillOpacity="0"
+              d="m981.46 420.73 24.042 187.38 0.7071-450.43z"
+            />
+            <path
+              id="sch_mem_layout_heap_box_end"
+              fill="hsl(var(--bc))"
+              d="m788 389.47a0.47507 0.52624 0 0 0-0.47461 0.52734v66a0.47511 0.52629 0 0 0 0.47461 0.52539h194a0.47511 0.52629 0 0 0 0.47461-0.52539v-65.5a0.47507 0.52624 0 0 0-0.47461-0.52734 0.47507 0.52624 0 0 0-0.47461 0.52734v64.973h-193.05v-64.367h0.71679a0.43922 0.48654 0 0 0 0.43946-0.48633 0.43922 0.48654 0 0 0-0.43946-0.48633h-0.71679v-0.13281a0.47507 0.52624 0 0 0-0.47461-0.52734zm6.4629 0.66015a0.43922 0.48654 0 0 0-0.43945 0.48633 0.43922 0.48654 0 0 0 0.43945 0.48633h0.87891a0.43922 0.48654 0 0 0 0.43945-0.48633 0.43922 0.48654 0 0 0-0.43945-0.48633zm6.1484 0a0.43922 0.48654 0 0 0-0.4375 0.48633 0.43922 0.48654 0 0 0 0.4375 0.48633h0.87891a0.43922 0.48654 0 0 0 0.43945-0.48633 0.43922 0.48654 0 0 0-0.43945-0.48633zm6.1504 0a0.43922 0.48654 0 0 0-0.43945 0.48633 0.43922 0.48654 0 0 0 0.43945 0.48633h0.87891a0.43922 0.48654 0 0 0 0.4375-0.48633 0.43922 0.48654 0 0 0-0.4375-0.48633zm6.1484 0a0.43922 0.48654 0 0 0-0.43945 0.48633 0.43922 0.48654 0 0 0 0.43945 0.48633h0.8789a0.43922 0.48654 0 0 0 0.43946-0.48633 0.43922 0.48654 0 0 0-0.43946-0.48633zm6.1484 0a0.43922 0.48654 0 0 0-0.43751 0.48633 0.43922 0.48654 0 0 0 0.43751 0.48633h0.8789a0.43922 0.48654 0 0 0 0.43946-0.48633 0.43922 0.48654 0 0 0-0.43946-0.48633zm6.1504 0a0.43922 0.48654 0 0 0-0.43946 0.48633 0.43922 0.48654 0 0 0 0.43946 0.48633h0.8789a0.43922 0.48654 0 0 0 0.4375-0.48633 0.43922 0.48654 0 0 0-0.4375-0.48633zm6.1484 0a0.43922 0.48654 0 0 0-0.43945 0.48633 0.43922 0.48654 0 0 0 0.43945 0.48633h0.87891a0.43922 0.48654 0 0 0 0.43945-0.48633 0.43922 0.48654 0 0 0-0.43945-0.48633zm6.1504 0a0.43922 0.48654 0 0 0-0.43945 0.48633 0.43922 0.48654 0 0 0 0.43945 0.48633h0.87696a0.43922 0.48654 0 0 0 0.43945-0.48633 0.43922 0.48654 0 0 0-0.43945-0.48633zm6.1484 0a0.43922 0.48654 0 0 0-0.43945 0.48633 0.43922 0.48654 0 0 0 0.43945 0.48633h0.87891a0.43922 0.48654 0 0 0 0.43945-0.48633 0.43922 0.48654 0 0 0-0.43945-0.48633zm6.1484 0a0.43922 0.48654 0 0 0-0.43945 0.48633 0.43922 0.48654 0 0 0 0.43945 0.48633h0.87891a0.43922 0.48654 0 0 0 0.43945-0.48633 0.43922 0.48654 0 0 0-0.43945-0.48633zm6.1504 0a0.43922 0.48654 0 0 0-0.43945 0.48633 0.43922 0.48654 0 0 0 0.43945 0.48633h0.87695a0.43922 0.48654 0 0 0 0.43946-0.48633 0.43922 0.48654 0 0 0-0.43946-0.48633zm6.1484 0a0.43922 0.48654 0 0 0-0.43946 0.48633 0.43922 0.48654 0 0 0 0.43946 0.48633h0.8789a0.43922 0.48654 0 0 0 0.43945-0.48633 0.43922 0.48654 0 0 0-0.43945-0.48633zm6.1484 0a0.43922 0.48654 0 0 0-0.43945 0.48633 0.43922 0.48654 0 0 0 0.43945 0.48633h0.87891a0.43922 0.48654 0 0 0 0.43945-0.48633 0.43922 0.48654 0 0 0-0.43945-0.48633zm6.1504 0a0.43922 0.48654 0 0 0-0.43945 0.48633 0.43922 0.48654 0 0 0 0.43945 0.48633h0.87696a0.43922 0.48654 0 0 0 0.43945-0.48633 0.43922 0.48654 0 0 0-0.43945-0.48633zm6.1484 0a0.43922 0.48654 0 0 0-0.43945 0.48633 0.43922 0.48654 0 0 0 0.43945 0.48633h0.87891a0.43922 0.48654 0 0 0 0.43945-0.48633 0.43922 0.48654 0 0 0-0.43945-0.48633zm6.1484 0a0.43922 0.48654 0 0 0-0.4375 0.48633 0.43922 0.48654 0 0 0 0.4375 0.48633h0.87891a0.43922 0.48654 0 0 0 0.43945-0.48633 0.43922 0.48654 0 0 0-0.43945-0.48633zm6.1504 0a0.43922 0.48654 0 0 0-0.43945 0.48633 0.43922 0.48654 0 0 0 0.43945 0.48633h0.8789a0.43922 0.48654 0 0 0 0.43751-0.48633 0.43922 0.48654 0 0 0-0.43751-0.48633zm6.1484 0a0.43922 0.48654 0 0 0-0.43946 0.48633 0.43922 0.48654 0 0 0 0.43946 0.48633h0.8789a0.43922 0.48654 0 0 0 0.43946-0.48633 0.43922 0.48654 0 0 0-0.43946-0.48633zm6.1504 0a0.43922 0.48654 0 0 0-0.43946 0.48633 0.43922 0.48654 0 0 0 0.43946 0.48633h0.87695a0.43922 0.48654 0 0 0 0.43945-0.48633 0.43922 0.48654 0 0 0-0.43945-0.48633zm6.1484 0a0.43922 0.48654 0 0 0-0.43945 0.48633 0.43922 0.48654 0 0 0 0.43945 0.48633h0.87891a0.43922 0.48654 0 0 0 0.43945-0.48633 0.43922 0.48654 0 0 0-0.43945-0.48633zm6.1484 0a0.43922 0.48654 0 0 0-0.43945 0.48633 0.43922 0.48654 0 0 0 0.43945 0.48633h0.87891a0.43922 0.48654 0 0 0 0.43945-0.48633 0.43922 0.48654 0 0 0-0.43945-0.48633zm6.1504 0a0.43922 0.48654 0 0 0-0.43945 0.48633 0.43922 0.48654 0 0 0 0.43945 0.48633h0.87696a0.43922 0.48654 0 0 0 0.43945-0.48633 0.43922 0.48654 0 0 0-0.43945-0.48633zm6.1484 0a0.43922 0.48654 0 0 0-0.43945 0.48633 0.43922 0.48654 0 0 0 0.43945 0.48633h0.8789a0.43922 0.48654 0 0 0 0.43946-0.48633 0.43922 0.48654 0 0 0-0.43946-0.48633zm6.1484 0a0.43922 0.48654 0 0 0-0.43946 0.48633 0.43922 0.48654 0 0 0 0.43946 0.48633h0.8789a0.43922 0.48654 0 0 0 0.43946-0.48633 0.43922 0.48654 0 0 0-0.43946-0.48633zm6.1504 0a0.43922 0.48654 0 0 0-0.43946 0.48633 0.43922 0.48654 0 0 0 0.43946 0.48633h0.87695a0.43922 0.48654 0 0 0 0.43945-0.48633 0.43922 0.48654 0 0 0-0.43945-0.48633zm6.1484 0a0.43922 0.48654 0 0 0-0.43945 0.48633 0.43922 0.48654 0 0 0 0.43945 0.48633h0.87891a0.43922 0.48654 0 0 0 0.43945-0.48633 0.43922 0.48654 0 0 0-0.43945-0.48633zm6.1484 0a0.43922 0.48654 0 0 0-0.4375 0.48633 0.43922 0.48654 0 0 0 0.4375 0.48633h0.87891a0.43922 0.48654 0 0 0 0.43945-0.48633 0.43922 0.48654 0 0 0-0.43945-0.48633zm6.1504 0a0.43922 0.48654 0 0 0-0.43945 0.48633 0.43922 0.48654 0 0 0 0.43945 0.48633h0.87891a0.43922 0.48654 0 0 0 0.4375-0.48633 0.43922 0.48654 0 0 0-0.4375-0.48633zm6.1484 0a0.43922 0.48654 0 0 0-0.43945 0.48633 0.43922 0.48654 0 0 0 0.43945 0.48633h0.8789a0.43922 0.48654 0 0 0 0.43946-0.48633 0.43922 0.48654 0 0 0-0.43946-0.48633zm6.1484 0a0.43922 0.48654 0 0 0-0.4375 0.48633 0.43922 0.48654 0 0 0 0.4375 0.48633h0.8789a0.43922 0.48654 0 0 0 0.43946-0.48633 0.43922 0.48654 0 0 0-0.43946-0.48633zm6.1504 0a0.43922 0.48654 0 0 0-0.43946 0.48633 0.43922 0.48654 0 0 0 0.43946 0.48633h0.87891a0.43922 0.48654 0 0 0 0.43749-0.48633 0.43922 0.48654 0 0 0-0.43749-0.48633z"
+            />
+            <path
+              id="sch_mem_layout_heap_label_end"
+              fill="hsl(var(--bc))"
+              d="m860.48 415.72v11.25h2.1133v-5.1309h4.1992v5.1309h2.1152v-11.25h-2.1152v4.5684h-4.1992v-4.5684zm15.359 0v11.25h6.6699v-1.5957h-4.5566v-3.4668h3.4726v-1.5059h-3.4726v-3.1387h4.2344v-1.543zm15.674 0-3.9531 11.25h1.5371l1.0566-3.002h4.2012l1.0566 3.002h2.168l-3.9531-11.25zm11.9 0v11.25h2.0723v-4.4082h0.8789c1.2719 0 2.2603-0.33765 2.9648-1.0117 0.70917-0.67912 1.0645-1.6274 1.0645-2.8438 0-1.0744-0.26615-1.8388-0.79688-2.2949-0.52616-0.4612-1.4073-0.69141-2.6426-0.69141zm2.0723 1.543h0.82421c1.2856 0 1.9277 0.55963 1.9277 1.6797 0 0.63858-0.20994 1.1445-0.63086 1.5195-0.41635 0.36997-0.98609 0.55664-1.709 0.55664h-0.4121zm-13.23 0.72265 1.5781 4.4844h-3.1582z"
+            />
+            <path
+              id="sch_mem_layout_heap_arrow_end"
+              fill="hsl(var(--b2))"
+              d="m884.92 378.65-6e-3 0.18059-4.9123 5.2292 3.2787 0.16394v5.2459h3.4426v-5.2459l3.2785-0.16394-4.9123-5.2292-6e-3 -0.18059-0.082 0.0871z"
+            />
+          </g>
+          <path
+            id="sch_mem_layout_dynamic_section_end"
+            fill="hsl(var(--bc))"
+            d="m788 223.97a0.47507 0.52624 0 0 0-0.47461 0.52539v166a0.47507 0.52624 0 0 0 0.47461 0.52539 0.47507 0.52624 0 0 0 0.47461-0.52539v-166a0.47507 0.52624 0 0 0-0.47461-0.52539zm194 0a0.47507 0.52624 0 0 0-0.47461 0.52539v166a0.47507 0.52624 0 0 0 0.47461 0.52539 0.47507 0.52624 0 0 0 0.47461-0.52539v-166a0.47507 0.52624 0 0 0-0.47461-0.52539z"
+          />
+          <g id="sch_mem_layout_stack_group_end">
+            <path
+              id="sch_mem_layout_stack_ptr_end"
+              fill="hsl(var(--b2))"
+              fillOpacity="0"
+              d="m982.17 188.09 23.334 419.31v-449.01z"
+            />
+            <path
+              id="sch_mem_layout_stack_arrow_end"
+              fill="hsl(var(--b2))"
+              d="m884.92 237.47-6e-3 -0.18059-4.9123-5.2292 3.2787-0.16394v-5.2459h3.4426v5.2459l3.2787 0.16394-4.9123 5.2292-6e-3 0.18059-0.082-0.0871z"
+            />
+            <path
+              id="sch_mem_layout_stack_box_end"
+              fill="hsl(var(--bc))"
+              d="m788 226.53a0.47507 0.52624 0 0 1-0.47461-0.52734v-66a0.47511 0.52629 0 0 1 0.47461-0.52539h194a0.47511 0.52629 0 0 1 0.47461 0.52539v65.5a0.47507 0.52624 0 0 1-0.47461 0.52735 0.47507 0.52624 0 0 1-0.47461-0.52735v-64.973h-193.05v64.367h0.71679a0.43922 0.48654 0 0 1 0.43946 0.48634 0.43922 0.48654 0 0 1-0.43946 0.48632h-0.71679v0.13281a0.47507 0.52624 0 0 1-0.47461 0.52734zm6.4629-0.66015a0.43922 0.48654 0 0 1-0.43945-0.48632 0.43922 0.48654 0 0 1 0.43945-0.48634h0.87891a0.43922 0.48654 0 0 1 0.43945 0.48634 0.43922 0.48654 0 0 1-0.43945 0.48632zm6.1484 0a0.43922 0.48654 0 0 1-0.4375-0.48632 0.43922 0.48654 0 0 1 0.4375-0.48634h0.87891a0.43922 0.48654 0 0 1 0.43945 0.48634 0.43922 0.48654 0 0 1-0.43945 0.48632zm6.1504 0a0.43922 0.48654 0 0 1-0.43945-0.48632 0.43922 0.48654 0 0 1 0.43945-0.48634h0.87891a0.43922 0.48654 0 0 1 0.4375 0.48634 0.43922 0.48654 0 0 1-0.4375 0.48632zm6.1484 0a0.43922 0.48654 0 0 1-0.43945-0.48632 0.43922 0.48654 0 0 1 0.43945-0.48634h0.8789a0.43922 0.48654 0 0 1 0.43946 0.48634 0.43922 0.48654 0 0 1-0.43946 0.48632zm6.1484 0a0.43922 0.48654 0 0 1-0.43751-0.48632 0.43922 0.48654 0 0 1 0.43751-0.48634h0.8789a0.43922 0.48654 0 0 1 0.43946 0.48634 0.43922 0.48654 0 0 1-0.43946 0.48632zm6.1504 0a0.43922 0.48654 0 0 1-0.43946-0.48632 0.43922 0.48654 0 0 1 0.43946-0.48634h0.8789a0.43922 0.48654 0 0 1 0.4375 0.48634 0.43922 0.48654 0 0 1-0.4375 0.48632zm6.1484 0a0.43922 0.48654 0 0 1-0.43945-0.48632 0.43922 0.48654 0 0 1 0.43945-0.48634h0.87891a0.43922 0.48654 0 0 1 0.43945 0.48634 0.43922 0.48654 0 0 1-0.43945 0.48632zm6.1504 0a0.43922 0.48654 0 0 1-0.43945-0.48632 0.43922 0.48654 0 0 1 0.43945-0.48634h0.87696a0.43922 0.48654 0 0 1 0.43945 0.48634 0.43922 0.48654 0 0 1-0.43945 0.48632zm6.1484 0a0.43922 0.48654 0 0 1-0.43945-0.48632 0.43922 0.48654 0 0 1 0.43945-0.48634h0.87891a0.43922 0.48654 0 0 1 0.43945 0.48634 0.43922 0.48654 0 0 1-0.43945 0.48632zm6.1484 0a0.43922 0.48654 0 0 1-0.43945-0.48632 0.43922 0.48654 0 0 1 0.43945-0.48634h0.87891a0.43922 0.48654 0 0 1 0.43945 0.48634 0.43922 0.48654 0 0 1-0.43945 0.48632zm6.1504 0a0.43922 0.48654 0 0 1-0.43945-0.48632 0.43922 0.48654 0 0 1 0.43945-0.48634h0.87695a0.43922 0.48654 0 0 1 0.43946 0.48634 0.43922 0.48654 0 0 1-0.43946 0.48632zm6.1484 0a0.43922 0.48654 0 0 1-0.43946-0.48632 0.43922 0.48654 0 0 1 0.43946-0.48634h0.8789a0.43922 0.48654 0 0 1 0.43945 0.48634 0.43922 0.48654 0 0 1-0.43945 0.48632zm6.1484 0a0.43922 0.48654 0 0 1-0.43945-0.48632 0.43922 0.48654 0 0 1 0.43945-0.48634h0.87891a0.43922 0.48654 0 0 1 0.43945 0.48634 0.43922 0.48654 0 0 1-0.43945 0.48632zm6.1504 0a0.43922 0.48654 0 0 1-0.43945-0.48632 0.43922 0.48654 0 0 1 0.43945-0.48634h0.87696a0.43922 0.48654 0 0 1 0.43945 0.48634 0.43922 0.48654 0 0 1-0.43945 0.48632zm6.1484 0a0.43922 0.48654 0 0 1-0.43945-0.48632 0.43922 0.48654 0 0 1 0.43945-0.48634h0.87891a0.43922 0.48654 0 0 1 0.43945 0.48634 0.43922 0.48654 0 0 1-0.43945 0.48632zm6.1484 0a0.43922 0.48654 0 0 1-0.4375-0.48632 0.43922 0.48654 0 0 1 0.4375-0.48634h0.87891a0.43922 0.48654 0 0 1 0.43945 0.48634 0.43922 0.48654 0 0 1-0.43945 0.48632zm6.1504 0a0.43922 0.48654 0 0 1-0.43945-0.48632 0.43922 0.48654 0 0 1 0.43945-0.48634h0.8789a0.43922 0.48654 0 0 1 0.43751 0.48634 0.43922 0.48654 0 0 1-0.43751 0.48632zm6.1484 0a0.43922 0.48654 0 0 1-0.43946-0.48632 0.43922 0.48654 0 0 1 0.43946-0.48634h0.8789a0.43922 0.48654 0 0 1 0.43946 0.48634 0.43922 0.48654 0 0 1-0.43946 0.48632zm6.1504 0a0.43922 0.48654 0 0 1-0.43946-0.48632 0.43922 0.48654 0 0 1 0.43946-0.48634h0.87695a0.43922 0.48654 0 0 1 0.43945 0.48634 0.43922 0.48654 0 0 1-0.43945 0.48632zm6.1484 0a0.43922 0.48654 0 0 1-0.43945-0.48632 0.43922 0.48654 0 0 1 0.43945-0.48634h0.87891a0.43922 0.48654 0 0 1 0.43945 0.48634 0.43922 0.48654 0 0 1-0.43945 0.48632zm6.1484 0a0.43922 0.48654 0 0 1-0.43945-0.48632 0.43922 0.48654 0 0 1 0.43945-0.48634h0.87891a0.43922 0.48654 0 0 1 0.43945 0.48634 0.43922 0.48654 0 0 1-0.43945 0.48632zm6.1504 0a0.43922 0.48654 0 0 1-0.43945-0.48632 0.43922 0.48654 0 0 1 0.43945-0.48634h0.87696a0.43922 0.48654 0 0 1 0.43945 0.48634 0.43922 0.48654 0 0 1-0.43945 0.48632zm6.1484 0a0.43922 0.48654 0 0 1-0.43945-0.48632 0.43922 0.48654 0 0 1 0.43945-0.48634h0.8789a0.43922 0.48654 0 0 1 0.43946 0.48634 0.43922 0.48654 0 0 1-0.43946 0.48632zm6.1484 0a0.43922 0.48654 0 0 1-0.43946-0.48632 0.43922 0.48654 0 0 1 0.43946-0.48634h0.8789a0.43922 0.48654 0 0 1 0.43946 0.48634 0.43922 0.48654 0 0 1-0.43946 0.48632zm6.1504 0a0.43922 0.48654 0 0 1-0.43946-0.48632 0.43922 0.48654 0 0 1 0.43946-0.48634h0.87695a0.43922 0.48654 0 0 1 0.43945 0.48634 0.43922 0.48654 0 0 1-0.43945 0.48632zm6.1484 0a0.43922 0.48654 0 0 1-0.43945-0.48632 0.43922 0.48654 0 0 1 0.43945-0.48634h0.87891a0.43922 0.48654 0 0 1 0.43945 0.48634 0.43922 0.48654 0 0 1-0.43945 0.48632zm6.1484 0a0.43922 0.48654 0 0 1-0.4375-0.48632 0.43922 0.48654 0 0 1 0.4375-0.48634h0.87891a0.43922 0.48654 0 0 1 0.43945 0.48634 0.43922 0.48654 0 0 1-0.43945 0.48632zm6.1504 0a0.43922 0.48654 0 0 1-0.43945-0.48632 0.43922 0.48654 0 0 1 0.43945-0.48634h0.87891a0.43922 0.48654 0 0 1 0.4375 0.48634 0.43922 0.48654 0 0 1-0.4375 0.48632zm6.1484 0a0.43922 0.48654 0 0 1-0.43945-0.48632 0.43922 0.48654 0 0 1 0.43945-0.48634h0.8789a0.43922 0.48654 0 0 1 0.43946 0.48634 0.43922 0.48654 0 0 1-0.43946 0.48632zm6.1484 0a0.43922 0.48654 0 0 1-0.4375-0.48632 0.43922 0.48654 0 0 1 0.4375-0.48634h0.8789a0.43922 0.48654 0 0 1 0.43946 0.48634 0.43922 0.48654 0 0 1-0.43946 0.48632zm6.1504 0a0.43922 0.48654 0 0 1-0.43946-0.48632 0.43922 0.48654 0 0 1 0.43946-0.48634h0.87891a0.43922 0.48654 0 0 1 0.43749 0.48634 0.43922 0.48654 0 0 1-0.43749 0.48632z"
+            />
+            <path
+              id="sch_mem_layout_stack_label_end"
+              fill="hsl(var(--bc))"
+              d="m856.42 183.85c-1.0111 0-1.8257 0.28118-2.4434 0.84375-0.61308 0.56256-0.91992 1.3069-0.91992 2.2344 0 0.69433 0.18733 1.3022 0.56249 1.8242 0.37518 0.51694 1.0192 1.0593 1.9297 1.627l0.67774 0.41798c0.54903 0.34462 0.9224 0.64307 1.1191 0.89647 0.19673 0.24835 0.29492 0.55503 0.29492 0.91993 0 0.46119-0.15696 0.82708-0.47265 1.0957-0.31112 0.26861-0.73876 0.40235-1.2832 0.40235-0.77779 0-1.7132-0.25296-2.8066-0.75977v1.9316c1.0798 0.25341 2.0254 0.37891 2.8398 0.37891 1.2308 0 2.1965-0.29571 2.8965-0.88867 0.70001-0.59297 1.0508-1.4111 1.0508-2.4551 0-0.73488-0.18604-1.3592-0.55664-1.8711-0.37059-0.51188-1.0443-1.0715-2.0234-1.6797l-0.72851-0.44922c-0.54446-0.33956-0.9146-0.62625-1.1113-0.85938-0.19674-0.23313-0.29493-0.50334-0.29493-0.8125 0-0.37504 0.13889-0.67623 0.41798-0.90429 0.28367-0.23314 0.65833-0.34961 1.125-0.34961 0.60394 0 1.4263 0.21373 2.4648 0.64453v-1.8008c-1.0157-0.25847-1.9285-0.38671-2.7383-0.38671zm43.256 0c-1.734 0-3.0699 0.51139-4.0078 1.5352-0.93334 1.0187-1.4004 2.4756-1.4004 4.3711 0 1.86 0.46576 3.3087 1.3945 4.3477 0.92878 1.039 2.2252 1.5586 3.8906 1.5586 1.3634 0 2.5378-0.24393 3.5215-0.73047v-1.7246c-1.0157 0.55749-2.0221 0.83594-3.0195 0.83594-1.1118 0-1.9826-0.38041-2.6094-1.1406-0.62223-0.76022-0.9336-1.8195-0.9336-3.1777 0-1.3836 0.292-2.4491 0.87306-3.1992 0.58105-0.75514 1.406-1.1328 2.4766-1.1328 0.83727 0 1.8753 0.23923 3.1152 0.7207v-1.832c-1.0935-0.28889-2.1936-0.43164-3.3008-0.43164zm-34.727 0.28125v1.543h3.6387v9.707h2.1211v-9.707h3.6367v-1.543zm18.051 0-3.9531 11.25h1.5371l1.0566-3.002h4.1992l1.0586 3.002h2.168l-3.9531-11.25zm26.305 0v11.25h2.0313v-5.5332l3.8496 5.5332h2.6426l-4.3711-6.2031 3.5215-5.0469h-1.7578l-3.8848 5.457v-5.457zm-25.564 2.2637 1.5781 4.4863h-3.1563z"
+            />
+          </g>
+          <g id="sch_mem_layout_cli_arg_group_end">
+            <path
+              id="sch_mem_layout_cli_arg_ptr_end"
+              fill="hsl(var(--b2))"
+              fillOpacity="0"
+              d="m981.46 140.71 24.042 467.4v-449.72z"
+            />
+            <path
+              id="sch_mem_layout_cli_arg_box_end"
+              fill="none"
+              stroke="hsl(var(--bc))"
+              d="m788 119v40.5h194v-40.5z"
+            />
+            <path
+              id="sch_mem_layout_cli_arg_label_end"
+              fill="hsl(var(--bc))"
+              d="m870.02 133.25c-1.734 0-3.0699 0.51336-4.0078 1.5371-0.93336 1.0187-1.4004 2.4756-1.4004 4.3711 0 1.86 0.46379 3.3087 1.3926 4.3477s2.2272 1.5586 3.8926 1.5586c1.3634 0 2.5358-0.24393 3.5195-0.73046v-1.7246c-1.0157 0.5575-2.0221 0.83594-3.0195 0.83594-1.1118 0-1.9806-0.3804-2.6074-1.1406-0.62224-0.76021-0.93359-1.8195-0.93359-3.1777 0-1.3836 0.29003-2.4511 0.87109-3.2012 0.58105-0.75514 1.4079-1.1328 2.4785-1.1328 0.83728 0 1.8754 0.24117 3.1152 0.72265v-1.832c-1.0935-0.28888-2.1936-0.4336-3.3008-0.4336zm73.898 0c-1.7386 0-3.079 0.51061-4.0215 1.5293-0.93793 1.0187-1.4062 2.4729-1.4062 4.3633 0 1.9056 0.46832 3.3708 1.4062 4.3945 0.9425 1.0187 2.2906 1.5273 4.043 1.5273 0.9242 0 2.023-0.18196 3.2949-0.54686v-4.8438h-2.1152v3.7031c-0.32484 0.076-0.60712 0.11328-0.8496 0.11328-1.1026 0-1.9689-0.3812-2.5957-1.1465-0.62681-0.77035-0.93945-1.8296-0.93945-3.1777 0-1.3937 0.29328-2.4722 0.87891-3.2324 0.58563-0.76022 1.415-1.1406 2.4902-1.1406 0.81438 0 1.8557 0.24117 3.123 0.72265v-1.832c-1.0935-0.28888-2.1968-0.4336-3.3086-0.4336zm12.848 0c-1.0111 0-1.8257 0.28119-2.4434 0.84375-0.61307 0.56257-0.91797 1.3089-0.91797 2.2363 0 0.69432 0.18733 1.3022 0.5625 1.8242 0.37518 0.51695 1.0173 1.0593 1.9277 1.627l0.67968 0.41796c0.54903 0.34463 0.92241 0.64309 1.1191 0.89649 0.19674 0.24833 0.29493 0.55502 0.29493 0.91992 0 0.46119-0.15891 0.82709-0.47461 1.0957-0.31112 0.2686-0.73875 0.40233-1.2832 0.40233-0.7778 0-1.7132-0.25295-2.8066-0.75976v1.9297c1.0798 0.25341 2.0274 0.38085 2.8418 0.38085 1.2307 0 2.1965-0.2957 2.8965-0.88867 0.70002-0.59297 1.0488-1.413 1.0488-2.457 0-0.73488-0.18409-1.3573-0.55469-1.8692-0.3706-0.51187-1.0463-1.0715-2.0254-1.6797l-0.72655-0.44922c-0.54447-0.33956-0.91656-0.62624-1.1133-0.85938-0.19673-0.23312-0.29492-0.50334-0.29492-0.8125 0-0.37503 0.14083-0.67623 0.41993-0.90429 0.28366-0.23314 0.65832-0.35156 1.125-0.35156 0.60393 0 1.4243 0.21569 2.4629 0.64648v-1.8008c-1.0157-0.25847-1.9285-0.38867-2.7383-0.38867zm-146.1 0.28126v11.252h6.6719v-1.5957h-4.5586v-3.4668h3.4726v-1.5059h-3.4726v-3.1406h4.2344v-1.543zm12.834 0v11.252h1.6953v-7.6856l4.6738 7.6856h1.8945v-11.252h-1.6953v7.6856l-4.709-7.6856zm14.096 0 3.7539 11.252h2.1211l3.6308-11.252h-1.5234l-2.8144 8.7051-2.9102-8.7051zm19.223 0-3.6562 13.502h1.2344l3.6582-13.502zm22.834 0v11.252h6.6914v-1.5957h-4.5781v-9.6562zm12.566 0v11.252h2.1133v-11.252zm20.918 0-3.9531 11.252h1.5371l1.0566-3.0039h4.1992l1.0566 3.0039h2.1699l-3.9531-11.252zm11.9 0v11.252h1.9902v-4.5996h1.166l2.5176 4.5996h2.5742l-3.3223-5.2539c0.61308-0.30409 1.0937-0.73902 1.4414-1.3066 0.3523-0.57269 0.5293-1.2061 0.5293-1.9004 0-1.86-1.0323-2.791-3.0957-2.791zm1.9902 1.543h0.73243c1.368 0 2.0527 0.50237 2.0527 1.5059 0 1.3735-0.76612 2.0606-2.2988 2.0606h-0.48633zm-13.15 0.72266 1.5781 4.4863h-3.1562z"
+            />
+          </g>
+        </g>
+        <g id="sch_cpu_group_end">
+          <path
+            id="sch_cpu_box_end"
+            d="m52 90.611h531.55v586.78h-531.55z"
+            fill="none"
             stroke="hsl(var(--bc))"
-            transform="translate(-96)"
-          >
-            <path id="schematic_cpu_box" d="M148 90.611h531.55v586.78H148z" />
-            <g id="schematic_cpu_bridge" fill="none" stroke="hsl(var(--b2))">
-              <g strokeWidth="12">
-                <path
-                  id="schematic_bridge_alu_n_dec"
-                  d="M503.11 589.84v-411.5"
-                />
-                <path
-                  id="schematic_bridge_alu_n_cspr"
-                  d="M503.26 178.75v182.96h21.707"
-                />
-                <path
-                  id="schematic_bridge_dec_n_cspr"
-                  d="M503.26 591.25v-230.5h21.707"
-                />
-                <path
-                  id="schematic_bridge_dec_n_pc"
-                  d="M503.26 585.04V409.32h21.707"
-                />
-                <path
-                  id="schematic_bridge_dec_n_sp"
-                  d="M503.26 584.01V384.52h21.707"
-                />
-              </g>
-              <path
-                id="schematic_bridge_dec_n_lr"
-                strokeWidth="11.368"
-                d="M407.43 589.79V383.78h-18.174"
-                transform="translate(96)"
-              />
-              <g strokeWidth="12">
-                <path d="M504.29 590.28v-38.245h-19.639" />
-                <path d="M503.26 588.15v-71.322h-16.538" />
-                <path d="M503.26 588.15V478.58h-17.572" />
-                <path d="M503.26 587.11V432.06H328.57v121.97h-24.808" />
-                <path d="M503.84 589.1V431.96H327.69v84.053h-24.12" />
-                <path d="M503.84 589.1V431.96H327.69v44.585h-24.12" />
-                <path d="M503.84 589.1V291.62h-19.003" />
-                <path d="M503.84 589.1V253.62h-19.003" />
-                <path d="M503.84 589.1V214.88h-19.003" />
-                <path d="M503.84 586.91V342.06H326.96v-48.239h-22.658" />
-                <path d="M503.84 587.64V342.06H327.69v-87.708h-23.389" />
-              </g>
-              <path
-                strokeWidth="11.955"
-                d="M503.86 588.93V341.6H326.94V215.4h-23.394"
-              />
-              <path
-                id="schematic_bridge_cu_n_pc"
-                strokeWidth="12"
-                d="M631.43 409.32h11.37"
-              />
-              <path
-                id="schematic_bridge_cu_n_mmu"
-                strokeWidth="12.158"
-                d="M653.09 418.47v-67.903"
-              />
-              <path
-                id="schematic_bridge_cu_n_dec"
-                strokeWidth="12"
-                d="M408.29 585.11h117.84v-15.505"
-                transform="translate(96)"
-              />
-            </g>
-            <g
-              id="schematic_cpu_clk"
-              stroke="hsl(var(--bc))"
-              transform="translate(-60.099 -184.99) scale(1.4844)"
-            >
-              <g
-                id="schematic_cpu_clk_execute"
-                transform="rotate(-25.558 -263.86 548.47)"
-              >
-                <path
-                  id="schematic_cpu_clk_circle_execute"
-                  strokeWidth="2.5"
-                  d="M199.74 603.4a12.083 12.083 0 0 1 16.327-5.043 12.083 12.083 0 0 1 5.043 16.327 12.083 12.083 0 0 1-16.327 5.043 12.083 12.083 0 0 1-5.043-16.327z"
-                />
-                <path
-                  id="schematic_cpu_clk_label_execute"
-                  fill="hsl(var(--bc))"
-                  d="M229.83 567.33c-.123-.057-.246-.11-.365-.16-1.674-.697-3.176-.746-4.507-.15-1.327.598-2.36 1.787-3.102 3.565-.743 1.784-.865 3.352-.368 4.704.5 1.348 1.579 2.369 3.237 3.06 1.246.518 2.508.724 3.787.62l.54-1.299c-1.412.14-2.623 0-3.632-.42-1.173-.49-1.937-1.267-2.288-2.333-.35-1.071-.24-2.287.326-3.648.595-1.428 1.374-2.402 2.335-2.921.96-.52 2.02-.536 3.18-.053.793.33 1.815 1.052 3.066 2.165l.591-1.42c-1.009-.742-1.941-1.312-2.8-1.71zm9.346 6.496-5.671 4.566c-1.213.977-1.893 1.968-2.042 2.97-.149 1.003.228 2.067 1.133 3.19.889 1.104 1.816 1.68 2.78 1.733.969.056 2.067-.41 3.296-1.4l5.708-4.596-.902-1.12-5.725 4.61c-.925.745-1.704 1.124-2.335 1.138-.624.014-1.223-.334-1.798-1.048-.588-.73-.812-1.429-.673-2.096.145-.665.67-1.363 1.574-2.092l5.685-4.577zm-21.79-9.507-6.452.324.578 11.548 6.79-.338-.062-1.227-5.15.259-.211-4.182 4.035-.203-.06-1.209-4.036.203-.186-3.707 4.815-.241zm30.193 22.358-1.202.246.822 4.017-10.127 2.072.329 1.608 10.127-2.072.821 4.019 1.202-.246zm-43.414-20.59-1.378.7-.635 5.209-4.451-2.631-1.73.877 5.86 3.486-.8 6.912 1.387-.704.639-5.464 4.693 2.762 1.728-.875-6.082-3.619zm-12.706 8.09-4.064 5.022 8.99 7.272 4.274-5.284-.953-.772-3.242 4.01-3.257-2.634 2.54-3.141-.941-.76-2.54 3.139-2.885-2.334 3.032-3.746zm57.594 28.725-11.28-2.54-1.493 6.63 1.195.27 1.135-5.03 4.084.92-.888 3.94 1.183.267.886-3.94 3.621.815-1.06 4.702 1.197.27z"
-                />
-              </g>
-              <g
-                id="schematic_cpu_clk_decode"
-                fill="none"
-                transform="rotate(-20.868 -360.23 534.34)"
-              >
-                <path
-                  id="schematic_cpu_clk_circle_decode"
-                  strokeWidth="2.5"
-                  d="M191.37 597.46a12.082 12.082 0 0 1 16.326-5.043 12.082 12.082 0 0 1 5.043 16.326 12.082 12.082 0 0 1-16.327 5.043 12.082 12.082 0 0 1-5.042-16.326z"
-                />
-                <path
-                  id="schematic_cpu_clk_label_decode"
-                  fill="hsl(var(--bc))"
-                  d="M213.22 560.49c-1.353-.466-2.545-.747-3.577-.843-1.805-.168-3.254.23-4.348 1.196-1.089.965-1.723 2.408-1.902 4.326-.18 1.924.17 3.46 1.046 4.603.878 1.138 2.212 1.791 4 1.958 1.344.125 2.612-.055 3.802-.535l.13-1.399c-1.307.553-2.505.778-3.594.676-1.265-.118-2.225-.633-2.878-1.546-.652-.919-.909-2.11-.772-3.578.143-1.54.596-2.701 1.359-3.483s1.77-1.114 3.02-.997c.856.08 2.047.463 3.573 1.155zm10.855 4.588a4.758 4.758 0 0 0-2.898-.238c-1.436.324-2.69 1.234-3.76 2.729-1.064 1.486-1.525 2.966-1.381 4.44.15 1.471.877 2.674 2.182 3.607 1.368.98 2.772 1.311 4.209.995 1.44-.321 2.703-1.242 3.791-2.763 1.067-1.49 1.52-2.97 1.359-4.436-.161-1.466-.905-2.676-2.235-3.628a6.152 6.152 0 0 0-1.267-.706zm-.338 1.221c.3.113.597.274.89.484.932.667 1.413 1.532 1.444 2.599.036 1.069-.383 2.217-1.26 3.44-.903 1.263-1.866 2.052-2.889 2.371-1.02.315-2.008.129-2.97-.56-.919-.657-1.388-1.525-1.406-2.6-.018-1.076.414-2.228 1.293-3.456.882-1.233 1.832-2.006 2.851-2.32a3.069 3.069 0 0 1 2.047.042zm-26.462-5.78-6.066 2.221 3.973 10.858 6.381-2.335-.42-1.15-4.843 1.77-1.438-3.933 3.792-1.387-.415-1.138-3.794 1.388-1.274-3.485 4.526-1.657zm37.593 15.665-10.651 4.503 1.506 3.562c.718 1.698 1.761 2.81 3.13 3.334s2.941.41 4.712-.339c1.458-.616 2.473-1.489 3.047-2.62a4.28 4.28 0 0 0 .48-2.195c-.04-.747-.281-1.649-.728-2.704zm-.49 1.989.524 1.245c.436 1.031.682 1.839.736 2.421a3.023 3.023 0 0 1-.332 1.7c-.457.912-1.312 1.633-2.564 2.163-1.333.564-2.528.703-3.581.42-.987-.262-1.773-1.083-2.357-2.465l-.817-1.936zm-48.16-9.28a4.788 4.788 0 0 0-1.401-.291 4.28 4.28 0 0 0-2.202.448c-.668.337-1.394.922-2.18 1.757l-2.634 2.8 8.42 7.923 2.65-2.815c1.264-1.343 1.859-2.746 1.785-4.21-.074-1.465-.81-2.856-2.21-4.173-.72-.678-1.464-1.158-2.229-1.44zm-.726 1.584c.63.238 1.255.648 1.874 1.23 1.055.993 1.665 2.028 1.83 3.106.16 1.009-.275 2.058-1.303 3.15l-1.44 1.531-6.634-6.24.927-.985c.767-.816 1.405-1.366 1.916-1.65a3.03 3.03 0 0 1 1.691-.384c.382.019.761.1 1.14.242zm53.917 22.346-11.539-.737-.433 6.783 1.225.078.327-5.147 4.179.268-.257 4.03 1.21.079.257-4.032 3.702.236-.307 4.812 1.225.078z"
-                />
-              </g>
-              <g
-                id="schematic_cpu_clk_fetch"
-                fill="none"
-                transform="translate(-15.898 -197.94)"
-              >
-                <path
-                  id="schematic_cpu_clk_circle_fetch"
-                  strokeWidth="2.5"
-                  d="M195.46 590.64a12.083 12.083 0 0 1 16.327-5.043 12.083 12.083 0 0 1 5.043 16.327 12.083 12.083 0 0 1-16.327 5.043 12.083 12.083 0 0 1-5.043-16.327z"
-                />
-                <path
-                  id="schematic_cpu_clk_label_fetch"
-                  fill="hsl(var(--bc))"
-                  d="m207.65 559.41-9.81.809.1 1.222 4.087-.336.85 10.301 1.634-.134-.85-10.301 4.089-.338zm9.217 2.443a4.708 4.708 0 0 0-1.846.413c-1.327.597-2.362 1.785-3.103 3.564-.744 1.783-.868 3.35-.371 4.703.498 1.348 1.577 2.37 3.236 3.06 1.245.52 2.508.726 3.787.622l.54-1.297c-1.411.139-2.622-.003-3.632-.424-1.173-.489-1.934-1.266-2.285-2.332-.35-1.07-.241-2.286.326-3.646.595-1.428 1.375-2.403 2.336-2.922s2.021-.536 3.18-.053c.793.33 1.813 1.052 3.064 2.166l.594-1.42c-1.153-.848-2.21-1.47-3.166-1.869-.941-.392-1.827-.581-2.66-.564zm-24.516.305-5.658 3.117 5.578 10.13 5.953-3.28-.592-1.074-4.516 2.486-2.021-3.666 3.539-1.95-.586-1.06-3.537 1.948-1.791-3.25 4.223-2.327zm37.102 7.09-9.115 7.111 1.007 1.293 4.307-3.357 3.383 4.336-4.307 3.36 1.01 1.292 9.117-7.111-1.01-1.293-3.843 2.998-3.383-4.338 3.844-2.998zm-47.963.185-4.055 5.032 9.006 7.252 1.03-1.278-4.09-3.293 2.539-3.152-.944-.758-2.537 3.15-3.02-2.43 3.026-3.753z"
-                />
-              </g>
-            </g>
-            <g id="schematic_cpu_reg_cspr">
-              <path
-                id="schematic_cpu_reg_box_cspr"
-                fill="none"
-                stroke="hsl(var(--bc))"
-                strokeWidth=".634"
-                d="M531.53 354.51h95.486v14.573H531.53z"
-              />
-              <path
-                id="schematic_cpu_reg_label_cspr"
-                fill="hsl(var(--bc))"
-                stroke="hsl(var(--bc))"
-                d="M536.49 347.06c-.906 0-1.61.266-2.11.797-.497.531-.746 1.278-.746 2.242 0 .966.245 1.714.735 2.242.49.526 1.183.79 2.082.79.674 0 1.297-.148 1.867-.442v-.703c-.625.336-1.21.504-1.758.504-.635 0-1.136-.213-1.504-.637-.367-.427-.55-1.01-.55-1.746 0-.774.171-1.372.515-1.797s.83-.637 1.457-.637c.43 0 1.04.137 1.832.41v-.77c-.695-.168-1.302-.253-1.82-.253zm4.414 0c-.5 0-.911.145-1.234.434a1.402 1.402 0 0 0-.485 1.097c0 .331.1.621.301.871.203.248.55.512 1.043.793l.399.23c.346.196.583.373.71.532.13.159.196.352.196.578a.836.836 0 0 1-.297.668c-.195.17-.455.254-.777.254-.42 0-.955-.151-1.606-.453v.812c.604.17 1.1.254 1.488.254.612 0 1.103-.152 1.473-.457.372-.304.559-.708.559-1.21 0-.355-.1-.658-.297-.91-.198-.253-.547-.522-1.047-.805l-.414-.235c-.36-.206-.607-.383-.742-.531a.737.737 0 0 1 .074-1.082c.185-.151.42-.227.703-.227.3 0 .754.12 1.363.36v-.75a4.91 4.91 0 0 0-1.41-.223zm2.914.145v5.78h.813v-2.296h.363c.74 0 1.318-.175 1.734-.524.417-.349.625-.83.625-1.445 0-.539-.152-.926-.457-1.16-.304-.237-.806-.356-1.504-.356zm4.422 0v5.78h.813v-2.445h.765l1.645 2.446h1.008l-1.93-2.707c.778-.323 1.168-.87 1.168-1.64 0-.467-.149-.822-.445-1.067-.295-.245-.72-.367-1.274-.367zm-3.61.613h.505c.487 0 .834.074 1.043.222.208.149.312.396.312.743 0 .409-.133.725-.398.949-.266.224-.642.336-1.13.336h-.331zm4.423 0h.515c.865 0 1.297.298 1.297.894 0 .81-.515 1.215-1.547 1.215h-.265z"
-              />
-            </g>
-            <g id="schematic_cpu_reg_pc">
-              <path
-                id="schematic_cpu_reg_box_pc"
-                fill="none"
-                stroke="hsl(var(--bc))"
-                strokeWidth=".634"
-                d="M531.53 402.51h95.486v14.573H531.53z"
-              />
-              <path
-                id="schematic_cpu_reg_label_pc"
-                fill="hsl(var(--bc))"
-                stroke="hsl(var(--bc))"
-                d="m541.42 395.06-1.93.48v.594l1.156-.289v4.563h-1.156v.578h3.086v-.578h-1.156zm21.395 0c-.906 0-1.61.266-2.11.797-.497.531-.745 1.278-.745 2.242 0 .966.244 1.714.734 2.242.49.526 1.183.79 2.082.79.674 0 1.297-.148 1.867-.442v-.703c-.625.336-1.21.504-1.758.504-.635 0-1.136-.213-1.504-.637-.367-.427-.55-1.01-.55-1.746 0-.774.171-1.372.515-1.797s.83-.637 1.457-.637c.43 0 1.04.137 1.832.41v-.77c-.695-.168-1.302-.253-1.82-.253zm-28.84.145v5.78h.812v-2.445h.766l1.645 2.446h1.007l-1.93-2.707c.78-.323 1.169-.87 1.169-1.64 0-.467-.149-.822-.446-1.067-.294-.245-.718-.367-1.273-.367zm10.441 0v2.812c.148-.018.29-.027.426-.027 1.195 0 1.793.433 1.793 1.3 0 .394-.11.702-.328.926-.216.224-.515.336-.895.336-.346 0-.71-.077-1.094-.23v.687c.37.081.7.121.993.121.671 0 1.196-.158 1.574-.476.38-.32.57-.762.57-1.324 0-.605-.208-1.077-.625-1.418-.417-.342-.996-.512-1.738-.512v-1.524h2.25v-.671zm6.824 0-2.082 6.937h.606l2.082-6.937zm4.637 0v5.78h.812v-2.296h.364c.74 0 1.317-.175 1.734-.524.417-.349.625-.83.625-1.445 0-.539-.152-.926-.457-1.16-.305-.237-.806-.356-1.504-.356zm-21.09.613h.516c.864 0 1.296.298 1.296.894 0 .81-.515 1.215-1.546 1.215h-.266zm21.902 0h.504c.487 0 .834.074 1.043.222.208.149.312.396.312.743 0 .409-.132.725-.398.949-.266.224-.642.336-1.129.336h-.332z"
-              />
-            </g>
-            <g id="schematic_cpu_reg_lr">
-              <path
-                id="schematic_cpu_reg_box_lr"
-                fill="none"
-                stroke="hsl(var(--bc))"
-                strokeWidth=".933"
-                d="M340.18 373.44h140.51v21.445H340.18z"
-              />
-              <path
-                id="schematic_cpu_reg_label_lr"
-                fill="hsl(var(--bc))"
-                stroke="hsl(var(--bc))"
-                d="m355.41 361.64-2.894.72v.891l1.734-.433v6.844h-1.734v.867h4.628v-.867h-1.734zm-11.168.217v8.672h1.219v-3.668h1.148l2.467 3.668h1.512l-2.895-4.06c1.168-.485 1.752-1.306 1.752-2.462 0-.699-.222-1.232-.668-1.6-.441-.366-1.078-.55-1.91-.55zm18.574 0-3.902 5.344v.873h3.902v2.455h1.084v-2.455h1.16v-.944h-1.16v-5.273zm7.324 0-3.123 10.406h.908l3.123-10.406zm6.955 0v8.672h5.133v-.92h-3.902v-7.752zm6.399 0v8.672h1.219v-3.668h1.148l2.467 3.668h1.511l-2.894-4.06c1.168-.485 1.752-1.306 1.752-2.462 0-.699-.223-1.232-.668-1.6-.441-.366-1.078-.55-1.91-.55zm-38.033.92h.773c1.297 0 1.945.447 1.945 1.342 0 1.214-.773 1.822-2.32 1.822h-.398zm39.252 0h.773c1.297 0 1.945.447 1.945 1.342 0 1.214-.773 1.822-2.32 1.822h-.398zm-21.82.498v3.855h-2.848z"
-              />
-            </g>
-            <g id="schematic_cpu_reg_sp">
-              <path
-                id="schematic_cpu_reg_box_sp"
-                fill="none"
-                stroke="hsl(var(--bc))"
-                strokeWidth=".634"
-                d="M531.53 378.51h95.486v14.573H531.53z"
-              />
-              <path
-                id="schematic_cpu_reg_label_sp"
-                fill="hsl(var(--bc))"
-                stroke="hsl(var(--bc))"
-                d="m541.42 371.06-1.93.48v.594l1.156-.289v4.563h-1.156v.578h3.086v-.578h-1.156zm4.144 0c-.43 0-.872.077-1.328.23v.672c.464-.216.888-.324 1.274-.324.703 0 1.055.296 1.055.887 0 .752-.534 1.129-1.602 1.129l-.27.004v.52h.305c1.138 0 1.707.406 1.707 1.218 0 .341-.116.62-.348.836-.229.214-.527.32-.894.32-.318 0-.753-.11-1.305-.328v.719c.544.125.995.187 1.352.187.627 0 1.12-.154 1.48-.464.36-.31.54-.737.54-1.282 0-.804-.467-1.315-1.4-1.53.806-.29 1.208-.774 1.208-1.454 0-.893-.591-1.34-1.773-1.34zm11.707 0c-.5 0-.911.145-1.234.434a1.402 1.402 0 0 0-.484 1.097c0 .331.1.621.3.871.204.248.551.512 1.043.793l.399.23c.346.196.583.373.71.532a.88.88 0 0 1 .196.578.836.836 0 0 1-.297.668c-.195.17-.454.254-.777.254-.42 0-.954-.151-1.606-.453v.812c.605.17 1.1.254 1.489.254.612 0 1.103-.152 1.472-.457.373-.304.56-.708.56-1.21 0-.355-.1-.658-.298-.91-.198-.253-.547-.522-1.047-.805l-.414-.235c-.36-.206-.607-.383-.742-.531a.737.737 0 0 1-.203-.512c0-.229.092-.419.277-.57.185-.151.42-.227.703-.227.3 0 .754.12 1.364.36v-.75a4.91 4.91 0 0 0-1.41-.223zm-23.297.145v5.78h.813v-2.445h.766l1.644 2.446h1.008l-1.93-2.707c.779-.323 1.168-.87 1.168-1.64 0-.467-.148-.822-.445-1.067-.294-.245-.719-.367-1.274-.367zm17.266 0-2.082 6.937h.606l2.082-6.937zm8.946 0v5.78h.812v-2.296h.364c.74 0 1.317-.175 1.734-.524s.625-.83.625-1.445c0-.539-.152-.926-.457-1.16-.305-.237-.806-.356-1.504-.356zm-25.398.613h.515c.865 0 1.297.298 1.297.894 0 .81-.515 1.215-1.547 1.215h-.265zm26.21 0h.505c.487 0 .834.074 1.043.222.208.149.312.396.312.743 0 .409-.133.725-.398.949-.266.224-.642.336-1.13.336H561z"
-              />
-            </g>
-            <path strokeWidth=".933" d="M340.18 542.92h140.51v21.445H340.18z" />
+          />
+          <g id="sch_bridge_group_end" fill="hsl(var(--b2))">
             <path
-              fill="hsl(var(--bc))"
-              stroke="hsl(var(--bc))"
-              d="m355.41 530.47-2.894.72v.891l1.734-.433v6.844h-1.734v.867h4.628v-.867h-1.734zm6.393 0c-.758 0-1.522.182-2.291.545v1.02c.816-.465 1.525-.698 2.127-.698.507 0 .906.139 1.195.416.293.278.44.658.44 1.143 0 .758-.426 1.521-1.278 2.29l-.662.593c-1.023.925-1.703 1.78-2.04 2.566v1.014h5.163v-1.014h-3.768c.145-.715.68-1.465 1.606-2.25l.445-.38c.676-.575 1.137-1.063 1.383-1.466.25-.402.375-.863.375-1.382 0-.723-.246-1.303-.738-1.74s-1.145-.657-1.957-.657zm-17.561.217v8.672h1.218v-3.668h1.149l2.467 3.668h1.511l-2.894-4.06c1.168-.485 1.752-1.306 1.752-2.462 0-.699-.223-1.232-.668-1.6-.442-.367-1.078-.55-1.91-.55zm1.218.92h.774c1.297 0 1.945.447 1.945 1.342 0 1.214-.773 1.822-2.32 1.822h-.399z"
+              id="sch_bridge_alu_n_dec_end"
+              d="m401.11 172.34v423.5h12v-423.5z"
             />
-            <path strokeWidth=".933" d="M340.18 504.89h140.51v21.445H340.18z" />
             <path
-              fill="hsl(var(--bc))"
-              stroke="hsl(var(--bc))"
-              d="m355.41 493.44-2.894.72v.891l1.734-.433v6.844h-1.734v.867h4.628v-.867h-1.734zm7.588 0-2.895.72v.891l1.735-.433v6.844h-1.735v.867h4.63v-.867h-1.735zm-18.756.217v8.672h1.219v-3.668h1.148l2.467 3.668h1.512l-2.895-4.06c1.168-.485 1.752-1.306 1.752-2.462 0-.699-.223-1.232-.668-1.6-.441-.367-1.078-.55-1.91-.55zm1.219.92h.773c1.297 0 1.945.447 1.945 1.342 0 1.214-.773 1.822-2.32 1.822h-.398z"
+              id="sch_bridge_alu_n_cspr_end"
+              d="m401.26 172.75v188.96a6.0006 6.0006 0 0 0 6 6h27.705v-12h-21.705v-182.96z"
             />
-            <path strokeWidth=".933" d="M340.18 466.87h140.51v21.445H340.18z" />
             <path
-              fill="hsl(var(--bc))"
-              stroke="hsl(var(--bc))"
-              d="m355.41 455.44-2.894.72v.891l1.734-.433v6.844h-1.734v.867h4.628v-.867h-1.734zm6.686 0c-.91 0-1.645.416-2.203 1.248-.555.832-.833 1.932-.833 3.299 0 1.355.276 2.455.827 3.299.554.84 1.279 1.26 2.173 1.26.934 0 1.678-.415 2.233-1.243.558-.832.838-1.943.838-3.334 0-1.355-.28-2.449-.838-3.281-.555-.832-1.287-1.248-2.197-1.248zm-17.854.217v8.672h1.218v-3.668h1.149l2.467 3.668h1.511l-2.894-4.06c1.168-.485 1.752-1.306 1.752-2.462 0-.699-.223-1.232-.668-1.6-.442-.367-1.078-.55-1.91-.55zm17.854.65c1.207 0 1.81 1.215 1.81 3.645 0 2.484-.611 3.726-1.834 3.726-1.187 0-1.781-1.23-1.781-3.691 0-2.453.601-3.68 1.805-3.68zm-16.635.27h.773c1.297 0 1.945.447 1.945 1.342 0 1.214-.773 1.822-2.32 1.822h-.398z"
+              id="sch_bridge_dec_n_cspr_end"
+              d="m407.26 354.74a6.0006 6.0006 0 0 0-6 6v236.5h12v-230.5h21.705v-12h-6z"
             />
-            <path strokeWidth=".933" d="M158.95 542.92h140.51v21.445H158.95z" />
             <path
-              fill="hsl(var(--bc))"
-              stroke="hsl(var(--bc))"
-              d="M172.47 530.47c-.82 0-1.502.293-2.045.879-.539.582-.809 1.316-.809 2.203 0 .773.254 1.43.762 1.969a2.464 2.464 0 0 0 1.858.803c.746 0 1.412-.362 1.998-1.084 0 1.09-.204 1.94-.61 2.554-.402.61-.963.914-1.681.914-.516 0-1.141-.127-1.875-.38v.978c.722.18 1.31.27 1.763.27 1.13 0 2.024-.438 2.684-1.313.664-.879.996-2.064.996-3.557 0-1.312-.271-2.345-.814-3.1-.543-.757-1.286-1.136-2.227-1.136zm-10.236.217v8.672h1.219v-3.668h1.148l2.467 3.668h1.512l-2.895-4.06c1.168-.485 1.752-1.306 1.752-2.462 0-.699-.222-1.232-.668-1.6-.441-.367-1.078-.55-1.91-.55zm10.166.644c.543 0 .98.227 1.313.68.335.45.503 1.043.503 1.781 0 .469-.173.87-.521 1.201a1.73 1.73 0 0 1-1.248.498c-.52 0-.93-.193-1.23-.58-.297-.386-.446-.916-.446-1.588 0-.613.145-1.097.434-1.453.293-.359.691-.539 1.195-.539zm-8.947.276h.773c1.297 0 1.945.447 1.945 1.342 0 1.214-.773 1.822-2.32 1.822h-.398z"
+              id="sch_bridge_dec_n_pc_end"
+              d="m407.26 403.32a6.0006 6.0006 0 0 0-6 6v181.72h12v-175.72h21.705v-12h-6z"
             />
-            <path strokeWidth=".933" d="M158.95 504.89h140.51v21.445H158.95z" />
             <path
-              fill="hsl(var(--bc))"
-              stroke="hsl(var(--bc))"
-              d="M172.8 492.46c-.773 0-1.4.205-1.88.615-.481.41-.722.944-.722 1.6 0 .715.424 1.367 1.272 1.957-1.148.687-1.723 1.55-1.723 2.59 0 .703.262 1.271.785 1.705.528.43 1.217.644 2.069.644.867 0 1.574-.228 2.121-.685.55-.457.826-1.05.826-1.776 0-1.011-.654-1.838-1.963-2.478 1.078-.692 1.617-1.457 1.617-2.297 0-.555-.222-1.006-.668-1.354-.441-.347-1.019-.521-1.734-.521zm-10.559.223v8.672h1.219v-3.668h1.148l2.467 3.668h1.512l-2.895-4.061c1.168-.484 1.752-1.305 1.752-2.46 0-.7-.222-1.233-.668-1.6-.441-.368-1.078-.551-1.91-.551zm10.441.65c.441 0 .797.107 1.066.322.27.211.405.49.405.838 0 .653-.405 1.244-1.213 1.776-.649-.371-1.094-.684-1.336-.938a1.253 1.253 0 0 1-.358-.873c0-.332.133-.602.399-.809.266-.21.611-.316 1.037-.316zm-9.223.27h.774c1.297 0 1.945.447 1.945 1.341 0 1.215-.773 1.823-2.32 1.823h-.399zm8.637 3.498.82.486c.567.336.948.621 1.143.855.2.23.299.514.299.85 0 .418-.16.758-.48 1.02-.317.261-.727.392-1.231.392-.524 0-.946-.152-1.266-.457-.32-.309-.48-.71-.48-1.207 0-.398.082-.73.246-.996.168-.27.484-.584.949-.943z"
+              id="sch_bridge_dec_n_sp_end"
+              d="m407.26 378.52a6.0006 6.0006 0 0 0-6 6v205.49h12v-199.49h21.705v-12h-6z"
             />
-            <path strokeWidth=".933" d="M158.95 466.87h140.51v21.445H158.95z" />
             <path
-              fill="hsl(var(--bc))"
-              stroke="hsl(var(--bc))"
-              d="M162.24 454.69v8.672h1.219v-3.668h1.148l2.467 3.668h1.512l-2.895-4.06c1.168-.485 1.752-1.305 1.752-2.462 0-.699-.222-1.232-.668-1.6-.441-.366-1.078-.55-1.91-.55zm7.77 0v1.084h4.464l-2.367 3.809c-.531.859-.902 1.535-1.113 2.027-.207.492-.367 1.076-.48 1.752h1.33c.265-1.781 1.51-4.31 3.732-7.588v-1.084zm-6.551.92h.773c1.297 0 1.945.447 1.945 1.342 0 1.215-.773 1.822-2.32 1.822h-.398z"
+              id="sch_bridge_dec_n_lr_end"
+              d="m383.57 378.09v11.367h18.174v206.02h11.369v-211.7a5.6844 5.6844 0 0 0-5.6836-5.6836h-18.174z"
             />
-            <path strokeWidth=".933" d="M340.18 280.92h140.51v21.445H340.18z" />
             <path
-              fill="hsl(var(--bc))"
-              stroke="hsl(var(--bc))"
-              d="M355.05 268.46c-1.125 0-1.998.416-2.62 1.248-.616.832-.925 2-.925 3.504 0 1.367.27 2.435.809 3.205s1.287 1.154 2.244 1.154c.832 0 1.517-.29 2.056-.873.543-.582.815-1.324.815-2.226 0-.786-.242-1.428-.727-1.928-.48-.504-1.1-.756-1.857-.756-.836 0-1.53.358-2.08 1.072 0-2.355.738-3.533 2.215-3.533.52 0 1.187.156 2.004.469v-1.008c-.774-.219-1.418-.328-1.934-.328zm-10.816.223v8.672h1.219v-3.668h1.148l2.467 3.668h1.512l-2.895-4.061c1.168-.484 1.752-1.305 1.752-2.46 0-.7-.222-1.233-.668-1.6-.441-.368-1.078-.551-1.91-.551zm1.219.92h.773c1.297 0 1.946.447 1.946 1.341 0 1.215-.774 1.823-2.32 1.823h-.4zm9.146 3.017c.524 0 .932.188 1.225.563.297.375.445.89.445 1.547 0 .601-.148 1.082-.445 1.441-.293.355-.688.533-1.184.533-.55 0-.994-.219-1.33-.656-.332-.441-.498-1.025-.498-1.752 0-.461.176-.856.527-1.184a1.782 1.782 0 0 1 1.26-.492z"
+              id="sch_bridge_dec_n_r12_end"
+              d="m382.65 546.04v12h19.639v38.244h12v-44.244a6.0006 6.0006 0 0 0-6-6h-19.639z"
             />
-            <path strokeWidth=".933" d="M340.18 242.89h140.51v21.445H340.18z" />
             <path
-              fill="hsl(var(--bc))"
-              stroke="hsl(var(--bc))"
-              d="M344.24 230.69v8.672h1.219v-3.668h1.148l2.467 3.668h1.512l-2.895-4.06c1.168-.485 1.752-1.305 1.752-2.462 0-.699-.222-1.232-.668-1.6-.441-.366-1.078-.55-1.91-.55zm8.074 0v4.219c.223-.028.436-.041.639-.041 1.793 0 2.69.65 2.69 1.951 0 .59-.165 1.053-.493 1.389-.324.336-.771.504-1.342.504-.52 0-1.066-.116-1.64-.346v1.031c.554.121 1.05.182 1.488.182 1.008 0 1.795-.239 2.361-.715.57-.48.856-1.143.856-1.986 0-.907-.313-1.616-.938-2.127-.625-.512-1.494-.768-2.607-.768v-2.285h3.375v-1.008zm-6.855.92h.773c1.297 0 1.945.447 1.945 1.342 0 1.215-.773 1.822-2.32 1.822h-.398z"
+              id="sch_bridge_dec_n_r11_end"
+              d="m384.72 510.82v12h16.539v71.32h12v-77.32a6.0006 6.0006 0 0 0-6-6h-16.539z"
             />
-            <path strokeWidth=".933" d="M340.18 204.87h140.51v21.445H340.18z" />
             <path
-              fill="hsl(var(--bc))"
-              stroke="hsl(var(--bc))"
-              d="M344.24 192.69v8.672h1.219v-3.668h1.148l2.467 3.668h1.512l-2.895-4.06c1.168-.485 1.752-1.305 1.752-2.462 0-.699-.222-1.232-.668-1.6-.441-.366-1.078-.55-1.91-.55zm1.219.92h.773c1.297 0 1.946.447 1.946 1.342 0 1.215-.774 1.822-2.32 1.822h-.4z"
+              id="sch_bridge_dec_n_r10_end"
+              d="m383.69 472.58v12h17.572v109.57h12v-115.57a6.0006 6.0006 0 0 0-6-6h-17.572z"
             />
-            <path strokeWidth=".933" d="M158.95 280.92h140.51v21.445H158.95z" />
             <path
-              fill="hsl(var(--bc))"
-              stroke="hsl(var(--bc))"
-              d="M172.04 268.47a6.22 6.22 0 0 0-1.992.346v1.008c.695-.325 1.332-.487 1.91-.487 1.055 0 1.582.444 1.582 1.33 0 1.13-.8 1.694-2.402 1.694l-.405.006v.779h.457c1.707 0 2.56.61 2.56 1.828 0 .512-.173.93-.52 1.254-.344.32-.792.48-1.342.48-.477 0-1.13-.164-1.957-.492v1.078c.816.188 1.492.282 2.027.282.941 0 1.681-.233 2.22-.698.54-.465.81-1.105.81-1.922 0-1.207-.7-1.972-2.098-2.296 1.207-.434 1.81-1.16 1.81-2.18 0-1.34-.887-2.01-2.66-2.01zm-9.797.217v8.672h1.219v-3.668h1.148l2.467 3.668h1.512l-2.895-4.06c1.168-.485 1.752-1.306 1.752-2.462 0-.699-.222-1.232-.668-1.6-.441-.367-1.078-.55-1.91-.55zm1.219.92h.773c1.297 0 1.946.447 1.946 1.342 0 1.214-.774 1.822-2.32 1.822h-.4z"
+              id="sch_bridge_dec_n_r9_end"
+              d="m232.57 426.06a6.0006 6.0006 0 0 0-6 6v115.97h-24.807v12h30.807a6.0006 6.0006 0 0 0 6-6v-115.97h162.69v155.05h12v-161.05a6.0006 6.0006 0 0 0-6-6z"
             />
-            <path strokeWidth=".933" d="M158.95 242.89h140.51v21.445H158.95z" />
             <path
-              fill="hsl(var(--bc))"
-              stroke="hsl(var(--bc))"
-              d="M172.21 230.85c-.758 0-1.522.182-2.291.545v1.02c.816-.465 1.525-.698 2.127-.698.508 0 .906.139 1.195.416.293.278.44.658.44 1.143 0 .758-.426 1.521-1.278 2.29l-.662.593c-1.023.925-1.703 1.78-2.039 2.566v1.014h5.162v-1.014h-3.767c.144-.715.68-1.465 1.605-2.25l.446-.38c.675-.575 1.136-1.063 1.382-1.466.25-.402.375-.863.375-1.382 0-.723-.246-1.303-.738-1.74s-1.144-.657-1.957-.657zm-9.973.217v8.672h1.22v-3.668h1.147l2.467 3.668h1.512l-2.894-4.06c1.168-.485 1.752-1.306 1.752-2.462 0-.699-.223-1.232-.668-1.6-.442-.367-1.079-.55-1.91-.55zm1.22.92h.773c1.296 0 1.945.447 1.945 1.342 0 1.214-.774 1.822-2.32 1.822h-.399z"
+              id="sch_bridge_dec_n_r8_end"
+              d="m231.7 425.96a6.0006 6.0006 0 0 0-6 6v78.055h-24.119v12h30.119a6.0006 6.0006 0 0 0 6-6v-78.055h164.15v157.14h12v-163.14a6.0006 6.0006 0 0 0-6-6z"
             />
-            <path strokeWidth=".933" d="M158.95 204.87h140.51v21.445H158.95z" />
             <path
-              fill="hsl(var(--bc))"
-              stroke="hsl(var(--bc))"
-              d="m173.41 192.4-2.894.72v.891l1.734-.433v6.844h-1.735v.867h4.63v-.867h-1.735zm-11.168.217v8.672h1.219v-3.668h1.148l2.467 3.668h1.512l-2.895-4.06c1.168-.485 1.752-1.306 1.752-2.462 0-.699-.222-1.232-.668-1.6-.441-.367-1.078-.55-1.91-.55zm1.219.92h.773c1.297 0 1.946.447 1.946 1.342 0 1.214-.774 1.822-2.32 1.822h-.4z"
+              id="sch_bridge_dec_n_r7_end"
+              d="m231.7 425.96a6.0006 6.0006 0 0 0-6 6v38.586h-24.119v12h30.119a6.0006 6.0006 0 0 0 6-6v-38.586h164.15v157.14h12v-163.14a6.0006 6.0006 0 0 0-6-6z"
             />
-            <g fill="hsl(var(--bc))" stroke="hsl(var(--bc))">
-              <g id="schematic_cpu_alu" aria-label="ARITHMETIC LOGIC UNIT">
-                <path
-                  id="schematic_cpu_alu_box"
-                  fill="none"
-                  d="M63 103h511v70H63z"
-                  transform="translate(96)"
-                />
-                <path
-                  id="schematic_cpu_alu_label"
-                  fill="hsl(var(--bc))"
-                  stroke="hsl(var(--bc))"
-                  d="M310.9 118.39c-1.813 0-3.219.531-4.219 1.594-.995 1.062-1.492 2.557-1.492 4.484 0 1.932.49 3.427 1.469 4.485.979 1.052 2.367 1.578 4.164 1.578 1.349 0 2.594-.295 3.734-.883v-1.406c-1.25.672-2.422 1.007-3.515 1.007-1.271 0-2.274-.424-3.008-1.273-.734-.854-1.102-2.018-1.102-3.492 0-1.547.344-2.745 1.031-3.594.688-.849 1.66-1.273 2.915-1.273.859 0 2.08.273 3.664.82v-1.54c-1.39-.338-2.604-.507-3.64-.507zm39.359 0c-1.64 0-2.953.552-3.938 1.656-.979 1.1-1.468 2.568-1.468 4.406 0 1.828.487 3.3 1.46 4.414.98 1.11 2.271 1.665 3.876 1.665 1.682 0 3.015-.547 4-1.641.984-1.099 1.476-2.583 1.476-4.453 0-1.833-.492-3.3-1.476-4.399-.985-1.099-2.295-1.648-3.93-1.648zm17.703 0c-1.797 0-3.193.534-4.188 1.602-.994 1.062-1.492 2.552-1.492 4.468 0 1.954.49 3.454 1.47 4.5.983 1.047 2.395 1.57 4.233 1.57 1.042 0 2.263-.2 3.665-.6v-4.68h-1.633v3.765c-.636.193-1.227.29-1.774.29-1.333 0-2.37-.423-3.109-1.267-.74-.848-1.11-2.036-1.11-3.562 0-1.542.344-2.737 1.032-3.586.693-.849 1.664-1.273 2.914-1.273.849 0 2.07.27 3.664.812v-1.515c-1.27-.35-2.495-.524-3.672-.524zm26.203 0c-1.813 0-3.219.531-4.219 1.594-.995 1.062-1.492 2.557-1.492 4.484 0 1.932.49 3.427 1.469 4.485.979 1.052 2.367 1.578 4.164 1.578 1.349 0 2.594-.295 3.734-.883v-1.406c-1.25.672-2.422 1.007-3.515 1.007-1.271 0-2.274-.424-3.008-1.273-.734-.854-1.102-2.018-1.102-3.492 0-1.547.344-2.745 1.031-3.594.688-.849 1.66-1.273 2.915-1.273.859 0 2.08.273 3.664.82v-1.54c-1.39-.338-2.605-.507-3.64-.507zm-214.89.29-4.586 11.561h1.523l1.274-3.203h4.898l1.258 3.203h1.773L180.9 118.68h-1.625zm12.812 0v11.561h1.625v-4.89h1.531l3.29 4.89h2.015l-3.86-5.414c1.558-.646 2.336-1.74 2.336-3.281 0-.933-.296-1.643-.89-2.133-.589-.49-1.438-.734-2.547-.734h-3.5zm15.109 0v11.561h1.64V118.68h-1.64zm8.266 0v1.226h4.101v10.336h1.64v-10.336h4.102v-1.227h-9.843zm16.469 0v11.561h1.64v-5.46h5.5v5.46h1.64V118.68h-1.64v4.875h-5.5v-4.875h-1.64zm16.758 0v11.561h1.406v-9.43l3.094 8.657h1.585l3.188-8.633v9.406h1.531v-11.562h-2.031l-3.297 8.945-3.203-8.945h-2.273zm18.78 0v11.561h6.797v-1.227h-5.156v-4.187h4.04v-1.21h-4.04v-3.712h4.82v-1.226h-6.46zm12.32 0v1.226h4.102v10.336h1.64v-10.336h4.102v-1.227h-9.843zm16.462 0v11.561h1.64V118.68h-1.64zm35.75 0v11.561h6.843v-1.227h-5.203v-10.336h-1.64zm47.516 0v11.561h1.64V118.68h-1.64zm35.656 0v7.28c0 1.558.343 2.709 1.03 3.453s1.753 1.118 3.196 1.118c1.417 0 2.448-.36 3.094-1.079.65-.718.976-1.867.976-3.445v-7.328h-1.437v7.352c0 1.187-.193 2.03-.578 2.53-.38.496-1.029.743-1.945.743-.938 0-1.623-.263-2.055-.789-.427-.531-.64-1.378-.64-2.54v-7.296h-1.641zm16.18 0v11.561h1.406v-8.93l5.828 8.93h1.602V118.68h-1.407v8.93l-5.82-8.93h-1.61zm16.812 0v11.561h1.64V118.68h-1.64zm8.265 0v1.226h4.102v10.336h1.64v-10.336h4.102v-1.227h-9.844zm-106.17.937c1.146 0 2.042.424 2.688 1.273.65.849.976 2.026.976 3.531 0 1.552-.323 2.755-.968 3.61-.646.849-1.56 1.273-2.743 1.273-1.13 0-2.015-.432-2.656-1.297-.64-.865-.96-2.052-.96-3.562 0-1.516.322-2.698.968-3.547.646-.854 1.544-1.282 2.695-1.282zm-156.55.289h1.031c1.73 0 2.594.596 2.594 1.789 0 1.62-1.031 2.43-3.094 2.43h-.53v-4.22zm-13.773.93 1.969 4.984h-3.945l1.976-4.985z"
-                />
-              </g>
-              <g id="schematic_cpu_dec" aria-label="INSTRUCTION DECODER">
-                <path
-                  id="schematic_cpu_dec_box"
-                  fill="none"
-                  d="M63 595h511v70H63z"
-                  transform="translate(96)"
-                />
-                <path
-                  id="schematic_cpu_dec_label"
-                  fill="hsl(var(--bc))"
-                  stroke="hsl(var(--bc))"
-                  d="M202.17 611.15c-1 0-1.823.29-2.469.867-.646.573-.969 1.305-.969 2.195 0 .662.201 1.243.602 1.743.406.494 1.102 1.023 2.086 1.586l.797.46c.692.391 1.166.745 1.422 1.063.26.318.39.703.39 1.156 0 .552-.198.998-.593 1.336-.391.339-.91.508-1.555.508-.839 0-1.909-.302-3.211-.906v1.625c1.208.338 2.2.508 2.977.508 1.224 0 2.205-.305 2.945-.915.745-.609 1.117-1.416 1.117-2.421 0-.709-.198-1.316-.594-1.82-.396-.506-1.093-1.042-2.093-1.61l-.829-.469c-.718-.411-1.213-.766-1.484-1.062s-.406-.638-.406-1.024c0-.458.185-.838.554-1.14.37-.302.839-.454 1.407-.454.599 0 1.507.24 2.726.72v-1.5c-.99-.298-1.93-.446-2.82-.446zm62.18 0c-1.813 0-3.219.531-4.219 1.594-.995 1.062-1.492 2.557-1.492 4.484 0 1.933.49 3.427 1.469 4.485.979 1.052 2.367 1.578 4.164 1.578 1.349 0 2.594-.295 3.734-.883v-1.406c-1.25.672-2.422 1.007-3.515 1.007-1.271 0-2.274-.424-3.008-1.273-.734-.854-1.102-2.018-1.102-3.492 0-1.547.344-2.745 1.031-3.594s1.66-1.273 2.915-1.273c.859 0 2.08.273 3.664.82v-1.54c-1.39-.338-2.604-.507-3.64-.507zm40.492 0c-1.64 0-2.953.552-3.938 1.656-.979 1.1-1.468 2.568-1.468 4.406 0 1.829.487 3.3 1.46 4.415.98 1.109 2.271 1.664 3.876 1.664 1.682 0 3.015-.547 4-1.641.984-1.099 1.476-2.583 1.476-4.453 0-1.833-.492-3.3-1.476-4.398-.985-1.1-2.295-1.649-3.93-1.649zm75.273 0c-1.813 0-3.219.531-4.219 1.594-.995 1.062-1.492 2.557-1.492 4.484 0 1.933.49 3.427 1.469 4.485.979 1.052 2.367 1.578 4.164 1.578 1.349 0 2.594-.295 3.734-.883v-1.406c-1.25.672-2.422 1.007-3.515 1.007-1.271 0-2.274-.424-3.008-1.273-.734-.854-1.102-2.018-1.102-3.492 0-1.547.344-2.745 1.031-3.594s1.66-1.273 2.915-1.273c.859 0 2.08.273 3.664.82v-1.54c-1.39-.338-2.604-.507-3.64-.507zm15.766 0c-1.64 0-2.953.552-3.937 1.656-.98 1.1-1.47 2.568-1.47 4.406 0 1.829.488 3.3 1.462 4.415.979 1.109 2.27 1.664 3.875 1.664 1.682 0 3.015-.547 4-1.641.984-1.099 1.476-2.583 1.476-4.453 0-1.833-.492-3.3-1.476-4.398-.985-1.1-2.295-1.649-3.93-1.649zm-222.94.29V623h1.64v-11.56h-1.64zm9.617 0V623h1.406v-8.93l5.829 8.93h1.601v-11.56h-1.406v8.93l-5.82-8.93h-1.61zm29.086 0v1.226h4.102v10.336h1.64v-10.336h4.102v-1.227h-9.844zm16.47 0V623h1.624v-4.89h1.531l3.29 4.89h2.015l-3.86-5.414c1.558-.646 2.337-1.74 2.337-3.281 0-.933-.297-1.643-.891-2.133-.589-.49-1.438-.734-2.547-.734h-3.5zm15.022 0v7.28c0 1.558.344 2.709 1.031 3.453.688.745 1.753 1.118 3.196 1.118 1.416 0 2.448-.36 3.094-1.079.65-.718.976-1.867.976-3.445v-7.328h-1.437v7.352c0 1.187-.193 2.03-.579 2.53-.38.496-1.028.743-1.945.743-.937 0-1.622-.263-2.055-.789-.427-.531-.64-1.378-.64-2.54v-7.296h-1.64zm30.898 0v1.226h4.102v10.336h1.64v-10.336h4.102v-1.227h-9.844zm16.461 0V623h1.64v-11.56h-1.64zm27.047 0V623h1.406v-8.93l5.829 8.93h1.601v-11.56h-1.406v8.93l-5.82-8.93h-1.61zm26.883 0V623h3.867c1.844 0 3.274-.529 4.29-1.586 1.015-1.057 1.523-2.547 1.523-4.469 0-1.583-.409-2.859-1.227-3.828a4.28 4.28 0 0 0-1.836-1.297c-.703-.255-1.627-.382-2.773-.382h-3.844zm16.984 0V623h6.797v-1.227h-5.156v-4.187h4.039v-1.21h-4.04v-3.712h4.821v-1.226h-6.46zm47.172 0V623h3.867c1.844 0 3.274-.529 4.29-1.586 1.015-1.057 1.523-2.547 1.523-4.469 0-1.583-.409-2.859-1.227-3.828a4.28 4.28 0 0 0-1.836-1.297c-.703-.255-1.627-.382-2.773-.382h-3.844zm16.984 0V623h6.797v-1.227h-5.156v-4.187h4.039v-1.21h-4.04v-3.712h4.821v-1.226h-6.46zm13.672 0V623h1.625v-4.89h1.531l3.29 4.89h2.015l-3.86-5.414c1.558-.646 2.337-1.74 2.337-3.281 0-.933-.297-1.643-.891-2.133-.589-.49-1.438-.734-2.547-.734h-3.5zm-134.4.937c1.146 0 2.042.424 2.688 1.273.65.849.976 2.026.976 3.531 0 1.552-.323 2.755-.968 3.61-.646.849-1.56 1.273-2.743 1.273-1.13 0-2.015-.432-2.656-1.297-.64-.865-.96-2.052-.96-3.562 0-1.516.322-2.698.968-3.547.646-.854 1.544-1.282 2.695-1.282zm91.04 0c1.145 0 2.04.424 2.687 1.273.65.849.976 2.026.976 3.531 0 1.552-.323 2.755-.968 3.61-.646.849-1.56 1.273-2.743 1.273-1.13 0-2.015-.432-2.656-1.297-.64-.865-.96-2.052-.96-3.562 0-1.516.322-2.698.968-3.547.646-.854 1.544-1.282 2.695-1.282zm-166.14.289h1.03c1.73 0 2.594.596 2.594 1.789 0 1.62-1.031 2.43-3.094 2.43h-.53v-4.22zm116.33 0h1.35c1.12 0 1.96.088 2.516.265a3.027 3.027 0 0 1 1.438.969c.661.776.992 1.844.992 3.203 0 1.448-.336 2.602-1.008 3.461-.625.807-1.687 1.21-3.187 1.21h-2.102v-9.108zm64.155 0h1.352c1.12 0 1.958.088 2.515.265a3.027 3.027 0 0 1 1.438.969c.661.776.992 1.844.992 3.203 0 1.448-.336 2.602-1.008 3.461-.625.807-1.687 1.21-3.187 1.21h-2.102v-9.108zm30.641 0h1.031c1.73 0 2.594.596 2.594 1.789 0 1.62-1.031 2.43-3.094 2.43h-.53v-4.22z"
-                />
-              </g>
-              <g
-                id="schematic_cpu_mmu"
-                aria-label="MEMORY MANAGEMENT UNIT"
-                transform="rotate(90.013)"
-              >
-                <path
-                  id="schematic_cpu_mmu_box"
-                  fill="none"
-                  stroke="hsl(var(--bc))"
-                  strokeWidth=".81"
-                  d="M576.58 204.03h92.184V344.8H576.58z"
-                  transform="rotate(269.99)"
-                />
-                <path
-                  id="schematic_cpu_mmu_label"
-                  fill="hsl(var(--bc))"
-                  stroke="hsl(var(--bc))"
-                  strokeWidth=".805"
-                  d="M211.74-623.15c0 1.254.277 2.181.83 2.781.554.6 1.411.902 2.573.902 1.141 0 1.972-.29 2.492-.87.525-.579.787-1.504.787-2.775v-5.903h-1.158l.001 5.922c0 .957-.155 1.637-.466 2.04-.306.398-.828.598-1.566.598-.755 0-1.308-.213-1.657-.637-.344-.428-.516-1.11-.516-2.045v-5.877h-1.32v5.864zm.075-12.66h1.133v-7.594l2.492 6.972h1.277l2.567-6.954v7.576h1.234v-9.313h-1.637l-2.654 7.205-2.58-7.205h-1.832v9.313zm0-16.109h1.133v-7.594l2.492 6.972h1.278l2.566-6.954v7.576h1.235v-9.313h-1.637l-2.655 7.207-2.58-7.207h-1.832v9.313zm12.957 32.218 1.133.002v-7.194l4.694 7.193h1.29v-9.313h-1.132v7.191l-4.688-7.192h-1.297v9.313zm1.077-16.108h1.226l1.025-2.58h3.946l1.014 2.58h1.428l-3.637-9.314h-1.309l-3.693 9.314zm1.094-16.11h5.474v-.988h-4.152v-3.372h3.253v-.975l-3.254-.001.001-2.989h3.883v-.989l-5.205.001v9.313zm1.542 12.548 1.593-4.016 1.584 4.015-3.177.001zm9.47-12.549h1.132v-7.594l2.492 6.972h1.278l2.566-6.954.002 7.576h1.233v-9.313h-1.637l-2.655 7.207-2.58-7.207h-1.832v9.313zm.358 32.219h1.323v-9.313h-1.323v9.313zm1.55-16.11 1.132.002-.001-7.194 4.695 7.193h1.289l.002-9.313h-1.133v7.191l-4.69-7.192h-1.295v9.313zm5.109 7.784 3.302.001v8.324h1.323v-8.324h3.302v-.99l-7.928.003v.986zm7.344-7.783h1.226l1.025-2.58h3.945l1.015 2.58h1.427l-3.637-9.314h-1.308l-3.693 9.314zm.22-20.772c0 1.473.392 2.657 1.176 3.554.789.894 1.83 1.342 3.121 1.342 1.355 0 2.428-.44 3.22-1.321.794-.886 1.191-2.083 1.191-3.589 0-1.476-.397-2.657-1.19-3.542-.793-.885-1.847-1.328-3.164-1.328-1.322 0-2.379.446-3.172 1.335-.789.885-1.183 2.068-1.183 3.55zm1.402-.006c0-1.22.26-2.174.78-2.858.52-.688 1.245-1.031 2.172-1.031.923 0 1.644.34 2.164 1.025.525.683.786 1.633.786 2.845 0 1.25-.26 2.218-.78 2.906-.52.684-1.257 1.026-2.21 1.026-.91 0-1.622-.348-2.138-1.044s-.774-1.652-.774-2.87zm1.013 17.217 1.591-4.016 1.587 4.015-3.178.001zm10.83-1.096c0 1.573.394 2.781 1.183 3.624.793.844 1.93 1.265 3.41 1.265.84 0 1.823-.162 2.951-.485l.002-3.767-1.317-.002v3.033a4.936 4.936 0 0 1-1.427.233c-1.074 0-1.91-.34-2.506-1.02-.596-.683-.893-1.639-.893-2.868 0-1.242.277-2.205.831-2.889.558-.684 1.34-1.026 2.348-1.026.683 0 1.667.22 2.95.656v-1.221a11.159 11.159 0 0 0-2.957-.423c-1.447 0-2.571.432-3.372 1.292-.802.855-1.203 2.054-1.203 3.598zm1.34-11.451h1.308l.001-3.94h1.233l2.649 3.938 1.625.002-3.11-4.363c1.254-.52 1.882-1.399 1.882-2.64 0-.752-.24-1.325-.717-1.72-.474-.394-1.158-.59-2.051-.59h-2.82v9.313zm1.31-4.928-.002-3.399.832.002c1.393 0 2.089.48 2.089 1.441 0 1.305-.831 1.956-2.492 1.956h-.428zm9.771-4.385 3.11 5.423-.002 3.889 1.322.001.001-3.914 3.327-5.4-1.226.001-2.605 4.202-2.417-4.203h-1.51zm1.467 25.422h5.475v-.988h-4.155l.002-3.374 3.252.001.001-.976h-3.254v-2.988h3.882v-.989l-5.203.001v9.313zm11.012 0 1.133-.001v-7.594l2.492 6.972h1.277l2.567-6.954v7.576h1.234v-9.312h-1.637l-2.654 7.206-2.58-7.207h-1.832v9.313zm15.127 0h5.475v-.988l-4.153-.001v-3.371h3.253v-.975l-3.254-.002.002-2.988h3.88l.002-.99-5.205.002v9.313zm11.012-.001 1.133.002v-7.194l4.695 7.193h1.29v-9.313h-1.134v7.191l-4.687-7.192h-1.297v9.313zm12.46-8.325 3.304.001v8.324h1.32v-8.324h3.305v-.987h-7.93v.986z"
-                />
-              </g>
-            </g>
-            <g id="schematic_cpu_cu">
-              <path
-                id="schematic_cpu_cu_box"
-                stroke="hsl(var(--bc))"
-                strokeWidth=".81"
-                d="M576.58 424.03h92.184V564.8H576.58z"
-              />
-              <path
-                id="schematic_cpu_cu_label"
-                fill="hsl(var(--bc))"
-                stroke="hsl(var(--bc))"
-                strokeWidth=".805"
-                d="M431.26-656.62c0 1.556.394 2.761 1.183 3.613.788.847 1.906 1.27 3.353 1.27a6.47 6.47 0 0 0 3.01-.71v-1.134c-1.007.541-1.951.811-2.832.811-1.024 0-1.83-.34-2.422-1.024-.592-.688-.888-1.625-.888-2.813 0-1.246.276-2.21.83-2.894s1.336-1.026 2.347-1.026c.692 0 1.676.219 2.951.66v-1.24c-1.12-.272-2.097-.409-2.931-.409-1.46 0-2.593.429-3.399 1.284-.8.856-1.202 2.06-1.202 3.612zm.473 17.31c0 1.254.277 2.181.83 2.781s1.41.9 2.573.9c1.14 0 1.972-.289 2.492-.868.524-.579.786-1.504.786-2.775l.001-5.903h-1.158v5.922c0 .957-.155 1.637-.465 2.04-.306.398-.828.598-1.566.598-.756 0-1.309-.213-1.657-.637-.344-.428-.516-1.109-.516-2.045v-5.877h-1.322l.002 5.864zm12.47-17.323c0 1.472.393 2.659 1.177 3.556.789.894 1.83 1.34 3.122 1.34 1.355 0 2.43-.44 3.222-1.321.793-.886 1.189-2.08 1.189-3.587 0-1.476-.396-2.657-1.189-3.542-.792-.886-1.849-1.328-3.166-1.328-1.321 0-2.377.444-3.17 1.333-.788.885-1.184 2.068-1.184 3.55zm.562 20.771h1.133l-.002-7.192 4.695 7.193h1.291v-9.313h-1.133v7.192l-4.69-7.193h-1.294v9.313zm.843-20.778c0-1.22.26-2.174.78-2.858.52-.688 1.243-1.031 2.17-1.031.923 0 1.646.343 2.167 1.026.524.684.785 1.632.785 2.844 0 1.25-.26 2.218-.78 2.906-.52.684-1.257 1.026-2.21 1.026-.91 0-1.622-.348-2.138-1.044s-.774-1.652-.774-2.869zm12.698 20.778h1.322v-9.313h-1.322v9.313zm.485-16.109h1.132v-7.192l4.694 7.193h1.29v-9.313h-1.132v7.191l-4.688-7.192h-1.297v9.313zm6.173 7.784h3.303v8.325h1.322v-8.324l3.303-.001v-.988h-7.928v.988zm6.286-16.11 3.304.002v8.324h1.32v-8.324l3.305-.001v-.988h-7.93v.988zm13.266 8.326h1.308v-3.938h1.234l2.65 3.939h1.622l-3.108-4.361c1.254-.52 1.88-1.402 1.88-2.643 0-.751-.239-1.325-.717-1.72-.474-.393-1.158-.59-2.051-.59h-2.819v9.313zm1.307-4.926.001-3.399h.83c1.393 0 2.09.48 2.09 1.441 0 1.305-.83 1.958-2.491 1.958h-.43zm10.32.263c0 1.472.392 2.659 1.177 3.556.788.894 1.83 1.34 3.121 1.34 1.355 0 2.43-.44 3.223-1.322.792-.885 1.188-2.08 1.188-3.586 0-1.476-.395-2.657-1.188-3.542-.793-.886-1.85-1.328-3.166-1.328-1.322 0-2.38.444-3.172 1.333-.789.885-1.183 2.068-1.183 3.55zm1.405-.006c0-1.221.258-2.172.778-2.856.52-.688 1.245-1.034 2.172-1.034.923 0 1.644.344 2.164 1.027.524.684.788 1.631.788 2.844 0 1.25-.26 2.22-.78 2.908-.521.684-1.257 1.024-2.21 1.024-.91 0-1.622-.348-2.138-1.044-.516-.697-.775-1.653-.775-2.87zm13.183 4.669h5.511v-.988l-4.191.001v-8.326h-1.32v9.313z"
-                transform="rotate(90.013)"
-              />
-            </g>
+            <path
+              id="sch_bridge_dec_n_r6_end"
+              d="m382.84 285.63v12h19.004v297.48h12v-303.48a6.0006 6.0006 0 0 0-6-6h-19.004z"
+            />
+            <path
+              id="sch_bridge_dec_n_r5_end"
+              d="m382.84 247.62v12h19.004v335.48h12v-341.48a6.0006 6.0006 0 0 0-6-6h-19.004z"
+            />
+            <path
+              id="sch_bridge_dec_n_r4_end"
+              d="m382.84 208.88v12h19.004v374.22h12v-380.22a6.0006 6.0006 0 0 0-6-6h-19.004z"
+            />
+            <path
+              id="sch_bridge_dec_n_r3_end"
+              d="m202.31 287.82v12h22.658v42.238a6.0006 6.0006 0 0 0 6 6h170.88v244.85h12v-250.85a6.0006 6.0006 0 0 0-6-6h-170.88v-42.238a6.0006 6.0006 0 0 0-6-6h-22.658z"
+            />
+            <path
+              id="sch_bridge_dec_n_r2_end"
+              d="m202.31 248.35v12h23.389v81.707a6.0006 6.0006 0 0 0 6 6h170.15v245.58h12v-251.58a6.0006 6.0006 0 0 0-6-6h-170.15v-81.707a6.0006 6.0006 0 0 0-6-6h-23.389z"
+            />
+            <path
+              id="sch_bridge_dec_n_r1_end"
+              d="m201.58 209.42v11.955h23.393v120.23a5.9783 5.9783 0 0 0 5.9785 5.9785h170.94v247.33h11.955v-253.31a5.9783 5.9783 0 0 0-5.9785-5.9766h-170.94v-120.23a5.9783 5.9783 0 0 0-5.9766-5.9785h-23.395z"
+            />
+            <path
+              id="sch_bridge_cu_n_pc_end"
+              d="m529.43 403.32v12h23.369v-12h-17.369z"
+            />
+            <path
+              id="sch_bridge_cu_n_mmu_end"
+              d="m551.01 344.49v80.061h12.158v-80.061z"
+            />
+            <path
+              id="sch_bridge_cu_n_dec_end"
+              d="m520.13 563.61v15.504h-117.84v12h123.84a6.0006 6.0006 0 0 0 6-6v-21.504z"
+            />
+          </g>
+          <g id="sch_cpu_clk_group_end">
+            <path
+              id="sch_cpu_clk_blinker_end"
+              fill="hsl(var(--b2))"
+              d="m110.43 387.92a17.935 17.935 0 0 1 24.234-7.4852 17.935 17.935 0 0 1 7.4852 24.234 17.935 17.935 0 0 1-24.234 7.4852 17.935 17.935 0 0 1-7.4852-24.234z"
+            />
+            <path
+              id="sch_cpu_clk_label_execute_end"
+              fillOpacity="0"
+              fill="hsl(var(--b3))"
+              d="m125.43 338.25c-0.20064 2e-3 -0.39936 0.0104-0.59143 0.0203-2.6869 0.13815-4.7303 1.0333-6.1317 2.6846-1.3937 1.6509-2.0168 3.9041-1.87 6.7608 0.14728 2.8644 0.98724 5.042 2.5194 6.5347 1.5317 1.485 3.6304 2.1606 6.2941 2.0236 1.9997-0.10283 3.8218-0.63513 5.4678-1.5945l-0.10727-2.0845c-1.8018 1.0913-3.513 1.6793-5.1344 1.7627-1.8839 0.0969-3.4041-0.45578-4.5574-1.6583-1.1538-1.2102-1.7866-2.9088-1.899-5.0938-0.1179-2.2931 0.30089-4.096 1.2553-5.4069 0.95444-1.3109 2.3633-2.012 4.224-2.1077 1.2739-0.0655 3.105 0.24643 5.4939 0.93642l-0.11887-2.2816c-1.8264-0.34637-3.4398-0.51294-4.8445-0.49576zm16.676 2.7136-4.6705 9.7469c-0.99878 2.0847-1.2747 3.8472-0.83206 5.2851 0.44264 1.438 1.6289 2.6204 3.5602 3.5456 1.8964 0.90862 3.5074 1.0872 4.8329 0.53926 1.3325-0.54459 2.5045-1.8709 3.5167-3.9834l4.6995-9.8107-1.925-0.92192-4.714 9.8397c-0.76161 1.5897-1.561 2.5959-2.3976 3.018-0.82631 0.41851-1.8518 0.33567-3.0789-0.25224-1.255-0.60125-2.0026-1.3929-2.2439-2.3744-0.23099-0.98507 0.0234-2.2547 0.76828-3.8095l4.6821-9.7701zm-35.268 1.2234-8.4336 4.5662 8.1698 15.093 8.8743-4.801-0.86688-1.6032-6.7318 3.6442-2.96-5.4649 5.2736-2.8557-0.85529-1.58-5.2735 2.8557-2.6237-4.8445 6.294-3.4065zm54.75 10.605-1.4525 1.0988 3.6732 4.8532-12.234 9.2599 1.4699 1.9424 12.234-9.2599 3.6732 4.8561 1.4525-1.0988zm-71.322 0.22903-1.3974 1.8207 2.4846 7.3812-7.6451-0.6726-1.754 2.2816 10.077 0.91614 3.3572 9.7672 1.4061-1.8294-2.644-7.7262 8.0538 0.69289 1.754-2.2787-10.463-0.95093zm-11.834 18.969-2.2265 9.3295 16.696 3.9805 2.3396-9.8136-1.7714-0.42327-1.7743 7.445-6.0476-1.4409 1.3916-5.8331-1.7482-0.41458-1.3916 5.8302-5.3576-1.2785 1.6612-6.958zm95.521 1.5858-16.734 3.8211 2.2468 9.8339 1.7743-0.40298-1.7018-7.4624 6.0592-1.3829 1.3336 5.8447 1.754-0.40007-1.3365-5.8447 5.3721-1.2263 1.5916 6.9753 1.7743-0.40588z"
+            />
+            <path
+              id="sch_cpu_clk_label_decode_end"
+              fillOpacity="0"
+              fill="hsl(var(--b3))"
+              d="m118.4 341.22c-2.1234 0.0692-3.9248 0.30946-5.4069 0.7219-2.5919 0.72121-4.391 2.04-5.3982 3.9573-0.99979 1.9153-1.1176 4.2514-0.35079 7.0072 0.76889 2.7632 2.0639 4.7079 3.8848 5.8302 1.8189 1.1149 4.0144 1.3151 6.584 0.60012 1.929-0.53677 3.5925-1.4558 4.9894-2.7513l-0.55953-2.0091c-1.5202 1.4582-3.063 2.403-4.627 2.8383-1.8173 0.50568-3.4217 0.2985-4.8097-0.62332-1.3901-0.92926-2.3764-2.4468-2.9629-4.5546-0.61554-2.2121-0.60184-4.0614 0.0435-5.549 0.64534-1.4876 1.8666-2.4808 3.6616-2.9803 1.229-0.34191 3.0845-0.43903 5.5664-0.28702zm17.482 0.62333c-1.5064-0.0318-2.8878 0.36864-4.1458 1.2031-1.8203 1.2083-3.0782 3.1328-3.7718 5.7722-0.68966 2.6245-0.54579 4.9208 0.43198 6.8884 0.98722 1.962 2.6314 3.2449 4.9343 3.8501 2.4151 0.63464 4.5378 0.35231 6.3636-0.84655 1.8278-1.2063 3.0925-3.1517 3.7979-5.836 0.69162-2.632 0.53766-4.9219-0.46097-6.871-0.99861-1.949-2.6706-3.2331-5.0184-3.8501-0.73603-0.19342-1.4462-0.29577-2.1309-0.3102zm0.17685 1.8728c0.47703-3e-3 0.97376 0.0643 1.4902 0.20004 1.645 0.43225 2.7706 1.3787 3.3775 2.8412 0.61435 1.4644 0.64031 3.2779 0.0725 5.4388-0.58552 2.2282-1.5048 3.8328-2.7542 4.8155-1.2474 0.97514-2.7181 1.2404-4.4154 0.79436-1.6225-0.42638-2.7317-1.3815-3.3253-2.8644-0.59359-1.4829-0.60458-3.3081-0.0348-5.4765 0.57177-2.1759 1.4807-3.7505 2.7281-4.7256 0.85897-0.67556 1.812-1.0175 2.8615-1.0234zm-39.759 5.9751-7.2392 6.2883 11.252 12.959 7.6161-6.613-1.1916-1.3742-5.7809 5.0155-4.0733-4.6937 4.5256-3.9283-1.1771-1.3597-4.5285 3.9312-3.6094-4.1603 5.4011-4.6908zm60.424 1.8497-12.391 11.878 3.9718 4.1429c1.8939 1.9756 3.9294 2.9665 6.1056 2.9687 2.1762 2e-3 4.2956-0.98585 6.3549-2.96 1.6966-1.6264 2.6431-3.3732 2.8412-5.2446 0.12326-1.1784-0.0416-2.2781-0.49575-3.2992-0.4488-1.0156-1.2612-2.1381-2.4382-3.3659zm0.3711 3.018 1.3858 1.4496c1.1503 1.1999 1.9192 2.1896 2.3019 2.9687 0.38835 0.77368 0.53363 1.6173 0.43776 2.5339-0.15209 1.5059-0.95548 2.9582-2.4121 4.3545-1.5515 1.4873-3.1349 2.3131-4.7459 2.4759-1.507 0.15956-3.0311-0.56417-4.572-2.1715l-2.157-2.2526zm-71.705 12.594c-0.72557 9e-3 -1.4241 0.12087-2.0961 0.3363-1.1279 0.3631-2.0672 0.95804-2.818 1.7859-0.74785 0.82069-1.4453 2.0166-2.0932 3.5891l-2.1744 5.2765 15.87 6.5376 2.186-5.3054c1.0426-2.5304 1.1261-4.7923 0.24933-6.784-0.87671-1.9918-2.633-3.5316-5.2707-4.6183-1.3581-0.55958-2.6437-0.83212-3.853-0.81756zm-0.16815 2.5802c0.99941-3e-3 2.0839 0.23567 3.2499 0.71609 1.9872 0.81874 3.3811 1.9318 4.1806 3.3398 0.75454 1.3143 0.70613 3.0004-0.14207 5.059l-1.1886 2.8846-12.501-5.1489 0.76537-1.8554c0.6332-1.5368 1.2277-2.6374 1.7859-3.3021 0.55105-0.66763 1.2652-1.144 2.1425-1.4264 0.53966-0.17587 1.1079-0.26494 1.7076-0.26672zm86.598 2.4846-16.395 5.0793 2.9861 9.6368 1.7395-0.53924-2.2671-7.3116 5.9374-1.8381 1.7743 5.7258 1.7192-0.53055-1.7743-5.7287 5.2591-1.6293 2.1193 6.8362 1.7395-0.53923z"
+            />
+            <path
+              id="sch_cpu_clk_label_fetch_end"
+              fillOpacity="0"
+              fill="hsl(var(--b3))"
+              d="m128.53 351.56-14.562 1.2002 0.14784 1.8149 6.0679-0.49866 1.2611 15.29 2.4266-0.20005-1.2611-15.29 6.0679-0.50155zm13.681 3.6268c-0.96183 0.0194-1.8748 0.22477-2.7397 0.6117-1.9699 0.8874-3.5059 2.6508-4.6068 5.291-1.1038 2.6473-1.2884 4.9732-0.55084 6.9811 0.74049 2.0007 2.3421 3.5165 4.8039 4.543 1.8481 0.77059 3.7225 1.0767 5.6214 0.92192l0.80306-1.925c-2.0964 0.20643-3.8939-4e-3 -5.3924-0.62911-1.7411-0.72596-2.8708-1.879-3.392-3.4616-0.51818-1.5898-0.35784-3.3933 0.48415-5.4127 0.88366-2.1193 2.0405-3.5668 3.4674-4.3371 1.4269-0.77037 3.0001-0.79531 4.7198-0.0782 1.1774 0.4909 2.6919 1.5614 4.5488 3.2151l0.88134-2.1077c-1.7118-1.2582-3.2795-2.1824-4.6995-2.7745-1.3968-0.5824-2.712-0.86289-3.9486-0.83785zm-36.39 0.45225-8.3988 4.627 8.28 15.035 8.8366-4.8677-0.87843-1.5945-6.7028 3.6906-3.0006-5.4417 5.2532-2.8933-0.86974-1.5742-5.2504 2.8904-2.6585-4.8242 6.268-3.4529zm55.072 10.524-13.53 10.556 1.496 1.9192 6.3926-4.9836 5.0213 6.4361-6.3926 4.9865 1.4989 1.9192 13.533-10.556-1.4988-1.9192-5.7055 4.4502-5.0213-6.439 5.7055-4.4502zm-71.194 0.27541-6.0186 7.4682 13.368 10.765 1.5279-1.8961-6.0708-4.888 3.7689-4.6792-1.4003-1.1249-3.766 4.6763-4.4821-3.6065 4.4908-5.5722z"
+            />
+          </g>
+          <path
+            id="sch_cpu_reg_box_cspr_end"
+            fill="none"
+            stroke="hsl(var(--bc))"
+            strokeWidth="1"
+            d="m435.53 354.51h95.486v14.573h-95.486z"
+          />
+          <path
+            id="sch_cpu_reg_label_cspr_end"
+            fill="hsl(var(--bc))"
+            d="m440.49 347.06c-0.90625 0-1.6094 0.26562-2.1094 0.79688-0.4974 0.53124-0.7461 1.2786-0.7461 2.2422 0 0.96614 0.2448 1.7135 0.73438 2.2422 0.48958 0.52605 1.1836 0.78906 2.082 0.78906 0.67447 0 1.2969-0.14713 1.8672-0.4414v-0.70313c-0.625 0.33594-1.2109 0.50391-1.7578 0.50391-0.63541 0-1.1367-0.21224-1.5039-0.63672-0.36719-0.42708-0.55078-1.0091-0.55078-1.7461 0-0.77344 0.17187-1.3724 0.51562-1.7969s0.82943-0.63672 1.457-0.63672c0.42969 0 1.0404 0.13672 1.832 0.41016v-0.76953c-0.69531-0.16928-1.3021-0.25391-1.8203-0.25391zm4.4141 0c-0.5 0-0.91146 0.14453-1.2344 0.43359-0.32292 0.28646-0.48438 0.65235-0.48438 1.0977 0 0.33073 0.10026 0.62109 0.30078 0.87109 0.20313 0.2474 0.55079 0.51172 1.043 0.79297l0.39844 0.23047c0.34635 0.19531 0.58333 0.3724 0.71094 0.53125 0.1302 0.15886 0.19531 0.35157 0.19531 0.57813 0 0.27604-0.099 0.49869-0.29687 0.66796-0.19532 0.16927-0.45444 0.25391-0.77735 0.25391-0.41927 0-0.95443-0.15104-1.6055-0.45312v0.8125c0.60417 0.16927 1.1003 0.2539 1.4883 0.2539 0.61198 0 1.1029-0.15234 1.4727-0.45703 0.37239-0.30469 0.55859-0.70834 0.55859-1.2109 0-0.35416-0.099-0.65755-0.29687-0.91015-0.19792-0.25261-0.54688-0.52084-1.0469-0.80469l-0.41406-0.23438c-0.35937-0.20573-0.60677-0.38281-0.74219-0.53124-0.13541-0.14844-0.20312-0.31902-0.20312-0.51172 0-0.22917 0.0925-0.41928 0.27734-0.57032 0.1849-0.15104 0.41927-0.22656 0.70313-0.22656 0.29947 0 0.7539 0.11979 1.3633 0.35938v-0.75c-0.49479-0.14844-0.96484-0.22266-1.4102-0.22266zm2.9141 0.14453v5.7812h0.8125v-2.2969h0.36328c0.73958 0 1.3177-0.17448 1.7344-0.52344 0.41667-0.34896 0.625-0.83073 0.625-1.4453 0-0.53906-0.15234-0.92578-0.45703-1.1602-0.30469-0.23698-0.80599-0.35547-1.5039-0.35547zm4.4219 0v5.7812h0.8125v-2.4453h0.76563l1.6445 2.4453h1.0078l-1.9297-2.707c0.77865-0.32291 1.168-0.86979 1.168-1.6406 0-0.46614-0.14844-0.82161-0.44531-1.0664-0.29427-0.24479-0.71875-0.36719-1.2734-0.36719zm-3.6094 0.61328h0.5039c0.48698 0 0.83464 0.0742 1.043 0.22266 0.20833 0.14844 0.3125 0.39583 0.3125 0.74219 0 0.40885-0.13281 0.72526-0.39844 0.94922-0.26562 0.22395-0.64192 0.33593-1.1289 0.33593h-0.33203zm4.4219 0h0.51563c0.86458 0 1.2969 0.29818 1.2969 0.89453 0 0.8099-0.51562 1.2148-1.5469 1.2148h-0.26563z"
+          />
+          <path
+            id="sch_cpu_reg_box_pc_end"
+            fill="none"
+            stroke="hsl(var(--bc))"
+            strokeWidth="1"
+            d="m435.53 402.51h95.486v14.573h-95.486z"
+          />
+          <path
+            id="sch_cpu_reg_label_pc_end"
+            fill="hsl(var(--bc))"
+            d="m445.42 395.06-1.9297 0.48047v0.59375l1.1562-0.28906v4.5625h-1.1562v0.57812h3.0859v-0.57812h-1.1562zm21.395 0c-0.90625 0-1.6094 0.26562-2.1094 0.79688-0.49739 0.53124-0.74609 1.2786-0.74609 2.2422 0 0.96614 0.2448 1.7135 0.73438 2.2422 0.48958 0.52605 1.1836 0.78906 2.082 0.78906 0.67448 0 1.2969-0.14713 1.8672-0.4414v-0.70313c-0.625 0.33594-1.2109 0.50391-1.7578 0.50391-0.63542 0-1.1367-0.21224-1.5039-0.63672-0.36719-0.42708-0.55079-1.0091-0.55079-1.7461 0-0.77344 0.17188-1.3724 0.51563-1.7969s0.82942-0.63672 1.457-0.63672c0.42969 0 1.0404 0.13672 1.832 0.41016v-0.76953c-0.69531-0.16928-1.3021-0.25391-1.8203-0.25391zm-28.84 0.14453v5.7812h0.8125v-2.4453h0.76562l1.6445 2.4453h1.0078l-1.9297-2.707c0.77864-0.32291 1.168-0.86979 1.168-1.6406 0-0.46614-0.14844-0.82161-0.44532-1.0664-0.29427-0.24479-0.71875-0.36719-1.2734-0.36719zm10.441 0v2.8125c0.14844-0.0182 0.29037-0.0273 0.42578-0.0273 1.1953 0 1.793 0.43359 1.793 1.3008 0 0.39323-0.10937 0.70183-0.32812 0.92578-0.21614 0.22396-0.51432 0.33594-0.89453 0.33594-0.34636 0-0.71094-0.0768-1.0938-0.23047v0.6875c0.36979 0.0807 0.70052 0.12109 0.99218 0.12109 0.67188 0 1.1966-0.15885 1.5742-0.47656 0.38021-0.32031 0.57031-0.76172 0.57031-1.3242 0-0.60416-0.20833-1.0768-0.625-1.418-0.41666-0.34114-0.99609-0.51172-1.7383-0.51172v-1.5234h2.25v-0.67188zm6.8242 0-2.082 6.9375h0.60547l2.082-6.9375zm4.6367 0v5.7812h0.8125v-2.2969h0.36328c0.73958 0 1.3177-0.17448 1.7344-0.52344 0.41666-0.34896 0.625-0.83073 0.625-1.4453 0-0.53906-0.15235-0.92578-0.45704-1.1602-0.30468-0.23698-0.80599-0.35547-1.5039-0.35547zm-21.09 0.61328h0.51562c0.86458 0 1.2969 0.29818 1.2969 0.89453 0 0.8099-0.51563 1.2148-1.5469 1.2148h-0.26562zm21.902 0h0.50391c0.48698 0 0.83463 0.0742 1.043 0.22266 0.20834 0.14844 0.3125 0.39583 0.3125 0.74219 0 0.40885-0.13281 0.72526-0.39843 0.94922-0.26562 0.22395-0.64193 0.33593-1.1289 0.33593h-0.33203z"
+          />
+          <path
+            id="sch_cpu_reg_box_lr_end"
+            fill="none"
+            stroke="hsl(var(--bc))"
+            strokeWidth="1"
+            d="m244.18 373.44h140.51v21.445h-140.51z"
+          />
+          <path
+            id="sch_cpu_reg_label_lr_end"
+            fill="hsl(var(--bc))"
+            d="m259.41 361.64-2.8945 0.72071v0.89062l1.7344-0.43359v6.8438h-1.7344v0.86718h4.6289v-0.86718h-1.7344zm-11.168 0.2168v8.6719h1.2188v-3.668h1.1484l2.4668 3.668h1.5117l-2.8945-4.0605c1.168-0.48438 1.752-1.3047 1.752-2.4609 0-0.69922-0.22266-1.2324-0.66797-1.5996-0.44141-0.36719-1.0781-0.55078-1.9102-0.55078zm18.574 0-3.9023 5.3438v0.87305h3.9023v2.4551h1.084v-2.4551h1.1602v-0.94336h-1.1602v-5.2734zm7.3242 0-3.123 10.406h0.90821l3.123-10.406zm6.9551 0v8.6719h5.1328v-0.91992h-3.9023v-7.752zm6.3984 0v8.6719h1.2188v-3.668h1.1484l2.4668 3.668h1.5117l-2.8945-4.0605c1.168-0.48438 1.752-1.3047 1.752-2.4609 0-0.69922-0.22266-1.2324-0.66797-1.5996-0.44141-0.36719-1.0781-0.55078-1.9102-0.55078zm-38.033 0.91992h0.77344c1.2969 0 1.9453 0.44727 1.9453 1.3418 0 1.2148-0.77344 1.8223-2.3203 1.8223h-0.39844zm39.252 0h0.77344c1.2969 0 1.9453 0.44727 1.9453 1.3418 0 1.2148-0.77343 1.8223-2.3203 1.8223h-0.39844zm-21.82 0.49805v3.8555h-2.8476z"
+          />
+          <path
+            id="sch_cpu_reg_box_sp_end"
+            fill="none"
+            stroke="hsl(var(--bc))"
+            strokeWidth="1"
+            d="m435.53 378.51h95.486v14.573h-95.486z"
+          />
+          <path
+            id="sch_cpu_reg_label_sp_end"
+            fill="hsl(var(--bc))"
+            d="m445.42 371.06-1.9297 0.48047v0.59375l1.1562-0.28906v4.5625h-1.1562v0.57812h3.0859v-0.57812h-1.1562zm4.1445 0c-0.42969 0-0.87239 0.0768-1.3281 0.23047v0.67187c0.46354-0.21614 0.88802-0.32422 1.2734-0.32422 0.70313 1e-5 1.0547 0.29558 1.0547 0.88672 0 0.7526-0.53385 1.1289-1.6016 1.1289l-0.26953 4e-3v0.51953h0.30468c1.138 0 1.707 0.40625 1.707 1.2188 0 0.34114-0.11589 0.61979-0.34765 0.83594-0.22917 0.21353-0.52734 0.32031-0.89453 0.32031-0.31771 0-0.75261-0.10938-1.3047-0.32813v0.71875c0.54427 0.125 0.99479 0.1875 1.3516 0.1875 0.62761 0 1.1211-0.15494 1.4805-0.46484 0.35937-0.30989 0.53906-0.73698 0.53906-1.2812 0-0.80469-0.46614-1.3151-1.3984-1.5312 0.80468-0.28906 1.207-0.77344 1.207-1.4531 0-0.89323-0.59116-1.3398-1.7734-1.3398zm11.707 0c-0.5 0-0.91145 0.14453-1.2344 0.43359-0.32292 0.28646-0.48438 0.65235-0.48438 1.0977 0 0.33073 0.10026 0.62109 0.30078 0.87109 0.20313 0.2474 0.55078 0.51172 1.043 0.79297l0.39844 0.23047c0.34635 0.19531 0.58334 0.3724 0.71094 0.53125 0.13021 0.15886 0.19531 0.35157 0.19531 0.57813 0 0.27604-0.099 0.49869-0.29688 0.66796-0.19531 0.16927-0.45443 0.25391-0.77734 0.25391-0.41927 0-0.95443-0.15104-1.6055-0.45312v0.8125c0.60417 0.16927 1.1003 0.2539 1.4883 0.2539 0.61198 0 1.1029-0.15234 1.4727-0.45703 0.37239-0.30469 0.55859-0.70834 0.55859-1.2109 0-0.35416-0.099-0.65755-0.29687-0.91015-0.19792-0.25261-0.54688-0.52084-1.0469-0.80469l-0.41406-0.23438c-0.35938-0.20573-0.60677-0.38281-0.74219-0.53124-0.13542-0.14844-0.20312-0.31902-0.20312-0.51172 0-0.22917 0.0924-0.41928 0.27734-0.57032 0.18489-0.15104 0.41927-0.22656 0.70313-0.22656 0.29948 0 0.7539 0.11979 1.3633 0.35938v-0.75c-0.49479-0.14844-0.96485-0.22266-1.4102-0.22266zm-23.297 0.14453v5.7812h0.8125v-2.4453h0.76562l1.6445 2.4453h1.0078l-1.9297-2.707c0.77864-0.32291 1.168-0.86979 1.168-1.6406 0-0.46614-0.14844-0.82161-0.44532-1.0664-0.29427-0.24479-0.71875-0.36719-1.2734-0.36719zm17.266 0-2.082 6.9375h0.60547l2.082-6.9375zm8.9453 0v5.7812h0.8125v-2.2969h0.36328c0.73959 0 1.3177-0.17448 1.7344-0.52344s0.625-0.83073 0.625-1.4453c0-0.53906-0.15235-0.92578-0.45703-1.1602-0.30469-0.23698-0.806-0.35547-1.5039-0.35547zm-25.398 0.61328h0.51562c0.86458 0 1.2969 0.29818 1.2969 0.89453 0 0.8099-0.51563 1.2148-1.5469 1.2148h-0.26562zm26.211 0h0.50391c0.48698 0 0.83463 0.0742 1.043 0.22266 0.20833 0.14844 0.3125 0.39583 0.3125 0.74219 0 0.40885-0.13281 0.72526-0.39844 0.94922-0.26563 0.22395-0.64193 0.33593-1.1289 0.33593h-0.33203z"
+          />
+          <path
+            id="sch_cpu_reg_box_r12_end"
+            fill="none"
+            stroke="hsl(var(--bc))"
+            strokeWidth="1"
+            d="m244.18 542.92h140.51v21.445h-140.51z"
+          />
+          <path
+            id="sch_cpu_reg_label_r12_end"
+            fill="hsl(var(--bc))"
+            d="m259.41 530.47-2.8945 0.72071v0.89062l1.7344-0.43359v6.8438h-1.7344v0.86719h4.6289v-0.86719h-1.7344zm6.3926 0c-0.75781 0-1.5215 0.18165-2.291 0.54492v1.0195c0.81641-0.46485 1.5254-0.69727 2.127-0.69727 0.50781 0 0.90625 0.13867 1.1953 0.41602 0.29296 0.27734 0.43945 0.6582 0.43945 1.1426 0 0.75782-0.42578 1.5215-1.2773 2.291l-0.66211 0.5918c-1.0234 0.92578-1.7031 1.7812-2.0391 2.5664v1.0137h5.1621v-1.0137h-3.7676c0.14452-0.71484 0.67968-1.4648 1.6055-2.25l0.44531-0.38086c0.67578-0.57422 1.1367-1.0625 1.3828-1.4648 0.25-0.40235 0.375-0.86329 0.375-1.3828 0-0.72266-0.24609-1.3027-0.73828-1.7402s-1.1445-0.65625-1.957-0.65625zm-17.561 0.2168v8.6719h1.2188v-3.668h1.1484l2.4668 3.668h1.5117l-2.8945-4.0606c1.168-0.48438 1.752-1.3047 1.752-2.4609 0-0.69922-0.22266-1.2324-0.66797-1.5996-0.44141-0.36719-1.0781-0.55078-1.9102-0.55078zm1.2188 0.91992h0.77344c1.2969 0 1.9453 0.44727 1.9453 1.3418 0 1.2148-0.77344 1.8223-2.3203 1.8223h-0.39844z"
+          />
+          <path
+            id="sch_cpu_reg_box_r11_end"
+            fill="none"
+            stroke="hsl(var(--bc))"
+            strokeWidth="1"
+            d="m244.18 504.89h140.51v21.445h-140.51z"
+          />
+          <path
+            id="sch_cpu_reg_label_r11_end"
+            fill="hsl(var(--bc))"
+            d="m259.41 493.44-2.8945 0.7207v0.89063l1.7344-0.4336v6.8438h-1.7344v0.86719h4.6289v-0.86719h-1.7344zm7.5879 0-2.8945 0.7207v0.89063l1.7344-0.4336v6.8438h-1.7344v0.86719h4.6289v-0.86719h-1.7344zm-18.756 0.2168v8.6719h1.2188v-3.668h1.1484l2.4668 3.668h1.5117l-2.8945-4.0606c1.168-0.48437 1.752-1.3047 1.752-2.4609 0-0.69922-0.22266-1.2324-0.66797-1.5996-0.44141-0.36719-1.0781-0.55078-1.9102-0.55078zm1.2188 0.91992h0.77344c1.2969 0 1.9453 0.44726 1.9453 1.3418 0 1.2148-0.77344 1.8223-2.3203 1.8223h-0.39844z"
+          />
+          <path
+            id="sch_cpu_reg_box_r10_end"
+            fill="none"
+            stroke="hsl(var(--bc))"
+            strokeWidth="1"
+            d="m244.18 466.87h140.51v21.445h-140.51z"
+          />
+          <path
+            id="sch_cpu_reg_label_r10_end"
+            fill="hsl(var(--bc))"
+            d="m259.41 455.44-2.8945 0.7207v0.89063l1.7344-0.4336v6.8438h-1.7344v0.86719h4.6289v-0.86719h-1.7344zm6.6856 0c-0.91016 0-1.6445 0.41601-2.2031 1.248-0.55468 0.83203-0.83203 1.9316-0.83203 3.2988 0 1.3555 0.27539 2.4551 0.82617 3.2988 0.55469 0.83985 1.2793 1.2598 2.1738 1.2598 0.93359 0 1.6777-0.41406 2.2324-1.2422 0.5586-0.83202 0.83789-1.9434 0.83789-3.334 0-1.3555-0.27929-2.4492-0.83789-3.2812-0.55468-0.83204-1.2871-1.248-2.1973-1.248zm-17.854 0.2168v8.6719h1.2188v-3.668h1.1484l2.4668 3.668h1.5117l-2.8945-4.0606c1.168-0.48437 1.752-1.3047 1.752-2.4609 0-0.69922-0.22266-1.2324-0.66797-1.5996-0.44141-0.36719-1.0781-0.55078-1.9102-0.55078zm17.854 0.65039c1.207 0 1.8105 1.2148 1.8105 3.6445 0 2.4844-0.61133 3.7266-1.834 3.7266-1.1875 0-1.7812-1.2305-1.7812-3.6914 0-2.4531 0.60156-3.6797 1.8047-3.6797zm-16.635 0.26953h0.77344c1.2969 0 1.9453 0.44726 1.9453 1.3418 0 1.2148-0.77344 1.8223-2.3203 1.8223h-0.39844z"
+          />
+          <path
+            id="sch_cpu_reg_box_r9_end"
+            fill="none"
+            stroke="hsl(var(--bc))"
+            strokeWidth="1"
+            d="m62.952 542.92h140.51v21.445h-140.51z"
+          />
+          <path
+            id="sch_cpu_reg_label_r9_end"
+            fill="hsl(var(--bc))"
+            d="m76.475 530.47c-0.82031 0-1.502 0.29297-2.0449 0.87891-0.53906 0.58203-0.8086 1.3164-0.8086 2.2031 0 0.77344 0.25391 1.4297 0.76172 1.9688 0.50781 0.53516 1.127 0.80274 1.8574 0.80274 0.7461 0 1.4121-0.36133 1.998-1.084 0 1.0898-0.20312 1.9414-0.60937 2.5547-0.40235 0.60937-0.96289 0.91406-1.6816 0.91406-0.51563 0-1.1406-0.12695-1.875-0.38086v0.97852c0.72265 0.17969 1.3105 0.26953 1.7637 0.26953 1.1289 0 2.0234-0.4375 2.6836-1.3125 0.66406-0.8789 0.99609-2.0644 0.99609-3.5566 0-1.3125-0.27148-2.3457-0.81445-3.0996-0.54297-0.75781-1.2852-1.1367-2.2266-1.1367zm-10.236 0.2168v8.6719h1.2188v-3.668h1.1484l2.4668 3.668h1.5117l-2.8945-4.0606c1.168-0.48438 1.752-1.3047 1.752-2.4609 0-0.69922-0.22266-1.2324-0.66797-1.5996-0.44141-0.36719-1.0781-0.55078-1.9102-0.55078zm10.166 0.64453c0.54297 0 0.98047 0.22656 1.3125 0.67969 0.33593 0.44922 0.5039 1.043 0.5039 1.7812 0 0.46874-0.17383 0.86914-0.52148 1.2012-0.34375 0.33203-0.75977 0.49805-1.248 0.49805-0.51953 0-0.92969-0.19336-1.2305-0.58008-0.29687-0.38672-0.44531-0.91602-0.44531-1.5879 0-0.61328 0.14453-1.0976 0.43359-1.4531 0.29297-0.35937 0.69141-0.53906 1.1953-0.53906zm-8.9473 0.27539h0.77344c1.2969 0 1.9453 0.44727 1.9453 1.3418 0 1.2148-0.77344 1.8223-2.3203 1.8223h-0.39844z"
+          />
+          <path
+            id="sch_cpu_reg_box_r8_end"
+            fill="none"
+            stroke="hsl(var(--bc))"
+            strokeWidth="1"
+            d="m62.952 504.89h140.51v21.445h-140.51z"
+          />
+          <path
+            id="sch_cpu_reg_label_r8_end"
+            fill="hsl(var(--bc))"
+            d="m76.797 492.46c-0.77343 0-1.4004 0.20508-1.8808 0.61524-0.48047 0.41015-0.72071 0.94335-0.72071 1.5996 0 0.71484 0.42383 1.3672 1.2715 1.957-1.1484 0.6875-1.7227 1.5508-1.7227 2.5898 0 0.70313 0.26172 1.2715 0.78516 1.7051 0.52734 0.42969 1.2168 0.64453 2.0684 0.64453 0.86718 0 1.5742-0.22851 2.1211-0.68555 0.55078-0.45702 0.82617-1.0488 0.82617-1.7754 0-1.0117-0.6543-1.8379-1.9629-2.4785 1.0781-0.69141 1.6172-1.457 1.6172-2.2969 0-0.55468-0.22266-1.0059-0.66797-1.3535-0.44141-0.34766-1.0195-0.52149-1.7344-0.52149zm-10.559 0.22266v8.6719h1.2188v-3.668h1.1484l2.4668 3.668h1.5117l-2.8945-4.0606c1.168-0.48438 1.752-1.3047 1.752-2.4609 0-0.69922-0.22266-1.2324-0.66797-1.5996-0.44141-0.36719-1.0781-0.55078-1.9102-0.55078zm10.441 0.65039c0.4414 0 0.79687 0.10742 1.0664 0.32227 0.26953 0.21093 0.4043 0.49023 0.4043 0.83789 0 0.65234-0.4043 1.2441-1.2129 1.7754-0.64844-0.3711-1.0938-0.6836-1.3359-0.9375-0.23828-0.25782-0.35742-0.54883-0.35742-0.87305 0-0.33203 0.13281-0.60157 0.39844-0.80859 0.26562-0.21094 0.61133-0.31641 1.0371-0.31641zm-9.2227 0.26953h0.77344c1.2969 0 1.9453 0.44727 1.9453 1.3418 0 1.2148-0.77344 1.8223-2.3203 1.8223h-0.39844zm8.6367 3.498 0.82031 0.48633c0.56641 0.33593 0.94727 0.62109 1.1426 0.85547 0.19922 0.23047 0.29883 0.51367 0.29883 0.84961 0 0.41797-0.16016 0.75781-0.48047 1.0195-0.31641 0.26171-0.72656 0.39257-1.2305 0.39257-0.52344 0-0.94531-0.15234-1.2656-0.45703-0.32032-0.30859-0.48047-0.71094-0.48047-1.207 0-0.39844 0.082-0.73047 0.24609-0.99609 0.16797-0.26953 0.48438-0.58399 0.94922-0.94336z"
+          />
+          <path
+            id="sch_cpu_reg_box_r7_end"
+            fill="none"
+            stroke="hsl(var(--bc))"
+            strokeWidth="1"
+            d="m62.952 466.87h140.51v21.445h-140.51z"
+          />
+          <path
+            id="sch_cpu_reg_label_r7_end"
+            fill="hsl(var(--bc))"
+            d="m66.238 454.69v8.6719h1.2188v-3.668h1.1484l2.4668 3.668h1.5117l-2.8945-4.0606c1.168-0.48438 1.752-1.3047 1.752-2.4609 0-0.69922-0.22266-1.2324-0.66797-1.5996-0.44141-0.36719-1.0781-0.55078-1.9102-0.55078zm7.7695 0v1.084h4.4648l-2.3672 3.8086c-0.53125 0.85937-0.90235 1.5352-1.1133 2.0273-0.20703 0.49219-0.36719 1.0762-0.48047 1.752h1.3301c0.26562-1.7812 1.5098-4.3106 3.7324-7.5879v-1.084zm-6.5508 0.91992h0.77344c1.2969 0 1.9453 0.44727 1.9453 1.3418 0 1.2148-0.77344 1.8223-2.3203 1.8223h-0.39844z"
+          />
+          <path
+            id="sch_cpu_reg_box_r6_end"
+            fill="none"
+            stroke="hsl(var(--bc))"
+            strokeWidth="1"
+            d="m244.18 280.92h140.51v21.445h-140.51z"
+          />
+          <path
+            id="sch_cpu_reg_label_r6_end"
+            fill="hsl(var(--bc))"
+            d="m259.05 268.46c-1.125 0-1.998 0.41602-2.6191 1.248-0.61719 0.83203-0.92578 2-0.92578 3.5039 0 1.3672 0.26953 2.4356 0.80859 3.2051s1.2871 1.1543 2.2441 1.1543c0.83203 0 1.5176-0.29101 2.0566-0.87305 0.54297-0.58202 0.81445-1.3242 0.81445-2.2266 0-0.78515-0.24219-1.4277-0.72656-1.9277-0.48046-0.50391-1.0996-0.75586-1.8574-0.75586-0.83594 0-1.5293 0.35743-2.0801 1.0723 0-2.3555 0.73828-3.5332 2.2148-3.5332 0.51952 0 1.1875 0.15625 2.0039 0.46875v-1.0078c-0.77343-0.21875-1.418-0.32813-1.9336-0.32813zm-10.816 0.22266v8.6719h1.2188v-3.668h1.1484l2.4668 3.668h1.5117l-2.8945-4.0606c1.168-0.48438 1.752-1.3047 1.752-2.4609 0-0.69922-0.22266-1.2324-0.66797-1.5996-0.44141-0.36719-1.0781-0.55078-1.9102-0.55078zm1.2188 0.91992h0.77344c1.2969 0 1.9453 0.44727 1.9453 1.3418 0 1.2148-0.77344 1.8223-2.3203 1.8223h-0.39844zm9.1465 3.0176c0.52343 0 0.93163 0.1875 1.2246 0.5625 0.29688 0.375 0.44532 0.89063 0.44532 1.5469 0 0.60156-0.14844 1.082-0.44532 1.4414-0.29297 0.35547-0.6875 0.5332-1.1836 0.5332-0.55078 0-0.99414-0.21875-1.3301-0.65625-0.33202-0.4414-0.49804-1.0254-0.49804-1.752 0-0.46094 0.17578-0.85547 0.52734-1.1836 0.35156-0.32813 0.77148-0.49219 1.2598-0.49219z"
+          />
+          <path
+            id="sch_cpu_reg_box_r5_end"
+            fill="none"
+            stroke="hsl(var(--bc))"
+            strokeWidth="1"
+            d="m244.18 242.89h140.51v21.445h-140.51z"
+          />
+          <path
+            id="sch_cpu_reg_label_r5_end"
+            fill="hsl(var(--bc))"
+            d="m248.24 230.69v8.6719h1.2188v-3.668h1.1484l2.4668 3.668h1.5117l-2.8945-4.0606c1.168-0.48438 1.752-1.3047 1.752-2.4609 0-0.69922-0.22266-1.2324-0.66797-1.5996-0.44141-0.36719-1.0781-0.55078-1.9102-0.55078zm8.0742 0v4.2188c0.22266-0.0273 0.43555-0.041 0.63867-0.041 1.793 0 2.6895 0.65039 2.6894 1.9512 0 0.58984-0.16406 1.0527-0.49218 1.3887-0.32422 0.33593-0.77149 0.5039-1.3418 0.5039-0.51953 0-1.0664-0.11523-1.6406-0.3457v1.0312c0.55468 0.12109 1.0508 0.18164 1.4883 0.18164 1.0078 0 1.7949-0.23828 2.3613-0.71484 0.57031-0.48047 0.85547-1.1426 0.85547-1.9863 0-0.90625-0.3125-1.6152-0.9375-2.127-0.625-0.51172-1.4941-0.76758-2.6074-0.76758v-2.2852h3.375v-1.0078zm-6.8555 0.91992h0.77344c1.2969 0 1.9453 0.44727 1.9453 1.3418 0 1.2148-0.77344 1.8223-2.3203 1.8223h-0.39844z"
+          />
+          <path
+            id="sch_cpu_reg_box_r4_end"
+            fill="none"
+            stroke="hsl(var(--bc))"
+            strokeWidth="1"
+            d="m244.18 204.87h140.51v21.445h-140.51z"
+          />
+          <path
+            id="sch_cpu_reg_label_r4_end"
+            fill="hsl(var(--bc))"
+            d="m248.24 192.69v8.6719h1.2188v-3.668h1.1484l2.4668 3.668h1.5117l-2.8945-4.0606c1.168-0.48438 1.752-1.3047 1.752-2.4609 0-0.69922-0.22266-1.2324-0.66797-1.5996-0.44141-0.36719-1.0781-0.55078-1.9102-0.55078h-2.625zm11.574 0.16797-3.9023 5.3438v0.03711c0.0429 0.27751 0.07028 0.55675 0.08398 0.83594h3.8184v2.4551h1.084v-2.4551h0.66993c0.0424-0.12423 0.0888-0.24788 0.13867-0.36915 0.012-0.06639 0.0615-0.31803 0.11719-0.57421h-0.92579v-5.2734h-1.084zm-10.355 0.75195h0.77344c1.2969 0 1.9453 0.44727 1.9453 1.3418 0 1.2148-0.77344 1.8223-2.3203 1.8223h-0.39844v-3.1641zm10.432 0.66602v3.8555h-2.8476l2.8476-3.8555z"
+          />
+          <path
+            id="sch_cpu_reg_box_r3_end"
+            fill="none"
+            stroke="hsl(var(--bc))"
+            strokeWidth="1"
+            d="m62.952 280.92h140.51v21.445h-140.51z"
+          />
+          <path
+            id="sch_cpu_reg_label_r3_end"
+            fill="hsl(var(--bc))"
+            d="m76.035 268.47c-0.64453 0-1.3086 0.11523-1.9922 0.34571v1.0078c0.69531-0.32422 1.332-0.48633 1.9102-0.48633 1.0547 0 1.582 0.44336 1.582 1.3301 0 1.1289-0.80079 1.6934-2.4024 1.6934l-0.40429 6e-3v0.77929h0.45703c1.707 0 2.5605 0.60938 2.5605 1.8281 0 0.51172-0.17382 0.92969-0.52148 1.2539-0.34375 0.32031-0.79102 0.48046-1.3418 0.48046-0.47656 0-1.1289-0.16406-1.957-0.49218v1.0781c0.81641 0.1875 1.4922 0.28125 2.0273 0.28125 0.94141 0 1.6816-0.23242 2.2207-0.69726 0.53906-0.46485 0.80859-1.1055 0.80859-1.9219 0-1.207-0.69922-1.9727-2.0976-2.2969 1.207-0.4336 1.8105-1.1602 1.8105-2.1797 0-1.3398-0.88672-2.0098-2.6602-2.0098zm-9.7969 0.2168v8.6719h1.2188v-3.668h1.1484l2.4668 3.668h1.5117l-2.8945-4.0606c1.168-0.48438 1.752-1.3047 1.752-2.4609 0-0.69922-0.22266-1.2324-0.66797-1.5996-0.44141-0.36719-1.0781-0.55078-1.9102-0.55078zm1.2188 0.91992h0.77344c1.2969 0 1.9453 0.44727 1.9453 1.3418 0 1.2148-0.77344 1.8223-2.3203 1.8223h-0.39844z"
+          />
+          <path
+            id="sch_cpu_reg_box_r2_end"
+            fill="none"
+            stroke="hsl(var(--bc))"
+            strokeWidth="1"
+            d="m62.952 242.89h140.51v21.445h-140.51z"
+          />
+          <path
+            id="sch_cpu_reg_label_r2_end"
+            fill="hsl(var(--bc))"
+            d="m76.211 230.85c-0.75781 0-1.5215 0.18164-2.291 0.54492v1.0195c0.81641-0.46485 1.5254-0.69727 2.127-0.69727 0.50782 0 0.90626 0.13867 1.1953 0.41602 0.29297 0.27734 0.43945 0.6582 0.43945 1.1426 0 0.75781-0.42578 1.5215-1.2773 2.291l-0.66211 0.5918c-1.0234 0.92578-1.7031 1.7812-2.0391 2.5664v1.0137h5.1621v-1.0137h-3.7676c0.14453-0.71485 0.67968-1.4648 1.6055-2.25l0.44532-0.38086c0.67578-0.57422 1.1367-1.0625 1.3828-1.4648 0.25-0.40234 0.375-0.86328 0.375-1.3828 0-0.72265-0.24609-1.3027-0.73828-1.7402s-1.1445-0.65625-1.957-0.65625zm-9.9727 0.21679v8.6719h1.2188v-3.668h1.1484l2.4668 3.668h1.5117l-2.8945-4.0606c1.168-0.48437 1.752-1.3047 1.752-2.4609 0-0.69922-0.22266-1.2324-0.66797-1.5996-0.44141-0.36718-1.0781-0.55078-1.9102-0.55078zm1.2188 0.91992h0.77344c1.2969 0 1.9453 0.44727 1.9453 1.3418 0 1.2148-0.77344 1.8223-2.3203 1.8223h-0.39844z"
+          />
+          <path
+            id="sch_cpu_reg_box_r1_end"
+            fill="none"
+            stroke="hsl(var(--bc))"
+            strokeWidth="1"
+            d="m62.952 204.87h140.51v21.445h-140.51z"
+          />
+          <path
+            id="sch_cpu_reg_label_r1_end"
+            fill="hsl(var(--bc))"
+            d="m77.406 192.4-2.8945 0.7207v0.89062l1.7344-0.43359v6.8438h-1.7344v0.86719h4.6289v-0.86719h-1.7344zm-11.168 0.21679v8.6719h1.2188v-3.668h1.1484l2.4668 3.668h1.5117l-2.8945-4.0606c1.168-0.48437 1.752-1.3047 1.752-2.4609 0-0.69921-0.22266-1.2324-0.66797-1.5996-0.44141-0.36719-1.0781-0.55079-1.9102-0.55079zm1.2188 0.91993h0.77344c1.2969 0 1.9453 0.44727 1.9453 1.3418 0 1.2148-0.77344 1.8223-2.3203 1.8223h-0.39844z"
+          />
+          <g id="sch_cpu_alu_group_end">
+            <path
+              id="sch_cpu_alu_box_end"
+              fill="none"
+              stroke="hsl(var(--bc))"
+              d="m63 103h511v70h-511z"
+            />
+            <path
+              id="sch_cpu_alu_label_end"
+              fill="hsl(var(--bc))"
+              d="m214.9 118.39c-1.8125 0-3.2188 0.53125-4.2188 1.5938-0.99479 1.0625-1.4922 2.5573-1.4922 4.4844 0 1.9323 0.48959 3.4271 1.4688 4.4844 0.97917 1.0521 2.3672 1.5781 4.1641 1.5781 1.349 0 2.5938-0.29428 3.7344-0.88282v-1.4062c-1.25 0.67188-2.4219 1.0078-3.5156 1.0078-1.2708 0-2.2734-0.42448-3.0078-1.2734-0.73437-0.85417-1.1016-2.0182-1.1016-3.4922 0-1.5469 0.34375-2.7448 1.0312-3.5938 0.6875-0.84896 1.6589-1.2734 2.9141-1.2734 0.85938 0 2.0807 0.27344 3.6641 0.82032v-1.5391c-1.3906-0.33854-2.6042-0.50781-3.6406-0.50781zm39.359 0c-1.6406 0-2.9531 0.55209-3.9375 1.6562-0.97917 1.099-1.4688 2.5677-1.4688 4.4062 0 1.8281 0.48697 3.2995 1.4609 4.4141 0.97917 1.1094 2.2708 1.6641 3.875 1.6641 1.6823 0 3.0156-0.54688 4-1.6406 0.98438-1.099 1.4766-2.5833 1.4766-4.4531 0-1.8333-0.49219-3.2995-1.4766-4.3984-0.98437-1.099-2.2943-1.6484-3.9297-1.6484zm17.703 0c-1.7969 0-3.1927 0.53386-4.1875 1.6016-0.99479 1.0625-1.4922 2.5521-1.4922 4.4688 0 1.9531 0.48959 3.4531 1.4688 4.5 0.98438 1.0469 2.3958 1.5703 4.2344 1.5703 1.0417 0 2.263-0.20053 3.6641-0.60157v-4.6797h-1.6328v3.7656c-0.63541 0.19271-1.2266 0.28906-1.7734 0.28906-1.3333 0-2.3698-0.42187-3.1094-1.2656-0.73958-0.84895-1.1094-2.0365-1.1094-3.5625 0-1.5417 0.34375-2.737 1.0312-3.5859 0.69271-0.84896 1.6641-1.2734 2.9141-1.2734 0.84896 0 2.0703 0.27084 3.6641 0.8125v-1.5156c-1.2708-0.34895-2.4948-0.52344-3.6719-0.52344zm26.203 0c-1.8125 0-3.2188 0.53125-4.2188 1.5938-0.9948 1.0625-1.4922 2.5573-1.4922 4.4844 0 1.9323 0.48958 3.4271 1.4688 4.4844 0.97916 1.0521 2.3672 1.5781 4.1641 1.5781 1.349 0 2.5938-0.29428 3.7344-0.88282v-1.4062c-1.25 0.67188-2.4219 1.0078-3.5156 1.0078-1.2708 0-2.2734-0.42448-3.0078-1.2734-0.73437-0.85417-1.1016-2.0182-1.1016-3.4922 0-1.5469 0.34375-2.7448 1.0312-3.5938 0.68749-0.84896 1.6588-1.2734 2.9141-1.2734 0.85938 0 2.0807 0.27344 3.6641 0.82032v-1.5391c-1.3906-0.33854-2.6042-0.50781-3.6406-0.50781zm-214.89 0.28906-4.5859 11.562h1.5234l1.2734-3.2031h4.8984l1.2578 3.2031h1.7734l-4.5156-11.562zm12.812 0v11.562h1.625v-4.8906h1.5312l3.2891 4.8906h2.0156l-3.8594-5.4141c1.5573-0.64583 2.3359-1.7396 2.3359-3.2812 0-0.93229-0.29687-1.6432-0.89062-2.1328-0.58854-0.48958-1.4375-0.73438-2.5469-0.73438zm15.109 0v11.562h1.6406v-11.562zm8.2656 0v1.2266h4.1016v10.336h1.6406v-10.336h4.1016v-1.2266zm16.469 0v11.562h1.6406v-5.4609h5.5v5.4609h1.6406v-11.562h-1.6406v4.875h-5.5v-4.875zm16.758 0v11.562h1.4062v-9.4297l3.0938 8.6562h1.5859l3.1875-8.6328v9.4062h1.5312v-11.562h-2.0312l-3.2969 8.9453-3.2031-8.9453zm18.781 0v11.562h6.7969v-1.2266h-5.1562v-4.1875h4.0391v-1.2109h-4.0391v-3.7109h4.8203v-1.2266zm12.32 0v1.2266h4.1016v10.336h1.6406v-10.336h4.1016v-1.2266zm16.461 0v11.562h1.6406v-11.562zm35.75 0v11.562h6.8438v-1.2266h-5.2031v-10.336zm47.516 0v11.562h1.6406v-11.562zm35.656 0v7.2812c0 1.5573 0.34375 2.7083 1.0312 3.4531s1.7526 1.1172 3.1953 1.1172c1.4167 0 2.4479-0.35938 3.0938-1.0781 0.65104-0.71875 0.97656-1.8672 0.97656-3.4453v-7.3281h-1.4375v7.3516c0 1.1875-0.1927 2.0312-0.57812 2.5312-0.38021 0.49479-1.0286 0.74218-1.9453 0.74218-0.9375 0-1.6224-0.26302-2.0547-0.78906-0.42708-0.53125-0.64063-1.3776-0.64063-2.5391v-7.2969zm16.18 0v11.562h1.4062v-8.9297l5.8281 8.9297h1.6016v-11.562h-1.4062v8.9297l-5.8203-8.9297zm16.812 0v11.562h1.6406v-11.562zm8.2656 0v1.2266h4.1016v10.336h1.6406v-10.336h4.1016v-1.2266zm-106.17 0.9375c1.1458 0 2.0417 0.42448 2.6875 1.2734 0.65103 0.84895 0.97656 2.026 0.97656 3.5312 0 1.5521-0.32292 2.7552-0.96875 3.6094-0.64583 0.84896-1.5599 1.2734-2.7422 1.2734-1.1302 0-2.0156-0.43228-2.6562-1.2969-0.64063-0.86458-0.96094-2.0521-0.96094-3.5625 0-1.5156 0.32292-2.6979 0.96875-3.5469 0.64584-0.85416 1.5443-1.2812 2.6953-1.2812zm-156.55 0.28907h1.0312c1.7292 0 2.5938 0.59635 2.5938 1.7891 0 1.6198-1.0312 2.4297-3.0938 2.4297h-0.53125zm-13.773 0.92968 1.9688 4.9844h-3.9453z"
+            />
+          </g>
+
+          <g id="sch_cpu_dec_group_end">
+            <path
+              id="sch_cpu_dec_box_end"
+              fill="none"
+              stroke="hsl(var(--bc))"
+              d="m63 595h511v70h-511z"
+            />
+            <path
+              id="sch_cpu_dec_label_end"
+              fill="hsl(var(--bc))"
+              d="m106.17 611.15c-1 0-1.8229 0.28907-2.4688 0.86719-0.64583 0.57292-0.96875 1.3047-0.96875 2.1953 0 0.66146 0.20052 1.2422 0.60156 1.7422 0.40625 0.49479 1.1016 1.0234 2.0859 1.5859l0.79687 0.46094c0.69271 0.39062 1.1667 0.74479 1.4219 1.0625 0.26041 0.3177 0.39062 0.70312 0.39062 1.1562 0 0.55208-0.19791 0.99739-0.59375 1.3359-0.39062 0.33854-0.90885 0.50782-1.5547 0.50782-0.83854 0-1.9089-0.30209-3.2109-0.90625v1.625c1.2083 0.33854 2.2005 0.50781 2.9766 0.50781 1.224 0 2.2057-0.30469 2.9453-0.91406 0.7448-0.60938 1.1172-1.4167 1.1172-2.4219 0-0.70833-0.19792-1.3151-0.59375-1.8203-0.39583-0.50521-1.0938-1.0417-2.0938-1.6094l-0.82812-0.46875c-0.71875-0.41146-1.2136-0.76562-1.4844-1.0625s-0.40625-0.63802-0.40625-1.0234c0-0.45834 0.1849-0.83854 0.55469-1.1406 0.36979-0.30208 0.83854-0.45312 1.4062-0.45312 0.59895 0 1.5078 0.23958 2.7266 0.71875v-1.5c-0.98958-0.29688-1.9297-0.44532-2.8203-0.44532zm62.18 0c-1.8125 0-3.2188 0.53125-4.2188 1.5938-0.99479 1.0625-1.4922 2.5573-1.4922 4.4844 0 1.9323 0.48958 3.4271 1.4688 4.4844 0.97916 1.0521 2.3672 1.5781 4.1641 1.5781 1.349 0 2.5938-0.29427 3.7344-0.88281v-1.4062c-1.25 0.67187-2.4219 1.0078-3.5156 1.0078-1.2708 0-2.2734-0.42448-3.0078-1.2734-0.73438-0.85416-1.1016-2.0182-1.1016-3.4922 0-1.5469 0.34375-2.7448 1.0312-3.5938s1.6588-1.2734 2.9141-1.2734c0.85937 0 2.0807 0.27344 3.6641 0.82031v-1.5391c-1.3906-0.33854-2.6042-0.50782-3.6406-0.50782zm40.492 0c-1.6406 0-2.9531 0.55209-3.9375 1.6562-0.97916 1.099-1.4688 2.5677-1.4688 4.4062 0 1.8281 0.48698 3.2995 1.4609 4.4141 0.97917 1.1094 2.2708 1.6641 3.875 1.6641 1.6823 0 3.0156-0.54688 4-1.6406 0.98437-1.099 1.4766-2.5833 1.4766-4.4531 0-1.8333-0.49219-3.2995-1.4766-4.3984-0.98437-1.099-2.2943-1.6484-3.9297-1.6484zm75.273 0c-1.8125 0-3.2188 0.53125-4.2188 1.5938-0.99479 1.0625-1.4922 2.5573-1.4922 4.4844 0 1.9323 0.48959 3.4271 1.4688 4.4844 0.97917 1.0521 2.3672 1.5781 4.1641 1.5781 1.349 0 2.5938-0.29427 3.7344-0.88281v-1.4062c-1.25 0.67187-2.4219 1.0078-3.5156 1.0078-1.2708 0-2.2734-0.42448-3.0078-1.2734-0.73437-0.85416-1.1016-2.0182-1.1016-3.4922 0-1.5469 0.34375-2.7448 1.0312-3.5938s1.6589-1.2734 2.9141-1.2734c0.85938 0 2.0807 0.27344 3.6641 0.82031v-1.5391c-1.3906-0.33854-2.6042-0.50782-3.6406-0.50782zm15.766 0c-1.6406 0-2.9531 0.55209-3.9375 1.6562-0.97917 1.099-1.4688 2.5677-1.4688 4.4062 0 1.8281 0.48697 3.2995 1.4609 4.4141 0.97917 1.1094 2.2708 1.6641 3.875 1.6641 1.6823 0 3.0156-0.54688 4-1.6406 0.98438-1.099 1.4766-2.5833 1.4766-4.4531 0-1.8333-0.49219-3.2995-1.4766-4.3984-0.98437-1.099-2.2943-1.6484-3.9297-1.6484zm-222.94 0.28907v11.562h1.6406v-11.562zm9.6172 0v11.562h1.4062v-8.9297l5.8281 8.9297h1.6016v-11.562h-1.4062v8.9297l-5.8203-8.9297zm29.086 0v1.2266h4.1016v10.336h1.6406v-10.336h4.1016v-1.2266zm16.469 0v11.562h1.625v-4.8906h1.5312l3.2891 4.8906h2.0156l-3.8594-5.4141c1.5573-0.64583 2.3359-1.7396 2.3359-3.2812 0-0.93229-0.29687-1.6432-0.89062-2.1328-0.58854-0.48958-1.4375-0.73437-2.5469-0.73437zm15.023 0v7.2812c0 1.5573 0.34375 2.7083 1.0312 3.4531 0.6875 0.74479 1.7526 1.1172 3.1953 1.1172 1.4167 0 2.4479-0.35938 3.0938-1.0781 0.65104-0.71875 0.97656-1.8672 0.97656-3.4453v-7.3281h-1.4375v7.3516c0 1.1875-0.19271 2.0312-0.57812 2.5312-0.38021 0.49479-1.0286 0.74219-1.9453 0.74219-0.9375 0-1.6224-0.26303-2.0547-0.78907-0.42709-0.53125-0.64063-1.3776-0.64063-2.5391v-7.2969zm30.898 0v1.2266h4.1016v10.336h1.6406v-10.336h4.1016v-1.2266zm16.461 0v11.562h1.6406v-11.562zm27.047 0v11.562h1.4062v-8.9297l5.8281 8.9297h1.6016v-11.562h-1.4062v8.9297l-5.8203-8.9297zm26.883 0v11.562h3.8672c1.8437 0 3.2734-0.52865 4.2891-1.5859 1.0156-1.0573 1.5234-2.5469 1.5234-4.4688 0-1.5833-0.40885-2.8594-1.2266-3.8281-0.51562-0.60938-1.1276-1.0417-1.8359-1.2969-0.70313-0.25521-1.6276-0.38281-2.7734-0.38281zm16.984 0v11.562h6.7969v-1.2266h-5.1562v-4.1875h4.0391v-1.2109h-4.0391v-3.7109h4.8203v-1.2266zm47.172 0v11.562h3.8672c1.8437 0 3.2734-0.52865 4.2891-1.5859 1.0156-1.0573 1.5234-2.5469 1.5234-4.4688 0-1.5833-0.40885-2.8594-1.2266-3.8281-0.51562-0.60938-1.1276-1.0417-1.8359-1.2969-0.70313-0.25521-1.6276-0.38281-2.7734-0.38281zm16.984 0v11.562h6.7969v-1.2266h-5.1562v-4.1875h4.0391v-1.2109h-4.0391v-3.7109h4.8203v-1.2266zm13.672 0v11.562h1.625v-4.8906h1.5312l3.2891 4.8906h2.0156l-3.8594-5.4141c1.5573-0.64583 2.3359-1.7396 2.3359-3.2812 0-0.93229-0.29687-1.6432-0.89062-2.1328-0.58854-0.48958-1.4375-0.73437-2.5469-0.73437zm-134.4 0.9375c1.1458 0 2.0417 0.42447 2.6875 1.2734 0.65104 0.84896 0.97657 2.026 0.97657 3.5312 0 1.5521-0.32292 2.7552-0.96875 3.6094-0.64584 0.84896-1.5599 1.2734-2.7422 1.2734-1.1302 0-2.0156-0.43229-2.6562-1.2969-0.64063-0.86458-0.96094-2.0521-0.96094-3.5625 0-1.5156 0.32292-2.6979 0.96875-3.5469 0.64583-0.85417 1.5443-1.2812 2.6953-1.2812zm91.039 0c1.1458 0 2.0417 0.42447 2.6875 1.2734 0.65104 0.84896 0.97656 2.026 0.97656 3.5312 0 1.5521-0.32292 2.7552-0.96875 3.6094-0.64583 0.84896-1.5599 1.2734-2.7422 1.2734-1.1302 0-2.0156-0.43229-2.6562-1.2969-0.64062-0.86458-0.96094-2.0521-0.96094-3.5625 0-1.5156 0.32292-2.6979 0.96875-3.5469 0.64584-0.85417 1.5443-1.2812 2.6953-1.2812zm-166.14 0.28906h1.0312c1.7292 0 2.5938 0.59636 2.5938 1.7891 0 1.6198-1.0312 2.4297-3.0938 2.4297h-0.53125zm116.33 0h1.3516c1.1198 0 1.9583 0.0885 2.5156 0.26562 0.5573 0.17188 1.0365 0.49479 1.4375 0.96875 0.66146 0.77604 0.99219 1.8438 0.99219 3.2031 0 1.4479-0.33594 2.6016-1.0078 3.4609-0.625 0.80729-1.6875 1.2109-3.1875 1.2109h-2.1016zm64.156 0h1.3516c1.1198 0 1.9583 0.0885 2.5156 0.26562 0.5573 0.17188 1.0365 0.49479 1.4375 0.96875 0.66146 0.77604 0.99219 1.8438 0.99219 3.2031 0 1.4479-0.33594 2.6016-1.0078 3.4609-0.625 0.80729-1.6875 1.2109-3.1875 1.2109h-2.1016zm30.641 0h1.0312c1.7292 0 2.5938 0.59636 2.5938 1.7891 0 1.6198-1.0312 2.4297-3.0938 2.4297h-0.53125z"
+            />
+          </g>
+          <g id="sch_cpu_mmu_group_end">
+            <path
+              id="sch_cpu_mmu_box_end"
+              fill="none"
+              stroke="hsl(var(--bc))"
+              strokeWidth="1"
+              d="m480.58 204.03h92.184v140.77h-92.184z"
+            />
+            <path
+              id="sch_cpu_mmu_label_end"
+              fill="hsl(var(--bc))"
+              d="m527.1 211.88c-1.2543-2.9e-4 -2.1812 0.27647-2.7812 0.83007-0.60002 0.55361-0.90208 1.4102-0.90235 2.5723-2.6e-4 1.1411 0.29035 1.9719 0.86914 2.4922 0.5788 0.5245 1.5043 0.78682 2.7754 0.78711l5.9024 2e-3v-1.1582l-5.9219-3.6e-4c-0.95648-2.2e-4 -1.6364-0.15626-2.0391-0.46679-0.39846-0.30634-0.59783-0.82808-0.59766-1.5664 1.8e-4 -0.7551 0.21294-1.3082 0.63672-1.6562 0.42798-0.34389 1.1094-0.51583 2.0449-0.51562l5.877 2e-3v-1.3203zm12.66 0.0781v1.1328l7.5938 2e-3 -6.9727 2.4902 1e-5 1.2773 6.9531 2.5684-7.5762-2e-3 -1e-5 1.2344 9.3125 2e-3v-1.6367l-7.2031-2.6562 7.2051-2.5781v-1.832zm16.109 4e-3v1.1328l7.5938 2e-3 -6.9727 2.4902v1.2774l6.9531 2.5684-7.5762-2e-3 -1e-5 1.2344 9.3125 2e-3 1e-5 -1.6367-7.2051-2.6563 7.207-2.5781v-1.832zm-32.221 12.949-2e-3 1.1328 7.1934 2e-3 -7.1934 4.6914 1e-5 1.291 9.3125 2e-3 -1e-5 -1.1328-7.1914-2e-3 7.1934-4.6855-1e-5 -1.2969zm16.107 1.0801v1.2266l2.5801 1.0254-2e-3 3.9453-2.5801 1.0137-1e-5 1.4277 9.3145-3.6348v-1.3086zm16.109 1.0976-2e-3 5.4746h0.98828l2e-3 -4.1523h3.3711v3.2539l0.97461-1e-5 2e-3 -3.2539 2.9883 2e-3 1e-5 3.8828h0.98828l1.9e-4 -5.2051zm-12.549 1.5391 4.0156 1.5938-4.0156 1.584zm12.547 9.4727v1.1328l7.5938 2e-3 -6.9727 2.4902 1e-5 1.2773 6.9531 2.5684-7.5762 2.7e-4v1.2324l9.3125 2e-3 -1e-5 -1.6367-7.2051-2.6562 7.207-2.5781v-1.832zm-32.219 0.35157 1e-5 1.3223 9.3125 2e-3 -1e-5 -1.3223zm16.109 1.5527-2e-3 1.1328 7.1934-3.6e-4 -7.1934 4.6934 1e-5 1.2891 9.3125 4e-3v-1.1328l-7.1914-2e-3 7.1934-4.6875-1e-5 -1.2949zm-7.7852 5.1074-2e-3 3.3027-8.3242-2e-3v1.3223l8.3242 2e-3 -1e-5 3.3027h0.98828l-1.8e-4 -7.9277zm7.7812 7.3457v1.2266l2.5801 1.0254-2e-3 3.9453-2.5801 1.0137-1e-5 1.4277 9.3145-3.6348v-1.3086zm20.771 0.22461c-1.4725-3.3e-4 -2.6568 0.39151-3.5547 1.1758-0.89373 0.78846-1.3415 1.829-1.3418 3.1211-3.1e-4 1.355 0.43954 2.4276 1.3203 3.2207 0.88498 0.79306 2.0819 1.1911 3.5879 1.1914 1.4767 3.4e-4 2.6576-0.3968 3.543-1.1895 0.88534-0.79266 1.3278-1.8468 1.3281-3.1641 3e-4 -1.3214-0.44483-2.3788-1.334-3.1719-0.88498-0.78888-2.068-1.1833-3.5488-1.1836zm6e-3 1.4024c1.2208 2.8e-4 2.1738 0.2609 2.8574 0.78124 0.68786 0.52035 1.0314 1.2448 1.0312 2.1719-2.1e-4 0.92292-0.34147 1.644-1.0254 2.1641-0.68391 0.52422-1.6333 0.78544-2.8457 0.78516-1.2501-2.9e-4 -2.2184-0.26091-2.9062-0.78125-0.68369-0.52034-1.0256-1.2567-1.0254-2.209 2.1e-4 -0.91032 0.34842-1.6228 1.0449-2.1387s1.6526-0.77371 2.8692-0.77343zm-17.217 1.0098 4.0156 1.5918-4.0156 1.5859zm1.0938 10.83c-1.5732-3.6e-4 -2.7816 0.39317-3.625 1.1816-0.84338 0.79267-1.2653 1.9293-1.2656 3.4102-1.9e-4 0.83901 0.16162 1.8226 0.48438 2.9512l3.7676 2e-3 2e-3 -1.3164-3.0332-1e-5c-0.15511-0.51182-0.23253-0.98725-0.23243-1.4277 2.5e-4 -1.0739 0.3398-1.9103 1.0195-2.5059 0.68393-0.59554 1.64-0.89286 2.8692-0.89258 1.2417 2.8e-4 2.205 0.27813 2.8887 0.83203 0.68366 0.55811 1.0256 1.3408 1.0254 2.3477-1.5e-4 0.68379-0.21967 1.6676-0.65625 2.9512h1.2207c0.2813-1.0235 0.42361-2.0089 0.42382-2.957 3.3e-4 -1.4473-0.43121-2.5716-1.291-3.373-0.8556-0.80144-2.0539-1.2028-3.5976-1.2031zm11.451 1.3418-1e-5 1.3086 3.9395 2e-3v1.2324l-3.9394 2.6484-2e-3 1.625 4.3633-3.1094c0.5199 1.2544 1.3989 1.8825 2.6406 1.8828 0.75091 1.7e-4 1.3243-0.23865 1.7187-0.7168 0.39445-0.47395 0.59159-1.1572 0.5918-2.0508v-2.8203zm4.9277 1.3106 3.3984-1e-5 -2e-3 0.83203c-3.1e-4 1.3928-0.48073 2.0881-1.4414 2.0879-1.3046-3e-4 -1.9554-0.83094-1.9551-2.4922zm4.3828 9.7734-5.4238 3.1074-3.8887-2e-3 -2e-3 1.3223 3.9141 2e-3 5.3984 3.3281-1e-5 -1.2266-4.2012-2.6055 4.2031-2.416zm-25.422 1.4609-2e-3 5.4746 0.98828-1e-5 2e-3 -4.1543 3.373 2e-3 -2e-3 3.252 0.97656 2e-3 -1e-5 -3.2539 2.9883-1e-5v3.8828h0.98828l1.9e-4 -5.2031zm-2e-3 11.012v1.1328l7.5938 2e-3 -6.9727 2.4902v1.2773l6.9531 2.5684-7.5762-2e-3v1.2344l9.3125 2e-3v-1.6367l-7.2051-2.6562 7.207-2.5781v-1.832zm-4e-3 15.127-2e-3 5.4746h0.98828l2e-3 -4.1524h3.3711v3.2539h0.97461l2e-3 -3.2539 2.9883 2e-3v3.8809l0.98828 2e-3 1.9e-4 -5.2051zm-2e-3 11.012-2e-3 1.1328 7.1934 2e-3 -7.1934 4.6934 1e-5 1.2891 9.3125 2e-3v-1.1328l-7.1914-2e-3 7.1934-4.6856-1e-5 -1.2969zm8.3223 12.461-2e-3 3.3047-8.3242-2e-3v1.3203l8.3242 2e-3v3.3047h0.98632l2e-3 -7.9297z"
+            />
+          </g>
+          <g id="sch_cpu_cu_group_end">
+            <path
+              id="sch_cpu_cu_box_end"
+              fill="none"
+              stroke="hsl(var(--bc))"
+              strokeWidth="1"
+              d="m480.58 424.03h92.184v140.77h-92.184z"
+            />
+            <path
+              id="sch_cpu_cu_label_end"
+              fill="hsl(var(--bc))"
+              d="m560.52 431.41c-1.5564-3.6e-4 -2.7615 0.39317-3.6133 1.1816-0.84759 0.78848-1.2712 1.9062-1.2715 3.3535-2.5e-4 1.0865 0.2371 2.091 0.71094 3.0098l1.1328-1e-5c-0.54093-1.0069-0.81074-1.9511-0.81054-2.832 2.3e-4 -1.0236 0.34146-1.8305 1.0254-2.4219 0.68813-0.59134 1.6253-0.887 2.8125-0.88672 1.2459 2.8e-4 2.2109 0.27617 2.8945 0.83008 0.68366 0.5539 1.0256 1.3366 1.0254 2.3476-1.6e-4 0.69218-0.21938 1.676-0.66015 2.9512h1.2383c0.27293-1.12 0.40995-2.0968 0.41015-2.9316 3.3e-4 -1.4599-0.4276-2.5928-1.2832-3.3984-0.8556-0.80144-2.0592-1.2028-3.6113-1.2031zm-17.311 0.46875c-1.2543-2.8e-4 -2.1812 0.27646-2.7812 0.83008-0.60002 0.55361-0.90012 1.4102-0.90039 2.5723-2.6e-4 1.141 0.28839 1.9719 0.86719 2.4922 0.5788 0.52451 1.5043 0.78682 2.7754 0.78711l5.9023 2e-3 1e-5 -1.1582-5.9219-2e-3c-0.95647-2.2e-4 -1.6364-0.15431-2.0391-0.46485-0.39845-0.30633-0.59782-0.82807-0.59765-1.5664 1.7e-4 -0.75511 0.21294-1.3082 0.63672-1.6562 0.42797-0.3439 1.1094-0.51583 2.0449-0.51562l5.877 2e-3 -1e-5 -1.3223zm17.32 12.475c-1.4724-3.4e-4 -2.6587 0.39151-3.5566 1.1758-0.89372 0.78846-1.3396 1.829-1.3398 3.1211-3.1e-4 1.355 0.43953 2.4296 1.3203 3.2227 0.88497 0.79307 2.0799 1.1891 3.5859 1.1894 1.4766 3.4e-4 2.6576-0.39484 3.543-1.1875 0.88533-0.79265 1.3278-1.8488 1.3281-3.166 3.1e-4 -1.3214-0.44285-2.3768-1.332-3.1699-0.88497-0.78888-2.068-1.1852-3.5488-1.1856zm-20.771 0.55664v1.1328l7.1914-3.5e-4 -7.1934 4.6934-1e-5 1.291 9.3125 2e-3v-1.1328l-7.1914-2e-3 7.1934-4.6875 1e-5 -1.2949zm20.777 0.84766c1.2208 2.8e-4 2.1737 0.26091 2.8574 0.78125 0.68787 0.52034 1.0315 1.2428 1.0312 2.1699-2.1e-4 0.92291-0.34342 1.646-1.0273 2.166-0.68391 0.52422-1.6314 0.78543-2.8438 0.78516-1.2501-2.9e-4 -2.2184-0.26091-2.9062-0.78126-0.68367-0.52034-1.0256-1.2567-1.0254-2.209 2.1e-4 -0.91033 0.34842-1.6228 1.0449-2.1387s1.6526-0.77372 2.8692-0.77344zm-20.781 12.693-1e-5 1.3223 9.3125 2e-3 1e-5 -1.3223zm16.109 0.48829 1e-5 1.1328 7.1914 2e-3 -7.1934 4.6914 1e-5 1.291 9.3125 2e-3v-1.1328l-7.1914-2e-3 7.1934-4.6856-1e-5 -1.2969zm-7.7852 6.1719-2e-3 3.3027-8.3242-2e-3v1.3223l8.3242 2e-3v3.3027h0.98828l2e-3 -7.9277zm16.107 6.2891-2e-3 3.3047-8.3242-2e-3v1.3203l8.3242 2e-3v3.3047l0.98828-1e-5 2e-3 -7.9297zm-8.3281 13.264v1.3086h3.9375l-1e-5 1.2344-3.9394 2.6484v1.623l4.3613-3.1074c0.51989 1.2544 1.4008 1.8806 2.6426 1.8809 0.75092 1.7e-4 1.3243-0.23865 1.7188-0.7168 0.39445-0.47395 0.5916-1.1572 0.5918-2.0508v-2.8184zm4.9258 1.3086 3.3984 2e-3v0.83008c-3.2e-4 1.3928-0.48074 2.0901-1.4414 2.0898-1.3047-3e-4 -1.9574-0.83095-1.957-2.4922zm-0.26562 10.32c-1.4725-3.4e-4 -2.6587 0.39152-3.5566 1.1758-0.89373 0.78846-1.3396 1.829-1.3398 3.1211-3.1e-4 1.355 0.43953 2.4296 1.3203 3.2226 0.88498 0.79308 2.0799 1.1891 3.5859 1.1895 1.4766 3.4e-4 2.6576-0.39484 3.543-1.1875 0.88533-0.79266 1.3278-1.8488 1.3281-3.166 3e-4 -1.3214-0.44285-2.3788-1.332-3.1719-0.88498-0.78888-2.068-1.1833-3.5488-1.1836zm6e-3 1.4043c1.2208 2.8e-4 2.1718 0.25896 2.8555 0.77929 0.68788 0.52035 1.0334 1.2448 1.0332 2.1719-2.1e-4 0.92291-0.34342 1.644-1.0273 2.1641-0.68391 0.52422-1.6314 0.78738-2.8438 0.78711-1.2501-2.9e-4 -2.2203-0.26092-2.9082-0.78126-0.68367-0.52034-1.0237-1.2567-1.0234-2.209 2.1e-4 -0.91032 0.34842-1.6228 1.0449-2.1387 0.6965-0.51583 1.6526-0.77372 2.8692-0.77344zm-4.6719 13.182-2e-3 5.5117h0.98828v-4.1914l8.3262 2e-3v-1.3203z"
+            />
           </g>
         </g>
       </svg>
