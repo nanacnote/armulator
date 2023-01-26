@@ -7,7 +7,6 @@ RUN npm i && npm run build
 
 # build react frontend
 FROM node:14 as node_builder
-ENV NODE_ENV=production
 WORKDIR /usr/src/app
 COPY web .
 COPY --from=core_lib_builder ./usr/src/app/dist /usr/src/app/src/lib/armulator_core
