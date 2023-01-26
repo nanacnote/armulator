@@ -10,7 +10,7 @@ function exec.kstool()
 
     local req_body_json = cjson.decode(req_body)
     local arch_mode = req_body_json.arch_mode
-    local asm_str = req_body_json.asm_str
+    local asm_str = string.gsub(req_body_json.asm_str, "\"", "\\\"")
     local ret = {text = {}}
 
     if (arch_mode == nil or arch_mode == "") or (asm_str == nil or asm_str == "") then ngx.exit(ngx.HTTP_NO_CONTENT) end

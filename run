@@ -1,0 +1,40 @@
+#!/bin/sh
+
+__ARG=$1
+
+__START_LOCAL_DOCKER="start_local_docker"
+__STOP_LOCAL_DOCKER="stop_local_docker"
+__START_REACT="start_react"
+__UPDATE_CORE_LIB="update_core_lib"
+
+__CURRENT_UID=$(id -u):$(id -g)
+export __CURRENT_UID
+
+if [[ "$__ARG" == "$__START_LOCAL_DOCKER" ]]; then
+    shift
+    if [[ "$(docker images -q hiramlabs/openresty 2> /dev/null)" == "" ]]; then
+        docker build -t hiramlabs/openresty "$@" .
+    fi
+    docker run \
+        "$@" \
+        -d \
+        -p 9001:80 \
+        --name openresty \
+        --restart=unless-stopped \
+        hiramlabs/openresty
+fi
+
+if [[ "$__ARG" == "$__STOP_LOCAL_DOCKER" ]]; then
+    shift
+    docker stop "$@" openresty
+fi
+
+if [[ "$__ARG" == "$__START_REACT" ]]; then
+    shift
+    npm --prefix web run start
+fi
+
+if [[ "$__ARG" == "$__UPDATE_CORE_LIB" ]]; then
+    shift
+    npm --prefix core run local:build
+fi

@@ -11,7 +11,7 @@ import {
   ivt,
   clk,
   ram
-} from '../lib/armulator_core/armulator_core';
+} from '../lib/armulator_core/index.modern';
 /**
  *
  * Handles schematic animation
@@ -174,9 +174,9 @@ export function useSchematicSVG(root: React.RefObject<HTMLDivElement>) {
     // be precise in which case the objCoord values can be used directly
     // *** SVG creation in inkscape is a pain atm so I will leave it***
     const entry = showTextLookupTable[key];
-    const objCoord = ((document.getElementById(
-      entry.id
-    ) as unknown) as SVGAElement)?.getBBox();
+    const objCoord = (
+      document.getElementById(entry.id) as unknown as SVGAElement
+    )?.getBBox();
     return {
       top: entry.y + '%',
       left: entry.x + '%',

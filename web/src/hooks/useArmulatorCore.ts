@@ -9,7 +9,7 @@ import {
   ivt,
   clk,
   ram
-} from '../lib/armulator_core/armulator_core';
+} from '../lib/armulator_core/index.modern';
 
 /**
  * Exposes the armulator-core library API
