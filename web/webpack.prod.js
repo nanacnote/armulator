@@ -8,7 +8,7 @@ const pkg = require('./package.json');
 module.exports = merge(common, {
   mode: 'production',
   output: {
-    path: path.resolve(__dirname, 'docs/'),
+    path: path.resolve(__dirname, 'dist'),
     filename: '[name].bundle.js'
   },
   plugins: [
