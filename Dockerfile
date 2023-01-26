@@ -1,3 +1,19 @@
+# build core library
+FROM node:14 as core_lib_builder
+WORKDIR /usr/src/app
+COPY core .
+RUN npm i && npm run build
+
+
+# build react frontend
+FROM node:14 as node_builder
+ENV NODE_ENV=production
+WORKDIR /usr/src/app
+COPY web .
+COPY --from=core_lib_builder ./usr/src/app/dist /usr/src/app/src/lib/armulator_core
+RUN npm i && npm run build
+
+
 FROM openresty/openresty:jammy
 
 RUN apt-get update && apt-get install -y \
@@ -51,8 +67,10 @@ RUN ln -s /opt/vcpkg/packages/keystone_x64-linux/include/keystone /usr/include/k
     ln -s /opt/unicorn-emulator/build/libunicorn.so.2 /usr/lib/x86_64-linux-gnu/libunicorn.so.2 && \
     ln -s /opt/unicorn-emulator/build/libunicorn.so.2 /usr/lib/x86_64-linux-gnu/libunicorn.so 
 
-COPY html /usr/local/openresty/nginx/html
-COPY lua /usr/local/openresty/nginx/lua
-COPY default.conf /etc/nginx/conf.d/
+COPY server/html /usr/local/openresty/nginx/html
+COPY server/lua /usr/local/openresty/nginx/lua
+COPY server/default.conf /etc/nginx/conf.d/
 
-EXPOSE 80 443
+COPY --from=node_builder ./usr/src/app/dist /usr/local/openresty/nginx/html
+
+EXPOSE 80
