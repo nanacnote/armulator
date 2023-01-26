@@ -2,35 +2,35 @@
   "name": "armulator-core",
   "version": "1.0.0",
   "description": "JavaScript ARM CPU Emulator core library",
-  "type": "module",
-  "source": "src/index.js",
-  "main": "./dist/index.cjs",
-  "module": "./dist/index.module.js",
-  "unpkg": "./dist/index.umd.js",
-  "exports": {
-    "require": "./dist/index.cjs",
-    "import": "./dist/index.modern.js"
-  },
-  "scripts": {
-    "build": "microbundle",
-    "dev": "microbundle watch",
-    "dev:debug": "microbundle watch --no-compress",
-    "build:mv": "microbundle --no-compress && cp ./dist/index.modern.js ../web/src/lib/armulator_core/armulator_core.js && cp ./dist/index.modern.js.map ../web/src/lib/armulator_core/armulator_core.js.map",
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "directories": {
-    "test": "test"
+  "homepage": "https://github.com/nanacnote/armulator#readme",
+  "bugs": {
+    "url": "https://github.com/nanacnote/armulator/issues"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/nanacnote/armulator.git"
   },
-  "author": "Owusu K <adjeibohyen@hotmail.co.uk>",
   "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/nanacnote/armulator/issues"
+  "author": "Owusu K <adjeibohyen@hotmail.co.uk>",
+  "type": "module",
+  "exports": {
+    "require": "./dist/index.cjs",
+    "import": "./dist/index.modern.js"
   },
-  "homepage": "https://github.com/nanacnote/armulator#readme",
+  "main": "./dist/index.cjs",
+  "unpkg": "./dist/index.umd.js",
+  "module": "./dist/index.module.js",
+  "source": "src/index.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "build": "microbundle",
+    "build:mv": "microbundle --no-compress && cp ./dist/index.modern.js ../web/src/lib/armulator_core/armulator_core.js && cp ./dist/index.modern.js.map ../web/src/lib/armulator_core/armulator_core.js.map",
+    "dev": "microbundle watch",
+    "dev:debug": "microbundle watch --no-compress",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
   "devDependencies": {
     "microbundle": "^0.15.1"
   }

@@ -9,14 +9,11 @@ module.exports = merge(common, {
   mode: 'development',
   devtool: 'inline-source-map',
   output: {
-    path: path.resolve(__dirname, 'dist/'),
+    path: path.resolve(__dirname, 'dist'),
     publicPath: '/dist/',
     filename: '[name].bundle.js'
   },
   devServer: {
-    static: {
-      directory: path.join(__dirname, 'public/')
-    },
     port: 5000,
     devMiddleware: {
       publicPath: 'https://localhost:5000/dist/'
