@@ -31,22 +31,22 @@ RUN apt-get update && apt-get install -y \
     gcc-12-arm-linux-gnueabi
 
 # install vcpkg manager and use it to install keystone engine
-RUN mkdir -p /opt/vcpkg
-WORKDIR /opt/vcpkg
-RUN git clone https://github.com/microsoft/vcpkg.git .
-RUN ./bootstrap-vcpkg.sh -disableMetrics && \
-    ./vcpkg install keystone
+# RUN mkdir -p /opt/vcpkg
+# WORKDIR /opt/vcpkg
+# RUN git clone https://github.com/microsoft/vcpkg.git .
+# RUN ./bootstrap-vcpkg.sh -disableMetrics && \
+#     ./vcpkg install keystone
 
 # # build and install keystone engine
-# RUN mkdir -p /opt/keystone-engine
-# WORKDIR /opt/keystone-engine
-# RUN git clone https://github.com/keystone-engine/keystone.git .
-# RUN mkdir build && \
-#     cd build && \
-#     ../make-share.sh && \
-#     cmake -DCMAKE_BUILD_TYPE=Release -DBUILD_SHARED_LIBS=OFF -DLLVM_TARGETS_TO_BUILD="ARM" -G "Unix Makefiles" .. && \
-#     make -j8 && \
-#     make install
+RUN mkdir -p /opt/keystone-engine
+WORKDIR /opt/keystone-engine
+RUN git clone https://github.com/keystone-engine/keystone.git .
+RUN mkdir build && \
+    cd build && \
+    ../make-share.sh && \
+    cmake -DCMAKE_BUILD_TYPE=Release -DBUILD_SHARED_LIBS=OFF -DLLVM_TARGETS_TO_BUILD="ARM" -G "Unix Makefiles" .. && \
+    make -j8 && \
+    make install
 
 # build and install unicorn cpu emulator
 RUN mkdir -p /opt/unicorn-emulator
