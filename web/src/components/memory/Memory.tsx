@@ -70,13 +70,13 @@ const Memory: React.FC<TProps> = (): JSX.Element => {
               {React.createElement(Numeral, { binStr: address.toString(2) })}
             </th>
             <td>
-              {React.createElement(Numeral, { binStr: batch.slice(0, 9) })}
+              {React.createElement(Numeral, { binStr: batch.slice(0, 8) })}
             </td>
             <td>
-              {React.createElement(Numeral, { binStr: batch.slice(9, 17) })}
+              {React.createElement(Numeral, { binStr: batch.slice(8, 16) })}
             </td>
             <td>
-              {React.createElement(Numeral, { binStr: batch.slice(17, 25) })}
+              {React.createElement(Numeral, { binStr: batch.slice(16, 24) })}
             </td>
             <td>{React.createElement(Numeral, { binStr: batch.slice(24) })}</td>
           </tr>
