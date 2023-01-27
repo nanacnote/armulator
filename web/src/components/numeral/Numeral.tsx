@@ -8,6 +8,9 @@ interface TProps {
 
 /**
  * Numeral component
+ * Returns an 8bit(byte) string with respect to the the bin/hex
+ * example 0b11111111 or 0xFF
+ * It updates when user preferred numeral ie bin/hex
  */
 const Numeral: React.FC<TProps> = ({ binStr }): JSX.Element => {
   const thisComponent = React.useRef<HTMLDivElement>(null);
@@ -22,7 +25,7 @@ const Numeral: React.FC<TProps> = ({ binStr }): JSX.Element => {
           '0x' +
             parseInt(origBinStr.current, 2)
               .toString(16)
-              .padStart(8, '0')
+              .padStart(2, '0')
               .toUpperCase()
         );
         break;
