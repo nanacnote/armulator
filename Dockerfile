@@ -60,11 +60,11 @@ RUN mkdir build && \
 WORKDIR /
 
 # Symlink the keystone and unicorn libraries to the gcc search path
-RUN ln -s /opt/vcpkg/packages/keystone_x64-linux/include/keystone /usr/include/keystone && \
-    ln -s /opt/vcpkg/packages/keystone_x64-linux/lib/libkeystone.a /usr/lib/x86_64-linux-gnu/libkeystone.a && \
-    ln -s /opt/unicorn-emulator/include/unicorn /usr/include/unicorn && \
-    ln -s /opt/unicorn-emulator/build/libunicorn.so.2 /usr/lib/x86_64-linux-gnu/libunicorn.so.2 && \
-    ln -s /opt/unicorn-emulator/build/libunicorn.so.2 /usr/lib/x86_64-linux-gnu/libunicorn.so 
+# RUN ln -s /opt/vcpkg/packages/keystone_x64-linux/include/keystone /usr/include/keystone && \
+#    ln -s /opt/vcpkg/packages/keystone_x64-linux/lib/libkeystone.a /usr/lib/x86_64-linux-gnu/libkeystone.a && \
+#    ln -s /opt/unicorn-emulator/include/unicorn /usr/include/unicorn && \
+#    ln -s /opt/unicorn-emulator/build/libunicorn.so.2 /usr/lib/x86_64-linux-gnu/libunicorn.so.2 && \
+#    ln -s /opt/unicorn-emulator/build/libunicorn.so.2 /usr/lib/x86_64-linux-gnu/libunicorn.so 
 
 COPY server/html /usr/local/openresty/nginx/html
 COPY server/lua /usr/local/openresty/nginx/lua
