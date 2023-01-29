@@ -6,9 +6,11 @@ import { Layout, Header, Body, Footer } from './components';
 class App extends Component {
   render() {
     return (
-      <div className={'app-wrapper'}>
-        <Layout header={<Header />} body={<Body />} footer={<Footer />} />
-      </div>
+      <Layout>
+        <Header />
+        <Body />
+        <Footer />
+      </Layout>
     );
   }
 }
