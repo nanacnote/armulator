@@ -1,28 +1,16 @@
 import * as React from 'react';
 
-interface TProps {
-  header: JSX.Element;
-  body: JSX.Element | string;
-  footer: JSX.Element | string;
-}
+interface TProps {}
 
 /**
  * Layout component
- *
- * @property JSX.Element
- * @property JSX.Element
- * @property JSX.Element
  */
-const Layout: React.FC<TProps> = ({ header, body, footer }): JSX.Element => {
+const Layout: React.FC<React.PropsWithChildren<TProps>> = ({
+  children
+}): JSX.Element => {
   const thisComponent = React.useRef<HTMLDivElement>(null);
 
-  return (
-    <div ref={thisComponent}>
-      {header}
-      {body}
-      {footer}
-    </div>
-  );
+  return <div ref={thisComponent}>{children}</div>;
 };
 
 export default Layout;

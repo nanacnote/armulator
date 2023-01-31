@@ -11,7 +11,7 @@ interface TProps {}
 const Footer: React.FC<TProps> = (): JSX.Element => {
   const thisComponent = React.useRef<HTMLDivElement>(null);
   const { getASMTextChunk } = useSession();
-  const { post } = useKompilerAPI();
+  const { kstoolBE } = useKompilerAPI();
   const { DEF, cpu, clk } = useArmulatorCore();
 
   const ctaGroupHandler = (e: Event) => {
@@ -30,7 +30,7 @@ const Footer: React.FC<TProps> = (): JSX.Element => {
   const startHandler = (e: React.MouseEvent) => {
     const asmText = getASMTextChunk();
     if (asmText) {
-      post(asmText).then((data) => cpu.loadProg(data).run());
+      kstoolBE(asmText).then((data) => cpu.loadProg(data).run());
     } else {
       // TODO: implement alert
     }

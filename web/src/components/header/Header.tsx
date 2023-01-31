@@ -22,7 +22,7 @@ const Header: React.FC<TProps> = (): JSX.Element => {
     off,
     toggleTheme,
     getTheme,
-    setASMTextChunk,
+    setASMTextChunkByUpload,
     getNumeralType,
     setNumeralType
   } = useSession();
@@ -77,7 +77,7 @@ const Header: React.FC<TProps> = (): JSX.Element => {
     const el = e.target;
     const reader = new FileReader();
     reader.onload = (e) => {
-      setASMTextChunk(String(e.target?.result));
+      setASMTextChunkByUpload(String(e.target?.result));
     };
     reader.readAsText(el.files![0]);
   };
