@@ -2,11 +2,17 @@
  * Fetch API wrapper to handle compiling Assembly instructions to machine code
  */
 export function useKompilerAPI() {
-  const post = (asm_str: string, arch_mode = 'armbe') => {
+  const parsAsmStr = (val: string) => {
+    // TODO: remove comments and replace line breaks with ; [think about how to handle branch names and main section]
+    // return val;
+    return 'cmp r3, #245; push {r7}; sub sp, sp, #12; add r7, sp, #0; str r0, [r7, #4]; ldr r3, [r7, #4]; mul r3, r3, r3; mov r0, r3; adds r7, r7, #12; mov sp, r7; ldr r7, [sp], #4; bx lr';
+  };
+
+  const kstoolBE = (asmStr: string) => {
     return fetch('http://localhost:9001/kstool', {
       cache: 'no-cache',
       method: 'POST',
-      body: JSON.stringify({ arch_mode, asm_str })
+      body: JSON.stringify({ arch_mode: 'armbe', asm_str: parsAsmStr(asmStr) })
     })
       .then((res) => res.json())
       .then((ctx) => ({
@@ -16,5 +22,5 @@ export function useKompilerAPI() {
       }));
   };
 
-  return { post };
+  return { kstoolBE };
 }
