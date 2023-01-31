@@ -9,7 +9,7 @@ export function useKompilerAPI() {
   };
 
   const kstoolBE = (asmStr: string) => {
-    return fetch('http://localhost:9001/kstool', {
+    return fetch('http://localhost:9001/api/kstool', {
       cache: 'no-cache',
       method: 'POST',
       body: JSON.stringify({ arch_mode: 'armbe', asm_str: parsAsmStr(asmStr) })
