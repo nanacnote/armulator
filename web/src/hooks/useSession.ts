@@ -17,6 +17,7 @@ export function useSession() {
     getNumeralType: session.getNumeralType,
     setNumeralType: session.setNumeralType,
     getASMTextChunk: session.getASMTextChunk,
-    setASMTextChunk: session.setASMTextChunk
+    setASMTextChunkByUpload: session.setASMTextChunkByUpload,
+    setASMTextChunkByAceInput: session.setASMTextChunkByAceInput
   };
 }

@@ -11,6 +11,7 @@ class Session extends EventTarget {
     this.STORE = sessionStorage;
 
     this.TYPE = {
+      ACE_INPUT: 'aceInput',
       UPLOAD: 'upload',
       THEME: 'theme',
       NUMERAL: 'numeral',
@@ -24,7 +25,8 @@ class Session extends EventTarget {
     this.getNumeralType = this.getNumeralType.bind(this);
     this.setNumeralType = this.setNumeralType.bind(this);
     this.getASMTextChunk = this.getASMTextChunk.bind(this);
-    this.setASMTextChunk = this.setASMTextChunk.bind(this);
+    this.setASMTextChunkByUpload = this.setASMTextChunkByUpload.bind(this);
+    this.setASMTextChunkByAceInput = this.setASMTextChunkByAceInput.bind(this);
 
     this.addEventListener = this.addEventListener.bind(this);
 
@@ -47,11 +49,13 @@ class Session extends EventTarget {
     }
   }
 
-  addEventListener(type, callback, options) {
-    for (const key in this.STORE) {
-      if (Object.hasOwnProperty.call(this.STORE, key)) {
-        if (key === type)
-          callback(new CustomEvent(key, { detail: this.STORE[key] }));
+  addEventListener(type, callback, options, withInitialCall = true) {
+    if (withInitialCall) {
+      for (const key in this.STORE) {
+        if (Object.hasOwnProperty.call(this.STORE, key)) {
+          if (key === type)
+            callback(new CustomEvent(key, { detail: this.STORE[key] }));
+        }
       }
     }
     return super.addEventListener(type, callback, options);
@@ -99,12 +103,21 @@ class Session extends EventTarget {
     this.dispatchEvent(new CustomEvent(this.TYPE.NUMERAL, { detail: value }));
   }
 
-  setASMTextChunk(value) {
+  setASMTextChunkByAceInput(value) {
+    this.STORE.removeItem(this.TYPE.UPLOAD);
+    this.STORE.setItem(this.TYPE.ACE_INPUT, value);
+    this.dispatchEvent(new CustomEvent(this.TYPE.ACE_INPUT, { detail: value }));
+  }
+  setASMTextChunkByUpload(value) {
+    this.STORE.removeItem(this.TYPE.ACE_INPUT);
     this.STORE.setItem(this.TYPE.UPLOAD, value);
-    this.dispatchEvent(new Event(this.TYPE.UPLOAD));
+    this.dispatchEvent(new CustomEvent(this.TYPE.UPLOAD, { detail: value }));
   }
   getASMTextChunk() {
-    return this.STORE.getItem(this.TYPE.UPLOAD);
+    return (
+      this.STORE.getItem(this.TYPE.UPLOAD) ||
+      this.STORE.getItem(this.TYPE.ACE_INPUT)
+    );
   }
 }
 
