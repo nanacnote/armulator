@@ -1,0 +1,93 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "ARMulator - KompilerAPI 1.0",
+    "description": "This project aims to produce a web-based application that allows users to input a subset of ARM1 assembly instructions and visually execute and understand how the instructions are processed within the CPU registers and RAM . The motivation for this project is to provide novice learners with a better understanding of how machine code is executed at the hardware level and how Assembly language works. Assembly language is a low-level programming language that is human-readable and has a strong correspondence to machine code instructions. Understanding Assembly language can help programmers write highly optimized and efficient code in high-level languages.\n\nTo achieve this goal, the project will face several technical challenges, including implementing logic to parse user input, an interpreter engine to execute and visualize the instructions, and a CPU clock simulator with variable speeds. To address these challenges, the project will require extensive research and planning before commencement. The resources for this project will include the ARM Architecture Reference Manual, which provides detailed information on the instructions needed for the project, and the ECMAScript language specification, which will be used as a guide for programming in JavaScript.\n\nThe technology stack for this project includes JavaScript for the programming language, React for the frontend framework, and Jest for component testing. The project will be designed as a stateless, client-side application to address security concerns, and the code will be bundled with Webpack and distributed via an Nginx server or GitHub pages. The project will be compared to similar applications that provide visual learning aids for Assembly language, and a plan for development and testing will be outlined. Overall, this project aims to provide a valuable learning aid for understanding Assembly language and how it is executed at the hardware level.\n\nSome useful links:\n- [Codebase](https://github.com/nanacnote/armulator)\n- [Author](https://nanacnote.github.io/)",
+    "contact": {
+      "email": "adjeibohyen@hotmail.co.uk"
+    },
+    "license": {
+      "name": "CC0 1.0",
+      "url": "https://creativecommons.org/publicdomain/zero/1.0/"
+    },
+    "version": "1.0.0"
+  },
+  "servers": [
+    {
+      "url": "http://localhost:9001/api"
+    }
+  ],
+  "tags": [
+    {
+      "name": "kstool",
+      "description": "Keystone engine cli tool"
+    }
+  ],
+  "paths": {
+    "/kstool": {
+      "post": {
+        "tags": ["kstool"],
+        "summary": "Compiles \";\" delimitered ARM32 instruction to machine code",
+        "description": "Post a string of \";\" ARM32 instructions and get an array of equivalent machine code in hex string (order is preservered).",
+        "requestBody": {
+          "description": "Set the architecture mode and ARM32 instruction payload in the body. There are two architecture modes thats is Little Endian(arm) and Big Endian(armbe). The ARM32 instructions payload must be \";\" delimitered if more than one.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/KstoolRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/KstoolResponse"
+                }
+              }
+            }
+          },
+          "204": {
+            "description": "Invalid payload"
+          },
+          "405": {
+            "description": "Invalid method"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "KstoolRequest": {
+        "required": ["arch_mode", "asm_str"],
+        "type": "object",
+        "properties": {
+          "arch_mode": {
+            "type": "string",
+            "example": "arm | armbe"
+          },
+          "asm_str": {
+            "type": "string",
+            "example": "cmp r3, #245; push {r7}; sub sp, sp, #12"
+          }
+        }
+      },
+      "KstoolResponse": {
+        "type": "object",
+        "properties": {
+          "text": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    }
+  }
+}

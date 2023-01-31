@@ -10,7 +10,7 @@
     "type": "git",
     "url": "git+https://github.com/nanacnote/armulator.git"
   },
-  "license": "MIT",
+  "license": "CC0-1.0",
   "author": "Owusu K <adjeibohyen@hotmail.co.uk>",
   "type": "module",
   "exports": {
@@ -33,5 +33,6 @@
   },
   "devDependencies": {
     "microbundle": "^0.15.1"
-  }
+  },
+  "email": "adjeibohyen@hotmail.co.uk"
 }
