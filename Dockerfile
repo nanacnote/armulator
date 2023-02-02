@@ -66,6 +66,7 @@ RUN ln -s /opt/unicorn-emulator/include/unicorn /usr/include/unicorn && \
 WORKDIR /
 
 COPY server/html /usr/local/openresty/nginx/html
+COPY server/docs /usr/local/openresty/nginx/docs
 COPY server/lua /usr/local/openresty/nginx/lua
 COPY server/default.conf /etc/nginx/conf.d/
 
