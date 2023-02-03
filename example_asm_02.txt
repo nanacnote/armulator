@@ -1,0 +1,8 @@
+cmp r3, #245
+push {r7}
+sub sp, sp, #12
+add r7, sp, #0
+str r0, [r7, #4]
+ldr r3, [r7, #4]
+mul r3, r3, r3
+mov r0, r3

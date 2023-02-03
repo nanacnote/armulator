@@ -10,7 +10,7 @@ interface TProps {}
  */
 const Footer: React.FC<TProps> = (): JSX.Element => {
   const thisComponent = React.useRef<HTMLDivElement>(null);
-  const { getASMTextChunk } = useSession();
+  const { getCodeBuffer } = useSession();
   const { kstoolBE } = useKompilerAPI();
   const { DEF, cpu, clk } = useArmulatorCore();
 
@@ -28,7 +28,7 @@ const Footer: React.FC<TProps> = (): JSX.Element => {
   };
 
   const startHandler = (e: React.MouseEvent) => {
-    const asmText = getASMTextChunk();
+    const asmText = getCodeBuffer();
     if (asmText) {
       kstoolBE(asmText).then((data) => cpu.loadProg(data).run());
     } else {

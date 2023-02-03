@@ -22,7 +22,7 @@ const Header: React.FC<TProps> = (): JSX.Element => {
     off,
     toggleTheme,
     getTheme,
-    setASMTextChunkByUpload,
+    setCodeBuffer,
     getNumeralType,
     setNumeralType
   } = useSession();
@@ -77,9 +77,10 @@ const Header: React.FC<TProps> = (): JSX.Element => {
     const el = e.target;
     const reader = new FileReader();
     reader.onload = (e) => {
-      setASMTextChunkByUpload(String(e.target?.result));
+      setCodeBuffer(String(e.target?.result));
     };
     reader.readAsText(el.files![0]);
+    el.value = ''; // allows for upload same multiple times in succession
   };
 
   const menuHandler = (e: React.ChangeEvent<HTMLInputElement>) => {

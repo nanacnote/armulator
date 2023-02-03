@@ -11,8 +11,7 @@ class Session extends EventTarget {
     this.STORE = sessionStorage;
 
     this.TYPE = {
-      ACE_INPUT: 'aceInput',
-      UPLOAD: 'upload',
+      CODE: 'code',
       THEME: 'theme',
       NUMERAL: 'numeral',
       TAB: 'tab'
@@ -24,9 +23,8 @@ class Session extends EventTarget {
     this.setSelectedTab = this.setSelectedTab.bind(this);
     this.getNumeralType = this.getNumeralType.bind(this);
     this.setNumeralType = this.setNumeralType.bind(this);
-    this.getASMTextChunk = this.getASMTextChunk.bind(this);
-    this.setASMTextChunkByUpload = this.setASMTextChunkByUpload.bind(this);
-    this.setASMTextChunkByAceInput = this.setASMTextChunkByAceInput.bind(this);
+    this.getCodeBuffer = this.getCodeBuffer.bind(this);
+    this.setCodeBuffer = this.setCodeBuffer.bind(this);
 
     this.addEventListener = this.addEventListener.bind(this);
 
@@ -103,21 +101,12 @@ class Session extends EventTarget {
     this.dispatchEvent(new CustomEvent(this.TYPE.NUMERAL, { detail: value }));
   }
 
-  setASMTextChunkByAceInput(value) {
-    this.STORE.removeItem(this.TYPE.UPLOAD);
-    this.STORE.setItem(this.TYPE.ACE_INPUT, value);
-    this.dispatchEvent(new CustomEvent(this.TYPE.ACE_INPUT, { detail: value }));
+  getCodeBuffer() {
+    return this.STORE.getItem(this.TYPE.CODE);
   }
-  setASMTextChunkByUpload(value) {
-    this.STORE.removeItem(this.TYPE.ACE_INPUT);
-    this.STORE.setItem(this.TYPE.UPLOAD, value);
-    this.dispatchEvent(new CustomEvent(this.TYPE.UPLOAD, { detail: value }));
-  }
-  getASMTextChunk() {
-    return (
-      this.STORE.getItem(this.TYPE.UPLOAD) ||
-      this.STORE.getItem(this.TYPE.ACE_INPUT)
-    );
+  setCodeBuffer(value) {
+    this.STORE.setItem(this.TYPE.CODE, value);
+    this.dispatchEvent(new CustomEvent(this.TYPE.CODE, { detail: value }));
   }
 }
 
