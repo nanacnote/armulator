@@ -7,7 +7,8 @@ const ON_SPEED_CHANGE_EVENT = "speed-change";
 const ON_RAM_WRITE_EVENT = "ram-write";
 const ON_RAM_READ_EVENT = "ram-read";
 const ON_BUFFER_32_WRITE_EVENT = "buffer-32-write";
-const ON_BUFFER_32_READ_EVENT = "buffer-32-write";
+const ON_BUFFER_32_READ_EVENT = "buffer-32-read";
+const ON_PROG_LOAD = "on-prog-load";
 const ON_FETCH_CYCLE = "fetch-cycle";
 const ON_DECODE_CYCLE = "decode-cycle";
 const ON_EXECUTE_CYCLE = "execute-cycle";
@@ -59,6 +60,7 @@ var def = {
   ON_RAM_READ_EVENT: ON_RAM_READ_EVENT,
   ON_BUFFER_32_WRITE_EVENT: ON_BUFFER_32_WRITE_EVENT,
   ON_BUFFER_32_READ_EVENT: ON_BUFFER_32_READ_EVENT,
+  ON_PROG_LOAD: ON_PROG_LOAD,
   ON_FETCH_CYCLE: ON_FETCH_CYCLE,
   ON_DECODE_CYCLE: ON_DECODE_CYCLE,
   ON_EXECUTE_CYCLE: ON_EXECUTE_CYCLE,
@@ -821,9 +823,10 @@ class Reg {
   }
 }
 
-class Mmu {
+class Mmu extends EventTarget {
   // virtual memory management unit
   constructor() {
+    super();
     this.BUS = null;
   }
   conn2bus(bus) {
@@ -842,6 +845,7 @@ class Mmu {
     for (let i = 0 + ram.START_ADDRESS, len = instructions.length + ram.START_ADDRESS; i < len; i++) {
       ram.write32(instructions[i], 4 * i);
     }
+    this.dispatchEvent(new Event(ON_PROG_LOAD));
   }
 }
 

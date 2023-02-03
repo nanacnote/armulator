@@ -12,7 +12,8 @@
   var ON_RAM_WRITE_EVENT = "ram-write";
   var ON_RAM_READ_EVENT = "ram-read";
   var ON_BUFFER_32_WRITE_EVENT = "buffer-32-write";
-  var ON_BUFFER_32_READ_EVENT = "buffer-32-write";
+  var ON_BUFFER_32_READ_EVENT = "buffer-32-read";
+  var ON_PROG_LOAD = "on-prog-load";
   var ON_FETCH_CYCLE = "fetch-cycle";
   var ON_DECODE_CYCLE = "decode-cycle";
   var ON_EXECUTE_CYCLE = "execute-cycle";
@@ -64,6 +65,7 @@
     ON_RAM_READ_EVENT: ON_RAM_READ_EVENT,
     ON_BUFFER_32_WRITE_EVENT: ON_BUFFER_32_WRITE_EVENT,
     ON_BUFFER_32_READ_EVENT: ON_BUFFER_32_READ_EVENT,
+    ON_PROG_LOAD: ON_PROG_LOAD,
     ON_FETCH_CYCLE: ON_FETCH_CYCLE,
     ON_DECODE_CYCLE: ON_DECODE_CYCLE,
     ON_EXECUTE_CYCLE: ON_EXECUTE_CYCLE,
@@ -1020,10 +1022,14 @@
     return Reg;
   }();
 
-  var Mmu = /*#__PURE__*/function () {
+  var Mmu = /*#__PURE__*/function (_EventTarget) {
+    _inheritsLoose(Mmu, _EventTarget);
     // virtual memory management unit
     function Mmu() {
-      this.BUS = null;
+      var _this;
+      _this = _EventTarget.call(this) || this;
+      _this.BUS = null;
+      return _this;
     }
     var _proto = Mmu.prototype;
     _proto.conn2bus = function conn2bus(bus) {
@@ -1042,9 +1048,10 @@
       for (var i = 0 + ram.START_ADDRESS, len = instructions.length + ram.START_ADDRESS; i < len; i++) {
         ram.write32(instructions[i], 4 * i);
       }
+      this.dispatchEvent(new Event(ON_PROG_LOAD));
     };
     return Mmu;
-  }();
+  }( /*#__PURE__*/_wrapNativeSuper(EventTarget));
 
   /**
 

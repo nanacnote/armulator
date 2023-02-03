@@ -1,8 +1,9 @@
-import { RAM_DEV_KEY } from "../var/def.js";
+import { ON_PROG_LOAD, RAM_DEV_KEY } from "../var/def.js";
 
-export class Mmu {
+export class Mmu extends EventTarget {
   // virtual memory management unit
   constructor() {
+    super();
     this.BUS = null;
   }
 
@@ -30,5 +31,6 @@ export class Mmu {
     ) {
       ram.write32(instructions[i], 4 * i);
     }
+    this.dispatchEvent(new Event(ON_PROG_LOAD));
   }
 }
