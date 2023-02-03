@@ -19,8 +19,8 @@ export class Cpu {
 
     this.CURRENT_INSTRUCTION = null;
     this.HANDLER_CODE = null;
-    this.PROG_START_ADDRESS = 0;
-    this.PROG_BYTE_SIZE = 0;
+    this.PROC_START_ADDRESS = 0;
+    this.PROC_BYTE_SIZE = 0;
     this.STACK_BYTE_SIZE = 0;
     this.STACK_START_ADDRESS = 0;
 
@@ -40,15 +40,15 @@ export class Cpu {
   }
 
   loadParsedElf(ctx) {
-    this.PROG_BYTE_SIZE = ctx.progSize;
+    this.PROC_BYTE_SIZE = ctx.proCSize;
     this.STACK_BYTE_SIZE = ctx.stackSize;
-    this.PROG_START_ADDRESS = this.MMU.byteAlloc(this.PROG_BYTE_SIZE, 0);
+    this.PROC_START_ADDRESS = this.MMU.byteAlloc(this.PROC_BYTE_SIZE, 0);
     this.STACK_START_ADDRESS = this.MMU.byteAlloc(
       this.STACK_BYTE_SIZE,
-      this.PROG_START_ADDRESS + this.PROG_BYTE_SIZE + 4
+      this.PROC_START_ADDRESS + this.PROC_BYTE_SIZE + 4
     );
-    this.REG.pc.write(this.PROG_START_ADDRESS);
-    this.REG.sp.write(this.PROG_START_ADDRESS);
+    this.REG.pc.write(this.PROC_START_ADDRESS);
+    this.REG.sp.write(this.PROC_START_ADDRESS);
     this.MMU.loadProc(ctx.text);
     return this;
   }
@@ -59,7 +59,7 @@ export class Cpu {
   }
 
   _fetch() {
-    if (this.REG.pc.read() < this.PROG_START_ADDRESS + this.PROG_BYTE_SIZE) {
+    if (this.REG.pc.read() < this.PROC_START_ADDRESS + this.PROC_BYTE_SIZE) {
       const pcRegAddr = this.REG.pc.read();
       const physicalMemAddr = this.MMU.map2ram(pcRegAddr);
       this.BUS.setAddress(physicalMemAddr);

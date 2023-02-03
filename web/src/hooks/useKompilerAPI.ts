@@ -17,7 +17,7 @@ export function useKompilerAPI() {
       .then((res) => res.json())
       .then((ctx) => ({
         stackSize: ctx.text.length * 4, // TODO: get from response
-        progSize: ctx.text.length * 4, // TODO: get from response
+        procSize: ctx.text.length * 4, // TODO: get from response
         text: ctx.text.map((s: string) => parseInt(s, 16)),
         instructions: parsedInstruction.split(';')
       }));
