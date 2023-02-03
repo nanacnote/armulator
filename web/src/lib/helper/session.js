@@ -105,22 +105,22 @@ class Session extends EventTarget {
   }
 
   getInstructionBuffer() {
-    return this.STORE.getItem(this.type.INSTRUCTION);
+    return this.STORE.getItem(this.TYPE.INSTRUCTION);
   }
   setInstructionBuffer(value) {
-    this.STORE.setItem(this.type.INSTRUCTION, value);
+    this.STORE.setItem(this.TYPE.INSTRUCTION, value);
     this.dispatchEvent(
-      new CustomEvent(this.type.INSTRUCTION, { detail: value })
+      new CustomEvent(this.TYPE.INSTRUCTION, { detail: value })
     );
   }
 
   getMachineCodeBuffer() {
-    return this.STORE.getItem(this.type.MACHINE_CODE);
+    return this.STORE.getItem(this.TYPE.MACHINE_CODE);
   }
   setMachineCodeBuffer(value) {
-    this.STORE.setItem(this.type.MACHINE_CODE, value);
+    this.STORE.setItem(this.TYPE.MACHINE_CODE, value);
     this.dispatchEvent(
-      new CustomEvent(this.type.MACHINE_CODE, { detail: value })
+      new CustomEvent(this.TYPE.MACHINE_CODE, { detail: value })
     );
   }
 }
