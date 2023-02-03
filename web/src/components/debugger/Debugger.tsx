@@ -11,7 +11,20 @@ const Debugger: React.FC<TProps> = (): JSX.Element => {
   const thisComponent = React.useRef<HTMLDivElement>(null);
   const [content, setContent] = React.useState<any>([]);
   const { getKstoolOutput } = useSession();
-  const { DEF, clk } = useArmulatorCore();
+  const { DEF, alu, clk } = useArmulatorCore();
+
+  const executionHandler = (e: CustomEventInit) => {
+    const children = thisComponent.current?.getElementsByClassName(
+      'code-entry-for-snippet'
+    ) as HTMLCollectionOf<HTMLButtonElement>;
+    for (const child of children) {
+      if (child.dataset.prefix == e.detail.index.toString()) {
+        child.classList.add('bg-warning', 'text-warning-content');
+      } else {
+        child.classList.remove('bg-warning', 'text-warning-content');
+      }
+    }
+  };
 
   const processLoadHandler = () => {
     const data = getKstoolOutput();
@@ -37,7 +50,8 @@ const Debugger: React.FC<TProps> = (): JSX.Element => {
   };
 
   React.useEffect(() => {
-    clk.addEventListener(DEF.ON_START_EVENT, processLoadHandler);
+    processLoadHandler();
+    alu.addEventListener(DEF.ON_ALU_EXECUTE, executionHandler);
     return () => {
       clk.removeEventListener(DEF.ON_START_EVENT, processLoadHandler);
     };
@@ -48,11 +62,12 @@ const Debugger: React.FC<TProps> = (): JSX.Element => {
       <div className="grid grid-cols-3 gap-4">
         <div className="col-span-2">
           <div className="mockup-code h-[473px] overflow-auto">
-            <pre data-prefix="0" className="bg-warning text-warning-content">
-              <code></code>
-            </pre>
             {content.map((item: any) => (
-              <pre key={item.key} data-prefix={item.lineNumber}>
+              <pre
+                key={item.key}
+                data-prefix={item.lineNumber}
+                className="code-entry-for-snippet"
+              >
                 <code>
                   {item.instruction}
                   &nbsp;
