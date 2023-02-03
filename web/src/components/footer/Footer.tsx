@@ -10,7 +10,7 @@ interface TProps {}
  */
 const Footer: React.FC<TProps> = (): JSX.Element => {
   const thisComponent = React.useRef<HTMLDivElement>(null);
-  const { getInstructionBuffer } = useSession();
+  const { getInstructionBuffer, setMachineCodeBuffer } = useSession();
   const { kstoolBE } = useKompilerAPI();
   const { DEF, cpu, clk } = useArmulatorCore();
 
@@ -31,6 +31,7 @@ const Footer: React.FC<TProps> = (): JSX.Element => {
     const instruction = getInstructionBuffer();
     if (instruction) {
       kstoolBE(instruction).then((machineCode) => {
+        setMachineCodeBuffer(machineCode);
         cpu.loadProg(machineCode).run();
       });
     } else {

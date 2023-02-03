@@ -17,6 +17,8 @@ export function useSession() {
     getNumeralType: session.getNumeralType,
     setNumeralType: session.setNumeralType,
     getInstructionBuffer: session.getInstructionBuffer,
-    setInstructionBuffer: session.setInstructionBuffer
+    setInstructionBuffer: session.setInstructionBuffer,
+    getMachineCodeBuffer: session.getMachineCodeBuffer,
+    setMachineCodeBuffer: session.setMachineCodeBuffer
   };
 }

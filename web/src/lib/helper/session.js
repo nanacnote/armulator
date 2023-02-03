@@ -11,6 +11,7 @@ class Session extends EventTarget {
     this.STORE = sessionStorage;
 
     this.TYPE = {
+      MACHINE_CODE: 'machine-code',
       INSTRUCTION: 'instruction',
       THEME: 'theme',
       NUMERAL: 'numeral',
@@ -25,6 +26,8 @@ class Session extends EventTarget {
     this.setNumeralType = this.setNumeralType.bind(this);
     this.getInstructionBuffer = this.getInstructionBuffer.bind(this);
     this.setInstructionBuffer = this.setInstructionBuffer.bind(this);
+    this.getMachineCodeBuffer = this.getMachineCodeBuffer.bind(this);
+    this.setMachineCodeBuffer = this.setMachineCodeBuffer.bind(this);
 
     this.addEventListener = this.addEventListener.bind(this);
 
@@ -108,6 +111,16 @@ class Session extends EventTarget {
     this.STORE.setItem(this.type.INSTRUCTION, value);
     this.dispatchEvent(
       new CustomEvent(this.type.INSTRUCTION, { detail: value })
+    );
+  }
+
+  getMachineCodeBuffer() {
+    return this.STORE.getItem(this.type.MACHINE_CODE);
+  }
+  setMachineCodeBuffer(value) {
+    this.STORE.setItem(this.type.MACHINE_CODE, value);
+    this.dispatchEvent(
+      new CustomEvent(this.type.MACHINE_CODE, { detail: value })
     );
   }
 }
