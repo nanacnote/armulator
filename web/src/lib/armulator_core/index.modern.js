@@ -607,7 +607,7 @@ class Cpu {
     this.CLK.addEventListener(ON_EXECUTE_CYCLE, this.BUS.onTick);
   }
   loadParsedElf(ctx) {
-    this.PROC_BYTE_SIZE = ctx.proCSize;
+    this.PROC_BYTE_SIZE = ctx.procSize;
     this.STACK_BYTE_SIZE = ctx.stackSize;
     this.PROC_START_ADDRESS = this.MMU.byteAlloc(this.PROC_BYTE_SIZE, 0);
     this.STACK_START_ADDRESS = this.MMU.byteAlloc(this.STACK_BYTE_SIZE, this.PROC_START_ADDRESS + this.PROC_BYTE_SIZE + 4);
