@@ -8,7 +8,7 @@ const ON_RAM_WRITE_EVENT = "ram-write";
 const ON_RAM_READ_EVENT = "ram-read";
 const ON_BUFFER_32_WRITE_EVENT = "buffer-32-write";
 const ON_BUFFER_32_READ_EVENT = "buffer-32-read";
-const ON_PROG_LOAD = "on-prog-load";
+const ON_PROC_LOAD = "on-proc-load";
 const ON_FETCH_CYCLE = "fetch-cycle";
 const ON_DECODE_CYCLE = "decode-cycle";
 const ON_EXECUTE_CYCLE = "execute-cycle";
@@ -60,7 +60,7 @@ var def = {
   ON_RAM_READ_EVENT: ON_RAM_READ_EVENT,
   ON_BUFFER_32_WRITE_EVENT: ON_BUFFER_32_WRITE_EVENT,
   ON_BUFFER_32_READ_EVENT: ON_BUFFER_32_READ_EVENT,
-  ON_PROG_LOAD: ON_PROG_LOAD,
+  ON_PROC_LOAD: ON_PROC_LOAD,
   ON_FETCH_CYCLE: ON_FETCH_CYCLE,
   ON_DECODE_CYCLE: ON_DECODE_CYCLE,
   ON_EXECUTE_CYCLE: ON_EXECUTE_CYCLE,
@@ -606,14 +606,14 @@ class Cpu {
     this.CLK.addEventListener(ON_DECODE_CYCLE, this.BUS.onTick);
     this.CLK.addEventListener(ON_EXECUTE_CYCLE, this.BUS.onTick);
   }
-  loadProg(ctx) {
+  loadParsedElf(ctx) {
     this.PROG_BYTE_SIZE = ctx.progSize;
     this.STACK_BYTE_SIZE = ctx.stackSize;
     this.PROG_START_ADDRESS = this.MMU.byteAlloc(this.PROG_BYTE_SIZE, 0);
     this.STACK_START_ADDRESS = this.MMU.byteAlloc(this.STACK_BYTE_SIZE, this.PROG_START_ADDRESS + this.PROG_BYTE_SIZE + 4);
     this.REG.pc.write(this.PROG_START_ADDRESS);
     this.REG.sp.write(this.PROG_START_ADDRESS);
-    this.MMU.initProg(ctx.text);
+    this.MMU.loadProc(ctx.text);
     return this;
   }
   run() {
@@ -840,12 +840,12 @@ class Mmu extends EventTarget {
     //TODO: implement virtual memory allocation
     return offset;
   }
-  initProg(instructions) {
+  loadProc(instructions) {
     const ram = this.BUS.DEVICES[RAM_DEV_KEY];
     for (let i = 0 + ram.START_ADDRESS, len = instructions.length + ram.START_ADDRESS; i < len; i++) {
       ram.write32(instructions[i], 4 * i);
     }
-    this.dispatchEvent(new Event(ON_PROG_LOAD));
+    this.dispatchEvent(new Event(ON_PROC_LOAD));
   }
 }
 

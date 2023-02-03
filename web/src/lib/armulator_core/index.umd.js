@@ -13,7 +13,7 @@
   var ON_RAM_READ_EVENT = "ram-read";
   var ON_BUFFER_32_WRITE_EVENT = "buffer-32-write";
   var ON_BUFFER_32_READ_EVENT = "buffer-32-read";
-  var ON_PROG_LOAD = "on-prog-load";
+  var ON_PROC_LOAD = "on-proc-load";
   var ON_FETCH_CYCLE = "fetch-cycle";
   var ON_DECODE_CYCLE = "decode-cycle";
   var ON_EXECUTE_CYCLE = "execute-cycle";
@@ -65,7 +65,7 @@
     ON_RAM_READ_EVENT: ON_RAM_READ_EVENT,
     ON_BUFFER_32_WRITE_EVENT: ON_BUFFER_32_WRITE_EVENT,
     ON_BUFFER_32_READ_EVENT: ON_BUFFER_32_READ_EVENT,
-    ON_PROG_LOAD: ON_PROG_LOAD,
+    ON_PROC_LOAD: ON_PROC_LOAD,
     ON_FETCH_CYCLE: ON_FETCH_CYCLE,
     ON_DECODE_CYCLE: ON_DECODE_CYCLE,
     ON_EXECUTE_CYCLE: ON_EXECUTE_CYCLE,
@@ -762,14 +762,14 @@
       this.CLK.addEventListener(ON_EXECUTE_CYCLE, this.BUS.onTick);
     }
     var _proto = Cpu.prototype;
-    _proto.loadProg = function loadProg(ctx) {
+    _proto.loadParsedElf = function loadParsedElf(ctx) {
       this.PROG_BYTE_SIZE = ctx.progSize;
       this.STACK_BYTE_SIZE = ctx.stackSize;
       this.PROG_START_ADDRESS = this.MMU.byteAlloc(this.PROG_BYTE_SIZE, 0);
       this.STACK_START_ADDRESS = this.MMU.byteAlloc(this.STACK_BYTE_SIZE, this.PROG_START_ADDRESS + this.PROG_BYTE_SIZE + 4);
       this.REG.pc.write(this.PROG_START_ADDRESS);
       this.REG.sp.write(this.PROG_START_ADDRESS);
-      this.MMU.initProg(ctx.text);
+      this.MMU.loadProc(ctx.text);
       return this;
     };
     _proto.run = function run() {
@@ -1043,12 +1043,12 @@
       //TODO: implement virtual memory allocation
       return offset;
     };
-    _proto.initProg = function initProg(instructions) {
+    _proto.loadProc = function loadProc(instructions) {
       var ram = this.BUS.DEVICES[RAM_DEV_KEY];
       for (var i = 0 + ram.START_ADDRESS, len = instructions.length + ram.START_ADDRESS; i < len; i++) {
         ram.write32(instructions[i], 4 * i);
       }
-      this.dispatchEvent(new Event(ON_PROG_LOAD));
+      this.dispatchEvent(new Event(ON_PROC_LOAD));
     };
     return Mmu;
   }( /*#__PURE__*/_wrapNativeSuper(EventTarget));

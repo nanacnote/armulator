@@ -14,7 +14,7 @@
       console.log(reg.pc.view());
       clk.addEventListener("stop", () => console.log(reg.pc.view()));
       cpu
-        .loadProg({
+        .loadParsedElf({
           stackSize: 48,
           progSize: 48,
           text: [
@@ -35,7 +35,7 @@
         .run();
       setTimeout(() => {
         cpu
-          .loadProg({
+          .loadParsedElf({
             stackSize: 48,
             progSize: 48,
             text: [

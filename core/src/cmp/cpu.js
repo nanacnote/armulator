@@ -39,7 +39,7 @@ export class Cpu {
     this.CLK.addEventListener(ON_EXECUTE_CYCLE, this.BUS.onTick);
   }
 
-  loadProg(ctx) {
+  loadParsedElf(ctx) {
     this.PROG_BYTE_SIZE = ctx.progSize;
     this.STACK_BYTE_SIZE = ctx.stackSize;
     this.PROG_START_ADDRESS = this.MMU.byteAlloc(this.PROG_BYTE_SIZE, 0);
@@ -49,7 +49,7 @@ export class Cpu {
     );
     this.REG.pc.write(this.PROG_START_ADDRESS);
     this.REG.sp.write(this.PROG_START_ADDRESS);
-    this.MMU.initProg(ctx.text);
+    this.MMU.loadProc(ctx.text);
     return this;
   }
 

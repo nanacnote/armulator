@@ -30,9 +30,9 @@ const Footer: React.FC<TProps> = (): JSX.Element => {
   const startHandler = (e: React.MouseEvent) => {
     const instruction = getInstructionBuffer();
     if (instruction) {
-      kstoolBE(instruction).then((machineCode) => {
-        setMachineCodeBuffer(machineCode);
-        cpu.loadProg(machineCode).run();
+      kstoolBE(instruction).then((parsedElf) => {
+        setMachineCodeBuffer(parsedElf.text);
+        cpu.loadParsedElf(parsedElf).run();
       });
     } else {
       // TODO: implement alert

@@ -1,4 +1,4 @@
-import { ON_PROG_LOAD, RAM_DEV_KEY } from "../var/def.js";
+import { ON_PROC_LOAD, RAM_DEV_KEY } from "../var/def.js";
 
 export class Mmu extends EventTarget {
   // virtual memory management unit
@@ -21,7 +21,7 @@ export class Mmu extends EventTarget {
     return offset;
   }
 
-  initProg(instructions) {
+  loadProc(instructions) {
     const ram = this.BUS.DEVICES[RAM_DEV_KEY];
     for (
       let i = 0 + ram.START_ADDRESS,
@@ -31,6 +31,6 @@ export class Mmu extends EventTarget {
     ) {
       ram.write32(instructions[i], 4 * i);
     }
-    this.dispatchEvent(new Event(ON_PROG_LOAD));
+    this.dispatchEvent(new Event(ON_PROC_LOAD));
   }
 }
