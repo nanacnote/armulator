@@ -10,7 +10,7 @@ interface TProps {}
  */
 const Footer: React.FC<TProps> = (): JSX.Element => {
   const thisComponent = React.useRef<HTMLDivElement>(null);
-  const { getInstructionBuffer, setMachineCodeBuffer } = useSession();
+  const { getInstructionBuffer, setKstoolOutput } = useSession();
   const { kstoolBE } = useKompilerAPI();
   const { DEF, cpu, clk } = useArmulatorCore();
 
@@ -31,7 +31,7 @@ const Footer: React.FC<TProps> = (): JSX.Element => {
     const instruction = getInstructionBuffer();
     if (instruction) {
       kstoolBE(instruction).then((parsedElf) => {
-        setMachineCodeBuffer(parsedElf.text);
+        setKstoolOutput(JSON.stringify(parsedElf));
         cpu.loadParsedElf(parsedElf).run();
       });
     } else {

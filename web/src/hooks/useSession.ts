@@ -18,7 +18,7 @@ export function useSession() {
     setNumeralType: session.setNumeralType,
     getInstructionBuffer: session.getInstructionBuffer,
     setInstructionBuffer: session.setInstructionBuffer,
-    getMachineCodeBuffer: session.getMachineCodeBuffer,
-    setMachineCodeBuffer: session.setMachineCodeBuffer
+    getKstoolOutput: session.getKstoolOutput,
+    setKstoolOutput: session.setKstoolOutput
   };
 }

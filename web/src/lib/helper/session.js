@@ -11,7 +11,7 @@ class Session extends EventTarget {
     this.STORE = sessionStorage;
 
     this.TYPE = {
-      MACHINE_CODE: 'machine-code',
+      KSTOOL_OUTPUT: 'kstool-output',
       INSTRUCTION: 'instruction',
       THEME: 'theme',
       NUMERAL: 'numeral',
@@ -26,8 +26,8 @@ class Session extends EventTarget {
     this.setNumeralType = this.setNumeralType.bind(this);
     this.getInstructionBuffer = this.getInstructionBuffer.bind(this);
     this.setInstructionBuffer = this.setInstructionBuffer.bind(this);
-    this.getMachineCodeBuffer = this.getMachineCodeBuffer.bind(this);
-    this.setMachineCodeBuffer = this.setMachineCodeBuffer.bind(this);
+    this.getKstoolOutput = this.getKstoolOutput.bind(this);
+    this.setKstoolOutput = this.setKstoolOutput.bind(this);
 
     this.addEventListener = this.addEventListener.bind(this);
 
@@ -114,13 +114,13 @@ class Session extends EventTarget {
     );
   }
 
-  getMachineCodeBuffer() {
-    return this.STORE.getItem(this.TYPE.MACHINE_CODE);
+  getKstoolOutput() {
+    return this.STORE.getItem(this.TYPE.KSTOOL_OUTPUT);
   }
-  setMachineCodeBuffer(value) {
-    this.STORE.setItem(this.TYPE.MACHINE_CODE, value);
+  setKstoolOutput(value) {
+    this.STORE.setItem(this.TYPE.KSTOOL_OUTPUT, value);
     this.dispatchEvent(
-      new CustomEvent(this.TYPE.MACHINE_CODE, { detail: value })
+      new CustomEvent(this.TYPE.KSTOOL_OUTPUT, { detail: value })
     );
   }
 }
