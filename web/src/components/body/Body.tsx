@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Editor, Schematic, Memory, Tab } from '..';
+import { Editor, Schematic, Memory, Tab, Debugger } from '..';
 
 interface TProps {}
 
@@ -13,8 +13,9 @@ const Body: React.FC<TProps> = (): JSX.Element => {
 
   const content: any = {
     editor: <Editor />,
-    schematic: <Schematic />,
-    memory: <Memory />
+    memory: <Memory />,
+    debugger: <Debugger />,
+    schematic: <Schematic />
   };
 
   const selectHandler = (val: string) => {
