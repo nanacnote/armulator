@@ -17,6 +17,7 @@
   var ON_FETCH_CYCLE = "fetch-cycle";
   var ON_DECODE_CYCLE = "decode-cycle";
   var ON_EXECUTE_CYCLE = "execute-cycle";
+  var ON_ALU_EXECUTE = "alu-execute";
 
   // Constant values that represent the status of an operation
   var OK_CODE = 1; // indicates everything went right
@@ -69,6 +70,7 @@
     ON_FETCH_CYCLE: ON_FETCH_CYCLE,
     ON_DECODE_CYCLE: ON_DECODE_CYCLE,
     ON_EXECUTE_CYCLE: ON_EXECUTE_CYCLE,
+    ON_ALU_EXECUTE: ON_ALU_EXECUTE,
     OK_CODE: OK_CODE,
     ERROR_CODE: ERROR_CODE,
     EXECUTION_KEY: EXECUTION_KEY,
@@ -793,12 +795,13 @@
     };
     _proto._execute = function _execute() {
       if (this.CURRENT_INSTRUCTION) {
+        var instructionIndex = (this.REG.pc.read() - this.PROC_START_ADDRESS) / 4;
         var type = this.HANDLER_CODE & (1 << 8) - 1 << 8 >>> 0;
         if (!(type ^ INTERRUPT_KEY)) {
           this.IVT.handle(this.HANDLER_CODE, this.CURRENT_INSTRUCTION);
         }
         if (!(type ^ EXECUTION_KEY)) {
-          this.ALU.handle(this.HANDLER_CODE, this.CURRENT_INSTRUCTION);
+          this.ALU.handle(this.HANDLER_CODE, this.CURRENT_INSTRUCTION, instructionIndex);
         }
       }
     };
@@ -1712,14 +1715,28 @@
     return Dec;
   }();
 
-  var Alu = /*#__PURE__*/function () {
-    function Alu() {}
+  var Alu = /*#__PURE__*/function (_EventTarget) {
+    _inheritsLoose(Alu, _EventTarget);
+    function Alu() {
+      return _EventTarget.call(this) || this;
+    }
     var _proto = Alu.prototype;
-    _proto.handle = function handle(code, inst) {
+    _proto.handle = function handle(code, inst, index) {
       console.log("Execute Opcode - " + code.toString(2) + " - " + inst.toString(16) + "\n\n");
+      var detail = {
+        code: code,
+        inst: inst,
+        index: index,
+        // TODO: calculate checksum from the above three val this way the consumer of the lib can do likewise and compare.
+        // This will become necessary when complex arm instructions involving initialised data is introduced
+        checksum: null
+      };
+      this.dispatchEvent(new CustomEvent(ON_ALU_EXECUTE, {
+        detail: detail
+      }));
     };
     return Alu;
-  }();
+  }( /*#__PURE__*/_wrapNativeSuper(EventTarget));
 
   var Ivt = /*#__PURE__*/function () {
     // interrupt vector table

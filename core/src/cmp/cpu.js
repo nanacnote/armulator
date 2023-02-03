@@ -78,6 +78,8 @@ export class Cpu {
 
   _execute() {
     if (this.CURRENT_INSTRUCTION) {
+      const instructionIndex =
+        (this.REG.pc.read() - this.PROC_START_ADDRESS) / 4;
       const type = this.HANDLER_CODE & ((((1 << 8) - 1) << 8) >>> 0);
 
       if (!(type ^ INTERRUPT_KEY)) {
@@ -85,7 +87,11 @@ export class Cpu {
       }
 
       if (!(type ^ EXECUTION_KEY)) {
-        this.ALU.handle(this.HANDLER_CODE, this.CURRENT_INSTRUCTION);
+        this.ALU.handle(
+          this.HANDLER_CODE,
+          this.CURRENT_INSTRUCTION,
+          instructionIndex
+        );
       }
     }
   }

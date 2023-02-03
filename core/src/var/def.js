@@ -12,6 +12,7 @@ export const ON_PROC_LOAD = "on-proc-load";
 export const ON_FETCH_CYCLE = "fetch-cycle";
 export const ON_DECODE_CYCLE = "decode-cycle";
 export const ON_EXECUTE_CYCLE = "execute-cycle";
+export const ON_ALU_EXECUTE = "alu-execute";
 
 // Constant values that represent the status of an operation
 export const OK_CODE = 1; // indicates everything went right
