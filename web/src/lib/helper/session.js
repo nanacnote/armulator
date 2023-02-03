@@ -11,7 +11,7 @@ class Session extends EventTarget {
     this.STORE = sessionStorage;
 
     this.TYPE = {
-      CODE: 'code',
+      INSTRUCTION: 'instruction',
       THEME: 'theme',
       NUMERAL: 'numeral',
       TAB: 'tab'
@@ -23,8 +23,8 @@ class Session extends EventTarget {
     this.setSelectedTab = this.setSelectedTab.bind(this);
     this.getNumeralType = this.getNumeralType.bind(this);
     this.setNumeralType = this.setNumeralType.bind(this);
-    this.getCodeBuffer = this.getCodeBuffer.bind(this);
-    this.setCodeBuffer = this.setCodeBuffer.bind(this);
+    this.getInstructionBuffer = this.getInstructionBuffer.bind(this);
+    this.setInstructionBuffer = this.setInstructionBuffer.bind(this);
 
     this.addEventListener = this.addEventListener.bind(this);
 
@@ -101,12 +101,14 @@ class Session extends EventTarget {
     this.dispatchEvent(new CustomEvent(this.TYPE.NUMERAL, { detail: value }));
   }
 
-  getCodeBuffer() {
-    return this.STORE.getItem(this.TYPE.CODE);
+  getInstructionBuffer() {
+    return this.STORE.getItem(this.type.INSTRUCTION);
   }
-  setCodeBuffer(value) {
-    this.STORE.setItem(this.TYPE.CODE, value);
-    this.dispatchEvent(new CustomEvent(this.TYPE.CODE, { detail: value }));
+  setInstructionBuffer(value) {
+    this.STORE.setItem(this.type.INSTRUCTION, value);
+    this.dispatchEvent(
+      new CustomEvent(this.type.INSTRUCTION, { detail: value })
+    );
   }
 }
 

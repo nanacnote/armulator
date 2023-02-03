@@ -16,7 +16,7 @@ export function useSession() {
     setSelectedTab: session.setSelectedTab,
     getNumeralType: session.getNumeralType,
     setNumeralType: session.setNumeralType,
-    getCodeBuffer: session.getCodeBuffer,
-    setCodeBuffer: session.setCodeBuffer
+    getInstructionBuffer: session.getInstructionBuffer,
+    setInstructionBuffer: session.setInstructionBuffer
   };
 }

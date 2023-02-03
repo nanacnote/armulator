@@ -11,8 +11,14 @@ interface TProps {}
 const Editor: React.FC<TProps> = (): JSX.Element => {
   const editor = React.useRef<any>(null);
   const thisComponent = React.useRef<HTMLDivElement>(null);
-  const { on, off, type, getTheme, getCodeBuffer, setCodeBuffer } =
-    useSession();
+  const {
+    on,
+    off,
+    type,
+    getTheme,
+    getInstructionBuffer,
+    setInstructionBuffer
+  } = useSession();
 
   const aceHandler = {
     [LIGHT_THEME_NAME]: 'ace/theme/iplastic',
@@ -22,7 +28,7 @@ const Editor: React.FC<TProps> = (): JSX.Element => {
       editor.current = ace.edit('ace-editor-container');
       editor.current.session.setMode('ace/mode/assembly_x86');
       editor.current.setTheme((this as any)[getTheme()!]);
-      editor.current.setValue(getCodeBuffer(), -1);
+      editor.current.setValue(getInstructionBuffer(), -1);
       editor.current.setOptions({
         enableBasicAutocompletion: true,
         enableLiveAutocompletion: true
@@ -39,15 +45,15 @@ const Editor: React.FC<TProps> = (): JSX.Element => {
     },
     saveEditorContent: function () {
       if (this.isLocalChange) {
-        setCodeBuffer(editor.current.session.getValue());
+        setInstructionBuffer(editor.current.session.getValue());
       }
     },
-    insertUploadedCode: function () {
-      const incomingContent = getCodeBuffer();
+    insertUploadedInstruction: function () {
+      const incomingContent = getInstructionBuffer();
       const currentContent = editor.current.session.getValue();
       if (incomingContent !== currentContent) {
         this.isLocalChange = false;
-        editor.current.setValue(getCodeBuffer());
+        editor.current.setValue(getInstructionBuffer());
         this.isLocalChange = true;
       }
     }
@@ -56,16 +62,16 @@ const Editor: React.FC<TProps> = (): JSX.Element => {
   const changeThemeHandler = aceHandler.changeTheme.bind(aceHandler);
   const saveEditorContentHandler =
     aceHandler.saveEditorContent.bind(aceHandler);
-  const insertUploadedCodeHandler =
-    aceHandler.insertUploadedCode.bind(aceHandler);
+  const insertUploadedInstructionHandler =
+    aceHandler.insertUploadedInstruction.bind(aceHandler);
 
   React.useEffect(() => {
     aceHandler.init();
     on(type.THEME, changeThemeHandler, {}, false);
-    on(type.CODE, insertUploadedCodeHandler, {}, false);
+    on(type.INSTRUCTION, insertUploadedInstructionHandler, {}, false);
     return () => {
       off(type.THEME, changeThemeHandler);
-      off(type.CODE, insertUploadedCodeHandler);
+      off(type.INSTRUCTION, insertUploadedInstructionHandler);
       aceHandler.kill();
     };
   }, []);

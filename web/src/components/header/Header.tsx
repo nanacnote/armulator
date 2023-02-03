@@ -22,7 +22,7 @@ const Header: React.FC<TProps> = (): JSX.Element => {
     off,
     toggleTheme,
     getTheme,
-    setCodeBuffer,
+    setInstructionBuffer,
     getNumeralType,
     setNumeralType
   } = useSession();
@@ -77,7 +77,7 @@ const Header: React.FC<TProps> = (): JSX.Element => {
     const el = e.target;
     const reader = new FileReader();
     reader.onload = (e) => {
-      setCodeBuffer(String(e.target?.result));
+      setInstructionBuffer(String(e.target?.result));
     };
     reader.readAsText(el.files![0]);
     el.value = ''; // allows for upload same multiple times in succession
