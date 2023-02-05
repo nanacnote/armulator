@@ -6,6 +6,10 @@ export class Alu extends EventTarget {
     super();
   }
 
+  conn2reg(reg) {
+    this.REG = reg;
+  }
+
   call({ pid, routine, instruction, virtualAddress }) {
     if (routine) {
       console.log(
@@ -13,6 +17,32 @@ export class Alu extends EventTarget {
           16
         )}\n\n`
       );
+      const reg =
+        this.REG[
+          [
+            "r1",
+            "r2",
+            "r3",
+            "r4",
+            "r5",
+            "r6",
+            "r7",
+            "r8",
+            "r9",
+            "r10",
+            "r11",
+            "r12",
+            "sp",
+            "lr",
+            "pc",
+            "cpsr",
+          ][
+            Math.floor(Math.random() * (Math.floor(15) - Math.ceil(0) + 1)) +
+              Math.ceil(0)
+          ]
+        ];
+      reg.write(instruction);
+      console.log(reg);
       this.dispatchEvent(
         new CustomEvent(ON_ALU_EXECUTE, {
           detail: fletcher16(`${pid}-${instruction}-${virtualAddress}`),

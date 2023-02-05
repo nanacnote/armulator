@@ -25,6 +25,7 @@ export class Cpu {
     this.ALU_ROUTINE = null;
 
     this.MMU.conn2bus(this.BUS);
+    this.ALU.conn2reg(this.REG);
 
     this._fetch = this._fetch.bind(this);
     this._decode = this._decode.bind(this);
