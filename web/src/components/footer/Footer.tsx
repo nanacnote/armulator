@@ -10,7 +10,7 @@ interface TProps {}
  */
 const Footer: React.FC<TProps> = (): JSX.Element => {
   const thisComponent = React.useRef<HTMLDivElement>(null);
-  const { getASMTextChunk } = useSession();
+  const { getInstructionBuffer, setLoadedELF } = useSession();
   const { kstoolBE } = useKompilerAPI();
   const { DEF, cpu, clk } = useArmulatorCore();
 
@@ -28,9 +28,13 @@ const Footer: React.FC<TProps> = (): JSX.Element => {
   };
 
   const startHandler = (e: React.MouseEvent) => {
-    const asmText = getASMTextChunk();
-    if (asmText) {
-      kstoolBE(asmText).then((data) => cpu.loadProg(data).run());
+    const instruction = getInstructionBuffer();
+    if (instruction) {
+      kstoolBE(instruction).then((elfStruct) => {
+        const extELFStruct = cpu.load(elfStruct);
+        cpu.spawn(extELFStruct.pid).run();
+        setLoadedELF(JSON.stringify(extELFStruct));
+      });
     } else {
       // TODO: implement alert
     }

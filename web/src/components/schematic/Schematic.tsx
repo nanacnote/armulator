@@ -11,11 +11,13 @@ const Schematic: React.FC<TProps> = (): JSX.Element => {
   useSchematicSVG(thisComponent);
 
   return (
-    <div ref={thisComponent} className="relative">
+    <div ref={thisComponent} className="relative h-[473px]">
       <svg
         version="1.1"
         viewBox="0 0 1366 768"
         xmlns="http://www.w3.org/2000/svg"
+        width={'100%'}
+        height={'100%'}
       >
         <g id="sch_bus_group_end" fill="hsl(var(--b2))">
           <path

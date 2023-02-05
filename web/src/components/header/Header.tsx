@@ -22,7 +22,7 @@ const Header: React.FC<TProps> = (): JSX.Element => {
     off,
     toggleTheme,
     getTheme,
-    setASMTextChunkByUpload,
+    setInstructionBuffer,
     getNumeralType,
     setNumeralType
   } = useSession();
@@ -77,9 +77,10 @@ const Header: React.FC<TProps> = (): JSX.Element => {
     const el = e.target;
     const reader = new FileReader();
     reader.onload = (e) => {
-      setASMTextChunkByUpload(String(e.target?.result));
+      setInstructionBuffer(String(e.target?.result));
     };
     reader.readAsText(el.files![0]);
+    el.value = ''; // allows for upload same multiple times in succession
   };
 
   const menuHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -100,12 +101,12 @@ const Header: React.FC<TProps> = (): JSX.Element => {
   };
 
   React.useEffect(() => {
-    on(type.THEME, themeSwitchHandler);
-    on(type.NUMERAL, numeralCTAGroupHandler);
+    on(type.THEME_CHANGE, themeSwitchHandler);
+    on(type.NUMERAL_CHANGE, numeralCTAGroupHandler);
     clk.addEventListener(DEF.ON_SPEED_CHANGE_EVENT, speedCTAGroupHandler);
     return () => {
-      off(type.THEME, themeSwitchHandler);
-      off(type.NUMERAL, numeralCTAGroupHandler);
+      off(type.THEME_CHANGE, themeSwitchHandler);
+      off(type.NUMERAL_CHANGE, numeralCTAGroupHandler);
       clk.removeEventListener(DEF.ON_SPEED_CHANGE_EVENT, speedCTAGroupHandler);
     };
   }, []);

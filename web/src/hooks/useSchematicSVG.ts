@@ -8,7 +8,6 @@ import {
   mmu,
   dec,
   alu,
-  ivt,
   clk,
   ram
 } from '../lib/armulator_core/index.modern';

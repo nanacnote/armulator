@@ -18,6 +18,7 @@ export class Bus {
   /**
    * Creates a new Bus instance.
    * @param {Object} dev - An object containing the devices connected to the bus.
+   * @constructor
    */
   constructor(dev) {
     /**
@@ -30,19 +31,19 @@ export class Bus {
      * The ADDRESS-BUS buffer.
      * @type {Buffer32Bit}
      */
-    this.A_BUS_BUFFER = new Buffer32Bit();
+    this.A_BUS_BUFFER = new Buffer32Bit("ADDRESS_BUS");
 
     /**
      * The CONTROL-BUS buffer.
      * @type {Buffer32Bit}
      */
-    this.C_BUS_BUFFER = new Buffer32Bit();
+    this.C_BUS_BUFFER = new Buffer32Bit("CONTROL_BUS");
 
     /**
      * The DATA-BUS buffer.
      * @type {Buffer32Bit}
      */
-    this.D_BUS_BUFFER = new Buffer32Bit();
+    this.D_BUS_BUFFER = new Buffer32Bit("DATA_BUS");
 
     this.onTick = this.onTick.bind(this);
   }
@@ -121,7 +122,7 @@ export class Bus {
       this.D_BUS_BUFFER.write(device.read32(byteOffset));
     }
 
-    // write data from memory into register
+    // write data from register into memory
     if (!(this.C_BUS_BUFFER.read() ^ C_BUS_WRITE_8_VAL)) {
       device.write8(this.D_BUS_BUFFER.read(), byteOffset);
     }

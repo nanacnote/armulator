@@ -6,7 +6,6 @@ import {
   mmu,
   dec,
   alu,
-  ivt,
   clk,
   ram
 } from '../lib/armulator_core/index.modern';
@@ -15,5 +14,5 @@ import {
  * Exposes the armulator-core library API
  */
 export function useArmulatorCore() {
-  return { DEF, cpu, bus, reg, mmu, dec, alu, ivt, clk, ram };
+  return { DEF, cpu, bus, reg, mmu, dec, alu, clk, ram };
 }

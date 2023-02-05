@@ -16,60 +16,83 @@ const Editor: React.FC<TProps> = (): JSX.Element => {
     off,
     type,
     getTheme,
-    getASMTextChunk,
-    setASMTextChunkByAceInput
+    getInstructionBuffer,
+    setInstructionBuffer
   } = useSession();
 
   const aceHandler = {
     [LIGHT_THEME_NAME]: 'ace/theme/iplastic',
     [DARK_THEME_NAME]: 'ace/theme/idle_fingers',
+    isLocalChange: true,
     init: function () {
       editor.current = ace.edit('ace-editor-container');
       editor.current.session.setMode('ace/mode/assembly_x86');
       editor.current.setTheme((this as any)[getTheme()!]);
-      editor.current.setValue(getASMTextChunk(), -1);
+      editor.current.setValue(getInstructionBuffer(), -1);
       editor.current.setOptions({
         enableBasicAutocompletion: true,
         enableLiveAutocompletion: true
       });
-      editor.current.session.on('change', editorChangeHandler);
+      editor.current.session.on('change', saveEditorContentHandler);
     },
     kill: function () {
-      editor.current.session.off('change', editorChangeHandler);
+      editor.current.session.off('change', saveEditorContentHandler);
       editor.current.destroy();
-      // editor.current.container.remove();
+      editor.current.container.remove();
     },
     changeTheme: function (e: CustomEventInit) {
       editor.current.setTheme((this as any)[e.detail]);
     },
-    setContent: function (_delta: any) {
-      setASMTextChunkByAceInput(editor.current.session.getValue());
+    saveEditorContent: function () {
+      if (this.isLocalChange) {
+        setInstructionBuffer(editor.current.session.getValue());
+      }
     },
-    restartEditor: function (e: CustomEventInit) {
-      this.kill();
-      this.init();
+    insertUploadedInstruction: function () {
+      const incomingContent = getInstructionBuffer();
+      const currentContent = editor.current.session.getValue();
+      if (incomingContent !== currentContent) {
+        this.isLocalChange = false;
+        editor.current.setValue(getInstructionBuffer());
+        this.isLocalChange = true;
+      }
     }
   };
 
-  const editorChangeHandler = aceHandler.setContent.bind(aceHandler);
   const changeThemeHandler = aceHandler.changeTheme.bind(aceHandler);
-  const restartEditorHandler = aceHandler.restartEditor.bind(aceHandler);
+  const saveEditorContentHandler =
+    aceHandler.saveEditorContent.bind(aceHandler);
+  const insertUploadedInstructionHandler =
+    aceHandler.insertUploadedInstruction.bind(aceHandler);
 
   React.useEffect(() => {
     aceHandler.init();
-    on(type.THEME, changeThemeHandler, {}, false);
-    // COMING HERE
-    // on(type.UPLOAD, restartEditorHandler, {}, false);
+    on(type.THEME_CHANGE, changeThemeHandler, {}, false);
+    on(type.INSTRUCTION_CHANGE, insertUploadedInstructionHandler, {}, false);
     return () => {
+      off(type.THEME_CHANGE, changeThemeHandler);
+      off(type.INSTRUCTION_CHANGE, insertUploadedInstructionHandler);
       aceHandler.kill();
-      off(type.THEME, changeThemeHandler);
-      // off(type.UPLOAD, restartEditorHandler);
     };
   }, []);
 
   return (
     <div ref={thisComponent} className="m-4">
-      <pre id="ace-editor-container" className="h-[473px] text-base"></pre>
+      <div className="grid grid-cols-7 gap-4">
+        <div className="col-span-7 md:col-span-5">
+          <pre id="ace-editor-container" className="h-[473px] text-base"></pre>
+        </div>
+        <div className="col-span-7 md:col-span-2">
+          <div className="mockup-code h-[473px] overflow-auto">
+            <pre data-prefix=">" className="text-warning">
+              <code>installing...</code>
+            </pre>
+            <pre data-prefix=">" className="text-success">
+              <code>Done!</code>
+            </pre>
+          </div>
+        </div>
+      </div>
     </div>
   );
 };

@@ -11,11 +11,11 @@ class Session extends EventTarget {
     this.STORE = sessionStorage;
 
     this.TYPE = {
-      ACE_INPUT: 'aceInput',
-      UPLOAD: 'upload',
-      THEME: 'theme',
-      NUMERAL: 'numeral',
-      TAB: 'tab'
+      ELF_LOAD: 'elf',
+      INSTRUCTION_CHANGE: 'instruction',
+      THEME_CHANGE: 'theme',
+      NUMERAL_CHANGE: 'numeral',
+      TAB_CHANGE: 'tab'
     };
 
     this.getTheme = this.getTheme.bind(this);
@@ -24,9 +24,10 @@ class Session extends EventTarget {
     this.setSelectedTab = this.setSelectedTab.bind(this);
     this.getNumeralType = this.getNumeralType.bind(this);
     this.setNumeralType = this.setNumeralType.bind(this);
-    this.getASMTextChunk = this.getASMTextChunk.bind(this);
-    this.setASMTextChunkByUpload = this.setASMTextChunkByUpload.bind(this);
-    this.setASMTextChunkByAceInput = this.setASMTextChunkByAceInput.bind(this);
+    this.getInstructionBuffer = this.getInstructionBuffer.bind(this);
+    this.setInstructionBuffer = this.setInstructionBuffer.bind(this);
+    this.getLoadedELF = this.getLoadedELF.bind(this);
+    this.setLoadedELF = this.setLoadedELF.bind(this);
 
     this.addEventListener = this.addEventListener.bind(this);
 
@@ -62,62 +63,73 @@ class Session extends EventTarget {
   }
 
   getTheme() {
-    return this.STORE.getItem(this.TYPE.THEME);
+    return this.STORE.getItem(this.TYPE.THEME_CHANGE);
   }
   toggleTheme() {
     switch (this.getTheme()) {
       case LIGHT_THEME_NAME:
-        this.STORE.setItem(this.TYPE.THEME, DARK_THEME_NAME);
+        this.STORE.setItem(this.TYPE.THEME_CHANGE, DARK_THEME_NAME);
         this.dispatchEvent(
-          new CustomEvent(this.TYPE.THEME, { detail: DARK_THEME_NAME })
+          new CustomEvent(this.TYPE.THEME_CHANGE, {
+            detail: DARK_THEME_NAME
+          })
         );
         break;
       case DARK_THEME_NAME:
-        this.STORE.setItem(this.TYPE.THEME, LIGHT_THEME_NAME);
+        this.STORE.setItem(this.TYPE.THEME_CHANGE, LIGHT_THEME_NAME);
         this.dispatchEvent(
-          new CustomEvent(this.TYPE.THEME, { detail: LIGHT_THEME_NAME })
+          new CustomEvent(this.TYPE.THEME_CHANGE, {
+            detail: LIGHT_THEME_NAME
+          })
         );
         break;
       default:
-        this.STORE.setItem(this.TYPE.THEME, LIGHT_THEME_NAME);
+        this.STORE.setItem(this.TYPE.THEME_CHANGE, LIGHT_THEME_NAME);
         this.dispatchEvent(
-          new CustomEvent(this.TYPE.THEME, { detail: LIGHT_THEME_NAME })
+          new CustomEvent(this.TYPE.THEME_CHANGE, {
+            detail: LIGHT_THEME_NAME
+          })
         );
         break;
     }
   }
 
   getSelectedTab() {
-    return this.STORE.getItem(this.TYPE.TAB);
+    return this.STORE.getItem(this.TYPE.TAB_CHANGE);
   }
   setSelectedTab(value) {
-    this.STORE.setItem(this.TYPE.TAB, value);
-    this.dispatchEvent(new CustomEvent(this.TYPE.TAB, { detail: value }));
+    this.STORE.setItem(this.TYPE.TAB_CHANGE, value);
+    this.dispatchEvent(
+      new CustomEvent(this.TYPE.TAB_CHANGE, { detail: value })
+    );
   }
 
   getNumeralType() {
-    return this.STORE.getItem(this.TYPE.NUMERAL);
+    return this.STORE.getItem(this.TYPE.NUMERAL_CHANGE);
   }
   setNumeralType(value) {
-    this.STORE.setItem(this.TYPE.NUMERAL, value);
-    this.dispatchEvent(new CustomEvent(this.TYPE.NUMERAL, { detail: value }));
+    this.STORE.setItem(this.TYPE.NUMERAL_CHANGE, value);
+    this.dispatchEvent(
+      new CustomEvent(this.TYPE.NUMERAL_CHANGE, { detail: value })
+    );
   }
 
-  setASMTextChunkByAceInput(value) {
-    this.STORE.removeItem(this.TYPE.UPLOAD);
-    this.STORE.setItem(this.TYPE.ACE_INPUT, value);
-    this.dispatchEvent(new CustomEvent(this.TYPE.ACE_INPUT, { detail: value }));
+  getInstructionBuffer() {
+    return this.STORE.getItem(this.TYPE.INSTRUCTION_CHANGE);
   }
-  setASMTextChunkByUpload(value) {
-    this.STORE.removeItem(this.TYPE.ACE_INPUT);
-    this.STORE.setItem(this.TYPE.UPLOAD, value);
-    this.dispatchEvent(new CustomEvent(this.TYPE.UPLOAD, { detail: value }));
-  }
-  getASMTextChunk() {
-    return (
-      this.STORE.getItem(this.TYPE.UPLOAD) ||
-      this.STORE.getItem(this.TYPE.ACE_INPUT)
+  setInstructionBuffer(value) {
+    this.STORE.setItem(this.TYPE.INSTRUCTION_CHANGE, value);
+    this.dispatchEvent(
+      new CustomEvent(this.TYPE.INSTRUCTION_CHANGE, { detail: value })
     );
+  }
+
+  getLoadedELF() {
+    return this.STORE.getItem(this.TYPE.ELF_LOAD);
+  }
+  setLoadedELF(value) {
+    this.STORE.setItem(this.TYPE.ELF_LOAD, value);
+    this.dispatchEvent(new CustomEvent(this.TYPE.ELF_LOAD, { detail: value }));
   }
 }
 

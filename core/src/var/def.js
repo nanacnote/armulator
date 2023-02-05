@@ -7,21 +7,23 @@ export const ON_SPEED_CHANGE_EVENT = "speed-change";
 export const ON_RAM_WRITE_EVENT = "ram-write";
 export const ON_RAM_READ_EVENT = "ram-read";
 export const ON_BUFFER_32_WRITE_EVENT = "buffer-32-write";
-export const ON_BUFFER_32_READ_EVENT = "buffer-32-write";
+export const ON_BUFFER_32_READ_EVENT = "buffer-32-read";
 export const ON_FETCH_CYCLE = "fetch-cycle";
 export const ON_DECODE_CYCLE = "decode-cycle";
 export const ON_EXECUTE_CYCLE = "execute-cycle";
+export const ON_ALU_EXECUTE = "alu-execute";
+
+// Const values that represent the name of the memory section of a process
+export const ENV_SECTION = "env-section";
+export const STACK_SECTION = "stack-section";
+export const HEAP_SECTION = "heap-section";
+export const BSS_SECTION = "bss-section";
+export const INIT_DATA_SECTION = "init-data-section";
+export const TEXT_SECTION = "text-section";
 
 // Constant values that represent the status of an operation
 export const OK_CODE = 1; // indicates everything went right
 export const ERROR_CODE = 0; // indicates an error occurred
-
-// Constants used to distinguish between different types of execution
-export const EXECUTION_KEY = 0b0000000000000000; // indicates normal execution
-export const INTERRUPT_KEY = 0b0000000100000000; // indicates interrupt execution
-
-// Constants used to identify specific interrupt types
-export const UNDEFINED_INSTRUCTION_INTERRUPT = INTERRUPT_KEY + 0b00000001; // indicates an undefined instruction interrupt
 
 // Constants used to identify different clock states
 export const STOP_CLOCK_KEY = 0; // indicates the system is in stop/idle state

@@ -16,8 +16,9 @@ export function useSession() {
     setSelectedTab: session.setSelectedTab,
     getNumeralType: session.getNumeralType,
     setNumeralType: session.setNumeralType,
-    getASMTextChunk: session.getASMTextChunk,
-    setASMTextChunkByUpload: session.setASMTextChunkByUpload,
-    setASMTextChunkByAceInput: session.setASMTextChunkByAceInput
+    getInstructionBuffer: session.getInstructionBuffer,
+    setInstructionBuffer: session.setInstructionBuffer,
+    getLoadedELF: session.getLoadedELF,
+    setLoadedELF: session.setLoadedELF
   };
 }
