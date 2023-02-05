@@ -12,13 +12,28 @@ import {
 export class Buffer32Bit extends EventTarget {
   /**
    * Creates a new Buffer32Bit object.
+   * @param {String} name - A name to identify the buffer by.
    * @constructor
    */
-  constructor() {
+  constructor(name) {
     super();
 
+    /**
+     * A name to identify the buffer.
+     * @type {String}
+     */
+    this.NAME = name;
+
+    /**
+     * A code indicating whether the buffer is empty.
+     * @type {number}
+     */
     this.IS_EMPTY = OK_CODE;
 
+    /**
+     * A DataView object representing the buffer.
+     * @type {DataView}
+     */
     this.BUFFER = new DataView(new ArrayBuffer(4));
   }
 
@@ -30,7 +45,9 @@ export class Buffer32Bit extends EventTarget {
    */
   read(byteOffset = 0) {
     const val = this.BUFFER.getUint32(byteOffset);
-    this.dispatchEvent(new Event(ON_BUFFER_32_READ_EVENT));
+    this.dispatchEvent(
+      new CustomEvent(ON_BUFFER_32_READ_EVENT, { detail: this.NAME })
+    );
     return val;
   }
 
@@ -41,11 +58,12 @@ export class Buffer32Bit extends EventTarget {
    * @returns {number} The OK_CODE indicating success.
    * @fires ON_BUFFER_32_WRITE_EVENT
    */
-
   write(val, byteOffset = 0) {
     this.BUFFER.setUint32(byteOffset, val);
     this.IS_EMPTY = ERROR_CODE;
-    this.dispatchEvent(new Event(ON_BUFFER_32_WRITE_EVENT));
+    this.dispatchEvent(
+      new CustomEvent(ON_BUFFER_32_WRITE_EVENT, { detail: this.NAME })
+    );
     return OK_CODE;
   }
 
@@ -53,7 +71,6 @@ export class Buffer32Bit extends EventTarget {
    * Resets the buffer to all zeros.
    * @returns {number} The OK_CODE indicating success.
    */
-
   flush() {
     this.BUFFER.setUint32(0, 0);
     this.IS_EMPTY = OK_CODE;

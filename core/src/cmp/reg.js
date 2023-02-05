@@ -9,23 +9,23 @@ export class Reg {
    * @constructor
    */
   constructor() {
-    this._r0 = new Buffer32Bit();
-    this._r1 = new Buffer32Bit();
-    this._r2 = new Buffer32Bit();
-    this._r3 = new Buffer32Bit();
-    this._r4 = new Buffer32Bit();
-    this._r5 = new Buffer32Bit();
-    this._r6 = new Buffer32Bit();
-    this._r7 = new Buffer32Bit();
-    this._r8 = new Buffer32Bit();
-    this._r9 = new Buffer32Bit();
-    this._r10 = new Buffer32Bit();
-    this._r11 = new Buffer32Bit();
-    this._r12 = new Buffer32Bit();
-    this._r13 = new Buffer32Bit();
-    this._r14 = new Buffer32Bit();
-    this._r15 = new Buffer32Bit();
-    this._cpsr = new Buffer32Bit();
+    this._r0 = new Buffer32Bit("r0");
+    this._r2 = new Buffer32Bit("r2");
+    this._r3 = new Buffer32Bit("r3");
+    this._r1 = new Buffer32Bit("r1");
+    this._r4 = new Buffer32Bit("r4");
+    this._r5 = new Buffer32Bit("r5");
+    this._r6 = new Buffer32Bit("r6");
+    this._r7 = new Buffer32Bit("r7");
+    this._r8 = new Buffer32Bit("r8");
+    this._r9 = new Buffer32Bit("r9");
+    this._r10 = new Buffer32Bit("r10");
+    this._r11 = new Buffer32Bit("r11");
+    this._r12 = new Buffer32Bit("r12");
+    this._r13 = new Buffer32Bit("r13");
+    this._r14 = new Buffer32Bit("r14");
+    this._r15 = new Buffer32Bit("r15");
+    this._cpsr = new Buffer32Bit("cpsr");
   }
 
   /**
@@ -148,6 +148,7 @@ export class Reg {
    * @alias sp
    */
   get sp() {
+    this._r13.NAME = "sp";
     return this._r13;
   }
 
@@ -156,6 +157,7 @@ export class Reg {
    * @alias lr
    */
   get lr() {
+    this._r14.NAME = "lr";
     return this._r14;
   }
 
@@ -164,6 +166,7 @@ export class Reg {
    * @alias pc
    */
   get pc() {
+    this._r15.NAME = "pc";
     return this._r15;
   }
 
