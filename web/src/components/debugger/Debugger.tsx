@@ -1,4 +1,5 @@
 import * as React from 'react';
+import cn from 'classnames';
 import { useArmulatorCore, useSession } from '../../hooks';
 import { Numeral } from '..';
 
@@ -64,7 +65,7 @@ const Debugger: React.FC<TProps> = (): JSX.Element => {
   };
 
   const hydrateRegister = () => {
-    const entries = [];
+    const entries: any = [];
     const altName: any = { r13: 'sp', r14: 'lr', r15: 'pc', r16: 'cpsr' };
     const names = [...Array(16).keys()].map(
       (item) => altName[`r${item + 1}`] || `r${item + 1}`
@@ -76,23 +77,33 @@ const Debugger: React.FC<TProps> = (): JSX.Element => {
       const value = React.createElement(Numeral, { binStr });
       entries.push({ key, name, value });
     }
-    setRegisters(entries);
+    setRegisters((prev: any[]) =>
+      entries.map((entry: any, i: number) =>
+        prev[i]
+          ? entry.key !== prev[i]?.key
+            ? { ...entry, hasChanged: true }
+            : { ...entry, hasChanged: false }
+          : entry
+      )
+    );
   };
 
   const updateViewHandler = (e: CustomEventInit) => {
-    hydrateRegister();
     hydrateInstruction();
+    hydrateRegister();
     highlightInstruction(e);
   };
 
   React.useEffect(() => {
-    hydrateRegister();
     hydrateInstruction();
+    hydrateRegister();
     alu.addEventListener(DEF.ON_ALU_EXECUTE, updateViewHandler);
     return () => {
       alu.removeEventListener(DEF.ON_ALU_EXECUTE, updateViewHandler);
     };
   }, []);
+
+  // TODO: implement register edit and flush
 
   return (
     <div ref={thisComponent} className="m-4">
@@ -126,7 +137,13 @@ const Debugger: React.FC<TProps> = (): JSX.Element => {
             {registers.map((reg: any) => (
               <div
                 key={reg.key}
-                className="grid grid-cols-7 text-xs mb-[3.5px] pl-3 border rounded bg-neutral-content text-warning-content"
+                className={cn(
+                  'grid grid-cols-7 text-xs mb-[3.5px] pl-3 border rounded',
+                  {
+                    'bg-neutral-content text-warning-content': !reg.hasChanged,
+                    'bg-warning text-warning-content': reg.hasChanged
+                  }
+                )}
                 data-name={reg.name}
               >
                 <div className="font-semibold">
