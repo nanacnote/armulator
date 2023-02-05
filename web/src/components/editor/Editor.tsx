@@ -67,18 +67,32 @@ const Editor: React.FC<TProps> = (): JSX.Element => {
 
   React.useEffect(() => {
     aceHandler.init();
-    on(type.THEME, changeThemeHandler, {}, false);
-    on(type.INSTRUCTION, insertUploadedInstructionHandler, {}, false);
+    on(type.THEME_CHANGE, changeThemeHandler, {}, false);
+    on(type.INSTRUCTION_CHANGE, insertUploadedInstructionHandler, {}, false);
     return () => {
-      off(type.THEME, changeThemeHandler);
-      off(type.INSTRUCTION, insertUploadedInstructionHandler);
+      off(type.THEME_CHANGE, changeThemeHandler);
+      off(type.INSTRUCTION_CHANGE, insertUploadedInstructionHandler);
       aceHandler.kill();
     };
   }, []);
 
   return (
     <div ref={thisComponent} className="m-4">
-      <pre id="ace-editor-container" className="h-[473px] text-base"></pre>
+      <div className="grid grid-cols-7 gap-4">
+        <div className="col-span-7 md:col-span-5">
+          <pre id="ace-editor-container" className="h-[473px] text-base"></pre>
+        </div>
+        <div className="col-span-7 md:col-span-2">
+          <div className="mockup-code h-[473px] overflow-auto">
+            <pre data-prefix=">" className="text-warning">
+              <code>installing...</code>
+            </pre>
+            <pre data-prefix=">" className="text-success">
+              <code>Done!</code>
+            </pre>
+          </div>
+        </div>
+      </div>
     </div>
   );
 };

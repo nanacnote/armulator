@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { useArmulatorCore, useSession } from '../../hooks';
+import { useSession } from '../../hooks';
 
 interface TProps {
   onSelect(val: string): void;
@@ -32,9 +32,9 @@ const Tab: React.FC<TProps> = ({ onSelect }): JSX.Element => {
   };
 
   React.useEffect(() => {
-    on(type.TAB, visibleContentHandler);
+    on(type.TAB_CHANGE, visibleContentHandler);
     return () => {
-      off(type.TAB, visibleContentHandler);
+      off(type.TAB_CHANGE, visibleContentHandler);
     };
   }, []);
 

@@ -38,9 +38,9 @@ const Numeral: React.FC<TProps> = ({ binStr }): JSX.Element => {
   };
 
   React.useEffect(() => {
-    on(type.NUMERAL, numeralTypeHandler);
+    on(type.NUMERAL_CHANGE, numeralTypeHandler);
     return () => {
-      off(type.NUMERAL, numeralTypeHandler);
+      off(type.NUMERAL_CHANGE, numeralTypeHandler);
     };
   }, []);
 

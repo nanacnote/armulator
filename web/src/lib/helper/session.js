@@ -11,11 +11,11 @@ class Session extends EventTarget {
     this.STORE = sessionStorage;
 
     this.TYPE = {
-      KSTOOL_OUTPUT: 'kstool-output',
-      INSTRUCTION: 'instruction',
-      THEME: 'theme',
-      NUMERAL: 'numeral',
-      TAB: 'tab'
+      ELF_LOAD: 'elf',
+      INSTRUCTION_CHANGE: 'instruction',
+      THEME_CHANGE: 'theme',
+      NUMERAL_CHANGE: 'numeral',
+      TAB_CHANGE: 'tab'
     };
 
     this.getTheme = this.getTheme.bind(this);
@@ -26,8 +26,8 @@ class Session extends EventTarget {
     this.setNumeralType = this.setNumeralType.bind(this);
     this.getInstructionBuffer = this.getInstructionBuffer.bind(this);
     this.setInstructionBuffer = this.setInstructionBuffer.bind(this);
-    this.getKstoolOutput = this.getKstoolOutput.bind(this);
-    this.setKstoolOutput = this.setKstoolOutput.bind(this);
+    this.getLoadedELF = this.getLoadedELF.bind(this);
+    this.setLoadedELF = this.setLoadedELF.bind(this);
 
     this.addEventListener = this.addEventListener.bind(this);
 
@@ -63,65 +63,73 @@ class Session extends EventTarget {
   }
 
   getTheme() {
-    return this.STORE.getItem(this.TYPE.THEME);
+    return this.STORE.getItem(this.TYPE.THEME_CHANGE);
   }
   toggleTheme() {
     switch (this.getTheme()) {
       case LIGHT_THEME_NAME:
-        this.STORE.setItem(this.TYPE.THEME, DARK_THEME_NAME);
+        this.STORE.setItem(this.TYPE.THEME_CHANGE, DARK_THEME_NAME);
         this.dispatchEvent(
-          new CustomEvent(this.TYPE.THEME, { detail: DARK_THEME_NAME })
+          new CustomEvent(this.TYPE.THEME_CHANGE, {
+            detail: DARK_THEME_NAME
+          })
         );
         break;
       case DARK_THEME_NAME:
-        this.STORE.setItem(this.TYPE.THEME, LIGHT_THEME_NAME);
+        this.STORE.setItem(this.TYPE.THEME_CHANGE, LIGHT_THEME_NAME);
         this.dispatchEvent(
-          new CustomEvent(this.TYPE.THEME, { detail: LIGHT_THEME_NAME })
+          new CustomEvent(this.TYPE.THEME_CHANGE, {
+            detail: LIGHT_THEME_NAME
+          })
         );
         break;
       default:
-        this.STORE.setItem(this.TYPE.THEME, LIGHT_THEME_NAME);
+        this.STORE.setItem(this.TYPE.THEME_CHANGE, LIGHT_THEME_NAME);
         this.dispatchEvent(
-          new CustomEvent(this.TYPE.THEME, { detail: LIGHT_THEME_NAME })
+          new CustomEvent(this.TYPE.THEME_CHANGE, {
+            detail: LIGHT_THEME_NAME
+          })
         );
         break;
     }
   }
 
   getSelectedTab() {
-    return this.STORE.getItem(this.TYPE.TAB);
+    return this.STORE.getItem(this.TYPE.TAB_CHANGE);
   }
   setSelectedTab(value) {
-    this.STORE.setItem(this.TYPE.TAB, value);
-    this.dispatchEvent(new CustomEvent(this.TYPE.TAB, { detail: value }));
+    this.STORE.setItem(this.TYPE.TAB_CHANGE, value);
+    this.dispatchEvent(
+      new CustomEvent(this.TYPE.TAB_CHANGE, { detail: value })
+    );
   }
 
   getNumeralType() {
-    return this.STORE.getItem(this.TYPE.NUMERAL);
+    return this.STORE.getItem(this.TYPE.NUMERAL_CHANGE);
   }
   setNumeralType(value) {
-    this.STORE.setItem(this.TYPE.NUMERAL, value);
-    this.dispatchEvent(new CustomEvent(this.TYPE.NUMERAL, { detail: value }));
+    this.STORE.setItem(this.TYPE.NUMERAL_CHANGE, value);
+    this.dispatchEvent(
+      new CustomEvent(this.TYPE.NUMERAL_CHANGE, { detail: value })
+    );
   }
 
   getInstructionBuffer() {
-    return this.STORE.getItem(this.TYPE.INSTRUCTION);
+    return this.STORE.getItem(this.TYPE.INSTRUCTION_CHANGE);
   }
   setInstructionBuffer(value) {
-    this.STORE.setItem(this.TYPE.INSTRUCTION, value);
+    this.STORE.setItem(this.TYPE.INSTRUCTION_CHANGE, value);
     this.dispatchEvent(
-      new CustomEvent(this.TYPE.INSTRUCTION, { detail: value })
+      new CustomEvent(this.TYPE.INSTRUCTION_CHANGE, { detail: value })
     );
   }
 
-  getKstoolOutput() {
-    return this.STORE.getItem(this.TYPE.KSTOOL_OUTPUT);
+  getLoadedELF() {
+    return this.STORE.getItem(this.TYPE.ELF_LOAD);
   }
-  setKstoolOutput(value) {
-    this.STORE.setItem(this.TYPE.KSTOOL_OUTPUT, value);
-    this.dispatchEvent(
-      new CustomEvent(this.TYPE.KSTOOL_OUTPUT, { detail: value })
-    );
+  setLoadedELF(value) {
+    this.STORE.setItem(this.TYPE.ELF_LOAD, value);
+    this.dispatchEvent(new CustomEvent(this.TYPE.ELF_LOAD, { detail: value }));
   }
 }
 

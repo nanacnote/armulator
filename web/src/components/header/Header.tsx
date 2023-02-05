@@ -101,12 +101,12 @@ const Header: React.FC<TProps> = (): JSX.Element => {
   };
 
   React.useEffect(() => {
-    on(type.THEME, themeSwitchHandler);
-    on(type.NUMERAL, numeralCTAGroupHandler);
+    on(type.THEME_CHANGE, themeSwitchHandler);
+    on(type.NUMERAL_CHANGE, numeralCTAGroupHandler);
     clk.addEventListener(DEF.ON_SPEED_CHANGE_EVENT, speedCTAGroupHandler);
     return () => {
-      off(type.THEME, themeSwitchHandler);
-      off(type.NUMERAL, numeralCTAGroupHandler);
+      off(type.THEME_CHANGE, themeSwitchHandler);
+      off(type.NUMERAL_CHANGE, numeralCTAGroupHandler);
       clk.removeEventListener(DEF.ON_SPEED_CHANGE_EVENT, speedCTAGroupHandler);
     };
   }, []);

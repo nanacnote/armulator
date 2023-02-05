@@ -16,9 +16,15 @@ export function useKompilerAPI() {
     })
       .then((res) => res.json())
       .then((ctx) => ({
-        stackSize: ctx.text.length * 4, // TODO: get from response
-        procSize: ctx.text.length * 4, // TODO: get from response
-        text: ctx.text.map((s: string) => parseInt(s, 16)),
+        procSize: ctx.text.length * 4 * 4, // TODO: get from response
+        envSize: 4,
+        envContent: [],
+        bssSize: 4,
+        bssContent: [],
+        initDataSize: 4,
+        initDataContent: [],
+        textSize: ctx.text.length * 4, // TODO: get from response
+        textContent: ctx.text.map((s: string) => parseInt(s, 16)),
         instructions: parsedInstruction.split(';')
       }));
   };
