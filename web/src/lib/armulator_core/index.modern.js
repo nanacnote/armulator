@@ -631,6 +631,7 @@ class Cpu {
     this.CURRENT_INSTRUCTION = null;
     this.ALU_ROUTINE = null;
     this.MMU.conn2bus(this.BUS);
+    this.ALU.conn2reg(this.REG);
     this._fetch = this._fetch.bind(this);
     this._decode = this._decode.bind(this);
     this._execute = this._execute.bind(this);
@@ -1525,6 +1526,9 @@ class Alu extends EventTarget {
   constructor() {
     super();
   }
+  conn2reg(reg) {
+    this.REG = reg;
+  }
   call({
     pid,
     routine,
@@ -1533,6 +1537,9 @@ class Alu extends EventTarget {
   }) {
     if (routine) {
       console.log(`Execute Opcode - ${routine.toString(2)} - ${instruction.toString(16)}\n\n`);
+      const reg = this.REG[["r1", "r2", "r3", "r4", "r5", "r6", "r7", "r8", "r9", "r10", "r11", "r12", "sp", "lr", "pc", "cpsr"][Math.floor(Math.random() * (Math.floor(15) - Math.ceil(0) + 1)) + Math.ceil(0)]];
+      reg.write(instruction);
+      console.log(reg);
       this.dispatchEvent(new CustomEvent(ON_ALU_EXECUTE, {
         detail: fletcher16(`${pid}-${instruction}-${virtualAddress}`)
       }));

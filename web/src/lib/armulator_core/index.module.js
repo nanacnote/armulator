@@ -782,6 +782,7 @@ var Cpu = /*#__PURE__*/function () {
     this.CURRENT_INSTRUCTION = null;
     this.ALU_ROUTINE = null;
     this.MMU.conn2bus(this.BUS);
+    this.ALU.conn2reg(this.REG);
     this._fetch = this._fetch.bind(this);
     this._decode = this._decode.bind(this);
     this._execute = this._execute.bind(this);
@@ -1850,6 +1851,9 @@ var Alu = /*#__PURE__*/function (_EventTarget) {
     return _EventTarget.call(this) || this;
   }
   var _proto = Alu.prototype;
+  _proto.conn2reg = function conn2reg(reg) {
+    this.REG = reg;
+  };
   _proto.call = function call(_ref) {
     var pid = _ref.pid,
       routine = _ref.routine,
@@ -1857,6 +1861,9 @@ var Alu = /*#__PURE__*/function (_EventTarget) {
       virtualAddress = _ref.virtualAddress;
     if (routine) {
       console.log("Execute Opcode - " + routine.toString(2) + " - " + instruction.toString(16) + "\n\n");
+      var reg = this.REG[["r1", "r2", "r3", "r4", "r5", "r6", "r7", "r8", "r9", "r10", "r11", "r12", "sp", "lr", "pc", "cpsr"][Math.floor(Math.random() * (Math.floor(15) - Math.ceil(0) + 1)) + Math.ceil(0)]];
+      reg.write(instruction);
+      console.log(reg);
       this.dispatchEvent(new CustomEvent(ON_ALU_EXECUTE, {
         detail: fletcher16(pid + "-" + instruction + "-" + virtualAddress)
       }));
