@@ -83,7 +83,7 @@ const Editor: React.FC<TProps> = (): JSX.Element => {
           <pre id="ace-editor-container" className="h-[473px] text-base"></pre>
         </div>
         <div className="col-span-7 md:col-span-2">
-          <div className="mockup-code h-[473px] overflow-auto">
+          <div className="mockup-code overflow-auto h-[250px] md:h-[473px]">
             <pre data-prefix=">" className="text-warning">
               <code>installing...</code>
             </pre>

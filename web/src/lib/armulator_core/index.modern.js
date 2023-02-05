@@ -1537,7 +1537,7 @@ class Alu extends EventTarget {
   }) {
     if (routine) {
       console.log(`Execute Opcode - ${routine.toString(2)} - ${instruction.toString(16)}\n\n`);
-      const reg = this.REG[["r1", "r2", "r3", "r4", "r5", "r6", "r7", "r8", "r9", "r10", "r11", "r12", "sp", "lr", "pc", "cpsr"][Math.floor(Math.random() * (Math.floor(15) - Math.ceil(0) + 1)) + Math.ceil(0)]];
+      const reg = this.REG[["r1", "r2", "r3", "r4", "r5", "r6", "r7", "r8", "r9", "r10", "r11", "r12", "lr", "cpsr"][Math.floor(Math.random() * (Math.floor(13) - Math.ceil(0) + 1)) + Math.ceil(0)]];
       reg.write(instruction);
       console.log(reg);
       this.dispatchEvent(new CustomEvent(ON_ALU_EXECUTE, {
