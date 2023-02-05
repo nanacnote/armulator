@@ -8,22 +8,22 @@ var ON_RAM_WRITE_EVENT = "ram-write";
 var ON_RAM_READ_EVENT = "ram-read";
 var ON_BUFFER_32_WRITE_EVENT = "buffer-32-write";
 var ON_BUFFER_32_READ_EVENT = "buffer-32-read";
-var ON_PROC_LOAD = "on-proc-load";
 var ON_FETCH_CYCLE = "fetch-cycle";
 var ON_DECODE_CYCLE = "decode-cycle";
 var ON_EXECUTE_CYCLE = "execute-cycle";
 var ON_ALU_EXECUTE = "alu-execute";
 
+// Const values that represent the name of the memory section of a process
+var ENV_SECTION = "env-section";
+var STACK_SECTION = "stack-section";
+var HEAP_SECTION = "heap-section";
+var BSS_SECTION = "bss-section";
+var INIT_DATA_SECTION = "init-data-section";
+var TEXT_SECTION = "text-section";
+
 // Constant values that represent the status of an operation
 var OK_CODE = 1; // indicates everything went right
 var ERROR_CODE = 0; // indicates an error occurred
-
-// Constants used to distinguish between different types of execution
-var EXECUTION_KEY = 0; // indicates normal execution
-var INTERRUPT_KEY = 256; // indicates interrupt execution
-
-// Constants used to identify specific interrupt types
-var UNDEFINED_INSTRUCTION_INTERRUPT = INTERRUPT_KEY + 1; // indicates an undefined instruction interrupt
 
 // Constants used to identify different clock states
 var STOP_CLOCK_KEY = 0; // indicates the system is in stop/idle state
@@ -61,16 +61,18 @@ var def = {
   ON_RAM_READ_EVENT: ON_RAM_READ_EVENT,
   ON_BUFFER_32_WRITE_EVENT: ON_BUFFER_32_WRITE_EVENT,
   ON_BUFFER_32_READ_EVENT: ON_BUFFER_32_READ_EVENT,
-  ON_PROC_LOAD: ON_PROC_LOAD,
   ON_FETCH_CYCLE: ON_FETCH_CYCLE,
   ON_DECODE_CYCLE: ON_DECODE_CYCLE,
   ON_EXECUTE_CYCLE: ON_EXECUTE_CYCLE,
   ON_ALU_EXECUTE: ON_ALU_EXECUTE,
+  ENV_SECTION: ENV_SECTION,
+  STACK_SECTION: STACK_SECTION,
+  HEAP_SECTION: HEAP_SECTION,
+  BSS_SECTION: BSS_SECTION,
+  INIT_DATA_SECTION: INIT_DATA_SECTION,
+  TEXT_SECTION: TEXT_SECTION,
   OK_CODE: OK_CODE,
   ERROR_CODE: ERROR_CODE,
-  EXECUTION_KEY: EXECUTION_KEY,
-  INTERRUPT_KEY: INTERRUPT_KEY,
-  UNDEFINED_INSTRUCTION_INTERRUPT: UNDEFINED_INSTRUCTION_INTERRUPT,
   STOP_CLOCK_KEY: STOP_CLOCK_KEY,
   START_CLOCK_KEY: START_CLOCK_KEY,
   PAUSE_CLOCK_KEY: PAUSE_CLOCK_KEY,
@@ -104,6 +106,20 @@ function _createClass(Constructor, protoProps, staticProps) {
     writable: false
   });
   return Constructor;
+}
+function _extends() {
+  _extends = Object.assign ? Object.assign.bind() : function (target) {
+    for (var i = 1; i < arguments.length; i++) {
+      var source = arguments[i];
+      for (var key in source) {
+        if (Object.prototype.hasOwnProperty.call(source, key)) {
+          target[key] = source[key];
+        }
+      }
+    }
+    return target;
+  };
+  return _extends.apply(this, arguments);
 }
 function _inheritsLoose(subClass, superClass) {
   subClass.prototype = Object.create(superClass.prototype);
@@ -513,12 +529,29 @@ var Buffer32Bit = /*#__PURE__*/function (_EventTarget, _Symbol$iterator) {
   _inheritsLoose(Buffer32Bit, _EventTarget);
   /**
    * Creates a new Buffer32Bit object.
+   * @param {String} name - A name to identify the buffer by.
    * @constructor
    */
-  function Buffer32Bit() {
+  function Buffer32Bit(name) {
     var _this;
     _this = _EventTarget.call(this) || this;
+
+    /**
+     * A name to identify the buffer.
+     * @type {String}
+     */
+    _this.NAME = name;
+
+    /**
+     * A code indicating whether the buffer is empty.
+     * @type {number}
+     */
     _this.IS_EMPTY = OK_CODE;
+
+    /**
+     * A DataView object representing the buffer.
+     * @type {DataView}
+     */
     _this.BUFFER = new DataView(new ArrayBuffer(4));
     return _this;
   }
@@ -535,7 +568,9 @@ var Buffer32Bit = /*#__PURE__*/function (_EventTarget, _Symbol$iterator) {
       byteOffset = 0;
     }
     var val = this.BUFFER.getUint32(byteOffset);
-    this.dispatchEvent(new Event(ON_BUFFER_32_READ_EVENT));
+    this.dispatchEvent(new CustomEvent(ON_BUFFER_32_READ_EVENT, {
+      detail: this.NAME
+    }));
     return val;
   }
 
@@ -552,7 +587,9 @@ var Buffer32Bit = /*#__PURE__*/function (_EventTarget, _Symbol$iterator) {
     }
     this.BUFFER.setUint32(byteOffset, val);
     this.IS_EMPTY = ERROR_CODE;
-    this.dispatchEvent(new Event(ON_BUFFER_32_WRITE_EVENT));
+    this.dispatchEvent(new CustomEvent(ON_BUFFER_32_WRITE_EVENT, {
+      detail: this.NAME
+    }));
     return OK_CODE;
   }
 
@@ -610,6 +647,7 @@ var Bus = /*#__PURE__*/function () {
   /**
    * Creates a new Bus instance.
    * @param {Object} dev - An object containing the devices connected to the bus.
+   * @constructor
    */
   function Bus(dev) {
     /**
@@ -622,19 +660,19 @@ var Bus = /*#__PURE__*/function () {
      * The ADDRESS-BUS buffer.
      * @type {Buffer32Bit}
      */
-    this.A_BUS_BUFFER = new Buffer32Bit();
+    this.A_BUS_BUFFER = new Buffer32Bit("ADDRESS_BUS");
 
     /**
      * The CONTROL-BUS buffer.
      * @type {Buffer32Bit}
      */
-    this.C_BUS_BUFFER = new Buffer32Bit();
+    this.C_BUS_BUFFER = new Buffer32Bit("CONTROL_BUS");
 
     /**
      * The DATA-BUS buffer.
      * @type {Buffer32Bit}
      */
-    this.D_BUS_BUFFER = new Buffer32Bit();
+    this.D_BUS_BUFFER = new Buffer32Bit("DATA_BUS");
     this.onTick = this.onTick.bind(this);
   }
 
@@ -712,7 +750,7 @@ var Bus = /*#__PURE__*/function () {
       this.D_BUS_BUFFER.write(device.read32(byteOffset));
     }
 
-    // write data from memory into register
+    // write data from register into memory
     if (!(this.C_BUS_BUFFER.read() ^ C_BUS_WRITE_8_VAL)) {
       device.write8(this.D_BUS_BUFFER.read(), byteOffset);
     }
@@ -736,21 +774,17 @@ var Cpu = /*#__PURE__*/function () {
   function Cpu(parts) {
     this.ALU = parts.alu;
     this.DEC = parts.dec;
-    this.IVT = parts.ivt;
     this.BUS = parts.bus;
     this.REG = parts.reg;
     this.MMU = parts.mmu;
     this.CLK = parts.clk;
+    this.CURRENT_PID = 0;
     this.CURRENT_INSTRUCTION = null;
-    this.HANDLER_CODE = null;
-    this.PROC_START_ADDRESS = 0;
-    this.PROC_BYTE_SIZE = 0;
-    this.STACK_BYTE_SIZE = 0;
-    this.STACK_START_ADDRESS = 0;
+    this.ALU_ROUTINE = null;
+    this.MMU.conn2bus(this.BUS);
     this._fetch = this._fetch.bind(this);
     this._decode = this._decode.bind(this);
     this._execute = this._execute.bind(this);
-    this.MMU.conn2bus(this.BUS);
     this.CLK.addEventListener(ON_FETCH_CYCLE, this._fetch);
     this.CLK.addEventListener(ON_DECODE_CYCLE, this._decode);
     this.CLK.addEventListener(ON_EXECUTE_CYCLE, this._execute);
@@ -759,46 +793,55 @@ var Cpu = /*#__PURE__*/function () {
     this.CLK.addEventListener(ON_EXECUTE_CYCLE, this.BUS.onTick);
   }
   var _proto = Cpu.prototype;
-  _proto.loadParsedElf = function loadParsedElf(ctx) {
-    this.PROC_BYTE_SIZE = ctx.procSize;
-    this.STACK_BYTE_SIZE = ctx.stackSize;
-    this.PROC_START_ADDRESS = this.MMU.byteAlloc(this.PROC_BYTE_SIZE, 0);
-    this.STACK_START_ADDRESS = this.MMU.byteAlloc(this.STACK_BYTE_SIZE, this.PROC_START_ADDRESS + this.PROC_BYTE_SIZE + 4);
-    this.REG.pc.write(this.PROC_START_ADDRESS);
-    this.REG.sp.write(this.PROC_START_ADDRESS);
-    this.MMU.loadProc(ctx.text);
-    return this;
-  };
   _proto.run = function run() {
     this.CLK.start();
     return this;
   };
+  _proto.spawn = function spawn(pid) {
+    this.REG.pc.write(this.MMU["for"](pid).PROC_START_ADDRESS);
+    this.REG.sp.write(this.MMU["for"](pid).STACK_SEC_START_ADDRESS);
+    this.CURRENT_PID = pid;
+    return this;
+  };
+  _proto.load = function load(elf) {
+    var pid = this.MMU.processAlloc(elf.procSize);
+    var extELF = _extends({}, elf, {
+      pid: pid
+    });
+
+    // order is important
+    extELF["envUUIDS"] = this.MMU.malloc(pid, ENV_SECTION, elf.envSize, elf.envContent);
+    this.MMU.malloc(pid, STACK_SECTION, undefined, []);
+    extELF["textUUIDS"] = this.MMU.malloc(pid, TEXT_SECTION, elf.textSize, elf.textContent);
+    extELF["initDataUUIDS"] = this.MMU.malloc(pid, INIT_DATA_SECTION, elf.initDataSize, elf.initDataContent);
+    extELF["bssUUIDS"] = this.MMU.malloc(pid, BSS_SECTION, elf.bssSize, elf.bssContent);
+    this.MMU.malloc(pid, HEAP_SECTION, undefined, []);
+    return extELF;
+  };
   _proto._fetch = function _fetch() {
-    if (this.REG.pc.read() < this.PROC_START_ADDRESS + this.PROC_BYTE_SIZE) {
-      var pcRegAddr = this.REG.pc.read();
-      var physicalMemAddr = this.MMU.map2ram(pcRegAddr);
-      this.BUS.setAddress(physicalMemAddr);
+    if (this.REG.pc.read() < this.MMU["for"](this.CURRENT_PID).TEXT_SEC_END_ADDRESS) {
+      var pc = this.REG.pc.read();
+      this.BUS.setAddress(this.MMU.translate(pc));
       this.BUS.setControl(C_BUS_READ_32_VAL);
-      this.REG.pc.write(pcRegAddr + 4);
+      this.REG.pc.write(pc + 4);
     } else {
       this.CLK.stop();
     }
   };
   _proto._decode = function _decode() {
-    this.CURRENT_INSTRUCTION = this.BUS.getData();
-    if (this.CURRENT_INSTRUCTION) this.HANDLER_CODE = this.DEC.decode(this.CURRENT_INSTRUCTION);
+    var _this$DEC$decode = this.DEC.decode(this.BUS.getData()),
+      instruction = _this$DEC$decode.instruction,
+      aluRoutine = _this$DEC$decode.aluRoutine;
+    this.CURRENT_INSTRUCTION = instruction;
+    this.ALU_ROUTINE = aluRoutine;
   };
   _proto._execute = function _execute() {
-    if (this.CURRENT_INSTRUCTION) {
-      var instructionIndex = (this.REG.pc.read() - this.PROC_START_ADDRESS) / 4;
-      var type = this.HANDLER_CODE & (1 << 8) - 1 << 8 >>> 0;
-      if (!(type ^ INTERRUPT_KEY)) {
-        this.IVT.handle(this.HANDLER_CODE, this.CURRENT_INSTRUCTION);
-      }
-      if (!(type ^ EXECUTION_KEY)) {
-        this.ALU.handle(this.HANDLER_CODE, this.CURRENT_INSTRUCTION, instructionIndex);
-      }
-    }
+    this.ALU.call({
+      pid: this.PID,
+      routine: this.ALU_ROUTINE,
+      instruction: this.CURRENT_INSTRUCTION,
+      virtualAddress: this.REG.pc.read() - 4
+    });
   };
   return Cpu;
 }();
@@ -812,23 +855,23 @@ var Reg = /*#__PURE__*/function () {
    * @constructor
    */
   function Reg() {
-    this._r0 = new Buffer32Bit();
-    this._r1 = new Buffer32Bit();
-    this._r2 = new Buffer32Bit();
-    this._r3 = new Buffer32Bit();
-    this._r4 = new Buffer32Bit();
-    this._r5 = new Buffer32Bit();
-    this._r6 = new Buffer32Bit();
-    this._r7 = new Buffer32Bit();
-    this._r8 = new Buffer32Bit();
-    this._r9 = new Buffer32Bit();
-    this._r10 = new Buffer32Bit();
-    this._r11 = new Buffer32Bit();
-    this._r12 = new Buffer32Bit();
-    this._r13 = new Buffer32Bit();
-    this._r14 = new Buffer32Bit();
-    this._r15 = new Buffer32Bit();
-    this._cpsr = new Buffer32Bit();
+    this._r0 = new Buffer32Bit("r0");
+    this._r2 = new Buffer32Bit("r2");
+    this._r3 = new Buffer32Bit("r3");
+    this._r1 = new Buffer32Bit("r1");
+    this._r4 = new Buffer32Bit("r4");
+    this._r5 = new Buffer32Bit("r5");
+    this._r6 = new Buffer32Bit("r6");
+    this._r7 = new Buffer32Bit("r7");
+    this._r8 = new Buffer32Bit("r8");
+    this._r9 = new Buffer32Bit("r9");
+    this._r10 = new Buffer32Bit("r10");
+    this._r11 = new Buffer32Bit("r11");
+    this._r12 = new Buffer32Bit("r12");
+    this._r13 = new Buffer32Bit("r13");
+    this._r14 = new Buffer32Bit("r14");
+    this._r15 = new Buffer32Bit("r15");
+    this._cpsr = new Buffer32Bit("cpsr");
   }
 
   /**
@@ -985,6 +1028,7 @@ var Reg = /*#__PURE__*/function () {
   }, {
     key: "sp",
     get: function get() {
+      this._r13.NAME = "sp";
       return this._r13;
     }
 
@@ -995,6 +1039,7 @@ var Reg = /*#__PURE__*/function () {
   }, {
     key: "lr",
     get: function get() {
+      this._r14.NAME = "lr";
       return this._r14;
     }
 
@@ -1005,6 +1050,7 @@ var Reg = /*#__PURE__*/function () {
   }, {
     key: "pc",
     get: function get() {
+      this._r15.NAME = "pc";
       return this._r15;
     }
 
@@ -1020,36 +1066,120 @@ var Reg = /*#__PURE__*/function () {
   return Reg;
 }();
 
-var Mmu = /*#__PURE__*/function (_EventTarget) {
-  _inheritsLoose(Mmu, _EventTarget);
+// NOTE: start and end byte are inclusive
+
+var Process = /*#__PURE__*/function () {
+  function Process(pid, startAddr, endAddr) {
+    this.PID = pid;
+    this.PROC_START_ADDRESS = startAddr;
+    this.PROC_END_ADDRESS = endAddr;
+
+    // TODO: implement allocation of stack and heap size and manage their growth
+    // stack grows down heap grows up
+  }
+  var _proto = Process.prototype;
+  _proto.set = function set(section, size) {
+    switch (section) {
+      case ENV_SECTION:
+        this.ENV_START_ADDRESS = this.PROC_END_ADDRESS - size;
+        this.ENV_END_ADDRESS = this.PROC_END_ADDRESS;
+        return this.ENV_START_ADDRESS;
+      case STACK_SECTION:
+        this.STACK_SEC_START_ADDRESS = this.ENV_START_ADDRESS - 1;
+        this.STACK_SEC_END_ADDRESS = this.ENV_START_ADDRESS + 2;
+        return this.STACK_SEC_START_ADDRESS;
+      case HEAP_SECTION:
+        this.HEAP_START_ADDRESS = this.BSS_SEC_END_ADDRESS + 1;
+        this.HEAP_END_ADDRESS = this.BSS_SEC_END_ADDRESS + 2;
+        return this.HEAP_START_ADDRESS;
+      case BSS_SECTION:
+        this.BSS_SEC_START_ADDRESS = this.INIT_DATA_SEC_END_ADDRESS + 1;
+        this.BSS_SEC_END_ADDRESS = this.BSS_SEC_START_ADDRESS + size;
+        return this.BSS_SEC_START_ADDRESS;
+      case INIT_DATA_SECTION:
+        this.INIT_DATA_SEC_START_ADDRESS = this.TEXT_SEC_END_ADDRESS + 1;
+        this.INIT_DATA_SEC_END_ADDRESS = this.INIT_DATA_SEC_START_ADDRESS + size;
+        return this.INIT_DATA_SEC_START_ADDRESS;
+      case TEXT_SECTION:
+        this.TEXT_SEC_START_ADDRESS = this.PROC_START_ADDRESS;
+        this.TEXT_SEC_END_ADDRESS = this.TEXT_SEC_START_ADDRESS + size;
+        return this.TEXT_SEC_START_ADDRESS;
+    }
+  };
+  return Process;
+}();
+
+/**
+ * Calculates the Fletcher-16 checksum of a string of data.
+ *
+ * @param {string} data - The data to be checksummed.
+ * @returns {number} - The calculated 16-bit checksum value.
+ */
+function fletcher16(data) {
+  var sum1 = 0;
+  var sum2 = 0;
+  for (var i = 0; i < data.length; i++) {
+    sum1 = (sum1 + data.charCodeAt(i)) % 255;
+    sum2 = (sum2 + sum1) % 255;
+  }
+  return sum2 << 8 | sum1;
+}
+
+var Mmu = /*#__PURE__*/function () {
   // virtual memory management unit
   function Mmu() {
-    var _this;
-    _this = _EventTarget.call(this) || this;
-    _this.BUS = null;
-    return _this;
+    this.PROCESSES = new Map();
   }
   var _proto = Mmu.prototype;
   _proto.conn2bus = function conn2bus(bus) {
-    this.BUS = bus;
-  };
-  _proto.map2ram = function map2ram(virtAddr) {
-    //TODO: implement virtual memory mapping tables
-    return RAM_DEV_KEY | virtAddr;
-  };
-  _proto.byteAlloc = function byteAlloc(size, offset) {
-    //TODO: implement virtual memory allocation
-    return offset;
-  };
-  _proto.loadProc = function loadProc(instructions) {
-    var ram = this.BUS.DEVICES[RAM_DEV_KEY];
-    for (var i = 0 + ram.START_ADDRESS, len = instructions.length + ram.START_ADDRESS; i < len; i++) {
-      ram.write32(instructions[i], 4 * i);
+    this.RAM = bus.DEVICES[RAM_DEV_KEY];
+    this.PAGE_TABLE = null;
+  }
+
+  // create new process and assign page memory which maps to physical memory frame
+  ;
+  _proto.processAlloc = function processAlloc(size) {
+    // TODO: implement paging lookup tables
+    var pid = 1;
+    var startAddr = 0;
+    var endAddr = size;
+    var proc = new Process(pid, startAddr, endAddr);
+    this.PROCESSES.set(pid, proc);
+    return pid;
+  }
+
+  // return the process instance given the pid
+  ;
+  _proto["for"] = function _for(pid) {
+    return this.PROCESSES.get(pid);
+  }
+
+  // given the pid allocate a section and pack content into the allocated section (nb skip packing if content is empty)
+  ;
+  _proto.malloc = function malloc(pid, section, size, content) {
+    var contentChecksums = [];
+    var proc = this.PROCESSES.get(pid);
+    var startAddr = proc.set(section, size || 4);
+    for (var i = startAddr, len = startAddr + content.length; i < len; i++) {
+      var entry = content[i];
+      var virtualAddr = i * 4;
+      var physicalAddr = this._lookup(virtualAddr);
+      this.RAM.write32(entry, physicalAddr);
+      contentChecksums.push(fletcher16(pid + "-" + entry + "-" + virtualAddr));
     }
-    this.dispatchEvent(new Event(ON_PROC_LOAD));
+    return contentChecksums;
+  }
+
+  // translate a virtual page address to a physical frame address
+  ;
+  _proto.translate = function translate(virtualAddress) {
+    return RAM_DEV_KEY | this._lookup(virtualAddress);
+  };
+  _proto._lookup = function _lookup(virtualAddress) {
+    return virtualAddress;
   };
   return Mmu;
-}( /*#__PURE__*/_wrapNativeSuper(EventTarget));
+}();
 
 /**
 
@@ -1138,6 +1268,7 @@ T0 - main encoding
     T7 - Unconditional instructions                                                         **
 
  */
+
 var Dec = /*#__PURE__*/function () {
   // Machine code decoder
   function Dec() {
@@ -1150,24 +1281,24 @@ var Dec = /*#__PURE__*/function () {
     // Load/Store Word, Unsigned Byte (immediate, literal)
     [["_ne", 15], ["_eq", 3], ["_eq", 0], ["_lup", "_T3"]],
     // Load/Store Word, Unsigned Byte (register)
-    [["_ne", 15], ["_eq", 3], ["_eq", 1], ["_ret", UNDEFINED_INSTRUCTION_INTERRUPT]],
+    [["_ne", 15], ["_eq", 3], ["_eq", 1], ["_ret", undefined]],
     // Media instructions
     [["_any"], ["_eqC", "10x"], ["_any"], ["_lup", "_T5"]],
     // Branch, branch with link, and block data transfer
-    [["_any"], ["_eqC", "11x"], ["_any"], ["_ret", UNDEFINED_INSTRUCTION_INTERRUPT]],
+    [["_any"], ["_eqC", "11x"], ["_any"], ["_ret", undefined]],
     // System register access, Advanced SIMD, floating-point, and Supervisor call
-    [["_eq", 15], ["_eqC", "0xx"], ["_any"], ["_ret", UNDEFINED_INSTRUCTION_INTERRUPT]] // Unconditional instructions
+    [["_eq", 15], ["_eqC", "0xx"], ["_any"], ["_ret", undefined]] // Unconditional instructions
     ];
     // prettier-ignore
-    this.T1 = [[["_eq", 0], ["_any"], ["_eq", 1], ["_ne", 0], ["_eq", 1], ["_ret", UNDEFINED_INSTRUCTION_INTERRUPT]],
+    this.T1 = [[["_eq", 0], ["_any"], ["_eq", 1], ["_ne", 0], ["_eq", 1], ["_ret", undefined]],
     // Extra load/store 
     [["_eq", 0], ["_eqC", "0xxxx"], ["_eq", 1], ["_eq", 0], ["_eq", 1], ["_lup", "_T12"]],
     // Multiply and Accumulate 
-    [["_eq", 0], ["_eqC", "1xxxx"], ["_eq", 1], ["_eq", 0], ["_eq", 1], ["_ret", UNDEFINED_INSTRUCTION_INTERRUPT]],
+    [["_eq", 0], ["_eqC", "1xxxx"], ["_eq", 1], ["_eq", 0], ["_eq", 1], ["_ret", undefined]],
     // Synchronization primitives and Load-Acquire/Store-Release 
     [["_eq", 0], ["_eqC", "10xx0"], ["_eq", 0], ["_any"], ["_any"], ["_lup", "_T14"]],
     // Miscellaneous 
-    [["_eq", 0], ["_eqC", "10xx0"], ["_eq", 1], ["_any"], ["_eq", 0], ["_ret", UNDEFINED_INSTRUCTION_INTERRUPT]],
+    [["_eq", 0], ["_eqC", "10xx0"], ["_eq", 1], ["_any"], ["_eq", 0], ["_ret", undefined]],
     // Halfword Multiply and Accumulate  
     [["_eq", 0], ["_neC", "10xx0"], ["_any"], ["_any"], ["_eq", 0], ["_lup", "_T16"]],
     // Data-processing register (immediate shift) 
@@ -1192,7 +1323,7 @@ var Dec = /*#__PURE__*/function () {
     // Integer Data Processing (two register and immediate)
     [["_eq", 2], ["_eq", 0], ["_lup", "_T182"]],
     // Move Halfword (immediate) 
-    [["_eq", 2], ["_eq", 2], ["_ret", UNDEFINED_INSTRUCTION_INTERRUPT]],
+    [["_eq", 2], ["_eq", 2], ["_ret", undefined]],
     // Move Special Register and Hints (immediate) 
     [["_eq", 2], ["_eqC", "x1"], ["_lup", "_T184"]],
     // Integer Test and Compare (one register and immediate) 
@@ -1299,9 +1430,9 @@ var Dec = /*#__PURE__*/function () {
     [["_eq", 0], ["_eq", 1], ["_eq", 0], ["_eq", 0], ["_ret", "STRB_REG_POST"]] // STRB (register) - Post indexed variant
     ];
     // prettier-ignore
-    this.T5 = [[["_eq", 15], ["_eq", 0], ["_ret", UNDEFINED_INSTRUCTION_INTERRUPT]],
+    this.T5 = [[["_eq", 15], ["_eq", 0], ["_ret", undefined]],
     // Exception Save/Restore
-    [["_ne", 15], ["_eq", 0], ["_ret", UNDEFINED_INSTRUCTION_INTERRUPT]],
+    [["_ne", 15], ["_eq", 0], ["_ret", undefined]],
     // Load/Store Multiple
     [["any"], ["_eq", 1], ["_lup", "T53"]] // Branch (immediate)
     ];
@@ -1314,9 +1445,12 @@ var Dec = /*#__PURE__*/function () {
     ];
   }
   var _proto = Dec.prototype;
-  _proto.decode = function decode(inst) {
-    this.INSTRUCTION = inst;
-    return this._T0();
+  _proto.decode = function decode(instruction) {
+    this.INSTRUCTION = instruction;
+    return {
+      instruction: instruction,
+      aluRoutine: this._T0()
+    };
   };
   _proto._any = function _any() {
     return true;
@@ -1389,7 +1523,7 @@ var Dec = /*#__PURE__*/function () {
         return this[caller].call(this, callee);
       }
     }
-    return UNDEFINED_INSTRUCTION_INTERRUPT;
+    return undefined;
   }
 
   // TABLE x
@@ -1427,7 +1561,7 @@ var Dec = /*#__PURE__*/function () {
         return this[caller].call(this, callee);
       }
     }
-    return UNDEFINED_INSTRUCTION_INTERRUPT;
+    return undefined;
   };
   _proto._T2 = function _T2() {
     var p = this.INSTRUCTION >>> 24 & (1 << 1 >>> 0) - 1;
@@ -1460,7 +1594,7 @@ var Dec = /*#__PURE__*/function () {
         return this[caller].call(this, callee);
       }
     }
-    return UNDEFINED_INSTRUCTION_INTERRUPT;
+    return undefined;
   };
   _proto._T3 = function _T3() {
     var P = this.INSTRUCTION >>> 24 & (1 << 1 >>> 0) - 1;
@@ -1491,7 +1625,7 @@ var Dec = /*#__PURE__*/function () {
         return this[caller].call(this, callee);
       }
     }
-    return UNDEFINED_INSTRUCTION_INTERRUPT;
+    return undefined;
   };
   _proto._T5 = function _T5() {
     var cond = this.INSTRUCTION >>> 28 & (1 << 4 >>> 0) - 1;
@@ -1514,7 +1648,7 @@ var Dec = /*#__PURE__*/function () {
         return this[caller].call(this, callee);
       }
     }
-    return UNDEFINED_INSTRUCTION_INTERRUPT;
+    return undefined;
   }
 
   // TABLE - 1x
@@ -1540,7 +1674,7 @@ var Dec = /*#__PURE__*/function () {
         return this[caller].call(this, callee);
       }
     }
-    return UNDEFINED_INSTRUCTION_INTERRUPT;
+    return undefined;
   };
   _proto._T14 = function _T14() {
     var op0 = this.INSTRUCTION >>> 21 & (1 << 2 >>> 0) - 1;
@@ -1563,7 +1697,7 @@ var Dec = /*#__PURE__*/function () {
         return this[caller].call(this, callee);
       }
     }
-    return UNDEFINED_INSTRUCTION_INTERRUPT;
+    return undefined;
   };
   _proto._T16 = function _T16() {
     return "T16";
@@ -1592,7 +1726,7 @@ var Dec = /*#__PURE__*/function () {
         return this[caller].call(this, callee);
       }
     }
-    return UNDEFINED_INSTRUCTION_INTERRUPT;
+    return undefined;
   }
 
   // TABLE 18x
@@ -1622,7 +1756,7 @@ var Dec = /*#__PURE__*/function () {
         return this[caller].call(this, callee);
       }
     }
-    return UNDEFINED_INSTRUCTION_INTERRUPT;
+    return undefined;
   };
   _proto._T182 = function _T182() {
     var H = this.INSTRUCTION >>> 22 & (1 << 1 >>> 0) - 1;
@@ -1641,7 +1775,7 @@ var Dec = /*#__PURE__*/function () {
         return this[caller].call(this, callee);
       }
     }
-    return UNDEFINED_INSTRUCTION_INTERRUPT;
+    return undefined;
   };
   _proto._T184 = function _T184() {
     var opc = this.INSTRUCTION >>> 21 & (1 << 2 >>> 0) - 1;
@@ -1660,7 +1794,7 @@ var Dec = /*#__PURE__*/function () {
         return this[caller].call(this, callee);
       }
     }
-    return UNDEFINED_INSTRUCTION_INTERRUPT;
+    return undefined;
   };
   _proto._T185 = function _T185() {
     var opc = this.INSTRUCTION >>> 21 & (1 << 2 >>> 0) - 1;
@@ -1679,7 +1813,7 @@ var Dec = /*#__PURE__*/function () {
         return this[caller].call(this, callee);
       }
     }
-    return UNDEFINED_INSTRUCTION_INTERRUPT;
+    return undefined;
   }
 
   // TABLE 5x
@@ -1705,7 +1839,7 @@ var Dec = /*#__PURE__*/function () {
         return this[caller].call(this, callee);
       }
     }
-    return UNDEFINED_INSTRUCTION_INTERRUPT;
+    return undefined;
   };
   return Dec;
 }();
@@ -1716,32 +1850,22 @@ var Alu = /*#__PURE__*/function (_EventTarget) {
     return _EventTarget.call(this) || this;
   }
   var _proto = Alu.prototype;
-  _proto.handle = function handle(code, inst, index) {
-    console.log("Execute Opcode - " + code.toString(2) + " - " + inst.toString(16) + "\n\n");
-    var detail = {
-      code: code,
-      inst: inst,
-      index: index,
-      // TODO: calculate checksum from the above three val this way the consumer of the lib can do likewise and compare.
-      // This will become necessary when complex arm instructions involving initialised data is introduced
-      checksum: null
-    };
-    this.dispatchEvent(new CustomEvent(ON_ALU_EXECUTE, {
-      detail: detail
-    }));
+  _proto.call = function call(_ref) {
+    var pid = _ref.pid,
+      routine = _ref.routine,
+      instruction = _ref.instruction,
+      virtualAddress = _ref.virtualAddress;
+    if (routine) {
+      console.log("Execute Opcode - " + routine.toString(2) + " - " + instruction.toString(16) + "\n\n");
+      this.dispatchEvent(new CustomEvent(ON_ALU_EXECUTE, {
+        detail: fletcher16(pid + "-" + instruction + "-" + virtualAddress)
+      }));
+    } else {
+      console.log("%c undefined - " + instruction.toString(16) + "\n\n", "background: black; color: white");
+    }
   };
   return Alu;
 }( /*#__PURE__*/_wrapNativeSuper(EventTarget));
-
-var Ivt = /*#__PURE__*/function () {
-  // interrupt vector table
-  function Ivt() {}
-  var _proto = Ivt.prototype;
-  _proto.handle = function handle(code, inst) {
-    console.log("%c Handle Interrupt - " + code.toString(2) + " - " + inst.toString(16) + "\n\n", "background: black; color: white");
-  };
-  return Ivt;
-}();
 
 var _Bus;
 var ram = new Ram();
@@ -1749,7 +1873,6 @@ var reg = new Reg();
 var mmu = new Mmu();
 var dec = new Dec();
 var alu = new Alu();
-var ivt = new Ivt();
 var clk = new Clk();
 var bus = new Bus((_Bus = {}, _Bus[RAM_DEV_KEY] = ram, _Bus));
 var cpu = new Cpu({
@@ -1758,7 +1881,6 @@ var cpu = new Cpu({
   mmu: mmu,
   dec: dec,
   alu: alu,
-  ivt: ivt,
   clk: clk,
   ram: ram
 });
@@ -1769,7 +1891,6 @@ exports.bus = bus;
 exports.clk = clk;
 exports.cpu = cpu;
 exports.dec = dec;
-exports.ivt = ivt;
 exports.mmu = mmu;
 exports.ram = ram;
 exports.reg = reg;
