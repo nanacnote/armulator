@@ -686,7 +686,7 @@ class Cpu {
   }
   _execute() {
     this.ALU.call({
-      pid: this.PID,
+      pid: this.CURRENT_PID,
       routine: this.ALU_ROUTINE,
       instruction: this.CURRENT_INSTRUCTION,
       virtualAddress: this.REG.pc.read() - 4
