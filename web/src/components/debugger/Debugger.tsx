@@ -11,7 +11,7 @@ const Debugger: React.FC<TProps> = (): JSX.Element => {
   const thisComponent = React.useRef<HTMLDivElement>(null);
   const [instructions, setInstructions] = React.useState<any>([]);
   const [registers, setRegisters] = React.useState<any>([]);
-  const { on, off, type, getLoadedELF } = useSession();
+  const { getLoadedELF } = useSession();
   const { DEF, alu, reg } = useArmulatorCore();
 
   const highlightInstruction = (e: CustomEventInit) => {
@@ -37,54 +37,60 @@ const Debugger: React.FC<TProps> = (): JSX.Element => {
   const hydrateInstruction = () => {
     const data = getLoadedELF();
     if (data) {
-      const instruction = [];
+      const entries = [];
       const { instructions, textUUIDS, textContent } = JSON.parse(data);
       const maxPadding = instructions.reduce(
         (acc: any, cur: any) => (cur.length > acc ? cur.length : acc),
         0
       );
       for (let i = 0, len = instructions.length; i < len; i++) {
-        instruction.push({
-          uuid: textUUIDS[i],
-          lineNumber: i + 1,
-          instruction: `${instructions[i].padEnd(maxPadding + 8, ' ')}`,
-          commentSymbol: ';;',
-          machineCode: React.createElement(Numeral, {
-            binStr: textContent[i].toString(2)
-          })
+        const uuid = textUUIDS[i];
+        const lineNumber = i + 1;
+        const instruction = `${instructions[i].padEnd(maxPadding + 8, ' ')}`;
+        const commentSymbol = ';;';
+        const machineCode = React.createElement(Numeral, {
+          binStr: textContent[i].toString(2)
+        });
+        entries.push({
+          uuid,
+          lineNumber,
+          instruction,
+          commentSymbol,
+          machineCode
         });
       }
-      setInstructions(instruction);
+      setInstructions(entries);
     }
   };
 
   const hydrateRegister = () => {
+    const entries = [];
     const altName: any = { r13: 'sp', r14: 'lr', r15: 'pc', r16: 'cpsr' };
-    const registers = [...Array(16).keys()].map((item) => {
-      const name = altName[`r${item + 1}`] || `r${item + 1}`;
-      const regInst = (reg as any)[name];
-      return {
-        name,
-        value: React.createElement(Numeral, {
-          binStr: regInst.view()
-        })
-      };
-    });
-    setRegisters(registers);
+    const names = [...Array(16).keys()].map(
+      (item) => altName[`r${item + 1}`] || `r${item + 1}`
+    );
+    for (let i = 0, len = names.length; i < len; i++) {
+      const name = names[i];
+      const binStr = (reg as any)[name].view();
+      const key = `${name}-${binStr}-${i}`;
+      const value = React.createElement(Numeral, { binStr });
+      entries.push({ key, name, value });
+    }
+    setRegisters(entries);
   };
 
-  const hydrateViewHandler = () => {
-    hydrateInstruction();
+  const updateViewHandler = (e: CustomEventInit) => {
     hydrateRegister();
+    hydrateInstruction();
+    highlightInstruction(e);
   };
 
   React.useEffect(() => {
-    hydrateViewHandler();
-    on(type.ELF_LOAD, hydrateViewHandler, {}, false);
-    alu.addEventListener(DEF.ON_ALU_EXECUTE, highlightInstruction);
+    hydrateRegister();
+    hydrateInstruction();
+    alu.addEventListener(DEF.ON_ALU_EXECUTE, updateViewHandler);
     return () => {
-      off(type.ELF_LOAD, hydrateViewHandler);
-      alu.removeEventListener(DEF.ON_ALU_EXECUTE, highlightInstruction);
+      alu.removeEventListener(DEF.ON_ALU_EXECUTE, updateViewHandler);
     };
   }, []);
 
@@ -119,7 +125,7 @@ const Debugger: React.FC<TProps> = (): JSX.Element => {
           <div className="h-[473px] overflow-auto">
             {registers.map((reg: any) => (
               <div
-                key={reg.name}
+                key={reg.key}
                 className="grid grid-cols-7 text-xs mb-[3.5px] pl-3 border rounded bg-neutral-content text-warning-content"
                 data-name={reg.name}
               >
