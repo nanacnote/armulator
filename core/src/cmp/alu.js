@@ -32,12 +32,10 @@ export class Alu extends EventTarget {
             "r10",
             "r11",
             "r12",
-            "sp",
             "lr",
-            "pc",
             "cpsr",
           ][
-            Math.floor(Math.random() * (Math.floor(15) - Math.ceil(0) + 1)) +
+            Math.floor(Math.random() * (Math.floor(13) - Math.ceil(0) + 1)) +
               Math.ceil(0)
           ]
         ];
