@@ -72,10 +72,12 @@ const Debugger: React.FC<TProps> = (): JSX.Element => {
     );
     for (let i = 0, len = names.length; i < len; i++) {
       const name = names[i];
-      const binStr = (reg as any)[name].view();
+      const regInst = (reg as any)[name];
+      const binStr = regInst.view();
+      const flushHandler = flushRegisterHander(regInst.flush.bind(regInst));
       const key = `${name}-${binStr}-${i}`;
       const value = React.createElement(Numeral, { binStr });
-      entries.push({ key, name, value });
+      entries.push({ key, name, value, flushHandler });
     }
     setRegisters((prev: any[]) =>
       entries.map((entry: any, i: number) =>
@@ -86,6 +88,11 @@ const Debugger: React.FC<TProps> = (): JSX.Element => {
           : entry
       )
     );
+  };
+
+  const flushRegisterHander = (callback: any) => (e: React.MouseEvent) => {
+    console.log(e);
+    console.log(callback);
   };
 
   const updateViewHandler = (e: CustomEventInit) => {
@@ -165,7 +172,10 @@ const Debugger: React.FC<TProps> = (): JSX.Element => {
                         <path d="M5.25 5.25a3 3 0 00-3 3v10.5a3 3 0 003 3h10.5a3 3 0 003-3V13.5a.75.75 0 00-1.5 0v5.25a1.5 1.5 0 01-1.5 1.5H5.25a1.5 1.5 0 01-1.5-1.5V8.25a1.5 1.5 0 011.5-1.5h5.25a.75.75 0 000-1.5H5.25z" />
                       </svg>
                     </button>
-                    <button className="btn btn-xs btn-outline border-none h-0 p-0 m-0 mr-2 hover:bg-transparent">
+                    <button
+                      className="btn btn-xs btn-outline border-none h-0 p-0 m-0 mr-2 hover:bg-transparent"
+                      onClick={reg.flushHandler}
+                    >
                       <svg
                         className="w-4 h-4"
                         xmlns="http://www.w3.org/2000/svg"
