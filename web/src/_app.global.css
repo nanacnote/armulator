@@ -2,3 +2,15 @@
 @tailwind components;
 @tailwind utilities;
 @tailwind variants;
+
+@layer components {
+  .polka-dot-bg {
+    background-color: hsl(var(--b1));
+    opacity: 0.8;
+    background-image: radial-gradient(
+      hsl(var(--p)) 0.5px,
+      hsl(var(--b1)) 0.5px
+    );
+    background-size: 10px 10px;
+  }
+}

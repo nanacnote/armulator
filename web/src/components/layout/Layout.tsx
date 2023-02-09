@@ -10,7 +10,11 @@ const Layout: React.FC<React.PropsWithChildren<TProps>> = ({
 }): JSX.Element => {
   const thisComponent = React.useRef<HTMLDivElement>(null);
 
-  return <div ref={thisComponent}>{children}</div>;
+  return (
+    <div ref={thisComponent} className="max-w-[1280px] mx-auto">
+      {children}
+    </div>
+  );
 };
 
 export default Layout;

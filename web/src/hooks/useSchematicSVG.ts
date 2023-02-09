@@ -123,13 +123,13 @@ export function useSchematicSVG(root: React.RefObject<HTMLDivElement>) {
         duration: clk.SPEED / 2
       });
     switch (e.type) {
-      case DEF.ON_FETCH_CYCLE:
+      case DEF.ON_FETCH_CYCLE_START:
         show('fetch');
         break;
-      case DEF.ON_DECODE_CYCLE:
+      case DEF.ON_DECODE_CYCLE_START:
         show('decode');
         break;
-      case DEF.ON_EXECUTE_CYCLE:
+      case DEF.ON_EXECUTE_CYCLE_START:
         show('execute');
         break;
 
@@ -215,17 +215,17 @@ export function useSchematicSVG(root: React.RefObject<HTMLDivElement>) {
   useEffect(() => {
     _initBaseAnimation();
     if (clk.STATE === DEF.START_CLOCK_KEY) _clkStartHandler();
-    clk.addEventListener(DEF.ON_FETCH_CYCLE, _clkTickHandler);
-    clk.addEventListener(DEF.ON_DECODE_CYCLE, _clkTickHandler);
-    clk.addEventListener(DEF.ON_EXECUTE_CYCLE, _clkTickHandler);
-    clk.addEventListener(DEF.ON_START_EVENT, _clkStartHandler);
-    clk.addEventListener(DEF.ON_STOP_EVENT, _clkStopHandler);
+    clk.addEventListener(DEF.ON_FETCH_CYCLE_START, _clkTickHandler);
+    clk.addEventListener(DEF.ON_DECODE_CYCLE_START, _clkTickHandler);
+    clk.addEventListener(DEF.ON_EXECUTE_CYCLE_START, _clkTickHandler);
+    clk.addEventListener(DEF.ON_START, _clkStartHandler);
+    clk.addEventListener(DEF.ON_STOP, _clkStopHandler);
     return () => {
-      clk.removeEventListener(DEF.ON_FETCH_CYCLE, _clkTickHandler);
-      clk.removeEventListener(DEF.ON_DECODE_CYCLE, _clkTickHandler);
-      clk.removeEventListener(DEF.ON_EXECUTE_CYCLE, _clkTickHandler);
-      clk.removeEventListener(DEF.ON_START_EVENT, _clkStartHandler);
-      clk.addEventListener(DEF.ON_STOP_EVENT, _clkStopHandler);
+      clk.removeEventListener(DEF.ON_FETCH_CYCLE_START, _clkTickHandler);
+      clk.removeEventListener(DEF.ON_DECODE_CYCLE_START, _clkTickHandler);
+      clk.removeEventListener(DEF.ON_EXECUTE_CYCLE_START, _clkTickHandler);
+      clk.removeEventListener(DEF.ON_START, _clkStartHandler);
+      clk.addEventListener(DEF.ON_STOP, _clkStopHandler);
     };
   }, []);
 

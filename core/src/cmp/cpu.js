@@ -1,14 +1,17 @@
 import {
   C_BUS_READ_32_VAL,
-  ON_FETCH_CYCLE,
-  ON_DECODE_CYCLE,
-  ON_EXECUTE_CYCLE,
+  ON_FETCH_CYCLE_START,
+  ON_DECODE_CYCLE_START,
+  ON_EXECUTE_CYCLE_START,
   TEXT_SECTION,
   STACK_SECTION,
   ENV_SECTION,
   HEAP_SECTION,
   BSS_SECTION,
   INIT_DATA_SECTION,
+  ON_FETCH_CYCLE_END,
+  ON_DECODE_CYCLE_END,
+  ON_EXECUTE_CYCLE_END,
 } from "../var/def.js";
 
 /**
@@ -48,13 +51,13 @@ export class Cpu {
     this._decode = this._decode.bind(this);
     this._execute = this._execute.bind(this);
 
-    this.CLK.addEventListener(ON_FETCH_CYCLE, this._fetch);
-    this.CLK.addEventListener(ON_DECODE_CYCLE, this._decode);
-    this.CLK.addEventListener(ON_EXECUTE_CYCLE, this._execute);
+    this.CLK.addEventListener(ON_FETCH_CYCLE_START, this._fetch);
+    this.CLK.addEventListener(ON_DECODE_CYCLE_START, this._decode);
+    this.CLK.addEventListener(ON_EXECUTE_CYCLE_START, this._execute);
 
-    this.CLK.addEventListener(ON_FETCH_CYCLE, this.BUS.onTick);
-    this.CLK.addEventListener(ON_DECODE_CYCLE, this.BUS.onTick);
-    this.CLK.addEventListener(ON_EXECUTE_CYCLE, this.BUS.onTick);
+    this.CLK.addEventListener(ON_FETCH_CYCLE_START, this.BUS.onTick);
+    this.CLK.addEventListener(ON_DECODE_CYCLE_START, this.BUS.onTick);
+    this.CLK.addEventListener(ON_EXECUTE_CYCLE_START, this.BUS.onTick);
   }
 
   /**
@@ -132,7 +135,6 @@ export class Cpu {
 
   /**
    * Fetches the instruction from memory using the bus and saves the instruction address in the PC register.
-   *
    * @private
    */
   _fetch() {
@@ -150,7 +152,6 @@ export class Cpu {
 
   /**
    * Decodes the instruction fetched by the bus and saves the decoded instruction and ALU routine.
-   *
    * @private
    */
   _decode() {
@@ -161,7 +162,6 @@ export class Cpu {
 
   /**
    * Executes the ALU routine associated with the decoded instruction.
-   *
    * @private
    */
   _execute() {

@@ -1,16 +1,22 @@
 // Constants used as keys to dispatch events
-export const ON_START_EVENT = "start";
-export const ON_STOP_EVENT = "stop";
-export const ON_PAUSE_EVENT = "pause";
-export const ON_RESUME_EVENT = "resume";
-export const ON_SPEED_CHANGE_EVENT = "speed-change";
-export const ON_RAM_WRITE_EVENT = "ram-write";
-export const ON_RAM_READ_EVENT = "ram-read";
-export const ON_BUFFER_32_WRITE_EVENT = "buffer-32-write";
-export const ON_BUFFER_32_READ_EVENT = "buffer-32-read";
-export const ON_FETCH_CYCLE = "fetch-cycle";
-export const ON_DECODE_CYCLE = "decode-cycle";
-export const ON_EXECUTE_CYCLE = "execute-cycle";
+export const ON_START = "start";
+export const ON_STOP = "stop";
+export const ON_PAUSE = "pause";
+export const ON_RESUME = "resume";
+export const ON_STEP = "step";
+export const ON_SPEED_CHANGE = "speed-change";
+export const ON_RAM_WRITE = "ram-write";
+export const ON_RAM_READ = "ram-read";
+export const ON_BUFFER_32_WRITE = "buffer-32-write";
+export const ON_BUFFER_32_READ = "buffer-32-read";
+export const ON_FETCH_CYCLE_START = "fetch-cycle_start";
+export const ON_DECODE_CYCLE_START = "decode-cycle_start";
+export const ON_EXECUTE_CYCLE_START = "execute-cycle_start";
+export const ON_FETCH_CYCLE_END = "fetch-cycle_end";
+export const ON_DECODE_CYCLE_END = "decode-cycle_end";
+export const ON_EXECUTE_CYCLE_END = "execute-cycle_end";
+export const ON_REG_WRITE = "reg-write";
+export const ON_REG_READ = "reg-read";
 export const ON_ALU_EXECUTE = "alu-execute";
 
 // Const values that represent the name of the memory section of a process

@@ -16,6 +16,8 @@ export function useSession() {
     setSelectedTab: session.setSelectedTab,
     getNumeralType: session.getNumeralType,
     setNumeralType: session.setNumeralType,
+    getMemViewType: session.getMemViewType,
+    setMemViewType: session.setMemViewType,
     getInstructionBuffer: session.getInstructionBuffer,
     setInstructionBuffer: session.setInstructionBuffer,
     getLoadedELF: session.getLoadedELF,

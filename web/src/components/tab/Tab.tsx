@@ -1,81 +1,59 @@
 import * as React from 'react';
 import { useSession } from '../../hooks';
+import { TAB_NAMES } from '../../lib/helper/def';
 
-interface TProps {
-  onSelect(val: string): void;
-}
+interface TProps {}
 
 /**
  * Tab component
  *
  */
-const Tab: React.FC<TProps> = ({ onSelect }): JSX.Element => {
+const Tab: React.FC<TProps> = (): JSX.Element => {
   const thisComponent = React.useRef<HTMLDivElement>(null);
-  const { type, on, off, getSelectedTab, setSelectedTab } = useSession();
+  const { type, on, off, setSelectedTab } = useSession();
 
-  const tabSelectionHandler = (e: React.MouseEvent) => {
-    const el = e.currentTarget as HTMLButtonElement;
-    const parent = el.parentNode!;
-    const children = parent.children as HTMLCollectionOf<HTMLButtonElement>;
+  const tabChangeHandler = (e: CustomEventInit) => {
+    const children = thisComponent.current?.getElementsByClassName(
+      'anchor-item-for-tab'
+    ) as HTMLCollectionOf<HTMLButtonElement>;
     for (const child of children) {
-      if (child.dataset.name == el.dataset.name) {
-        child.classList.add('tab-active');
-        setSelectedTab(child.dataset.name);
+      if (child.dataset.name === e.detail) {
+        child.classList.add('tab-active', 'polka-dot-bg');
       } else {
-        child.classList.remove('tab-active');
+        child.classList.remove('tab-active', 'polka-dot-bg');
       }
     }
   };
 
-  const visibleContentHandler = (e: CustomEventInit) => {
-    onSelect(e.detail);
+  const tabSelectionHandler = (e: React.MouseEvent<HTMLAnchorElement>) => {
+    setSelectedTab(e.currentTarget.dataset.name);
   };
 
   React.useEffect(() => {
-    on(type.TAB_CHANGE, visibleContentHandler);
+    on(type.TAB_CHANGE, tabChangeHandler);
     return () => {
-      off(type.TAB_CHANGE, visibleContentHandler);
+      off(type.TAB_CHANGE, tabChangeHandler);
     };
   }, []);
 
   return (
-    <div ref={thisComponent} className="tabs">
-      <a
-        className={`tab tab-lifted ${
-          getSelectedTab() === 'editor' ? 'tab-active' : ''
-        }`}
-        data-name="editor"
-        onClick={tabSelectionHandler}
-      >
-        Editor
-      </a>
-      <a
-        className={`tab tab-lifted ${
-          getSelectedTab() === 'memory' ? 'tab-active' : ''
-        }`}
-        data-name="memory"
-        onClick={tabSelectionHandler}
-      >
-        Memory
-      </a>
-      <a
-        className={`tab tab-lifted ${
-          getSelectedTab() === 'debugger' ? 'tab-active' : ''
-        }`}
-        data-name="debugger"
-        onClick={tabSelectionHandler}
-      >
-        Debugger
-      </a>
-      <a
-        className={`tab tab-lifted ${
-          getSelectedTab() === 'schematic' ? 'tab-active' : ''
-        }`}
-        data-name="schematic"
-        onClick={tabSelectionHandler}
-      >
-        Schematic
-      </a>
+    <div ref={thisComponent}>
+      <div className="flex">
+        <div className="tabs">
+          {TAB_NAMES.map((item) => (
+            <a
+              key={item}
+              className="anchor-item-for-tab tab tab-lifted"
+              data-name={item}
+              onClick={tabSelectionHandler}
+            >
+              {item}
+            </a>
+          ))}
+          <a className="tab tab-lifted"></a>
+        </div>
+        <div className="flex-1 border-b border-base-300"></div>
+      </div>
     </div>
   );
 };

@@ -1,6 +1,13 @@
 import * as React from 'react';
-import { useArmulatorCore } from '../../hooks';
+import { useArmulatorCore, useSession } from '../../hooks';
 import { Numeral } from '../';
+import { hexDump } from '../../lib/helper/utils';
+import {
+  HEX_DUMP_SIZE_BYTE,
+  MEMORY_HEX_DUMP_TYPE,
+  MEMORY_TABLE_VIEW_TYPE,
+  NUMBER_OF_MEMORY_TABLE_ENTRIES
+} from '../../lib/helper/def';
 
 interface TProps {}
 
@@ -14,7 +21,39 @@ const Memory: React.FC<TProps> = (): JSX.Element => {
   const [tableStartAddress, setTableStartAddress] = React.useState(0);
   const [pagRehydrationKey, setPagRehydrationKey] = React.useState(20);
   const [pagStartIndex, setPagStartIndex] = React.useState(0);
+  const { type, on, off, setMemViewType } = useSession();
   const { DEF, ram } = useArmulatorCore();
+
+  const memViewChangeHandler = (e: CustomEventInit) => {
+    // TODO:
+    // unknown bug where `thisComponent.current` is null
+    // when switching between tabs and right after click `table view` or `hex dump`
+    // to remedy this `views` and `btnGroup` are wrapped in `if` conditions
+    const views = thisComponent.current?.getElementsByClassName(
+      'content-item-for-view-type'
+    ) as HTMLCollectionOf<HTMLDivElement>;
+    if (views) {
+      for (const child of views) {
+        if (child.dataset.name === e.detail) {
+          child.classList.remove('hidden');
+        } else {
+          child.classList.add('hidden');
+        }
+      }
+    }
+    const btnGroup = thisComponent.current?.getElementsByClassName(
+      'btn-item-for-view-type'
+    ) as HTMLCollectionOf<HTMLButtonElement>;
+    if (btnGroup) {
+      for (const child of btnGroup) {
+        if (child.name === e.detail) {
+          child.classList.add('btn-active');
+        } else {
+          child.classList.remove('btn-active');
+        }
+      }
+    }
+  };
 
   const pagGroupHandler = (e: React.MouseEvent) => {
     const el = e.currentTarget as HTMLButtonElement;
@@ -22,7 +61,7 @@ const Memory: React.FC<TProps> = (): JSX.Element => {
       'btn-item-for-pag'
     ) as HTMLCollectionOf<HTMLButtonElement>;
     for (const child of children) {
-      if (child.dataset.index == el.dataset.index) {
+      if (child.dataset.index === el.dataset.index) {
         child.classList.add('btn-active');
       } else {
         child.classList.remove('btn-active');
@@ -34,12 +73,12 @@ const Memory: React.FC<TProps> = (): JSX.Element => {
     const el = e.currentTarget as HTMLButtonElement;
     const index = parseInt(el.dataset.index!);
     const startAddr = parseInt(el.dataset.startAddr!);
-    if (!(index % 4) && index != pagStartIndex) {
+    if (!(index % 4) && index !== pagStartIndex) {
       setPagSelectionOffset(0);
       setPagStartIndex(index);
       rehydratePag();
     }
-    if (index == pagStartIndex && index > 3) {
+    if (index === pagStartIndex && index > 3) {
       setPagSelectionOffset(4);
       setPagStartIndex(index - 4);
       rehydratePag();
@@ -49,12 +88,16 @@ const Memory: React.FC<TProps> = (): JSX.Element => {
     rehydrateTable();
   };
 
+  const generateHexDump = () => {
+    return hexDump(ram.BUFFER.buffer.slice(0, HEX_DUMP_SIZE_BYTE));
+  };
+
   const genTableEntry = () => {
     let count = 0;
     let batch = '';
     let address = tableStartAddress;
     let byteStart = address * 4;
-    const byteEnd = byteStart + 40; // 40/4 = 10 which represents how many entries are in a pagination must be in sync with `genPaginationEntry` pagLength
+    const byteEnd = byteStart + NUMBER_OF_MEMORY_TABLE_ENTRIES * 4;
     const tableEntries: any[] = [];
     const it = ram[Symbol.iterator]() as any;
 
@@ -63,7 +106,7 @@ const Memory: React.FC<TProps> = (): JSX.Element => {
       count++;
       if (count < byteStart + 1) continue;
       batch += value;
-      if (batch.length == 32) {
+      if (batch.length === 32) {
         tableEntries.push(
           <tr key={`ram-${address}`}>
             <th>
@@ -92,14 +135,14 @@ const Memory: React.FC<TProps> = (): JSX.Element => {
   const genPaginationEntry = () => {
     let pagStart = pagStartIndex;
     const wordLength = ram.getByteLength() / 4;
-    const pagLength = wordLength / 10; // 10 is the max number of entries in a pagination must be in sync for the `genTableEntry` byteEnd value
+    const pagLength = wordLength / NUMBER_OF_MEMORY_TABLE_ENTRIES;
     const pagEntries: any[] = [];
     for (let i = pagStart; i < pagLength; i++) {
       if (i > pagStart + 4) break;
       pagEntries.push(
         <button
           className="btn-item-for-pag btn btn-xs"
-          data-start-addr={i * 9}
+          data-start-addr={i * (NUMBER_OF_MEMORY_TABLE_ENTRIES - 1)}
           data-index={i}
           onClick={paginationHandler}
         >
@@ -110,7 +153,7 @@ const Memory: React.FC<TProps> = (): JSX.Element => {
     return <>{...pagEntries}</>;
   };
 
-  const initialPagSelection = () => {
+  const syncPagSelection = () => {
     const children = thisComponent.current?.getElementsByClassName(
       'btn-item-for-pag'
     ) as HTMLCollectionOf<HTMLButtonElement>;
@@ -127,61 +170,130 @@ const Memory: React.FC<TProps> = (): JSX.Element => {
     setPagRehydrationKey((prev) => prev + 1);
   };
 
+  const memViewSelectionHandler = (e: React.MouseEvent<HTMLButtonElement>) => {
+    setMemViewType(e.currentTarget.name);
+  };
+
   React.useEffect(() => {
-    initialPagSelection();
+    syncPagSelection();
   }, [pagRehydrationKey]);
 
   React.useEffect(() => {
-    ram.addEventListener(DEF.ON_RAM_WRITE_EVENT, rehydrateTable);
-    initialPagSelection();
+    on(type.MEMORY_VIEW_CHANGE, memViewChangeHandler);
+    ram.addEventListener(DEF.ON_RAM_WRITE, rehydrateTable);
     return () => {
-      ram.removeEventListener(DEF.ON_RAM_WRITE_EVENT, rehydrateTable);
+      off(type.MEMORY_VIEW_CHANGE, memViewChangeHandler);
+      ram.removeEventListener(DEF.ON_RAM_WRITE, rehydrateTable);
     };
   }, []);
 
   return (
-    <div ref={thisComponent} className="m-4">
-      <div className="overflow-x-auto">
-        <table className="table table-compact w-full">
-          <thead>
-            <tr>
-              <th>Address</th>
-              <th>
-                1<sup>st</sup> Byte
-              </th>
-              <th>
-                2<sup>nd</sup> Byte
-              </th>
-              <th>
-                3<sup>rd</sup> Byte
-              </th>
-              <th>
-                4<sup>th</sup> Byte
-              </th>
-            </tr>
-          </thead>
-          <tbody key={tableRehydrationKey}>{genTableEntry()}</tbody>
-          <tfoot>
-            <tr>
-              <th>Address</th>
-              <th>
-                1<sup>st</sup> Byte
-              </th>
-              <th>
-                2<sup>nd</sup> Byte
-              </th>
-              <th>
-                3<sup>rd</sup> Byte
-              </th>
-              <th>
-                4<sup>th</sup> Byte
-              </th>
-            </tr>
-          </tfoot>
-        </table>
+    <div ref={thisComponent} className="p-4">
+      <div
+        className="content-item-for-view-type"
+        data-name={MEMORY_HEX_DUMP_TYPE}
+      >
+        <div className="relative bg-base-100 shadow-md h-[441px] border rounded border-base-300 overflow-auto">
+          <div className="sticky top-0 left-0 right-0 mb-4">
+            <div className="alert shadow-lg rounded-none">
+              <div className="text-xs font-bold opacity-50">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  className="stroke-current flex-shrink-0 w-6 h-6"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
+                    d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+                  ></path>
+                </svg>
+                <span>Memory Hexadecimal dump is restricted to first</span>
+                <div className="badge badge-neutral badge-sm">
+                  {`${HEX_DUMP_SIZE_BYTE} Bytes`}
+                </div>
+                <span>or</span>
+                <div className="badge badge-neutral badge-sm">
+                  {`${(HEX_DUMP_SIZE_BYTE / 1024 / 1000).toPrecision(2)}MB`}
+                </div>
+              </div>
+            </div>
+          </div>
+          <div className="px-6">
+            <pre>{generateHexDump()}</pre>
+          </div>
+        </div>
       </div>
-      <div className="mt-2 flex flex-row-reverse">
-        <div key={pagRehydrationKey} className="btn-group">
+
+      <div
+        className="content-item-for-view-type"
+        data-name={MEMORY_TABLE_VIEW_TYPE}
+      >
+        <div className="overflow-x-auto">
+          <table className="table table-compact w-full">
+            <thead>
+              <tr>
+                <th>Address</th>
+                <th>
+                  1<sup>st</sup> Byte
+                </th>
+                <th>
+                  2<sup>nd</sup> Byte
+                </th>
+                <th>
+                  3<sup>rd</sup> Byte
+                </th>
+                <th>
+                  4<sup>th</sup> Byte
+                </th>
+              </tr>
+            </thead>
+            <tbody key={tableRehydrationKey}>{genTableEntry()}</tbody>
+            <tfoot>
+              <tr>
+                <th>Address</th>
+                <th>
+                  1<sup>st</sup> Byte
+                </th>
+                <th>
+                  2<sup>nd</sup> Byte
+                </th>
+                <th>
+                  3<sup>rd</sup> Byte
+                </th>
+                <th>
+                  4<sup>th</sup> Byte
+                </th>
+              </tr>
+            </tfoot>
+          </table>
+        </div>
+      </div>
+
+      <div className="mt-2 flex justify-between">
+        <div className="btn-group">
+          <button
+            className="btn-item-for-view-type btn btn-xs"
+            name={MEMORY_TABLE_VIEW_TYPE}
+            onClick={memViewSelectionHandler}
+          >
+            Table view
+          </button>
+          <button
+            className="btn-item-for-view-type btn btn-xs"
+            name={MEMORY_HEX_DUMP_TYPE}
+            onClick={memViewSelectionHandler}
+          >
+            Hex dump
+          </button>
+        </div>
+        <div
+          key={pagRehydrationKey}
+          className="content-item-for-view-type btn-group"
+          data-name={MEMORY_TABLE_VIEW_TYPE}
+        >
           {genPaginationEntry()}
         </div>
       </div>

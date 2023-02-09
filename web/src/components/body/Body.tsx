@@ -1,5 +1,7 @@
 import * as React from 'react';
 import { Editor, Schematic, Memory, Tab, Debugger } from '..';
+import { useSession } from '../../hooks';
+import { TAB_NAMES } from '../../lib/helper/def';
 
 interface TProps {}
 
@@ -9,23 +11,36 @@ interface TProps {}
  */
 const Body: React.FC<TProps> = (): JSX.Element => {
   const thisComponent = React.useRef<HTMLDivElement>(null);
-  const [selectedTab, setSelectedTab] = React.useState('memory');
+  const { type, on, off, getSelectedTab } = useSession();
+  const [selectedTab, setSelectedTab] = React.useState(getSelectedTab());
 
-  const content: any = {
-    editor: <Editor />,
-    memory: <Memory />,
-    debugger: <Debugger />,
-    schematic: <Schematic />
+  const generateComponent = () => {
+    const Component: any = {
+      [TAB_NAMES[0]]: Editor,
+      [TAB_NAMES[1]]: Memory,
+      [TAB_NAMES[2]]: Debugger,
+      [TAB_NAMES[3]]: Schematic
+    };
+    return React.createElement(Component[selectedTab!]);
   };
 
-  const selectHandler = (val: string) => {
-    setSelectedTab(val);
+  const tabChangeHandler = (e: CustomEventInit) => {
+    setSelectedTab(e.detail);
   };
+
+  React.useEffect(() => {
+    on(type.TAB_CHANGE, tabChangeHandler);
+    return () => {
+      off(type.TAB_CHANGE, tabChangeHandler);
+    };
+  }, []);
 
   return (
     <div ref={thisComponent} className="my-4">
-      <Tab onSelect={selectHandler} />
-      <div className="min-h-[410px]">{content[selectedTab]}</div>
+      <Tab />
+      <div className="min-h-[410px] border-l border-b border-r border-base-300 rounded-b polka-dot-bg">
+        {generateComponent()}
+      </div>
     </div>
   );
 };

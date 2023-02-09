@@ -8,3 +8,4 @@ export { default as Memory } from './memory/Memory';
 export { default as Debugger } from './debugger/Debugger';
 export { default as Schematic } from './schematic/Schematic';
 export { default as Numeral } from './numeral/Numeral';
+export { default as LandingLoader } from './loader/LandingLoader';
