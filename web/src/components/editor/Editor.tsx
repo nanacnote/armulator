@@ -102,7 +102,7 @@ const Editor: React.FC<TProps> = (): JSX.Element => {
         <div className="col-span-9 md:col-span-6">
           <pre id="ace-editor-container" className="h-[473px] text-base"></pre>
         </div>
-        <div className="relative col-span-9 md:col-span-3 border">
+        <div className="relative col-span-9 md:col-span-3">
           <div
             id="editor-view-console-logger"
             className="mockup-code min-w-[100%] text-xs h-[250px] md:h-[473px] overflow-auto"
