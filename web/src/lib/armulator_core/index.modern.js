@@ -1,16 +1,22 @@
 // Constants used as keys to dispatch events
-const ON_START_EVENT = "start";
-const ON_STOP_EVENT = "stop";
-const ON_PAUSE_EVENT = "pause";
-const ON_RESUME_EVENT = "resume";
-const ON_SPEED_CHANGE_EVENT = "speed-change";
-const ON_RAM_WRITE_EVENT = "ram-write";
-const ON_RAM_READ_EVENT = "ram-read";
-const ON_BUFFER_32_WRITE_EVENT = "buffer-32-write";
-const ON_BUFFER_32_READ_EVENT = "buffer-32-read";
-const ON_FETCH_CYCLE = "fetch-cycle";
-const ON_DECODE_CYCLE = "decode-cycle";
-const ON_EXECUTE_CYCLE = "execute-cycle";
+const ON_START = "start";
+const ON_STOP = "stop";
+const ON_PAUSE = "pause";
+const ON_RESUME = "resume";
+const ON_STEP = "step";
+const ON_SPEED_CHANGE = "speed-change";
+const ON_RAM_WRITE = "ram-write";
+const ON_RAM_READ = "ram-read";
+const ON_BUFFER_32_WRITE = "buffer-32-write";
+const ON_BUFFER_32_READ = "buffer-32-read";
+const ON_FETCH_CYCLE_START = "fetch-cycle_start";
+const ON_DECODE_CYCLE_START = "decode-cycle_start";
+const ON_EXECUTE_CYCLE_START = "execute-cycle_start";
+const ON_FETCH_CYCLE_END = "fetch-cycle_end";
+const ON_DECODE_CYCLE_END = "decode-cycle_end";
+const ON_EXECUTE_CYCLE_END = "execute-cycle_end";
+const ON_REG_WRITE = "reg-write";
+const ON_REG_READ = "reg-read";
 const ON_ALU_EXECUTE = "alu-execute";
 
 // Const values that represent the name of the memory section of a process
@@ -52,18 +58,24 @@ const RAM_SIZE_IN_BYTE = 0.5 * 1024 * 1024;
 
 var def = {
   __proto__: null,
-  ON_START_EVENT: ON_START_EVENT,
-  ON_STOP_EVENT: ON_STOP_EVENT,
-  ON_PAUSE_EVENT: ON_PAUSE_EVENT,
-  ON_RESUME_EVENT: ON_RESUME_EVENT,
-  ON_SPEED_CHANGE_EVENT: ON_SPEED_CHANGE_EVENT,
-  ON_RAM_WRITE_EVENT: ON_RAM_WRITE_EVENT,
-  ON_RAM_READ_EVENT: ON_RAM_READ_EVENT,
-  ON_BUFFER_32_WRITE_EVENT: ON_BUFFER_32_WRITE_EVENT,
-  ON_BUFFER_32_READ_EVENT: ON_BUFFER_32_READ_EVENT,
-  ON_FETCH_CYCLE: ON_FETCH_CYCLE,
-  ON_DECODE_CYCLE: ON_DECODE_CYCLE,
-  ON_EXECUTE_CYCLE: ON_EXECUTE_CYCLE,
+  ON_START: ON_START,
+  ON_STOP: ON_STOP,
+  ON_PAUSE: ON_PAUSE,
+  ON_RESUME: ON_RESUME,
+  ON_STEP: ON_STEP,
+  ON_SPEED_CHANGE: ON_SPEED_CHANGE,
+  ON_RAM_WRITE: ON_RAM_WRITE,
+  ON_RAM_READ: ON_RAM_READ,
+  ON_BUFFER_32_WRITE: ON_BUFFER_32_WRITE,
+  ON_BUFFER_32_READ: ON_BUFFER_32_READ,
+  ON_FETCH_CYCLE_START: ON_FETCH_CYCLE_START,
+  ON_DECODE_CYCLE_START: ON_DECODE_CYCLE_START,
+  ON_EXECUTE_CYCLE_START: ON_EXECUTE_CYCLE_START,
+  ON_FETCH_CYCLE_END: ON_FETCH_CYCLE_END,
+  ON_DECODE_CYCLE_END: ON_DECODE_CYCLE_END,
+  ON_EXECUTE_CYCLE_END: ON_EXECUTE_CYCLE_END,
+  ON_REG_WRITE: ON_REG_WRITE,
+  ON_REG_READ: ON_REG_READ,
   ON_ALU_EXECUTE: ON_ALU_EXECUTE,
   ENV_SECTION: ENV_SECTION,
   STACK_SECTION: STACK_SECTION,
@@ -110,23 +122,24 @@ class Clk extends EventTarget {
     this.TICKER = null;
 
     /**
-     *The number of clock cycles that have passed since the clock was started.
+     *The current cycle of the clock.
      *@type {number}
-     */
-    this.COUNTER = 0;
-
-    /**
-     * The current cycle of the clock.
-     * @type {number}
      */
     this.CYCLE = 0;
 
     /**
-     * @property {Array} CYCLE_EVENTS - A list of constants representing the different cycles in the processor.
+     * @property {Array} CYCLE_START_EVENTS - A list of constants representing the different start of cycles in the processor.
      * @constant
      * @default
      */
-    this.CYCLE_EVENTS = [ON_FETCH_CYCLE, ON_DECODE_CYCLE, ON_EXECUTE_CYCLE];
+    this.CYCLE_START_EVENTS = [ON_FETCH_CYCLE_START, ON_DECODE_CYCLE_START, ON_EXECUTE_CYCLE_START];
+
+    /**
+     * @property {Array} CYCLE_END_EVENTS - A list of constants representing the different end of cycles in the processor.
+     * @constant
+     * @default
+     */
+    this.CYCLE_END_EVENTS = [ON_FETCH_CYCLE_END, ON_DECODE_CYCLE_END, ON_EXECUTE_CYCLE_END];
 
     /**
      * The current state of the clock.
@@ -148,12 +161,12 @@ class Clk extends EventTarget {
 
   /**
    * Starts the system clock.
-   * @fires ON_START_EVENT
+   * @fires ON_START
    */
   start() {
-    if (this.STATE != START_CLOCK_KEY) {
+    if (this.STATE !== START_CLOCK_KEY) {
       this.STATE = START_CLOCK_KEY;
-      this.dispatchEvent(new Event(ON_START_EVENT));
+      this.dispatchEvent(new Event(ON_START));
       this.TICKER = setInterval(this._trigger_observers, this.SPEED);
     }
   }
@@ -162,43 +175,65 @@ class Clk extends EventTarget {
    * Stops the clock, resetting the counter and cycle to their default values, and sets the state to `STOP_CLOCK_KEY`.
    * If the clock is already stopped, this method does nothing.
    *
-   * @fires ON_STOP_EVENT when the clock is stopped
+   * @fires ON_STOP when the clock is stopped
    */
   stop() {
-    if (this.STATE != STOP_CLOCK_KEY) {
+    if (this.STATE !== STOP_CLOCK_KEY) {
       clearInterval(this.TICKER);
       this.CYCLE = 0;
-      this.COUNTER = 0;
+      this.CYCLE = 0;
       this.TICKER = null;
       this.STATE = STOP_CLOCK_KEY;
-      this.dispatchEvent(new Event(ON_STOP_EVENT));
+      this.dispatchEvent(new Event(ON_STOP));
     }
   }
 
   /**
    * Pauses the system clock. If the clock is already paused, this method has no effect.
    *
-   * @fires ON_PAUSE_EVENT when the clock is paused
+   * @fires ON_PAUSE when the clock is paused
    */
   pause() {
-    if (this.STATE != PAUSE_CLOCK_KEY) {
+    if (this.STATE !== PAUSE_CLOCK_KEY) {
       clearInterval(this.TICKER);
       this.TICKER = null;
       this.STATE = PAUSE_CLOCK_KEY;
-      this.dispatchEvent(new Event(ON_PAUSE_EVENT));
+      this.dispatchEvent(new Event(ON_PAUSE));
     }
   }
 
   /**
    * Resumes the clock if it is currently paused.
    *
-   * @fires ON_RESUME_EVENTwhen the clock is resumed
+   * @fires ON_RESUME when the clock is resumed
    */
   resume() {
     if (this.STATE === PAUSE_CLOCK_KEY) {
       this.STATE = START_CLOCK_KEY;
-      this.dispatchEvent(new Event(ON_RESUME_EVENT));
+      this.dispatchEvent(new Event(ON_RESUME));
       this.TICKER = setInterval(this._trigger_observers, this.SPEED);
+    }
+  }
+
+  /**
+   * Resumes the clock if it is currently paused and pause it after 3 clocks.
+   *
+   * @fires ON_RESUME when the clock is resumed
+   */
+  step() {
+    if (this.STATE === PAUSE_CLOCK_KEY) {
+      this.STATE = START_CLOCK_KEY;
+      this.dispatchEvent(new Event(ON_STEP));
+      setTimeout(() => {
+        this._trigger_observers();
+        setTimeout(() => {
+          this._trigger_observers();
+          setTimeout(() => {
+            this._trigger_observers();
+            this.pause();
+          }, this.SPEED);
+        }, this.SPEED);
+      }, this.SPEED);
     }
   }
 
@@ -206,7 +241,7 @@ class Clk extends EventTarget {
    * Changes the speed of the clock.
    *
    * @param {number} val - The new speed of the clock, in milliseconds.
-   * @fires ON_SPEED_CHANGE_EVENT the clock speed is changed
+   * @fires ON_SPEED_CHANGE the clock speed is changed
    */
   changeSpeed(val) {
     this.SPEED = val;
@@ -214,7 +249,7 @@ class Clk extends EventTarget {
       clearInterval(this.TICKER);
       this.TICKER = setInterval(this._trigger_observers, this.SPEED);
     }
-    this.dispatchEvent(new CustomEvent(ON_SPEED_CHANGE_EVENT, {
+    this.dispatchEvent(new CustomEvent(ON_SPEED_CHANGE, {
       detail: this.SPEED
     }));
   }
@@ -225,11 +260,9 @@ class Clk extends EventTarget {
    */
   _trigger_observers() {
     // TODO: suspend on visibility change ie user leave current browser tab
-    this.dispatchEvent(new Event(this.CYCLE_EVENTS[this.CYCLE]));
-    if (this.STATE === START_CLOCK_KEY) {
-      this.COUNTER++;
-      this.CYCLE = this.COUNTER % this.CYCLE_EVENTS.length;
-    }
+    this.dispatchEvent(new Event(this.CYCLE_START_EVENTS[this.CYCLE]));
+    this.dispatchEvent(new Event(this.CYCLE_END_EVENTS[this.CYCLE]));
+    this.CYCLE = this.CYCLE < this.CYCLE_START_EVENTS.length - 1 ? this.CYCLE + 1 : 0;
   }
 }
 
@@ -252,11 +285,11 @@ class Ram extends EventTarget {
    * Reads an 8-bit value from the memory buffer at the specified byte offset.
    * @param {number} [byteOffset=0] - The byte offset at which to read the value.
    * @returns {number} The 8-bit value read from the memory buffer.
-   * @fires ON_RAM_READ_EVENT
+   * @fires ON_RAM_READ
    */
   read8(byteOffset = 0) {
     const val = this.BUFFER.getUint8(byteOffset);
-    this.dispatchEvent(new Event(ON_RAM_READ_EVENT));
+    this.dispatchEvent(new Event(ON_RAM_READ));
     return val;
   }
 
@@ -264,11 +297,11 @@ class Ram extends EventTarget {
    * Reads a 16-bit value from the memory buffer at the specified byte offset.
    * @param {number} [byteOffset=0] - The byte offset at which to read the value.
    * @returns {number} The 16-bit value read from the memory buffer.
-   * @fires ON_RAM_READ_EVENT
+   * @fires ON_RAM_READ
    */
   read16(byteOffset = 0) {
     const val = this.BUFFER.getUint16(byteOffset);
-    this.dispatchEvent(new Event(ON_RAM_READ_EVENT));
+    this.dispatchEvent(new Event(ON_RAM_READ));
     return val;
   }
 
@@ -276,11 +309,11 @@ class Ram extends EventTarget {
    * Reads a 32-bit value from the memory buffer at the specified byte offset.
    * @param {number} [byteOffset=0] - The byte offset at which to read the value.
    * @returns {number} The 32-bit value read from the memory buffer.
-   * @fires ON_RAM_READ_EVENT
+   * @fires ON_RAM_READ
    */
   read32(byteOffset = 0) {
     const val = this.BUFFER.getUint32(byteOffset);
-    this.dispatchEvent(new Event(ON_RAM_READ_EVENT));
+    this.dispatchEvent(new Event(ON_RAM_READ));
     return val;
   }
 
@@ -289,11 +322,11 @@ class Ram extends EventTarget {
    * @param {number} val - The 8-bit value to write to the memory buffer.
    * @param {number} [byteOffset=0] - The byte offset at which to write the value.
    * @returns {number} The OK_CODE indicating success.
-   * @fires ON_RAM_WRITE_EVENT
+   * @fires ON_RAM_WRITE
    */
   write8(val, byteOffset = 0) {
     this.BUFFER.setUint8(byteOffset, val);
-    this.dispatchEvent(new Event(ON_RAM_WRITE_EVENT));
+    this.dispatchEvent(new Event(ON_RAM_WRITE));
     return OK_CODE;
   }
 
@@ -302,11 +335,11 @@ class Ram extends EventTarget {
    * @param {number} val - The 16-bit value to write to the memory buffer.
    * @param {number} [byteOffset=0] - The byte offset at which to write the value.
    * @returns {number} The OK_CODE indicating success.
-   * @fires ON_RAM_WRITE_EVENT
+   * @fires ON_RAM_WRITE
    */
   write16(val, byteOffset = 0) {
     this.BUFFER.setUint16(byteOffset, val);
-    this.dispatchEvent(new Event(ON_RAM_WRITE_EVENT));
+    this.dispatchEvent(new Event(ON_RAM_WRITE));
     return OK_CODE;
   }
 
@@ -315,12 +348,12 @@ class Ram extends EventTarget {
    * @param {number} val - The 32-bit value to write to the memory buffer.
    * @param {number} [byteOffset=0] - The byte offset at which to write the value.
    * @returns {number} The OK_CODE indicating success.
-   * @fires ON_RAM_WRITE_EVENT
+   * @fires ON_RAM_WRITE
    */
 
   write32(val, byteOffset = 0) {
     this.BUFFER.setUint32(byteOffset, val);
-    this.dispatchEvent(new Event(ON_RAM_WRITE_EVENT));
+    this.dispatchEvent(new Event(ON_RAM_WRITE));
     return OK_CODE;
   }
 
@@ -404,12 +437,12 @@ class Buffer32Bit extends EventTarget {
    * Reads a 32-bit value from the buffer at the specified byte offset.
    * @param {number} [byteOffset=0] - The byte offset at which to read the value.
    * @returns {number} The 32-bit value read from the buffer.
-   * @fires ON_BUFFER_32_READ_EVENT
+   * @fires ON_BUFFER_32_READ
    */
   read(byteOffset = 0) {
     const val = this.BUFFER.getUint32(byteOffset);
-    this.dispatchEvent(new CustomEvent(ON_BUFFER_32_READ_EVENT, {
-      detail: this.NAME
+    this.dispatchEvent(new CustomEvent(ON_BUFFER_32_READ, {
+      detail: this
     }));
     return val;
   }
@@ -419,13 +452,13 @@ class Buffer32Bit extends EventTarget {
    * @param {number} val - The 32-bit value to write to the buffer.
    * @param {number} [byteOffset=0] - The byte offset at which to write the value.
    * @returns {number} The OK_CODE indicating success.
-   * @fires ON_BUFFER_32_WRITE_EVENT
+   * @fires ON_BUFFER_32_WRITE
    */
   write(val, byteOffset = 0) {
     this.BUFFER.setUint32(byteOffset, val);
     this.IS_EMPTY = ERROR_CODE;
-    this.dispatchEvent(new CustomEvent(ON_BUFFER_32_WRITE_EVENT, {
-      detail: this.NAME
+    this.dispatchEvent(new CustomEvent(ON_BUFFER_32_WRITE, {
+      detail: this
     }));
     return OK_CODE;
   }
@@ -433,10 +466,14 @@ class Buffer32Bit extends EventTarget {
   /**
    * Resets the buffer to all zeros.
    * @returns {number} The OK_CODE indicating success.
+   * @fires ON_BUFFER_32_WRITE
    */
   flush() {
     this.BUFFER.setUint32(0, 0);
     this.IS_EMPTY = OK_CODE;
+    this.dispatchEvent(new CustomEvent(ON_BUFFER_32_WRITE, {
+      detail: this
+    }));
     return OK_CODE;
   }
 
@@ -455,9 +492,9 @@ class Buffer32Bit extends EventTarget {
    * indicating whether the end of the buffer has been reached.
    */
   [Symbol.iterator]() {
+    let index = 0;
     const binStr = this.BUFFER.getUint32(0).toString(2);
     const binStr32 = binStr.padStart(32, "0");
-    let index = 0;
     return {
       next: () => {
         if (index < binStr32.length) {
@@ -619,7 +656,24 @@ function _extends() {
   return _extends.apply(this, arguments);
 }
 
+/**
+ * A class representing the Central Processing Unit (CPU) of a computer.
+ *
+ * The Cpu class acts as a coordinator of different hardware components and
+ * handles the fetch-decode-execute cycle.
+ */
 class Cpu {
+  /**
+   * Creates an instance of Cpu.
+   *
+   * @param {Object} parts - The hardware components required by the CPU.
+   * @param {ALU} parts.alu - The Arithmetic Logic Unit of the CPU.
+   * @param {DEC} parts.dec - The Instruction Decoder of the CPU.
+   * @param {BUS} parts.bus - The Data Bus of the CPU.
+   * @param {REG} parts.reg - The Register Bank of the CPU.
+   * @param {MMU} parts.mmu - The Memory Management Unit of the CPU.
+   * @param {CLK} parts.clk - The Clock of the CPU.
+   */
   constructor(parts) {
     this.ALU = parts.alu;
     this.DEC = parts.dec;
@@ -635,23 +689,53 @@ class Cpu {
     this._fetch = this._fetch.bind(this);
     this._decode = this._decode.bind(this);
     this._execute = this._execute.bind(this);
-    this.CLK.addEventListener(ON_FETCH_CYCLE, this._fetch);
-    this.CLK.addEventListener(ON_DECODE_CYCLE, this._decode);
-    this.CLK.addEventListener(ON_EXECUTE_CYCLE, this._execute);
-    this.CLK.addEventListener(ON_FETCH_CYCLE, this.BUS.onTick);
-    this.CLK.addEventListener(ON_DECODE_CYCLE, this.BUS.onTick);
-    this.CLK.addEventListener(ON_EXECUTE_CYCLE, this.BUS.onTick);
+    this.CLK.addEventListener(ON_FETCH_CYCLE_START, this._fetch);
+    this.CLK.addEventListener(ON_DECODE_CYCLE_START, this._decode);
+    this.CLK.addEventListener(ON_EXECUTE_CYCLE_START, this._execute);
+    this.CLK.addEventListener(ON_FETCH_CYCLE_START, this.BUS.onTick);
+    this.CLK.addEventListener(ON_DECODE_CYCLE_START, this.BUS.onTick);
+    this.CLK.addEventListener(ON_EXECUTE_CYCLE_START, this.BUS.onTick);
   }
+
+  /**
+   * Start the fetch-decode-execute cycle.
+   *
+   * @returns {Cpu} The Cpu instance.
+   */
   run() {
     this.CLK.start();
     return this;
   }
+
+  /**
+   * Spawn a process by initializing the Program Counter (PC) and Stack Pointer (SP).
+   *
+   * @param {number} pid - The Process ID of the process to spawn.
+   * @returns {Cpu} The Cpu instance.
+   */
+
   spawn(pid) {
     this.REG.pc.write(this.MMU.for(pid).PROC_START_ADDRESS);
     this.REG.sp.write(this.MMU.for(pid).STACK_SEC_START_ADDRESS);
     this.CURRENT_PID = pid;
     return this;
   }
+
+  /**
+   * Load an Executable and Linkable Format (ELF) file into memory.
+   *
+   * @param {Object} elf - The ELF file to be loaded.
+   * @param {number} elf.procSize - The size of the process.
+   * @param {number} elf.envSize - The size of the environment section of the ELF file.
+   * @param {Array} elf.envContent - The content of the environment section of the ELF file.
+   * @param {number} elf.textSize - The size of the text section of the ELF file.
+   * @param {Array} elf.textContent - The content of the text section of the ELF file.
+   * @param {number} elf.initDataSize - The size of the initialized data section of the ELF file.
+   * @param {Array} elf.initDataContent - The content of the initialized data section of the ELF file.
+   * @param {number} elf.bssSize - The size of the block started by symbol section of the ELF file.
+   * @param {Array} elf.bssContent - The content of the block started by symbol section of the ELF file.
+   * @returns {Object} The loaded ELF file with additional properties (pid, envUUUID, textUUUID, initDataUUID, bssUUID).
+   */
   load(elf) {
     const pid = this.MMU.processAlloc(elf.procSize);
     const extELF = _extends({}, elf, {
@@ -667,6 +751,11 @@ class Cpu {
     this.MMU.malloc(pid, HEAP_SECTION, undefined, []);
     return extELF;
   }
+
+  /**
+   * Fetches the instruction from memory using the bus and saves the instruction address in the PC register.
+   * @private
+   */
   _fetch() {
     if (this.REG.pc.read() < this.MMU.for(this.CURRENT_PID).TEXT_SEC_END_ADDRESS) {
       const pc = this.REG.pc.read();
@@ -677,6 +766,11 @@ class Cpu {
       this.CLK.stop();
     }
   }
+
+  /**
+   * Decodes the instruction fetched by the bus and saves the decoded instruction and ALU routine.
+   * @private
+   */
   _decode() {
     const {
       instruction,
@@ -685,6 +779,11 @@ class Cpu {
     this.CURRENT_INSTRUCTION = instruction;
     this.ALU_ROUTINE = aluRoutine;
   }
+
+  /**
+   * Executes the ALU routine associated with the decoded instruction.
+   * @private
+   */
   _execute() {
     this.ALU.call({
       pid: this.CURRENT_PID,
@@ -697,17 +796,18 @@ class Cpu {
 
 /**
  * A class representing a set of registers in a processor.
+ * @extends EventTarget
  */
-class Reg {
+class Reg extends EventTarget {
   /**
    * Creates a new set of registers.
    * @constructor
    */
   constructor() {
-    this._r0 = new Buffer32Bit("r0");
+    super();
+    this._r1 = new Buffer32Bit("r1");
     this._r2 = new Buffer32Bit("r2");
     this._r3 = new Buffer32Bit("r3");
-    this._r1 = new Buffer32Bit("r1");
     this._r4 = new Buffer32Bit("r4");
     this._r5 = new Buffer32Bit("r5");
     this._r6 = new Buffer32Bit("r6");
@@ -717,17 +817,44 @@ class Reg {
     this._r10 = new Buffer32Bit("r10");
     this._r11 = new Buffer32Bit("r11");
     this._r12 = new Buffer32Bit("r12");
-    this._r13 = new Buffer32Bit("r13");
-    this._r14 = new Buffer32Bit("r14");
-    this._r15 = new Buffer32Bit("r15");
+    this._sp = new Buffer32Bit("sp");
+    this._lr = new Buffer32Bit("lr");
+    this._pc = new Buffer32Bit("pc");
     this._cpsr = new Buffer32Bit("cpsr");
-  }
-
-  /**
-   * @returns {Buffer32Bit} The r0 general-purpose register. Can be used for any purpose.
-   */
-  get r0() {
-    return this._r0;
+    this._readEventHandler = this._readEventHandler.bind(this);
+    this._writeEventHandler = this._writeEventHandler.bind(this);
+    this._r1.addEventListener(ON_BUFFER_32_READ, this._readEventHandler);
+    this._r2.addEventListener(ON_BUFFER_32_READ, this._readEventHandler);
+    this._r3.addEventListener(ON_BUFFER_32_READ, this._readEventHandler);
+    this._r4.addEventListener(ON_BUFFER_32_READ, this._readEventHandler);
+    this._r5.addEventListener(ON_BUFFER_32_READ, this._readEventHandler);
+    this._r6.addEventListener(ON_BUFFER_32_READ, this._readEventHandler);
+    this._r7.addEventListener(ON_BUFFER_32_READ, this._readEventHandler);
+    this._r8.addEventListener(ON_BUFFER_32_READ, this._readEventHandler);
+    this._r9.addEventListener(ON_BUFFER_32_READ, this._readEventHandler);
+    this._r10.addEventListener(ON_BUFFER_32_READ, this._readEventHandler);
+    this._r11.addEventListener(ON_BUFFER_32_READ, this._readEventHandler);
+    this._r12.addEventListener(ON_BUFFER_32_READ, this._readEventHandler);
+    this._sp.addEventListener(ON_BUFFER_32_READ, this._readEventHandler);
+    this._lr.addEventListener(ON_BUFFER_32_READ, this._readEventHandler);
+    this._pc.addEventListener(ON_BUFFER_32_READ, this._readEventHandler);
+    this._cpsr.addEventListener(ON_BUFFER_32_READ, this._readEventHandler);
+    this._r1.addEventListener(ON_BUFFER_32_WRITE, this._writeEventHandler);
+    this._r2.addEventListener(ON_BUFFER_32_WRITE, this._writeEventHandler);
+    this._r3.addEventListener(ON_BUFFER_32_WRITE, this._writeEventHandler);
+    this._r4.addEventListener(ON_BUFFER_32_WRITE, this._writeEventHandler);
+    this._r5.addEventListener(ON_BUFFER_32_WRITE, this._writeEventHandler);
+    this._r6.addEventListener(ON_BUFFER_32_WRITE, this._writeEventHandler);
+    this._r7.addEventListener(ON_BUFFER_32_WRITE, this._writeEventHandler);
+    this._r8.addEventListener(ON_BUFFER_32_WRITE, this._writeEventHandler);
+    this._r9.addEventListener(ON_BUFFER_32_WRITE, this._writeEventHandler);
+    this._r10.addEventListener(ON_BUFFER_32_WRITE, this._writeEventHandler);
+    this._r11.addEventListener(ON_BUFFER_32_WRITE, this._writeEventHandler);
+    this._r12.addEventListener(ON_BUFFER_32_WRITE, this._writeEventHandler);
+    this._sp.addEventListener(ON_BUFFER_32_WRITE, this._writeEventHandler);
+    this._lr.addEventListener(ON_BUFFER_32_WRITE, this._writeEventHandler);
+    this._pc.addEventListener(ON_BUFFER_32_WRITE, this._writeEventHandler);
+    this._cpsr.addEventListener(ON_BUFFER_32_WRITE, this._writeEventHandler);
   }
 
   /**
@@ -815,61 +942,85 @@ class Reg {
   }
 
   /**
-   * @returns {Buffer32Bit} The r13 stack pointer register. Points to the top of the stack.[SP]
-   * @alias sp
-   */
-  get r13() {
-    return this._r13;
-  }
-
-  /**
-   * @returns {Buffer32Bit} The r14 link register. Stores the return address for function calls.
-   * @alias lr
-   */
-  get r14() {
-    return this._r14;
-  }
-
-  /**
-   * @returns {Buffer32Bit} The r15 program counter register. Stores the address of the current instruction.
-   * @alias pc
-   */
-  get r15() {
-    return this._r15;
-  }
-
-  /**
-   * @returns {Buffer32Bit} The r13 stack pointer register. Points to the top of the stack.
-   * @alias sp
+   * @returns {Buffer32Bit} The r13 stack pointer register. Points to the top of the stack.[alias SP]
    */
   get sp() {
-    this._r13.NAME = "sp";
-    return this._r13;
+    return this._sp;
   }
 
   /**
-   * @returns {Buffer32Bit} The r14 link register. Stores the return address for function calls.
-   * @alias lr
+   * @returns {Buffer32Bit} The r14 link register. Stores the return address for function calls.[alias LR]
    */
   get lr() {
-    this._r14.NAME = "lr";
-    return this._r14;
+    return this._lr;
   }
 
   /**
-   * @returns {Buffer32Bit} The r15 program counter register. Stores the address of the current instruction.
-   * @alias pc
+   * @returns {Buffer32Bit} The r15 program counter register. Stores the address of the current instruction.[alias PC]
    */
   get pc() {
-    this._r15.NAME = "pc";
-    return this._r15;
+    return this._pc;
   }
 
   /**
-   * @returns {Buffer32Bit} The current program status register. Stores the current status of the processor, such as the current processor mode and condition flags.
+   * @returns {Buffer32Bit} The current program status register.
+   * Stores the current status of the processor, such as the current processor mode and condition flags.
    */
   get cpsr() {
     return this._cpsr;
+  }
+
+  /**
+   * The event handler for the ON_REG_READ event.
+   * @param {CustomEvent} event - The ON_REG_READ event.
+   * @private
+   */
+  _readEventHandler({
+    detail
+  }) {
+    this.dispatchEvent(new CustomEvent(ON_REG_READ, {
+      detail
+    }));
+  }
+
+  /**
+   * The event handler for the ON_REG_WRITE event.
+   * @param {CustomEvent} event - The ON_REG_WRITE event.
+   * @private
+   */
+  _writeEventHandler({
+    detail
+  }) {
+    this.dispatchEvent(new CustomEvent(ON_REG_WRITE, {
+      detail
+    }));
+  }
+
+  /**
+   * Allows an instance of Reg class(this) to be used in a for...of loop returning one of the
+   * registers in each iteration.
+   * @returns {Object} An object conforming to the iterator protocol with a `next` method.
+   * The `next` method returns an object with two properties: `value` and `done`.
+   * The `value` property represents the next value in the iteration.
+   * The `done` property is a boolean indicating if the iteration has finished.
+   */
+  [Symbol.iterator]() {
+    const registers = [this.r1, this.r2, this.r3, this.r4, this.r5, this.r6, this.r7, this.r8, this.r9, this.r10, this.r11, this.r12, this.sp, this.lr, this.pc, this.cpsr];
+    let index = 0;
+    return {
+      next: () => {
+        if (index < registers.length) {
+          return {
+            value: registers[index++],
+            done: false
+          };
+        } else {
+          return {
+            done: true
+          };
+        }
+      }
+    };
   }
 }
 
@@ -1276,8 +1427,8 @@ class Dec {
     for (let i = 0; i < v1len; i++) {
       const curV1 = v1[i];
       const curV2 = v2str[i];
-      if (curV1 == "x") continue;
-      if (curV1 != curV2) return true;
+      if (curV1 === "x") continue;
+      if (curV1 !== curV2) return true;
     }
     return false;
   }
@@ -1290,8 +1441,8 @@ class Dec {
     for (let i = 0; i < v1len; i++) {
       const curV1 = v1[i];
       const curV2 = v2str[i];
-      if (curV1 == "x") continue;
-      if (curV1 != curV2) return false;
+      if (curV1 === "x") continue;
+      if (curV1 !== curV2) return false;
     }
     return true;
   }
@@ -1539,9 +1690,13 @@ class Alu extends EventTarget {
       console.log(`Execute Opcode - ${routine.toString(2)} - ${instruction.toString(16)}\n\n`);
       const reg = this.REG[["r1", "r2", "r3", "r4", "r5", "r6", "r7", "r8", "r9", "r10", "r11", "r12", "lr", "cpsr"][Math.floor(Math.random() * (Math.floor(13) - Math.ceil(0) + 1)) + Math.ceil(0)]];
       reg.write(instruction);
-      console.log(reg);
       this.dispatchEvent(new CustomEvent(ON_ALU_EXECUTE, {
-        detail: fletcher16(`${pid}-${instruction}-${virtualAddress}`)
+        detail: {
+          pid,
+          instruction,
+          virtualAddress,
+          checkSum: fletcher16(`${pid}-${instruction}-${virtualAddress}`)
+        }
       }));
     } else {
       console.log(`%c undefined - ${instruction.toString(16)}\n\n`, "background: black; color: white");

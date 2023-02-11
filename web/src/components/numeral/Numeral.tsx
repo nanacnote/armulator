@@ -4,6 +4,8 @@ import { NUMERAL_TYPE_BIN, NUMERAL_TYPE_HEX } from '../../lib/helper/def';
 
 interface TProps {
   binStr: string;
+  binPad?: number;
+  hexPad?: number;
 }
 
 /**
@@ -12,7 +14,11 @@ interface TProps {
  * example 0b11111111 or 0xFF
  * It updates when user preferred numeral ie bin/hex
  */
-const Numeral: React.FC<TProps> = ({ binStr }): JSX.Element => {
+const Numeral: React.FC<TProps> = ({
+  binStr,
+  binPad = 8,
+  hexPad = 2
+}): JSX.Element => {
   const thisComponent = React.useRef<HTMLDivElement>(null);
   const origBinStr = React.useRef(binStr);
   const { type, on, off } = useSession();
@@ -25,12 +31,12 @@ const Numeral: React.FC<TProps> = ({ binStr }): JSX.Element => {
           '0x' +
             parseInt(origBinStr.current, 2)
               .toString(16)
-              .padStart(2, '0')
+              .padStart(hexPad, '0')
               .toUpperCase()
         );
         break;
       case NUMERAL_TYPE_BIN:
-        setInnerText('0b' + origBinStr.current.padStart(8, '0'));
+        setInnerText('0b' + origBinStr.current.padStart(binPad, '0'));
         break;
       default:
         break;

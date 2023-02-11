@@ -23,16 +23,15 @@ const Header: React.FC<TProps> = (): JSX.Element => {
     toggleTheme,
     getTheme,
     setInstructionBuffer,
-    getNumeralType,
     setNumeralType
   } = useSession();
 
-  const numeralCTAGroupHandler = (e: CustomEventInit) => {
+  const numeralChangeHandler = (e: CustomEventInit) => {
     const children = thisComponent.current?.getElementsByClassName(
       'btn-item-for-numeral'
     ) as HTMLCollectionOf<HTMLButtonElement>;
     for (const child of children) {
-      if (child.name == e.detail) {
+      if (child.name === e.detail) {
         child.classList.add('btn-active');
       } else {
         child.classList.remove('btn-active');
@@ -53,6 +52,10 @@ const Header: React.FC<TProps> = (): JSX.Element => {
     }
   };
 
+  const themeSwitchHandler = (e: CustomEventInit) => {
+    document.documentElement.setAttribute('data-theme', e.detail);
+  };
+
   const slowClockSpeedHandler = (e: React.MouseEvent) => {
     clk.changeSpeed(DEF.SLOW_CLOCK_SPEED);
   };
@@ -65,11 +68,9 @@ const Header: React.FC<TProps> = (): JSX.Element => {
     clk.changeSpeed(DEF.FAST_CLOCK_SPEED);
   };
 
-  const hexNumericUnitHandler = (e: React.MouseEvent<HTMLButtonElement>) => {
-    setNumeralType(e.currentTarget.name);
-  };
-
-  const binNumericUnitHandler = (e: React.MouseEvent<HTMLButtonElement>) => {
+  const numericUnitSelectionHandler = (
+    e: React.MouseEvent<HTMLButtonElement>
+  ) => {
     setNumeralType(e.currentTarget.name);
   };
 
@@ -96,18 +97,14 @@ const Header: React.FC<TProps> = (): JSX.Element => {
     }
   };
 
-  const themeSwitchHandler = (e: CustomEventInit) => {
-    document.documentElement.setAttribute('data-theme', e.detail);
-  };
-
   React.useEffect(() => {
     on(type.THEME_CHANGE, themeSwitchHandler);
-    on(type.NUMERAL_CHANGE, numeralCTAGroupHandler);
-    clk.addEventListener(DEF.ON_SPEED_CHANGE_EVENT, speedCTAGroupHandler);
+    on(type.NUMERAL_CHANGE, numeralChangeHandler);
+    clk.addEventListener(DEF.ON_SPEED_CHANGE, speedCTAGroupHandler);
     return () => {
       off(type.THEME_CHANGE, themeSwitchHandler);
-      off(type.NUMERAL_CHANGE, numeralCTAGroupHandler);
-      clk.removeEventListener(DEF.ON_SPEED_CHANGE_EVENT, speedCTAGroupHandler);
+      off(type.NUMERAL_CHANGE, numeralChangeHandler);
+      clk.removeEventListener(DEF.ON_SPEED_CHANGE, speedCTAGroupHandler);
     };
   }, []);
 
@@ -151,20 +148,16 @@ const Header: React.FC<TProps> = (): JSX.Element => {
           <div className="menu menu-horizontal mr-3 ml-6 mb-2 hidden lg:block">
             <div className="btn-group">
               <button
-                className={`btn-item-for-numeral btn btn-xs ${
-                  getNumeralType() === NUMERAL_TYPE_HEX ? 'btn-active' : ''
-                }`}
+                className="btn-item-for-numeral btn btn-xs"
                 name={NUMERAL_TYPE_HEX}
-                onClick={hexNumericUnitHandler}
+                onClick={numericUnitSelectionHandler}
               >
                 Hex
               </button>
               <button
-                className={`btn-item-for-numeral btn btn-xs ${
-                  getNumeralType() === NUMERAL_TYPE_BIN ? 'btn-active' : ''
-                }`}
+                className="btn-item-for-numeral btn btn-xs"
                 name={NUMERAL_TYPE_BIN}
-                onClick={binNumericUnitHandler}
+                onClick={numericUnitSelectionHandler}
               >
                 Bin
               </button>
@@ -281,20 +274,16 @@ const Header: React.FC<TProps> = (): JSX.Element => {
           <div className="mr-6">
             <div className="btn-group">
               <button
-                className={`btn-item-for-numeral btn btn-xs ${
-                  getNumeralType() === NUMERAL_TYPE_HEX ? 'btn-active' : ''
-                }`}
+                className="btn-item-for-numeral btn btn-xs"
                 name={NUMERAL_TYPE_HEX}
-                onClick={hexNumericUnitHandler}
+                onClick={numericUnitSelectionHandler}
               >
                 Hex
               </button>
               <button
-                className={`btn-item-for-numeral btn btn-xs ${
-                  getNumeralType() === NUMERAL_TYPE_BIN ? 'btn-active' : ''
-                }`}
+                className="btn-item-for-numeral btn btn-xs"
                 name={NUMERAL_TYPE_BIN}
-                onClick={binNumericUnitHandler}
+                onClick={numericUnitSelectionHandler}
               >
                 Bin
               </button>

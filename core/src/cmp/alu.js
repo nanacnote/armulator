@@ -40,10 +40,14 @@ export class Alu extends EventTarget {
           ]
         ];
       reg.write(instruction);
-      console.log(reg);
       this.dispatchEvent(
         new CustomEvent(ON_ALU_EXECUTE, {
-          detail: fletcher16(`${pid}-${instruction}-${virtualAddress}`),
+          detail: {
+            pid,
+            instruction,
+            virtualAddress,
+            checkSum: fletcher16(`${pid}-${instruction}-${virtualAddress}`),
+          },
         })
       );
     } else {

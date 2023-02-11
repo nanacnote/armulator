@@ -1,8 +1,10 @@
 import {
   DARK_THEME_NAME,
-  DEFAULT_SELECTED_TAB,
+  DEBUGGER_EMPTY_MSG,
   LIGHT_THEME_NAME,
-  NUMERAL_TYPE_HEX
+  MEMORY_TABLE_VIEW_TYPE,
+  NUMERAL_TYPE_HEX,
+  TAB_NAMES
 } from './def';
 
 class Session extends EventTarget {
@@ -15,6 +17,7 @@ class Session extends EventTarget {
       INSTRUCTION_CHANGE: 'instruction',
       THEME_CHANGE: 'theme',
       NUMERAL_CHANGE: 'numeral',
+      MEMORY_VIEW_CHANGE: 'memory',
       TAB_CHANGE: 'tab'
     };
 
@@ -24,6 +27,8 @@ class Session extends EventTarget {
     this.setSelectedTab = this.setSelectedTab.bind(this);
     this.getNumeralType = this.getNumeralType.bind(this);
     this.setNumeralType = this.setNumeralType.bind(this);
+    this.getMemViewType = this.getMemViewType.bind(this);
+    this.setMemViewType = this.setMemViewType.bind(this);
     this.getInstructionBuffer = this.getInstructionBuffer.bind(this);
     this.setInstructionBuffer = this.setInstructionBuffer.bind(this);
     this.getLoadedELF = this.getLoadedELF.bind(this);
@@ -36,9 +41,11 @@ class Session extends EventTarget {
 
   _init() {
     const fallback = {
+      elf: DEBUGGER_EMPTY_MSG,
       theme: LIGHT_THEME_NAME,
       numeral: NUMERAL_TYPE_HEX,
-      tab: DEFAULT_SELECTED_TAB
+      memory: MEMORY_TABLE_VIEW_TYPE,
+      tab: TAB_NAMES[0]
     };
     for (const key in fallback) {
       if (
@@ -114,10 +121,24 @@ class Session extends EventTarget {
     );
   }
 
+  getMemViewType() {
+    return this.STORE.getItem(this.TYPE.MEMORY_VIEW_CHANGE);
+  }
+  setMemViewType(value) {
+    this.STORE.setItem(this.TYPE.MEMORY_VIEW_CHANGE, value);
+    this.dispatchEvent(
+      new CustomEvent(this.TYPE.MEMORY_VIEW_CHANGE, { detail: value })
+    );
+  }
+
   getInstructionBuffer() {
     return this.STORE.getItem(this.TYPE.INSTRUCTION_CHANGE);
   }
   setInstructionBuffer(value) {
+    // reset loaded elf to empty on changes to instruction changes (i.e. when a user types new instruction or upload a file)
+    if (this.getLoadedELF()) {
+      this.setLoadedELF(DEBUGGER_EMPTY_MSG);
+    }
     this.STORE.setItem(this.TYPE.INSTRUCTION_CHANGE, value);
     this.dispatchEvent(
       new CustomEvent(this.TYPE.INSTRUCTION_CHANGE, { detail: value })

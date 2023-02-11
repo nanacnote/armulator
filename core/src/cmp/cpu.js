@@ -1,17 +1,37 @@
 import {
   C_BUS_READ_32_VAL,
-  ON_FETCH_CYCLE,
-  ON_DECODE_CYCLE,
-  ON_EXECUTE_CYCLE,
+  ON_FETCH_CYCLE_START,
+  ON_DECODE_CYCLE_START,
+  ON_EXECUTE_CYCLE_START,
   TEXT_SECTION,
   STACK_SECTION,
   ENV_SECTION,
   HEAP_SECTION,
   BSS_SECTION,
   INIT_DATA_SECTION,
+  ON_FETCH_CYCLE_END,
+  ON_DECODE_CYCLE_END,
+  ON_EXECUTE_CYCLE_END,
 } from "../var/def.js";
 
+/**
+ * A class representing the Central Processing Unit (CPU) of a computer.
+ *
+ * The Cpu class acts as a coordinator of different hardware components and
+ * handles the fetch-decode-execute cycle.
+ */
 export class Cpu {
+  /**
+   * Creates an instance of Cpu.
+   *
+   * @param {Object} parts - The hardware components required by the CPU.
+   * @param {ALU} parts.alu - The Arithmetic Logic Unit of the CPU.
+   * @param {DEC} parts.dec - The Instruction Decoder of the CPU.
+   * @param {BUS} parts.bus - The Data Bus of the CPU.
+   * @param {REG} parts.reg - The Register Bank of the CPU.
+   * @param {MMU} parts.mmu - The Memory Management Unit of the CPU.
+   * @param {CLK} parts.clk - The Clock of the CPU.
+   */
   constructor(parts) {
     this.ALU = parts.alu;
     this.DEC = parts.dec;
@@ -31,19 +51,31 @@ export class Cpu {
     this._decode = this._decode.bind(this);
     this._execute = this._execute.bind(this);
 
-    this.CLK.addEventListener(ON_FETCH_CYCLE, this._fetch);
-    this.CLK.addEventListener(ON_DECODE_CYCLE, this._decode);
-    this.CLK.addEventListener(ON_EXECUTE_CYCLE, this._execute);
+    this.CLK.addEventListener(ON_FETCH_CYCLE_START, this._fetch);
+    this.CLK.addEventListener(ON_DECODE_CYCLE_START, this._decode);
+    this.CLK.addEventListener(ON_EXECUTE_CYCLE_START, this._execute);
 
-    this.CLK.addEventListener(ON_FETCH_CYCLE, this.BUS.onTick);
-    this.CLK.addEventListener(ON_DECODE_CYCLE, this.BUS.onTick);
-    this.CLK.addEventListener(ON_EXECUTE_CYCLE, this.BUS.onTick);
+    this.CLK.addEventListener(ON_FETCH_CYCLE_START, this.BUS.onTick);
+    this.CLK.addEventListener(ON_DECODE_CYCLE_START, this.BUS.onTick);
+    this.CLK.addEventListener(ON_EXECUTE_CYCLE_START, this.BUS.onTick);
   }
 
+  /**
+   * Start the fetch-decode-execute cycle.
+   *
+   * @returns {Cpu} The Cpu instance.
+   */
   run() {
     this.CLK.start();
     return this;
   }
+
+  /**
+   * Spawn a process by initializing the Program Counter (PC) and Stack Pointer (SP).
+   *
+   * @param {number} pid - The Process ID of the process to spawn.
+   * @returns {Cpu} The Cpu instance.
+   */
 
   spawn(pid) {
     this.REG.pc.write(this.MMU.for(pid).PROC_START_ADDRESS);
@@ -52,6 +84,21 @@ export class Cpu {
     return this;
   }
 
+  /**
+   * Load an Executable and Linkable Format (ELF) file into memory.
+   *
+   * @param {Object} elf - The ELF file to be loaded.
+   * @param {number} elf.procSize - The size of the process.
+   * @param {number} elf.envSize - The size of the environment section of the ELF file.
+   * @param {Array} elf.envContent - The content of the environment section of the ELF file.
+   * @param {number} elf.textSize - The size of the text section of the ELF file.
+   * @param {Array} elf.textContent - The content of the text section of the ELF file.
+   * @param {number} elf.initDataSize - The size of the initialized data section of the ELF file.
+   * @param {Array} elf.initDataContent - The content of the initialized data section of the ELF file.
+   * @param {number} elf.bssSize - The size of the block started by symbol section of the ELF file.
+   * @param {Array} elf.bssContent - The content of the block started by symbol section of the ELF file.
+   * @returns {Object} The loaded ELF file with additional properties (pid, envUUUID, textUUUID, initDataUUID, bssUUID).
+   */
   load(elf) {
     const pid = this.MMU.processAlloc(elf.procSize);
     const extELF = { ...elf, pid };
@@ -86,6 +133,10 @@ export class Cpu {
     return extELF;
   }
 
+  /**
+   * Fetches the instruction from memory using the bus and saves the instruction address in the PC register.
+   * @private
+   */
   _fetch() {
     if (
       this.REG.pc.read() < this.MMU.for(this.CURRENT_PID).TEXT_SEC_END_ADDRESS
@@ -99,12 +150,20 @@ export class Cpu {
     }
   }
 
+  /**
+   * Decodes the instruction fetched by the bus and saves the decoded instruction and ALU routine.
+   * @private
+   */
   _decode() {
     const { instruction, aluRoutine } = this.DEC.decode(this.BUS.getData());
     this.CURRENT_INSTRUCTION = instruction;
     this.ALU_ROUTINE = aluRoutine;
   }
 
+  /**
+   * Executes the ALU routine associated with the decoded instruction.
+   * @private
+   */
   _execute() {
     this.ALU.call({
       pid: this.CURRENT_PID,

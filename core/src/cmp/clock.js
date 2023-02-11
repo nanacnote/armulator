@@ -3,14 +3,18 @@ import {
   PAUSE_CLOCK_KEY,
   START_CLOCK_KEY,
   STOP_CLOCK_KEY,
-  ON_STOP_EVENT,
-  ON_START_EVENT,
-  ON_PAUSE_EVENT,
-  ON_RESUME_EVENT,
-  ON_SPEED_CHANGE_EVENT,
-  ON_FETCH_CYCLE,
-  ON_DECODE_CYCLE,
-  ON_EXECUTE_CYCLE,
+  ON_STOP,
+  ON_START,
+  ON_PAUSE,
+  ON_RESUME,
+  ON_SPEED_CHANGE,
+  ON_FETCH_CYCLE_START,
+  ON_DECODE_CYCLE_START,
+  ON_EXECUTE_CYCLE_START,
+  ON_FETCH_CYCLE_END,
+  ON_DECODE_CYCLE_END,
+  ON_EXECUTE_CYCLE_END,
+  ON_STEP,
 } from "../var/def.js";
 
 /**
@@ -33,23 +37,32 @@ export class Clk extends EventTarget {
     this.TICKER = null;
 
     /**
-     *The number of clock cycles that have passed since the clock was started.
+     *The current cycle of the clock.
      *@type {number}
-     */
-    this.COUNTER = 0;
-
-    /**
-     * The current cycle of the clock.
-     * @type {number}
      */
     this.CYCLE = 0;
 
     /**
-     * @property {Array} CYCLE_EVENTS - A list of constants representing the different cycles in the processor.
+     * @property {Array} CYCLE_START_EVENTS - A list of constants representing the different start of cycles in the processor.
      * @constant
      * @default
      */
-    this.CYCLE_EVENTS = [ON_FETCH_CYCLE, ON_DECODE_CYCLE, ON_EXECUTE_CYCLE];
+    this.CYCLE_START_EVENTS = [
+      ON_FETCH_CYCLE_START,
+      ON_DECODE_CYCLE_START,
+      ON_EXECUTE_CYCLE_START,
+    ];
+
+    /**
+     * @property {Array} CYCLE_END_EVENTS - A list of constants representing the different end of cycles in the processor.
+     * @constant
+     * @default
+     */
+    this.CYCLE_END_EVENTS = [
+      ON_FETCH_CYCLE_END,
+      ON_DECODE_CYCLE_END,
+      ON_EXECUTE_CYCLE_END,
+    ];
 
     /**
      * The current state of the clock.
@@ -72,12 +85,12 @@ export class Clk extends EventTarget {
 
   /**
    * Starts the system clock.
-   * @fires ON_START_EVENT
+   * @fires ON_START
    */
   start() {
-    if (this.STATE != START_CLOCK_KEY) {
+    if (this.STATE !== START_CLOCK_KEY) {
       this.STATE = START_CLOCK_KEY;
-      this.dispatchEvent(new Event(ON_START_EVENT));
+      this.dispatchEvent(new Event(ON_START));
       this.TICKER = setInterval(this._trigger_observers, this.SPEED);
     }
   }
@@ -86,43 +99,65 @@ export class Clk extends EventTarget {
    * Stops the clock, resetting the counter and cycle to their default values, and sets the state to `STOP_CLOCK_KEY`.
    * If the clock is already stopped, this method does nothing.
    *
-   * @fires ON_STOP_EVENT when the clock is stopped
+   * @fires ON_STOP when the clock is stopped
    */
   stop() {
-    if (this.STATE != STOP_CLOCK_KEY) {
+    if (this.STATE !== STOP_CLOCK_KEY) {
       clearInterval(this.TICKER);
       this.CYCLE = 0;
-      this.COUNTER = 0;
+      this.CYCLE = 0;
       this.TICKER = null;
       this.STATE = STOP_CLOCK_KEY;
-      this.dispatchEvent(new Event(ON_STOP_EVENT));
+      this.dispatchEvent(new Event(ON_STOP));
     }
   }
 
   /**
    * Pauses the system clock. If the clock is already paused, this method has no effect.
    *
-   * @fires ON_PAUSE_EVENT when the clock is paused
+   * @fires ON_PAUSE when the clock is paused
    */
   pause() {
-    if (this.STATE != PAUSE_CLOCK_KEY) {
+    if (this.STATE !== PAUSE_CLOCK_KEY) {
       clearInterval(this.TICKER);
       this.TICKER = null;
       this.STATE = PAUSE_CLOCK_KEY;
-      this.dispatchEvent(new Event(ON_PAUSE_EVENT));
+      this.dispatchEvent(new Event(ON_PAUSE));
     }
   }
 
   /**
    * Resumes the clock if it is currently paused.
    *
-   * @fires ON_RESUME_EVENTwhen the clock is resumed
+   * @fires ON_RESUME when the clock is resumed
    */
   resume() {
     if (this.STATE === PAUSE_CLOCK_KEY) {
       this.STATE = START_CLOCK_KEY;
-      this.dispatchEvent(new Event(ON_RESUME_EVENT));
+      this.dispatchEvent(new Event(ON_RESUME));
       this.TICKER = setInterval(this._trigger_observers, this.SPEED);
+    }
+  }
+
+  /**
+   * Resumes the clock if it is currently paused and pause it after 3 clocks.
+   *
+   * @fires ON_RESUME when the clock is resumed
+   */
+  step() {
+    if (this.STATE === PAUSE_CLOCK_KEY) {
+      this.STATE = START_CLOCK_KEY;
+      this.dispatchEvent(new Event(ON_STEP));
+      setTimeout(() => {
+        this._trigger_observers();
+        setTimeout(() => {
+          this._trigger_observers();
+          setTimeout(() => {
+            this._trigger_observers();
+            this.pause();
+          }, this.SPEED);
+        }, this.SPEED);
+      }, this.SPEED);
     }
   }
 
@@ -130,7 +165,7 @@ export class Clk extends EventTarget {
    * Changes the speed of the clock.
    *
    * @param {number} val - The new speed of the clock, in milliseconds.
-   * @fires ON_SPEED_CHANGE_EVENT the clock speed is changed
+   * @fires ON_SPEED_CHANGE the clock speed is changed
    */
   changeSpeed(val) {
     this.SPEED = val;
@@ -139,7 +174,7 @@ export class Clk extends EventTarget {
       this.TICKER = setInterval(this._trigger_observers, this.SPEED);
     }
     this.dispatchEvent(
-      new CustomEvent(ON_SPEED_CHANGE_EVENT, { detail: this.SPEED })
+      new CustomEvent(ON_SPEED_CHANGE, { detail: this.SPEED })
     );
   }
 
@@ -149,10 +184,9 @@ export class Clk extends EventTarget {
    */
   _trigger_observers() {
     // TODO: suspend on visibility change ie user leave current browser tab
-    this.dispatchEvent(new Event(this.CYCLE_EVENTS[this.CYCLE]));
-    if (this.STATE === START_CLOCK_KEY) {
-      this.COUNTER++;
-      this.CYCLE = this.COUNTER % this.CYCLE_EVENTS.length;
-    }
+    this.dispatchEvent(new Event(this.CYCLE_START_EVENTS[this.CYCLE]));
+    this.dispatchEvent(new Event(this.CYCLE_END_EVENTS[this.CYCLE]));
+    this.CYCLE =
+      this.CYCLE < this.CYCLE_START_EVENTS.length - 1 ? this.CYCLE + 1 : 0;
   }
 }

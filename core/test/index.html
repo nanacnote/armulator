@@ -10,12 +10,12 @@
     <script type="module">
       import { cpu, clk, reg, ram } from "../src/index.js";
       clk.changeSpeed(50);
-      console.log(ram.view());
-      console.log(reg.pc.view());
-      clk.addEventListener("stop", () => {
-        console.log(reg.pc.view());
-        console.log(ram.view());
-      });
+      // console.log(ram.view());
+      // console.log(reg.pc.view());
+      // clk.addEventListener("stop", () => {
+      //   console.log(reg.pc.view());
+      //   console.log(ram.view());
+      // });
       const extELF = cpu.load({
         procSize: 96,
         envSize: 4,
@@ -42,7 +42,7 @@
         ],
       });
       cpu.spawn(extELF.pid).run();
-      console.log(extELF);
+      // console.log(extELF);
 
       // setTimeout(() => {
       //   const pid = cpu.load({

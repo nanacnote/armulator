@@ -1,7 +1,7 @@
 import {
   OK_CODE,
-  ON_RAM_READ_EVENT,
-  ON_RAM_WRITE_EVENT,
+  ON_RAM_READ,
+  ON_RAM_WRITE,
   RAM_SIZE_IN_BYTE,
 } from "../var/def.js";
 
@@ -29,11 +29,11 @@ export class Ram extends EventTarget {
    * Reads an 8-bit value from the memory buffer at the specified byte offset.
    * @param {number} [byteOffset=0] - The byte offset at which to read the value.
    * @returns {number} The 8-bit value read from the memory buffer.
-   * @fires ON_RAM_READ_EVENT
+   * @fires ON_RAM_READ
    */
   read8(byteOffset = 0) {
     const val = this.BUFFER.getUint8(byteOffset);
-    this.dispatchEvent(new Event(ON_RAM_READ_EVENT));
+    this.dispatchEvent(new Event(ON_RAM_READ));
     return val;
   }
 
@@ -41,11 +41,11 @@ export class Ram extends EventTarget {
    * Reads a 16-bit value from the memory buffer at the specified byte offset.
    * @param {number} [byteOffset=0] - The byte offset at which to read the value.
    * @returns {number} The 16-bit value read from the memory buffer.
-   * @fires ON_RAM_READ_EVENT
+   * @fires ON_RAM_READ
    */
   read16(byteOffset = 0) {
     const val = this.BUFFER.getUint16(byteOffset);
-    this.dispatchEvent(new Event(ON_RAM_READ_EVENT));
+    this.dispatchEvent(new Event(ON_RAM_READ));
     return val;
   }
 
@@ -53,11 +53,11 @@ export class Ram extends EventTarget {
    * Reads a 32-bit value from the memory buffer at the specified byte offset.
    * @param {number} [byteOffset=0] - The byte offset at which to read the value.
    * @returns {number} The 32-bit value read from the memory buffer.
-   * @fires ON_RAM_READ_EVENT
+   * @fires ON_RAM_READ
    */
   read32(byteOffset = 0) {
     const val = this.BUFFER.getUint32(byteOffset);
-    this.dispatchEvent(new Event(ON_RAM_READ_EVENT));
+    this.dispatchEvent(new Event(ON_RAM_READ));
     return val;
   }
 
@@ -66,11 +66,11 @@ export class Ram extends EventTarget {
    * @param {number} val - The 8-bit value to write to the memory buffer.
    * @param {number} [byteOffset=0] - The byte offset at which to write the value.
    * @returns {number} The OK_CODE indicating success.
-   * @fires ON_RAM_WRITE_EVENT
+   * @fires ON_RAM_WRITE
    */
   write8(val, byteOffset = 0) {
     this.BUFFER.setUint8(byteOffset, val);
-    this.dispatchEvent(new Event(ON_RAM_WRITE_EVENT));
+    this.dispatchEvent(new Event(ON_RAM_WRITE));
     return OK_CODE;
   }
 
@@ -79,11 +79,11 @@ export class Ram extends EventTarget {
    * @param {number} val - The 16-bit value to write to the memory buffer.
    * @param {number} [byteOffset=0] - The byte offset at which to write the value.
    * @returns {number} The OK_CODE indicating success.
-   * @fires ON_RAM_WRITE_EVENT
+   * @fires ON_RAM_WRITE
    */
   write16(val, byteOffset = 0) {
     this.BUFFER.setUint16(byteOffset, val);
-    this.dispatchEvent(new Event(ON_RAM_WRITE_EVENT));
+    this.dispatchEvent(new Event(ON_RAM_WRITE));
     return OK_CODE;
   }
 
@@ -92,12 +92,12 @@ export class Ram extends EventTarget {
    * @param {number} val - The 32-bit value to write to the memory buffer.
    * @param {number} [byteOffset=0] - The byte offset at which to write the value.
    * @returns {number} The OK_CODE indicating success.
-   * @fires ON_RAM_WRITE_EVENT
+   * @fires ON_RAM_WRITE
    */
 
   write32(val, byteOffset = 0) {
     this.BUFFER.setUint32(byteOffset, val);
-    this.dispatchEvent(new Event(ON_RAM_WRITE_EVENT));
+    this.dispatchEvent(new Event(ON_RAM_WRITE));
     return OK_CODE;
   }
 

@@ -247,8 +247,8 @@ export class Dec {
     for (let i = 0; i < v1len; i++) {
       const curV1 = v1[i];
       const curV2 = v2str[i];
-      if (curV1 == "x") continue;
-      if (curV1 != curV2) return true;
+      if (curV1 === "x") continue;
+      if (curV1 !== curV2) return true;
     }
     return false;
   }
@@ -262,8 +262,8 @@ export class Dec {
     for (let i = 0; i < v1len; i++) {
       const curV1 = v1[i];
       const curV2 = v2str[i];
-      if (curV1 == "x") continue;
-      if (curV1 != curV2) return false;
+      if (curV1 === "x") continue;
+      if (curV1 !== curV2) return false;
     }
     return true;
   }

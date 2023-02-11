@@ -1,7 +1,13 @@
 import * as React from 'react';
+import cn from 'classnames';
 import ace from 'ace-builds';
 import { useSession } from '../../hooks';
-import { DARK_THEME_NAME, LIGHT_THEME_NAME } from '../../lib/helper/def';
+import {
+  DARK_THEME_NAME,
+  LIGHT_THEME_NAME,
+  LOG_HEADER_MSG
+} from '../../lib/helper/def';
+import { GlobalDataContext } from '../../context/GlobalData';
 
 interface TProps {}
 
@@ -11,6 +17,7 @@ interface TProps {}
 const Editor: React.FC<TProps> = (): JSX.Element => {
   const editor = React.useRef<any>(null);
   const thisComponent = React.useRef<HTMLDivElement>(null);
+  const { store } = React.useContext(GlobalDataContext);
   const {
     on,
     off,
@@ -66,6 +73,19 @@ const Editor: React.FC<TProps> = (): JSX.Element => {
     aceHandler.insertUploadedInstruction.bind(aceHandler);
 
   React.useEffect(() => {
+    const entry = thisComponent.current?.getElementsByClassName(
+      'text-entry-for-logger'
+    ) as HTMLCollectionOf<HTMLDivElement>;
+    if (entry.length) {
+      entry[entry.length - 1].scrollIntoView({
+        behavior: 'smooth',
+        block: 'nearest',
+        inline: 'nearest'
+      });
+    }
+  }, [store.editorLogs]);
+
+  React.useEffect(() => {
     aceHandler.init();
     on(type.THEME_CHANGE, changeThemeHandler, {}, false);
     on(type.INSTRUCTION_CHANGE, insertUploadedInstructionHandler, {}, false);
@@ -77,19 +97,27 @@ const Editor: React.FC<TProps> = (): JSX.Element => {
   }, []);
 
   return (
-    <div ref={thisComponent} className="m-4">
-      <div className="grid grid-cols-7 gap-4">
-        <div className="col-span-7 md:col-span-5">
+    <div ref={thisComponent} className="p-4">
+      <div className="grid grid-cols-9 gap-4">
+        <div className="col-span-9 md:col-span-6">
           <pre id="ace-editor-container" className="h-[473px] text-base"></pre>
         </div>
-        <div className="col-span-7 md:col-span-2">
-          <div className="mockup-code overflow-auto h-[250px] md:h-[473px]">
-            <pre data-prefix=">" className="text-warning">
-              <code>installing...</code>
+        <div className="relative col-span-9 md:col-span-3 border">
+          <div
+            id="editor-view-console-logger"
+            className="mockup-code min-w-[100%] text-xs h-[250px] md:h-[473px] overflow-auto"
+          >
+            <pre className="text-warning mb-4">
+              <code>{LOG_HEADER_MSG}</code>
             </pre>
-            <pre data-prefix=">" className="text-success">
-              <code>Done!</code>
-            </pre>
+            {store.editorLogs.map((item: any, index: number) => (
+              <pre
+                key={`${index}-${item.style}`}
+                className={cn('text-entry-for-logger', item.style)}
+              >
+                <code>{item.msg}</code>
+              </pre>
+            ))}
           </div>
         </div>
       </div>
