@@ -15,8 +15,7 @@ const LandingLoader: React.FC<React.PropsWithChildren<TProps>> = ({
 
   const loadProgressHandler = () => {
     let curPercentage = 0;
-    // TODO: change to 100 :: using 10 to speed up dev process
-    const maxPercentage = 10;
+    const maxPercentage = 100;
     setLoadPercentage((prev) => {
       if (prev < maxPercentage) {
         curPercentage = prev + 1;
