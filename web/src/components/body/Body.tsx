@@ -17,8 +17,8 @@ const Body: React.FC<TProps> = (): JSX.Element => {
   const generateComponent = () => {
     const Component: any = {
       [TAB_NAMES[0]]: Editor,
-      [TAB_NAMES[1]]: Memory,
-      [TAB_NAMES[2]]: Debugger,
+      [TAB_NAMES[1]]: Debugger,
+      [TAB_NAMES[2]]: Memory,
       [TAB_NAMES[3]]: Schematic
     };
     return React.createElement(Component[selectedTab!]);
