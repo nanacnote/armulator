@@ -13,6 +13,7 @@ const Tab: React.FC<TProps> = (): JSX.Element => {
   const { type, on, off, setSelectedTab } = useSession();
 
   const tabChangeHandler = (e: CustomEventInit) => {
+    location.hash = e.detail.toLowerCase();
     const children = thisComponent.current?.getElementsByClassName(
       'anchor-item-for-tab'
     ) as HTMLCollectionOf<HTMLButtonElement>;
