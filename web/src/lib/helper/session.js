@@ -10,7 +10,7 @@ import {
 class Session extends EventTarget {
   constructor() {
     super();
-    this.STORE = sessionStorage;
+    this.SESSION = sessionStorage;
 
     this.TYPE = {
       ELF_LOAD: 'elf',
@@ -50,19 +50,19 @@ class Session extends EventTarget {
     for (const key in fallback) {
       if (
         Object.hasOwnProperty.call(fallback, key) &&
-        !this.STORE.getItem(key)
+        !this.SESSION.getItem(key)
       ) {
-        this.STORE.setItem(key, fallback[key]);
+        this.SESSION.setItem(key, fallback[key]);
       }
     }
   }
 
   addEventListener(type, callback, options, withInitialCall = true) {
     if (withInitialCall) {
-      for (const key in this.STORE) {
-        if (Object.hasOwnProperty.call(this.STORE, key)) {
+      for (const key in this.SESSION) {
+        if (Object.hasOwnProperty.call(this.SESSION, key)) {
           if (key === type)
-            callback(new CustomEvent(key, { detail: this.STORE[key] }));
+            callback(new CustomEvent(key, { detail: this.SESSION[key] }));
         }
       }
     }
@@ -70,12 +70,12 @@ class Session extends EventTarget {
   }
 
   getTheme() {
-    return this.STORE.getItem(this.TYPE.THEME_CHANGE);
+    return this.SESSION.getItem(this.TYPE.THEME_CHANGE);
   }
   toggleTheme() {
     switch (this.getTheme()) {
       case LIGHT_THEME_NAME:
-        this.STORE.setItem(this.TYPE.THEME_CHANGE, DARK_THEME_NAME);
+        this.SESSION.setItem(this.TYPE.THEME_CHANGE, DARK_THEME_NAME);
         this.dispatchEvent(
           new CustomEvent(this.TYPE.THEME_CHANGE, {
             detail: DARK_THEME_NAME
@@ -83,7 +83,7 @@ class Session extends EventTarget {
         );
         break;
       case DARK_THEME_NAME:
-        this.STORE.setItem(this.TYPE.THEME_CHANGE, LIGHT_THEME_NAME);
+        this.SESSION.setItem(this.TYPE.THEME_CHANGE, LIGHT_THEME_NAME);
         this.dispatchEvent(
           new CustomEvent(this.TYPE.THEME_CHANGE, {
             detail: LIGHT_THEME_NAME
@@ -91,7 +91,7 @@ class Session extends EventTarget {
         );
         break;
       default:
-        this.STORE.setItem(this.TYPE.THEME_CHANGE, LIGHT_THEME_NAME);
+        this.SESSION.setItem(this.TYPE.THEME_CHANGE, LIGHT_THEME_NAME);
         this.dispatchEvent(
           new CustomEvent(this.TYPE.THEME_CHANGE, {
             detail: LIGHT_THEME_NAME
@@ -102,54 +102,54 @@ class Session extends EventTarget {
   }
 
   getSelectedTab() {
-    return this.STORE.getItem(this.TYPE.TAB_CHANGE);
+    return this.SESSION.getItem(this.TYPE.TAB_CHANGE);
   }
   setSelectedTab(value) {
-    this.STORE.setItem(this.TYPE.TAB_CHANGE, value);
+    this.SESSION.setItem(this.TYPE.TAB_CHANGE, value);
     this.dispatchEvent(
       new CustomEvent(this.TYPE.TAB_CHANGE, { detail: value })
     );
   }
 
   getNumeralType() {
-    return this.STORE.getItem(this.TYPE.NUMERAL_CHANGE);
+    return this.SESSION.getItem(this.TYPE.NUMERAL_CHANGE);
   }
   setNumeralType(value) {
-    this.STORE.setItem(this.TYPE.NUMERAL_CHANGE, value);
+    this.SESSION.setItem(this.TYPE.NUMERAL_CHANGE, value);
     this.dispatchEvent(
       new CustomEvent(this.TYPE.NUMERAL_CHANGE, { detail: value })
     );
   }
 
   getMemViewType() {
-    return this.STORE.getItem(this.TYPE.MEMORY_VIEW_CHANGE);
+    return this.SESSION.getItem(this.TYPE.MEMORY_VIEW_CHANGE);
   }
   setMemViewType(value) {
-    this.STORE.setItem(this.TYPE.MEMORY_VIEW_CHANGE, value);
+    this.SESSION.setItem(this.TYPE.MEMORY_VIEW_CHANGE, value);
     this.dispatchEvent(
       new CustomEvent(this.TYPE.MEMORY_VIEW_CHANGE, { detail: value })
     );
   }
 
   getInstructionBuffer() {
-    return this.STORE.getItem(this.TYPE.INSTRUCTION_CHANGE);
+    return this.SESSION.getItem(this.TYPE.INSTRUCTION_CHANGE);
   }
   setInstructionBuffer(value) {
     // reset loaded elf to empty on changes to instruction changes (i.e. when a user types new instruction or upload a file)
     if (this.getLoadedELF()) {
       this.setLoadedELF(DEBUGGER_EMPTY_MSG);
     }
-    this.STORE.setItem(this.TYPE.INSTRUCTION_CHANGE, value);
+    this.SESSION.setItem(this.TYPE.INSTRUCTION_CHANGE, value);
     this.dispatchEvent(
       new CustomEvent(this.TYPE.INSTRUCTION_CHANGE, { detail: value })
     );
   }
 
   getLoadedELF() {
-    return this.STORE.getItem(this.TYPE.ELF_LOAD);
+    return this.SESSION.getItem(this.TYPE.ELF_LOAD);
   }
   setLoadedELF(value) {
-    this.STORE.setItem(this.TYPE.ELF_LOAD, value);
+    this.SESSION.setItem(this.TYPE.ELF_LOAD, value);
     this.dispatchEvent(new CustomEvent(this.TYPE.ELF_LOAD, { detail: value }));
   }
 }

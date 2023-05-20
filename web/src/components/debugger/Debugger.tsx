@@ -43,12 +43,29 @@ const Debugger: React.FC<TProps> = (): JSX.Element => {
     setLoadedELF(JSON.stringify({ ...parsedData, instructionPrefix }));
   };
 
-  const removeStepCTA = (e: Event) => {
+  const resetStyles = (e: Event) => {
     (
       thisComponent.current?.getElementsByClassName(
         'step-cta-for-breakpoint'
       )[0] as HTMLDivElement
     ).classList.add('hidden');
+    [
+      ...(thisComponent.current?.getElementsByClassName(
+        'code-entry-for-snippet'
+      ) || [])
+    ].forEach((element: Element) => {
+      element.classList.remove(
+        'highlighted-entry-for-snippet',
+        'bg-warning',
+        'text-warning-content'
+      );
+    });
+    setRegisters((prev: any) =>
+      prev.map((reg: any) => {
+        reg.hasChanged = false;
+        return reg;
+      })
+    );
   };
 
   const triggerBreakpoint = (e: Event) => {
@@ -166,17 +183,16 @@ const Debugger: React.FC<TProps> = (): JSX.Element => {
       `.numeral-entry-for-register[data-name="${name}"]`
     )?.children!;
     const [editIcon, cancelIcon] = document.querySelectorAll(
-      `.edit-btn-for-register svg`
+      `.edit-btn-for-register[name="${name}"] svg`
     );
     const input = form.children[0] as HTMLInputElement;
     input.classList.add('hidden');
     span.classList.remove('hidden');
     cancelIcon.classList.add('hidden');
     editIcon.classList.remove('hidden');
-    if (input.value) {
+    if (input.value && parseInt(input.value, 10) >= 0)
       registers.filter((reg: any) => reg.NAME === name)[0].write(input.value);
-      input.value = '';
-    }
+    input.value = '';
   };
 
   const editRegisterHandler = (e: React.MouseEvent<HTMLButtonElement>) => {
@@ -185,7 +201,7 @@ const Debugger: React.FC<TProps> = (): JSX.Element => {
       `.numeral-entry-for-register[data-name="${btn.name}"]`
     )?.children!;
     const [editIcon, cancelIcon] = document.querySelectorAll(
-      `.edit-btn-for-register svg`
+      `.edit-btn-for-register[name="${btn.name}"] svg`
     );
     const input = form.children[0] as HTMLInputElement;
     if (btn.dataset.isEditing) {
@@ -200,6 +216,7 @@ const Debugger: React.FC<TProps> = (): JSX.Element => {
       editIcon.classList.add('hidden');
       cancelIcon.classList.remove('hidden');
       btn.dataset.isEditing = 'true';
+      input.focus();
     }
   };
 
@@ -214,15 +231,15 @@ const Debugger: React.FC<TProps> = (): JSX.Element => {
     reg.addEventListener(DEF.ON_REG_WRITE, highlightRegister);
     alu.addEventListener(DEF.ON_ALU_EXECUTE, highlightInstruction);
     clk.addEventListener(DEF.ON_EXECUTE_CYCLE_END, triggerBreakpoint);
-    clk.addEventListener(DEF.ON_START, removeStepCTA);
-    clk.addEventListener(DEF.ON_STOP, removeStepCTA);
+    clk.addEventListener(DEF.ON_START, resetStyles);
+    clk.addEventListener(DEF.ON_STOP, resetStyles);
     return () => {
       off(type.ELF_LOAD, hydrateInstruction);
       reg.removeEventListener(DEF.ON_REG_WRITE, highlightRegister);
       alu.removeEventListener(DEF.ON_ALU_EXECUTE, highlightInstruction);
       clk.removeEventListener(DEF.ON_EXECUTE_CYCLE_END, triggerBreakpoint);
-      clk.removeEventListener(DEF.ON_START, removeStepCTA);
-      clk.removeEventListener(DEF.ON_STOP, removeStepCTA);
+      clk.removeEventListener(DEF.ON_START, resetStyles);
+      clk.removeEventListener(DEF.ON_STOP, resetStyles);
     };
   }, []);
 
@@ -338,7 +355,8 @@ const Debugger: React.FC<TProps> = (): JSX.Element => {
                       <input
                         className="input input-bordered input-xs w-full max-w-xs hidden"
                         type="number"
-                        placeholder="Use Decimal [uint32]"
+                        min="0"
+                        placeholder="uint32"
                         data-name={reg.NAME}
                         onBlur={registerValueChangeHandler}
                       />

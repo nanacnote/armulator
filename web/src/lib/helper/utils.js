@@ -51,4 +51,8 @@ function hexDump(buffer, blockSize = 16) {
   return lines.join('\n');
 }
 
-export { parseInstructionForKstool, hexDump };
+function sleep(ms) {
+  return new Promise((resolve) => setTimeout(resolve, ms));
+}
+
+export { parseInstructionForKstool, hexDump, sleep };

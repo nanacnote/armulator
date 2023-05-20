@@ -11,7 +11,7 @@ export class Alu extends EventTarget {
   }
 
   call({ pid, routine, instruction, virtualAddress }) {
-    if (routine) {
+    if (routine && instruction) {
       console.log(
         `Execute Opcode - ${routine.toString(2)} - ${instruction.toString(
           16

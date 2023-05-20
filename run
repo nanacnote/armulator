@@ -36,5 +36,7 @@ fi
 
 if [[ "$__ARG" == "$__UPDATE_CORE_LIB" ]]; then
     shift
-    npm --prefix core run local:build
+    npm --prefix core run build \
+    && mkdir -p ./web/src/lib/armulator_core \
+    && cp -a ./core/dist/*modern* ./web/src/lib/armulator_core
 fi

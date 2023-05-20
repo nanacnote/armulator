@@ -29,7 +29,7 @@ export function useKompilerAPI() {
         resolve(oldElf);
       });
     } else {
-      return fetch('http://localhost:9001/api/kstool', {
+      return fetch('/api/kstool', {
         cache: 'no-cache',
         method: 'POST',
         body: JSON.stringify({
