@@ -190,10 +190,9 @@ const Debugger: React.FC<TProps> = (): JSX.Element => {
     span.classList.remove('hidden');
     cancelIcon.classList.add('hidden');
     editIcon.classList.remove('hidden');
-    if (input.value) {
+    if (input.value && parseInt(input.value, 10) >= 0)
       registers.filter((reg: any) => reg.NAME === name)[0].write(input.value);
-      input.value = '';
-    }
+    input.value = '';
   };
 
   const editRegisterHandler = (e: React.MouseEvent<HTMLButtonElement>) => {
@@ -356,7 +355,8 @@ const Debugger: React.FC<TProps> = (): JSX.Element => {
                       <input
                         className="input input-bordered input-xs w-full max-w-xs hidden"
                         type="number"
-                        placeholder="Use Decimal [uint32]"
+                        min="0"
+                        placeholder="uint32"
                         data-name={reg.NAME}
                         onBlur={registerValueChangeHandler}
                       />
