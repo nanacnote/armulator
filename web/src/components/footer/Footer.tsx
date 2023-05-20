@@ -3,7 +3,8 @@ import cn from 'classnames';
 import pkg from '../../../package.json';
 import { GlobalDataContext } from '../../context/GlobalData';
 import { useArmulatorCore, useSession, useKompilerAPI } from '../../hooks';
-import { EDITOR_LOGGER_PAYLOADS } from '../../lib/helper/def';
+import { EDITOR_LOGGER_PAYLOADS, TAB_NAMES } from '../../lib/helper/def';
+import { sleep } from '../../lib/helper/utils';
 
 interface TProps {}
 
@@ -14,7 +15,7 @@ interface TProps {}
 const Footer: React.FC<TProps> = (): JSX.Element => {
   const thisComponent = React.useRef<HTMLDivElement>(null);
   const [isLoading, setIsLoading] = React.useState(false);
-  const { getInstructionBuffer, setLoadedELF } = useSession();
+  const { getInstructionBuffer, setLoadedELF, setSelectedTab } = useSession();
   const { addEditorLog } = React.useContext(GlobalDataContext);
   const { kstoolBE } = useKompilerAPI();
   const { DEF, cpu, clk } = useArmulatorCore();
@@ -41,17 +42,23 @@ const Footer: React.FC<TProps> = (): JSX.Element => {
         .then((elfStruct) => {
           addEditorLog(EDITOR_LOGGER_PAYLOADS[3], EDITOR_LOGGER_PAYLOADS[4]);
           const extELFStruct: any = cpu.load(elfStruct);
+          setLoadedELF(JSON.stringify(extELFStruct));
           addEditorLog({
             ...EDITOR_LOGGER_PAYLOADS[5],
             msg: EDITOR_LOGGER_PAYLOADS[5].msg.replace('[]', extELFStruct.pid)
           });
-          cpu.spawn(extELFStruct.pid).run();
-          addEditorLog({
-            ...EDITOR_LOGGER_PAYLOADS[6],
-            msg: EDITOR_LOGGER_PAYLOADS[6].msg.replace('[]', extELFStruct.pid)
-          });
-          setLoadedELF(JSON.stringify(extELFStruct));
+          return extELFStruct;
         })
+        .then((extELFStruct) =>
+          sleep(2000).then(() => {
+            setSelectedTab(TAB_NAMES[1]);
+            cpu.spawn(extELFStruct.pid).run();
+            addEditorLog({
+              ...EDITOR_LOGGER_PAYLOADS[6],
+              msg: EDITOR_LOGGER_PAYLOADS[6].msg.replace('[]', extELFStruct.pid)
+            });
+          })
+        )
         .catch(() => addEditorLog(EDITOR_LOGGER_PAYLOADS[7]))
         .finally(() => setIsLoading(false));
     } else {
