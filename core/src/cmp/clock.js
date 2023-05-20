@@ -118,7 +118,7 @@ export class Clk extends EventTarget {
    * @fires ON_PAUSE when the clock is paused
    */
   pause() {
-    if (this.STATE !== PAUSE_CLOCK_KEY) {
+    if (this.STATE === START_CLOCK_KEY) {
       clearInterval(this.TICKER);
       this.TICKER = null;
       this.STATE = PAUSE_CLOCK_KEY;
