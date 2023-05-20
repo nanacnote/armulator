@@ -214,10 +214,10 @@ const Memory: React.FC<TProps> = (): JSX.Element => {
                 <div className="badge badge-neutral badge-sm">
                   {`${HEX_DUMP_SIZE_BYTE} Bytes`}
                 </div>
-                <span>or</span>
+                {/* <span>or</span>
                 <div className="badge badge-neutral badge-sm">
                   {`${(HEX_DUMP_SIZE_BYTE / 1024 / 1000).toPrecision(2)}MB`}
-                </div>
+                </div> */}
               </div>
             </div>
           </div>
