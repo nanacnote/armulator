@@ -96,18 +96,18 @@ export class Dec {
         [["_ne", 0b1111],         ["_eqC", "00x"],        ["_any"],           ["_lup", "_T1"]],                             // data-processing and miscellaneous instructions
         [["_ne", 0b1111],         ["_eq", 0b010],         ["_any"],           ["_lup", "_T2"]],                             // Load/Store Word, Unsigned Byte (immediate, literal)
         [["_ne", 0b1111],         ["_eq", 0b011],         ["_eq", 0b0],       ["_lup", "_T3"]],                             // Load/Store Word, Unsigned Byte (register)
-        [["_ne", 0b1111],         ["_eq", 0b011],         ["_eq", 0b1],       ["_ret", undefined]],   // Media instructions
+        [["_ne", 0b1111],         ["_eq", 0b011],         ["_eq", 0b1],       ["_ret", undefined]],                         // Media instructions
         [["_any"],                ["_eqC", "10x"],        ["_any"],           ["_lup", "_T5"]],                             // Branch, branch with link, and block data transfer
-        [["_any"],                ["_eqC", "11x"],        ["_any"],           ["_ret", undefined]],   // System register access, Advanced SIMD, floating-point, and Supervisor call
-        [["_eq", 0b1111],         ["_eqC", "0xx"],        ["_any"],           ["_ret", undefined]],   // Unconditional instructions
+        [["_any"],                ["_eqC", "11x"],        ["_any"],           ["_ret", undefined]],                         // System register access, Advanced SIMD, floating-point, and Supervisor call
+        [["_eq", 0b1111],         ["_eqC", "0xx"],        ["_any"],           ["_ret", undefined]],                         // Unconditional instructions
     ];
     // prettier-ignore
     this.T1 = [
-        [["_eq", 0b0],        ["_any"],               ["_eq", 0b1],       ["_ne", 0b00],      ["_eq", 0b1],       ["_ret", undefined]],   // Extra load/store 
+        [["_eq", 0b0],        ["_any"],               ["_eq", 0b1],       ["_ne", 0b00],      ["_eq", 0b1],       ["_ret", undefined]],                         // Extra load/store 
         [["_eq", 0b0],        ["_eqC", "0xxxx"],      ["_eq", 0b1],       ["_eq", 0b00],      ["_eq", 0b1],       ["_lup", "_T12"]],                            // Multiply and Accumulate 
-        [["_eq", 0b0],        ["_eqC", "1xxxx"],      ["_eq", 0b1],       ["_eq", 0b00],      ["_eq", 0b1],       ["_ret", undefined]],   // Synchronization primitives and Load-Acquire/Store-Release 
+        [["_eq", 0b0],        ["_eqC", "1xxxx"],      ["_eq", 0b1],       ["_eq", 0b00],      ["_eq", 0b1],       ["_ret", undefined]],                         // Synchronization primitives and Load-Acquire/Store-Release 
         [["_eq", 0b0],        ["_eqC", "10xx0"],      ["_eq", 0b0],       ["_any"],           ["_any"],           ["_lup", "_T14"]],                            // Miscellaneous 
-        [["_eq", 0b0],        ["_eqC", "10xx0"],      ["_eq", 0b1],       ["_any"],           ["_eq", 0b0],       ["_ret", undefined]],   // Halfword Multiply and Accumulate  
+        [["_eq", 0b0],        ["_eqC", "10xx0"],      ["_eq", 0b1],       ["_any"],           ["_eq", 0b0],       ["_ret", undefined]],                         // Halfword Multiply and Accumulate  
         [["_eq", 0b0],        ["_neC", "10xx0"],      ["_any"],           ["_any"],           ["_eq", 0b0],       ["_lup", "_T16"]],                            // Data-processing register (immediate shift) 
         [["_eq", 0b0],        ["_neC", "10xx0"],      ["_eq", 0b0],       ["_any"],           ["_eq", 0b1],       ["_lup", "_T16"]],                            // Data-processing register (register shift) 
         [["_eq", 0b1],        ["_any"],               ["_any"],           ["_any"],           ["_any"],           ["_lup", "_T18"]],                            // Data-processing immediate  
@@ -127,7 +127,7 @@ export class Dec {
     this.T18 = [
         [["_eqC", "0x"],        ["_any"],           ["_lup", "_T181"]],                             // Integer Data Processing (two register and immediate)
         [["_eq", 0b10],         ["_eq", 0b00],      ["_lup", "_T182"]],                             // Move Halfword (immediate) 
-        [["_eq", 0b10],         ["_eq", 0b10],      ["_ret", undefined]],     // Move Special Register and Hints (immediate) 
+        [["_eq", 0b10],         ["_eq", 0b10],      ["_ret", undefined]],                           // Move Special Register and Hints (immediate) 
         [["_eq", 0b10],         ["_eqC", "x1"],     ["_lup", "_T184"]],                             // Integer Test and Compare (one register and immediate) 
         [["_eq", 0b11],         ["_any"],           ["_lup", "_T185"]],                             // Logical Arithmetic (two register and immediate)
     ]
@@ -198,9 +198,9 @@ export class Dec {
     ];
     // prettier-ignore
     this.T5 = [
-        [["_eq", 0b1111],       ["_eq", 0b0],       ["_ret", undefined]],        // Exception Save/Restore
-        [["_ne", 0b1111],       ["_eq", 0b0],       ["_ret", undefined]],        // Load/Store Multiple
-        [["any"],               ["_eq", 0b1],       ["_lup", "T53"]],                                  // Branch (immediate)
+        [["_eq", 0b1111],       ["_eq", 0b0],       ["_ret", undefined]],                 // Exception Save/Restore
+        [["_ne", 0b1111],       ["_eq", 0b0],       ["_ret", undefined]],                 // Load/Store Multiple
+        [["any"],               ["_eq", 0b1],       ["_lup", "T53"]],                     // Branch (immediate)
     ]
     // prettier-ignore
     this.T53 = [
