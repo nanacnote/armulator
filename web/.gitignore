@@ -3,4 +3,4 @@
 
 # packages
 node_modules
-web/src/lib/armulator_core
+src/lib/armulator_core
