@@ -241,14 +241,14 @@ const Header: React.FC<TProps> = (): JSX.Element => {
           </ul>
         </div>
       </div>
-      <div className="hidden lg:hidden bg-base-300 shadow-inner dropdown-item-for-menu">
+      <div className="hidden lg:hidden bg-base-200 dropdown-item-for-menu">
         <div className="flex flex-row-reverse pb-4 pt-2">
           <div className="mr-6">
             <div className="btn-group">
               <button
                 className="btn btn-xs btn-item-for-speed"
                 name="slow"
-                data-detail={1000}
+                data-detail={DEF.SLOW_CLOCK_SPEED}
                 onClick={slowClockSpeedHandler}
               >
                 Slow
@@ -256,7 +256,7 @@ const Header: React.FC<TProps> = (): JSX.Element => {
               <button
                 className="btn btn-xs btn-item-for-speed btn-active"
                 name="normal"
-                data-detail={500}
+                data-detail={DEF.NORMAL_CLOCK_SPEED}
                 onClick={normalClockSpeedHandler}
               >
                 Normal
@@ -264,7 +264,7 @@ const Header: React.FC<TProps> = (): JSX.Element => {
               <button
                 className="btn btn-xs btn-item-for-speed"
                 name="fast"
-                data-detail={200}
+                data-detail={DEF.FAST_CLOCK_SPEED}
                 onClick={fastClockSpeedHandler}
               >
                 Fast
