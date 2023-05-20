@@ -28,7 +28,6 @@
     "build": "microbundle",
     "dev": "microbundle watch",
     "dev:debug": "microbundle watch --no-compress",
-    "local:build": "microbundle --no-compress && cp -a ./dist/*modern* ../web/src/lib/armulator_core",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "devDependencies": {
