@@ -13,6 +13,7 @@ export const MEMORY_TABLE_VIEW_TYPE = 'table-view';
 export const MEMORY_HEX_DUMP_TYPE = 'hex-dump';
 
 // order is import
+// web/src/components/footer/Footer.tsx is dependent on these names
 export const TAB_NAMES = ['Editor', 'Debugger', 'Memory', 'Schematic'];
 
 export const DEBUGGER_EMPTY_MSG =
