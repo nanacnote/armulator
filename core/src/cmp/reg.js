@@ -7,6 +7,10 @@ import {
 import { Buffer32Bit } from "./buf.js";
 
 /**
+ * @module Core
+ */
+
+/**
  * A class representing a set of registers in a processor.
  * @extends EventTarget
  */

@@ -12,6 +12,10 @@ import {
 } from "../var/def.js";
 
 /**
+ * @module Core
+ */
+
+/**
  * A class representing the Central Processing Unit (CPU) of a computer.
  *
  * The Cpu class acts as a coordinator of different hardware components and

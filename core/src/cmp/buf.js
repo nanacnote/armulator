@@ -6,6 +6,10 @@ import {
 } from "../var/def.js";
 
 /**
+ * @module Core
+ */
+
+/**
  * A class representing a 32-bit buffer that can be read from and written to.
  * @extends EventTarget
  */

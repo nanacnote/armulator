@@ -18,6 +18,10 @@ import {
 } from "../var/def.js";
 
 /**
+ * @module Core
+ */
+
+/**
  * Represents a system clock that can be started, stopped, paused, and resumed, and can have its speed changed.
  * It also has observers that can be registered to be notified of different clock cycles.
  * @extends EventTarget

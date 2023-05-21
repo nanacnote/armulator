@@ -7,7 +7,9 @@ import {
   TEXT_SECTION,
 } from "../var/def.js";
 
-// NOTE: start and end byte are inclusive
+/**
+ * @module Core
+ */
 
 /**
  * Represents a process.
@@ -15,6 +17,7 @@ import {
 export class Process {
   /**
    * Creates an instance of the Process class.
+   * start and end byte are inclusive
    * @param {number} pid - The process ID.
    * @param {number} startAddr - The start address of the process.
    * @param {number} endAddr - The end address of the process.

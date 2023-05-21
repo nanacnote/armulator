@@ -3,6 +3,10 @@ import { RAM_DEV_KEY } from "../var/def.js";
 import { fletcher16 } from "../lib/checksum.js";
 
 /**
+ * @module Core
+ */
+
+/**
  * Represents a virtual memory management unit (MMU).
  */
 export class Mmu {
