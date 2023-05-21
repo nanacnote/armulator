@@ -28,9 +28,11 @@
     "build": "microbundle",
     "dev": "microbundle watch",
     "dev:debug": "microbundle watch --no-compress",
+    "gen:docs": "jsdoc2md ./src/cmp/*.js > API.md",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "devDependencies": {
+    "jsdoc-to-markdown": "^8.0.0",
     "microbundle": "^0.15.1"
   },
   "email": "adjeibohyen@hotmail.co.uk"
