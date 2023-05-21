@@ -9,17 +9,45 @@ import {
 
 // NOTE: start and end byte are inclusive
 
+/**
+ * Represents a process.
+ */
 export class Process {
+  /**
+   * Creates an instance of the Process class.
+   * @param {number} pid - The process ID.
+   * @param {number} startAddr - The start address of the process.
+   * @param {number} endAddr - The end address of the process.
+   */
   constructor(pid, startAddr, endAddr) {
+    /**
+     * The process ID.
+     * @type {number}
+     */
     this.PID = pid;
 
+    /**
+     * The start address of the process.
+     * @type {number}
+     */
     this.PROC_START_ADDRESS = startAddr;
+
+    /**
+     * The end address of the process.
+     * @type {number}
+     */
     this.PROC_END_ADDRESS = endAddr;
 
     // TODO: implement allocation of stack and heap size and manage their growth
     // stack grows down heap grows up
   }
 
+  /**
+   * Sets the specified section and returns the start address.
+   * @param {string} section - The section to set. Must be one of the section constants (BSS_SECTION, ENV_SECTION, HEAP_SECTION, INIT_DATA_SECTION, STACK_SECTION, TEXT_SECTION).
+   * @param {number} size - The size of the section.
+   * @returns {number} - The start address of the section.
+   */
   set(section, size) {
     switch (section) {
       case ENV_SECTION:

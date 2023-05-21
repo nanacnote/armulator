@@ -9,9 +9,6 @@ import {
   HEAP_SECTION,
   BSS_SECTION,
   INIT_DATA_SECTION,
-  ON_FETCH_CYCLE_END,
-  ON_DECODE_CYCLE_END,
-  ON_EXECUTE_CYCLE_END,
 } from "../var/def.js";
 
 /**
@@ -76,7 +73,6 @@ export class Cpu {
    * @param {number} pid - The Process ID of the process to spawn.
    * @returns {Cpu} The Cpu instance.
    */
-
   spawn(pid) {
     this.REG.pc.write(this.MMU.for(pid).PROC_START_ADDRESS);
     this.REG.sp.write(this.MMU.for(pid).STACK_SEC_START_ADDRESS);
