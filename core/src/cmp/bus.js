@@ -11,6 +11,10 @@ import {
 import { Buffer32Bit } from "./buf.js";
 
 /**
+ * @module Core
+ */
+
+/**
  * Represents a bus system that connects devices and allows them to communicate with each other.
  * It has three buffers for the address, data, and control signals, and can read and write data from and to devices.
  */

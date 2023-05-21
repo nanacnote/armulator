@@ -1,15 +1,38 @@
 import { fletcher16 } from "../lib/checksum.js";
 import { ON_ALU_EXECUTE } from "../var/def.js";
 
+/**
+ * @module Core
+ */
+
+/**
+ * Represents an arithmetic logic unit (ALU).
+ * @extends {EventTarget}
+ */
 export class Alu extends EventTarget {
+  /**
+   * Creates an instance of the Alu class.
+   */
   constructor() {
     super();
   }
 
+  /**
+   * Connects the ALU to a register.
+   * @param {object} reg - The register object.
+   */
   conn2reg(reg) {
     this.REG = reg;
   }
 
+  /**
+   * Calls the ALU to execute an opcode.
+   * @param {object} options - The options for the call.
+   * @param {number} options.pid - The process ID.
+   * @param {number} options.routine - The routine.
+   * @param {number} options.instruction - The instruction.
+   * @param {number} options.virtualAddress - The virtual address.
+   */
   call({ pid, routine, instruction, virtualAddress }) {
     if (routine && instruction) {
       console.log(

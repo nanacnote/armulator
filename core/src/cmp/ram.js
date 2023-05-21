@@ -6,6 +6,10 @@ import {
 } from "../var/def.js";
 
 /**
+ * @module Core
+ */
+
+/**
  * A class representing a memory buffer that can be read and written to.
  * @extends EventTarget
  */
