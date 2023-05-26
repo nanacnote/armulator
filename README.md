@@ -1,7 +1,33 @@
-# ARMulator
+## ARMulator
 
-This project aims to produce a web-based application that allows users to input a subset of ARM1 assembly instructions and visually execute and understand how the instructions are processed within the CPU registers and RAM . The motivation for this project is to provide novice learners with a better understanding of how machine code is executed at the hardware level and how Assembly language works. Assembly language is a low-level programming language that is human-readable and has a strong correspondence to machine code instructions. Understanding Assembly language can help programmers write highly optimized and efficient code in high-level languages.
+A web-based application that allows users to input a subset of ARM assembly instructions and visually execute and understand how the instructions are processed within the CPU registers and RAM. The motivation for this project is to provide novice learners with a better understanding of how machine code is executed at the hardware level and how Assembly language works.
 
-To achieve this goal, the project will face several technical challenges, including implementing logic to parse user input, an interpreter engine to execute and visualize the instructions, and a CPU clock simulator with variable speeds. To address these challenges, the project will require extensive research and planning before commencement. The resources for this project will include the ARM Architecture Reference Manual, which provides detailed information on the instructions needed for the project, and the ECMAScript language specification, which will be used as a guide for programming in JavaScript.
+### Hosted Demo
 
-The technology stack for this project includes JavaScript for the programming language, React for the frontend framework, and Jest for component testing. The project will be designed as a stateless, client-side application to address security concerns, and the code will be bundled with Webpack and distributed via an Nginx server or GitHub pages. The project will be compared to similar applications that provide visual learning aids for Assembly language, and a plan for development and testing will be outlined. Overall, this project aims to provide a valuable learning aid for understanding Assembly language and how it is executed at the hardware level.
+[Here](http://armulator.aal.hiramlabs.com/)
+
+### Requirements
+
+Node 16
+
+Docker 4.2.0
+
+### Developer Setup
+
+```bash
+git clone https://github.com/nanacnote/armulator.git    # clone the application repository
+cd armulator                                            # check out the application directory
+chmod +x ./run                                          # make the run script executable (unix like systems)
+./run init                                              # install dependencies in both core and web directories
+```
+
+### Running Locally
+
+```bash
+git clone https://github.com/nanacnote/armulator.git    # clone the application repository
+cd armulator                                            # check out the application directory
+chmod +x ./run                                          # make the run script executable (unix like systems)
+./run start:docker                                      # Start a docker container
+```
+
+After executing the _Running Locally_ commands, navigate to `localhost:9001` in your browser
