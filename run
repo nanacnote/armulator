@@ -2,6 +2,7 @@
 
 __ARG=$1
 
+__INIT="init"
 __START_LOCAL_DOCKER="start:docker"
 __STOP_LOCAL_DOCKER="stop:docker"
 __START_REACT="start:react"
@@ -9,6 +10,15 @@ __UPDATE_CORE_LIB="update:core"
 
 __CURRENT_UID=$(id -u):$(id -g)
 export __CURRENT_UID
+
+if [[ "$__ARG" == "$__INIT" ]]; then
+    shift
+    cd core \
+    && npm i \
+    && cd ../web \
+    && npm i \
+    && cd ..
+fi
 
 if [[ "$__ARG" == "$__START_LOCAL_DOCKER" ]]; then
     shift
