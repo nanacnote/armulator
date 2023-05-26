@@ -4,7 +4,7 @@ A web-based application that allows users to input a subset of ARM assembly inst
 
 ### Hosted Demo
 
-[Here](http://armulator.aal.hiramlabs.com/)
+<!-- [Here](http://armulator.aal.hiramlabs.com/) -->
 
 ### Requirements
 
