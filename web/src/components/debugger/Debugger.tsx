@@ -25,7 +25,7 @@ const Debugger: React.FC<TProps> = (): JSX.Element => {
     const elem = e.currentTarget as HTMLDivElement;
     const uuid = elem.dataset.uuid;
     const data = getLoadedELF()!;
-    const instructionPrefix = [];
+    const instructionPrefix: string[] = [];
     const parsedData = JSON.parse(data);
     parsedData.instructionPrefix = parsedData.instructionPrefix
       ? parsedData.instructionPrefix
@@ -37,7 +37,7 @@ const Debugger: React.FC<TProps> = (): JSX.Element => {
       ) {
         instructionPrefix.push(BREAKPOINT_SYMBOL);
       } else {
-        instructionPrefix.push(i + 1);
+        instructionPrefix.push(String(i + 1));
       }
     }
     setLoadedELF(JSON.stringify({ ...parsedData, instructionPrefix }));
@@ -91,7 +91,7 @@ const Debugger: React.FC<TProps> = (): JSX.Element => {
   };
 
   const hydrateInstruction = () => {
-    const entries = [];
+    const entries: {}[] = [];
     const data = getLoadedELF()!;
     const parsedData = JSON.parse(data);
     const instruction = parsedData.instruction;
