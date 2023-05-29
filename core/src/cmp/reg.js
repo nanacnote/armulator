@@ -22,6 +22,7 @@ export class Reg extends EventTarget {
   constructor() {
     super();
 
+    this._r0 = new Buffer32Bit("r0");
     this._r1 = new Buffer32Bit("r1");
     this._r2 = new Buffer32Bit("r2");
     this._r3 = new Buffer32Bit("r3");
@@ -42,6 +43,7 @@ export class Reg extends EventTarget {
     this._readEventHandler = this._readEventHandler.bind(this);
     this._writeEventHandler = this._writeEventHandler.bind(this);
 
+    this._r0.addEventListener(ON_BUFFER_32_READ, this._readEventHandler);
     this._r1.addEventListener(ON_BUFFER_32_READ, this._readEventHandler);
     this._r2.addEventListener(ON_BUFFER_32_READ, this._readEventHandler);
     this._r3.addEventListener(ON_BUFFER_32_READ, this._readEventHandler);
@@ -59,6 +61,7 @@ export class Reg extends EventTarget {
     this._pc.addEventListener(ON_BUFFER_32_READ, this._readEventHandler);
     this._cpsr.addEventListener(ON_BUFFER_32_READ, this._readEventHandler);
 
+    this._r0.addEventListener(ON_BUFFER_32_WRITE, this._writeEventHandler);
     this._r1.addEventListener(ON_BUFFER_32_WRITE, this._writeEventHandler);
     this._r2.addEventListener(ON_BUFFER_32_WRITE, this._writeEventHandler);
     this._r3.addEventListener(ON_BUFFER_32_WRITE, this._writeEventHandler);
@@ -75,6 +78,13 @@ export class Reg extends EventTarget {
     this._lr.addEventListener(ON_BUFFER_32_WRITE, this._writeEventHandler);
     this._pc.addEventListener(ON_BUFFER_32_WRITE, this._writeEventHandler);
     this._cpsr.addEventListener(ON_BUFFER_32_WRITE, this._writeEventHandler);
+  }
+
+  /**
+   * @returns {Buffer32Bit} The r0 general-purpose register. Can be used for any purpose.
+   */
+  get r0() {
+    return this._r0;
   }
 
   /**
@@ -218,6 +228,7 @@ export class Reg extends EventTarget {
    */
   [Symbol.iterator]() {
     const registers = [
+      this.r0,
       this.r1,
       this.r2,
       this.r3,
