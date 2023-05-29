@@ -24,8 +24,10 @@
         bssContent: [],
         initDataSize: 4,
         initDataContent: [],
-        textSize: 48,
+        textSize: 13 * 4,
         textContent: [
+          0xe1100060, // tst     r0, r0, RRX
+          0xe1500101, // cmp     r0, r1, LSL #2
           0xe35300f5, // cmp     r3, #245
           0xe52d7004, // push    {r7}
           0xe24dd00c, // sub     sp, sp, #12
@@ -38,7 +40,7 @@
           0xe1a0d007, // mov     sp, r7
           0xe49d7004, // ldr     r7, [sp], #4
           // 0xe12fff1e, // bx      lr
-          0x0120d0e5, // ldrb r2, [r0, #1] --> undefined,
+          // 0x0120d0e5, // ldrb r2, [r0, #1] --> undefined,
         ],
       });
       cpu.spawn(extELF.pid).run();
