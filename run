@@ -12,28 +12,28 @@ check_node_version() {
 check_node_version
 
 kill_all_processes() {
-  echo "\n**Attempting a graceful shutdown**"
+  printf "\n**Attempting a graceful shutdown**\n"
   kill -15 "$PID_1" &&
-  echo "**Successfully terminated Core Library process [$PID_1]**"
+  printf "**Successfully terminated Core Library process [%s]**\n" "$PID_1"
   kill -15 "$PID_2" &&
-  echo "**Successfully terminated React process [$PID_2]**"
+  printf "**Successfully terminated React process [%s]**\n" "$PID_2"
   rm -rf local.dev.log &&
-  echo "**Successfully deleted log file at [./local.dev.log]**"
+  printf "**Successfully deleted log file at [./local.dev.log]**\n"
   exit 0
 }
 
-if [[ "$1" == "init" ]]; then
+if [ "$1" = "init" ]; then
     shift
-    cd core \
-    && npm i \
-    && cd ../web \
-    && npm i \
-    && npm link ../core \
-    && cd ..
-elif [[ "$1" == "docker:start" ]]; then
+    cd core &&
+    npm i &&
+    cd ../web &&
+    npm i &&
+    npm link ../core &&
+    cd ..
+elif [ "$1" = "docker:start" ]; then
     shift
-    if [[ "$(docker images -q hiramlabs/openresty 2> /dev/null)" == "" ]]; then
-        docker build -t hiramlabs/openresty "$@" .
+    if [ "$(docker images -q hiramlabs/openresty 2> /dev/null)" = "" ]; then
+        docker build -t hiramlabs/openresty "$@"
     fi
     docker run \
         "$@" \
@@ -42,10 +42,10 @@ elif [[ "$1" == "docker:start" ]]; then
         --name openresty \
         --restart=unless-stopped \
         hiramlabs/openresty
-elif [[ "$1" == "docker:stop" ]]; then
+elif [ "$1" = "docker:stop" ]; then
     shift
     docker stop "$@" openresty
-elif [[ "$1" == "dev:start" ]]; then
+elif [ "$1" = "dev:start" ]; then
     shift
     trap kill_all_processes INT TERM QUIT
     npm --prefix core run dev --color=always 2>&1 >>local.dev.log &
