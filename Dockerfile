@@ -2,14 +2,14 @@
 FROM node:14 as core_lib_builder
 WORKDIR /usr/src/app
 COPY core .
-RUN npm i && npm run build
+RUN npm i && npm run build && rm -rf node_modules
 
 
 # build react frontend
 FROM node:14 as node_builder
 WORKDIR /usr/src/app
 COPY web .
-COPY --from=core_lib_builder ./usr/src/app/dist /usr/src/app/src/lib/armulator_core
+COPY --from=core_lib_builder ./usr/src/app /usr/src/app/node_modules/armulator-core
 RUN npm i && npm run build
 
 
