@@ -1,5 +1,5 @@
 {
-  "name": "ARMulator",
+  "name": "armulator",
   "version": "1.0.0",
   "description": "JavaScript Visual Emulator for ARM",
   "homepage": "https://github.com/nanacnote/armulator#readme",
@@ -25,7 +25,6 @@
     "daisyui": "^2.49.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "react-hot-loader": "^4.13.1",
     "react-icons": "^4.7.1"
   },
   "devDependencies": {
