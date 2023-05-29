@@ -15,6 +15,7 @@ module.exports = {
             '@babel/env',
             ['@babel/preset-react', { runtime: 'automatic' }]
           ]
+          // plugins: ['react-refresh/babel'] // TODO: find a way to add this only in dev mode
         }
       },
       {
