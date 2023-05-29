@@ -78,8 +78,8 @@ export class Cpu {
    * @returns {Cpu} The Cpu instance.
    */
   spawn(pid) {
-    this.REG.pc.write(this.MMU.for(pid).PROC_START_ADDRESS);
-    this.REG.sp.write(this.MMU.for(pid).STACK_SEC_START_ADDRESS);
+    this.REG.pc.write(this.MMU.getProcessById(pid).PROC_START_ADDRESS);
+    this.REG.sp.write(this.MMU.getProcessById(pid).STACK_SEC_START_ADDRESS);
     this.CURRENT_PID = pid;
     return this;
   }
@@ -100,7 +100,7 @@ export class Cpu {
    * @returns {Object} The loaded ELF file with additional properties (pid, envUUUID, textUUUID, initDataUUID, bssUUID).
    */
   load(elf) {
-    const pid = this.MMU.processAlloc(elf.procSize);
+    const pid = this.MMU.palloc(elf.procSize);
     const extELF = { ...elf, pid };
 
     // order is important
@@ -139,7 +139,8 @@ export class Cpu {
    */
   _fetch() {
     if (
-      this.REG.pc.read() < this.MMU.for(this.CURRENT_PID).TEXT_SEC_END_ADDRESS
+      this.REG.pc.read() <
+      this.MMU.getProcessById(this.CURRENT_PID).TEXT_SEC_END_ADDRESS
     ) {
       const pc = this.REG.pc.read();
       this.BUS.setAddress(this.MMU.translate(pc));

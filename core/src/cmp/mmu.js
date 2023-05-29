@@ -35,7 +35,7 @@ export class Mmu {
    * @param {number} size - The size of the process.
    * @returns {number} - The process ID.
    */
-  processAlloc(size) {
+  palloc(size) {
     // TODO: implement paging lookup tables
     const pid = 1;
     const startAddr = 0;
@@ -43,15 +43,6 @@ export class Mmu {
     const proc = new Process(pid, startAddr, endAddr);
     this.PROCESSES.set(pid, proc);
     return pid;
-  }
-
-  /**
-   * Returns the process instance given the process ID.
-   * @param {number} pid - The process ID.
-   * @returns {Process|null} - The process instance, or null if not found.
-   */
-  for(pid) {
-    return this.PROCESSES.get(pid);
   }
 
   /**
@@ -75,6 +66,15 @@ export class Mmu {
       contentChecksums.push(fletcher16(`${pid}-${entry}-${virtualAddr}`));
     }
     return contentChecksums;
+  }
+
+  /**
+   * Returns the process instance given the process ID.
+   * @param {number} pid - The process ID.
+   * @returns {Process|null} - The process instance, or null if not found.
+   */
+  getProcessById(pid) {
+    return this.PROCESSES.get(pid);
   }
 
   /**
