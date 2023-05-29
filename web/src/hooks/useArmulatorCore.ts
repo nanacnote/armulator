@@ -1,14 +1,4 @@
-import {
-  DEF,
-  cpu,
-  bus,
-  reg,
-  mmu,
-  dec,
-  alu,
-  clk,
-  ram
-} from '../lib/armulator_core/index.modern';
+import { DEF, cpu, bus, reg, mmu, dec, alu, clk, ram } from 'armulator-core';
 
 /**
  * Exposes the armulator-core library API

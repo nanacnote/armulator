@@ -1,16 +1,6 @@
 import { useEffect } from 'react';
 import anime from 'animejs/lib/anime.es.js';
-import {
-  DEF,
-  cpu,
-  bus,
-  reg,
-  mmu,
-  dec,
-  alu,
-  clk,
-  ram
-} from '../lib/armulator_core/index.modern';
+import { DEF, cpu, bus, reg, mmu, dec, alu, clk, ram } from 'armulator-core';
 /**
  *
  * Handles schematic animation
