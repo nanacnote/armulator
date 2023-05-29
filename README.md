@@ -31,3 +31,7 @@ chmod +x ./run                                          # make the run script ex
 ```
 
 After executing the _Running Locally_ commands, navigate to `localhost:9001` in your browser
+
+### Notes
+
+The `core library` is included in the `web` application via `npm link` when `./run init` is executed.
