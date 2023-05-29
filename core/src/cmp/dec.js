@@ -5,16 +5,31 @@ T0 - main encoding
         T11 - Extra load/store                                                              **
         T12 - Multiply and Accumulate
             • MUL/MULS
+            • MLA/MLAS
+            • UMAAL
+            • MLS
+            • UMULL/UMULLS
         T13 - Synchronization primitives and Load-Acquire/Store-Release                     **
         T14 - Miscellaneous
             • BX
+            • BXJ
+            • BLX (register)
             • CLZ
         T15 - Halfword Multiply and Accumulate                                              **
         T16 - Data-processing register (immediate shift)
-
-        T17 - Data-processing register (register shift)
-        
-        T18 - Data-processing immediate  
+            T161 - Integer Data Processing (three register, immediate shift)                **
+            T162 - Integer Test and Compare (two register, immediate shift)
+                • TST (register) - Shift or rotate by value variant
+                • TST (register) - Rotate right with extend variant
+                • TEQ (register) - Shift or rotate by value variant
+                • TEQ (register) - Rotate right with extend variant
+                • CMP (register) - Shift or rotate by value variant
+                • CMP (register) - Rotate right with extend variant
+                • CMN (register) - Shift or rotate by value variant
+                • CMN (register) - Rotate right with extend variant
+            T163 - Logical Arithmetic (three register, immediate shift)                     **
+        T17 - Data-processing register (register shift)                                     **
+        T18 - Data-processing immediate
             T181 - Integer Data Processing (two register and immediate)
                 • AND, ANDS (immediate)
                 • EOR, EORS (immediate)
@@ -109,19 +124,54 @@ export class Dec {
         [["_eq", 0b0],        ["_eqC", "10xx0"],      ["_eq", 0b0],       ["_any"],           ["_any"],           ["_lup", "_T14"]],                            // Miscellaneous 
         [["_eq", 0b0],        ["_eqC", "10xx0"],      ["_eq", 0b1],       ["_any"],           ["_eq", 0b0],       ["_ret", undefined]],                         // Halfword Multiply and Accumulate  
         [["_eq", 0b0],        ["_neC", "10xx0"],      ["_any"],           ["_any"],           ["_eq", 0b0],       ["_lup", "_T16"]],                            // Data-processing register (immediate shift) 
-        [["_eq", 0b0],        ["_neC", "10xx0"],      ["_eq", 0b0],       ["_any"],           ["_eq", 0b1],       ["_lup", "_T16"]],                            // Data-processing register (register shift) 
-        [["_eq", 0b1],        ["_any"],               ["_any"],           ["_any"],           ["_any"],           ["_lup", "_T18"]],                            // Data-processing immediate  
+        [["_eq", 0b0],        ["_neC", "10xx0"],      ["_eq", 0b0],       ["_any"],           ["_eq", 0b1],       ["_ret", undefined]],                         // Data-processing register (register shift)
+        [["_eq", 0b1],        ["_any"],               ["_any"],           ["_any"],           ["_any"],           ["_lup", "_T18"]],                            // Data-processing immediate
     ];
     // prettier-ignore
     this.T12 = [
-        // TODO: not all opcodes implemented 
-        [["_eq", 0b000],       ["_any"],       ["_ret", "MUL_MULS"]],         // MUL/MULS
+      [["_eq", 0b000],      ["_any"],           ["_ret", "MUL_MULS"]],              // MUL/MULS
+      [["_eq", 0b001],      ["_any"],           ["_ret", "MLA_MLAS"]],              // MLA/MLAS
+      [["_eq", 0b010],      ["_eq", 0b0],       ["_ret", "UMAAL"]],                 // UMAAL
+      [["_eq", 0b010],      ["_eq", 0b1],       ["_ret", undefined]],               // Unallocated
+      [["_eq", 0b011],      ["_eq", 0b0],       ["_ret", "MLS"]],                   // MLS
+      [["_eq", 0b011],      ["_eq", 0b1],       ["_ret", undefined]],               // Unallocated
+      [["_eq", 0b100],      ["_any"],           ["_ret", "UMULL_UMULLS"]],          // UMULL/UMULLS
     ]
     // prettier-ignore
     this.T14 = [
       // TODO: not all opcodes implemented
-      [["_eq", 0b01], ["_eq", 0b001], ["_ret", "BX"]], // BX
-      [["_eq", 0b11], ["_eq", 0b001], ["_ret", "CLZ"]], // CLZ
+      [["_eq", 0b01],         ["_eq", 0b001],         ["_ret", "BX"]],                // BX
+      [["_eq", 0b01],         ["_eq", 0b010],         ["_ret", "BXJ"]],               // BXJ
+      [["_eq", 0b01],         ["_eq", 0b011],         ["_ret", "BLX_REG"]],           // BLX (register)
+      [["_eq", 0b11],         ["_eq", 0b001],         ["_ret", "CLZ"]],               // CLZ
+    ];
+    // prettier-ignore
+    this.T16 = [
+      [["_eqC", "0x"],        ["_any"],           ["_ret", undefined]],           // Integer Data Processing (three register, immediate shift)
+      [["_eq", 0b10],         ["_eq", 0b1],       ["_lup", "_T162"]],             // Integer Test and Compare (two register, immediate shift)
+      [["_eq", 0b11],         ["_any"],           ["_lup", "_T163"]],             // Logical Arithmetic (three register, immediate shift)
+    ];
+    // prettier-ignore
+    this.T162 = [
+      [["_eq", 0b00],        ["_ne", 0b0000011],           ["_ret", "TST_SFT_ROT_VAL"]],            // TST (register) - Shift or rotate by value variant
+      [["_eq", 0b00],        ["_eq", 0b0000011],           ["_ret", "TST_ROT_EXT"]],                // TST (register) - Rotate right with extend variant
+      [["_eq", 0b01],        ["_ne", 0b0000011],           ["_ret", "TEQ_SFT_ROT_VAL"]],            // TEQ (register) - Shift or rotate by value variant
+      [["_eq", 0b01],        ["_eq", 0b0000011],           ["_ret", "TEQ_ROT_EXT"]],                // TEQ (register) - Rotate right with extend variant
+      [["_eq", 0b10],        ["_ne", 0b0000011],           ["_ret", "CMP_SFT_ROT_VAL"]],            // CMP (register) - Shift or rotate by value variant
+      [["_eq", 0b10],        ["_eq", 0b0000011],           ["_ret", "CMP_ROT_EXT"]],                // CMP (register) - Rotate right with extend variant
+      [["_eq", 0b11],        ["_ne", 0b0000011],           ["_ret", "CMN_SFT_ROT_VAL"]],            // CMN (register) - Shift or rotate by value variant
+      [["_eq", 0b11],        ["_eq", 0b0000011],           ["_ret", "CMN_ROT_EXT"]],                // CMN (register) - Rotate right with extend variant
+    ];
+    // prettier-ignore
+    this.T163 = [
+      [["_eq", 0b00],        ["_ne", 0b0000011],           ["_ret", "ORR_ORRS_SFT_ROT_VAL"]],            // ORR, ORRS (register) - ORRS, shift or rotate by value variant
+      [["_eq", 0b00],        ["_eq", 0b0000011],           ["_ret", "ORR_ORRS_ROT_EXT"]],                // ORR, ORRS (register) - ORRS, rotate right with extend variant
+      [["_eq", 0b01],        ["_ne", 0b0000011],           ["_ret", "MOV_MOVS_SFT_ROT_VAL"]],            // MOV, MOVS (register) - MOVS, shift or rotate by value variant
+      [["_eq", 0b01],        ["_eq", 0b0000011],           ["_ret", "MOV_MOVS_ROT_EXT"]],                // MOV, MOVS (register) - MOVS, rotate right with extend variant
+      [["_eq", 0b10],        ["_ne", 0b0000011],           ["_ret", "BIC_BICS_SFT_ROT_VAL"]],            // BIC, BICS (register) - BICS, shift or rotate by value variant
+      [["_eq", 0b10],        ["_eq", 0b0000011],           ["_ret", "BIC_BICS_ROT_EXT"]],                // BIC, BICS (register) - BICS, rotate right with extend variant
+      [["_eq", 0b11],        ["_ne", 0b0000011],           ["_ret", "MVN_MVNS_SFT_ROT_VAL"]],            // MVN, MVNS (register) - MVNS, shift or rotate by value variant
+      [["_eq", 0b11],        ["_eq", 0b0000011],           ["_ret", "MVN_MVNS_ROT_EXT"]],                // MVN, MVNS (register) - MVNS, rotate right with extend variant
     ];
     // prettier-ignore
     this.T18 = [
@@ -152,22 +202,22 @@ export class Dec {
     ]
     // prettier-ignore
     this.T182 = [
-        [["_eq", 0b0],    ["_ret", "MOV_MOVS_IMD"]],        // MOV, MOVS (immediate)
-        [["_eq", 0b1],    ["_ret", "MOVT"]],                // MOVT
+        [["_eq", 0b0],      ["_ret", "MOV_MOVS_IMD"]],        // MOV, MOVS (immediate)
+        [["_eq", 0b1],      ["_ret", "MOVT"]],                // MOVT
     ]
     // prettier-ignore
     this.T184 = [
-        [["_eq", 0b00],    ["_ret", "TST_IMD"]],         // TST (immediate)
-        [["_eq", 0b01],    ["_ret", "TEQ_IMD"]],         // TEQ (immediate)
-        [["_eq", 0b10],    ["_ret", "CMP_IMD"]],         // CMP (immediate)
-        [["_eq", 0b11],    ["_ret", "CMN_IMD"]],         // CMN (immediate)
+        [["_eq", 0b00],     ["_ret", "TST_IMD"]],         // TST (immediate)
+        [["_eq", 0b01],     ["_ret", "TEQ_IMD"]],         // TEQ (immediate)
+        [["_eq", 0b10],     ["_ret", "CMP_IMD"]],         // CMP (immediate)
+        [["_eq", 0b11],     ["_ret", "CMN_IMD"]],         // CMN (immediate)
     ]
     // prettier-ignore
     this.T185 = [
-        [["_eq", 0b00], ["_ret", "ORR_ORRS_IMD"]],         // ORR, ORRS (immediate)
-        [["_eq", 0b01], ["_ret", "MOV_MOVS_IMD"]],         // MOV, MOVS (immediate)
-        [["_eq", 0b10], ["_ret", "BIC_BICS_IMD"]],         // BIC, BICS (immediate)
-        [["_eq", 0b11], ["_ret", "MVN_MVNS_IMD"]],         // MVN, MVNS (immediate)
+        [["_eq", 0b00],     ["_ret", "ORR_ORRS_IMD"]],         // ORR, ORRS (immediate)
+        [["_eq", 0b01],     ["_ret", "MOV_MOVS_IMD"]],         // MOV, MOVS (immediate)
+        [["_eq", 0b10],     ["_ret", "BIC_BICS_IMD"]],         // BIC, BICS (immediate)
+        [["_eq", 0b11],     ["_ret", "MVN_MVNS_IMD"]],         // MVN, MVNS (immediate)
     ]
     // prettier-ignore
     this.T2 = [
@@ -205,8 +255,8 @@ export class Dec {
     // prettier-ignore
     this.T53 = [
         [["_ne", 0b1111],       ["_eq", 0b0],       ["_ret", "B"]],         // B
-        [["_ne", 0b1111],       ["_eq", 0b1],       ["_ret", "BL"]],        // BL/BLX (immediate)
-        [["_eq", 0b1111],       ["_any"],           ["_ret", "BLX"]],       // BL/BLX (immediate)
+        [["_ne", 0b1111],       ["_eq", 0b1],       ["_ret", "BL_IMD"]],        // BL/BLX (immediate)
+        [["_eq", 0b1111],       ["_any"],           ["_ret", "BLX_IMD"]],       // BL/BLX (immediate)
     ]
   }
 
@@ -431,11 +481,60 @@ export class Dec {
   }
 
   _T16() {
-    return "T16";
+    const op0 = (this.INSTRUCTION >>> 23) & (((1 << 2) >>> 0) - 1);
+    const op1 = (this.INSTRUCTION >>> 20) & (((1 << 1) >>> 0) - 1);
+    for (let i = 0, len = this.T16.length; i < len; i++) {
+      const entry = this.T16[i];
+      const [op0_func, op0_v1] = entry[0];
+      const [op1_func, op1_v1] = entry[1];
+      const fields = [
+        this[op0_func].call(this, op0_v1, op0),
+        this[op1_func].call(this, op1_v1, op1),
+      ];
+      if (fields.every((v) => v)) {
+        const [caller, callee] = entry[fields.length];
+        return this[caller].call(this, callee);
+      }
+    }
+    return undefined;
   }
 
-  _T17() {
-    return "T17";
+  _T162() {
+    const opc = (this.INSTRUCTION >>> 21) & (((1 << 2) >>> 0) - 1);
+    const imm5Stype = (this.INSTRUCTION >>> 5) & (((1 << 7) >>> 0) - 1);
+    for (let i = 0, len = this.T162.length; i < len; i++) {
+      const entry = this.T162[i];
+      const [opc_func, opc_v1] = entry[0];
+      const [imm5Stype_func, imm5Stype_v1] = entry[1];
+      const fields = [
+        this[opc_func].call(this, opc_v1, opc),
+        this[imm5Stype_func].call(this, imm5Stype_v1, imm5Stype),
+      ];
+      if (fields.every((v) => v)) {
+        const [caller, callee] = entry[fields.length];
+        return this[caller].call(this, callee);
+      }
+    }
+    return undefined;
+  }
+
+  _T163() {
+    const opc = (this.INSTRUCTION >>> 21) & (((1 << 2) >>> 0) - 1);
+    const imm5Stype = (this.INSTRUCTION >>> 5) & (((1 << 7) >>> 0) - 1);
+    for (let i = 0, len = this.T163.length; i < len; i++) {
+      const entry = this.T163[i];
+      const [opc_func, opc_v1] = entry[0];
+      const [imm5Stype_func, imm5Stype_v1] = entry[1];
+      const fields = [
+        this[opc_func].call(this, opc_v1, opc),
+        this[imm5Stype_func].call(this, imm5Stype_v1, imm5Stype),
+      ];
+      if (fields.every((v) => v)) {
+        const [caller, callee] = entry[fields.length];
+        return this[caller].call(this, callee);
+      }
+    }
+    return undefined;
   }
 
   _T18() {
@@ -543,36 +642,30 @@ export class Dec {
   }
 }
 
-const INSTRUCTION_SUBSET = [
-  "ADC",
-  "ADD",
-  "ADR",
-  "AND",
-  "ASR",
-  "BIC",
-  "BL",
-  "CMN",
-  "CMP",
-  "DCD",
-  "END",
-  "EOR",
-  "EQU",
-  "FILL",
-  "LDM",
-  "LDR",
-  "LSL",
-  "LSR",
-  "MOV",
-  "MVN",
-  "ORR",
-  "ROR",
-  "RRX",
-  "RSB",
-  "RSC",
-  "SBC",
-  "STM",
-  "STR",
-  "SUB",
-  "TEQ",
-  "TST",
-];
+// ADC (Add with Carry): Adds the value of a register to the value of another register, and then adds the carry flag.
+// ADD (Add): Adds the value of a register to the value of another register.
+// ADR (Add Immediate to PC): Adds an immediate value to the program counter.
+// AND (Bitwise AND): Performs a bitwise AND operation on the values of two registers.
+// ASR (Arithmetic Shift Right): Shifts the value of a register right by a specified number of bits.
+// BIC (Bitwise Complement and AND): Performs a bitwise AND operation on the value of a register and the bitwise complement of an immediate value.
+// BL (Branch with Link): Branches to a specified address and saves the current instruction pointer to the link register.
+// CMN (Compare Negated): Compares the value of a register to the value of another register, and then negates the result.
+// CMP (Compare): Compares the value of a register to the value of another register.
+// EOR (Bitwise Exclusive OR): Performs a bitwise exclusive OR operation on the values of two registers.
+// LDM (Load Multiple): Loads multiple registers from memory.
+// LDR (Load Register): Loads a register from memory.
+// LSL (Logical Shift Left): Shifts the value of a register left by a specified number of bits.
+// LSR (Logical Shift Right): Shifts the value of a register right by a specified number of bits.
+// MOV (Move): Copies the value of a register to another register.
+// MVN (Move Negated): Copies the bitwise complement of a register to another register.
+// ORR (Bitwise OR): Performs a bitwise OR operation on the values of two registers.
+// ROR (Rotate Right): Rotates the value of a register right by a specified number of bits.
+// RRX (Rotate Right with Carry): Rotates the value of a register right by a specified number of bits and then carries the carry flag into the least significant bit.
+// RSB (Subtract with Borrow): Subtracts the value of a register from the value of another register and then borrows from the carry flag.
+// RSC (Subtract with Carry): Subtracts the value of a register from the value of another register and then carries the carry flag into the least significant bit.
+// SBC (Subtract with Carry): Subtracts the value of a register from the value of another register and then carries the carry flag into the least significant bit.
+// STM (Store Multiple): Stores multiple registers to memory.
+// STR (Store Register): Stores a register to memory.
+// SUB (Subtract): Subtracts the value of a register from the value of another register.
+// TEQ (Test Equal): Compares the value of a register to the value of another register and then sets the zero flag if they are equal.
+// TST (Test): Compares the value of a register to the value of zero and then sets the zero flag if they are equal.
