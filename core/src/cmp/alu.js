@@ -1,5 +1,5 @@
-import { fletcher16 } from "../lib/checksum.js";
-import { ON_ALU_EXECUTE } from "../var/def.js";
+import { extractBits, fletcher16, setBit } from "../lib/utils.js";
+import { MNEM, ON_ALU_EXECUTE } from "../lib/def.js";
 
 /**
  * @module Core
@@ -22,7 +22,28 @@ export class Alu extends EventTarget {
    * @param {object} reg - The register object.
    */
   conn2reg(reg) {
-    this.REG = reg;
+    this.REGS = [...reg];
+    this.CPSR = this.REGS[this.REGS.length - 1];
+  }
+
+  updateCPSR(flag, val) {
+    // TODO: implement all flags
+    switch (flag) {
+      case "N":
+        this.CPSR.write(setBit(this.CPSR.read(), 31, val));
+        break;
+      case "Z":
+        this.CPSR.write(setBit(this.CPSR.read(), 30, val));
+        break;
+      case "C":
+        this.CPSR.write(setBit(this.CPSR.read(), 29, val));
+        break;
+      case "V":
+        this.CPSR.write(setBit(this.CPSR.read(), 28, val));
+        break;
+      default:
+        break;
+    }
   }
 
   /**
@@ -34,35 +55,8 @@ export class Alu extends EventTarget {
    * @param {number} options.virtualAddress - The virtual address.
    */
   call({ pid, routine, instruction, virtualAddress }) {
-    if (routine && instruction) {
-      console.log(
-        `Execute Opcode - ${routine.toString(2)} - ${instruction.toString(
-          16
-        )}\n\n`
-      );
-      const reg =
-        this.REG[
-          [
-            "r1",
-            "r2",
-            "r3",
-            "r4",
-            "r5",
-            "r6",
-            "r7",
-            "r8",
-            "r9",
-            "r10",
-            "r11",
-            "r12",
-            "lr",
-            "cpsr",
-          ][
-            Math.floor(Math.random() * (Math.floor(13) - Math.ceil(0) + 1)) +
-              Math.ceil(0)
-          ]
-        ];
-      reg.write(instruction);
+    if (routine && this[routine]) {
+      this[routine].call(this, instruction);
       this.dispatchEvent(
         new CustomEvent(ON_ALU_EXECUTE, {
           detail: {
@@ -73,11 +67,38 @@ export class Alu extends EventTarget {
           },
         })
       );
+      console.log(
+        `Execute Opcode - ${routine.toString(2)} - ${instruction.toString(
+          16
+        )}\n\n`
+      );
     } else {
       console.log(
-        `%c undefined - ${instruction.toString(16)}\n\n`,
+        `%c Unsupported Opcode - ${routine.toString(
+          2
+        )} - ${instruction.toString(16)}\n\n`,
         "background: black; color: white"
       );
     }
   }
+
+  [MNEM.MUL_MULS](instruction) {
+    const rd = extractBits(instruction, 16, 4);
+    const rn = extractBits(instruction, 0, 4);
+    const rm = extractBits(instruction, 8, 4);
+    const setflags = extractBits(instruction, 20, 1);
+
+    const result = this.REGS[rn].read() * this.REGS[rm].read();
+    this.REGS[rd].write(result);
+
+    if (setflags) {
+      this.updateCPSR("N", extractBits(result, 31, 1));
+      this.updateCPSR("Z", result === 0 ? 1 : 0);
+    }
+  }
 }
+
+// const rd = extractBits(instruction, 0, 4)
+// const rn = extractBits(instruction, 0, 4)
+// const rm = extractBits(instruction, 0, 4)
+// const setflags = extractBits(instruction, 0, 1)
