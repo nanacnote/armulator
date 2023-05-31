@@ -4,6 +4,7 @@ import {
   ON_REG_READ,
   ON_REG_WRITE,
 } from "../lib/def.js";
+import { extractBits, setBit } from "../lib/utils.js";
 import { Buffer32Bit } from "./buf.js";
 
 /**
@@ -39,6 +40,8 @@ export class Reg extends EventTarget {
     this._lr = new Buffer32Bit("lr");
     this._pc = new Buffer32Bit("pc");
     this._cpsr = new Buffer32Bit("cpsr");
+
+    this._extendCPSR(this._cpsr);
 
     this._readEventHandler = this._readEventHandler.bind(this);
     this._writeEventHandler = this._writeEventHandler.bind(this);
@@ -216,6 +219,55 @@ export class Reg extends EventTarget {
    */
   _writeEventHandler({ detail }) {
     this.dispatchEvent(new CustomEvent(ON_REG_WRITE, { detail }));
+  }
+
+  /**
+   * Extends the CPSR (Current Program Status Register) with flag properties.
+   * @param {Buffer32Bit} instance - The instance of the Buffer32Bit class.
+   * @private
+   */
+  _extendCPSR(instance) {
+    // TODO: implement all flags
+    Object.defineProperty(instance, "N", {
+      get() {
+        return extractBits(this.read(), 31, 1);
+      },
+      set(value) {
+        this.write(setBit(this.read(), 31, value));
+      },
+      enumerable: true,
+      configurable: true,
+    });
+    Object.defineProperty(instance, "Z", {
+      get() {
+        return extractBits(this.read(), 30, 1);
+      },
+      set(value) {
+        this.write(setBit(this.read(), 30, value));
+      },
+      enumerable: true,
+      configurable: true,
+    });
+    Object.defineProperty(instance, "C", {
+      get() {
+        return extractBits(this.read(), 29, 1);
+      },
+      set(value) {
+        this.write(setBit(this.read(), 29, value));
+      },
+      enumerable: true,
+      configurable: true,
+    });
+    Object.defineProperty(instance, "V", {
+      get() {
+        return extractBits(this.read(), 28, 1);
+      },
+      set(value) {
+        this.write(setBit(this.read(), 28, value));
+      },
+      enumerable: true,
+      configurable: true,
+    });
   }
 
   /**
