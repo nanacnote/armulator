@@ -9,7 +9,7 @@ import {
   HEAP_SECTION,
   BSS_SECTION,
   INIT_DATA_SECTION,
-} from "../var/def.js";
+} from "../lib/def.js";
 
 /**
  * @module Core

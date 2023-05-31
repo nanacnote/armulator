@@ -1,6 +1,6 @@
 import { Process } from "./proc.js";
-import { RAM_DEV_KEY } from "../var/def.js";
-import { fletcher16 } from "../lib/checksum.js";
+import { RAM_DEV_KEY } from "../lib/def.js";
+import { fletcher16 } from "../lib/utils.js";
 
 /**
  * @module Core

@@ -3,7 +3,7 @@ import {
   OK_CODE,
   ON_BUFFER_32_READ,
   ON_BUFFER_32_WRITE,
-} from "../var/def.js";
+} from "../lib/def.js";
 
 /**
  * @module Core

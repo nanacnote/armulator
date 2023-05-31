@@ -3,7 +3,7 @@ import {
   ON_BUFFER_32_READ,
   ON_REG_READ,
   ON_REG_WRITE,
-} from "../var/def.js";
+} from "../lib/def.js";
 import { Buffer32Bit } from "./buf.js";
 
 /**
