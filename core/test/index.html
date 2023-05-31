@@ -24,7 +24,7 @@
         bssContent: [],
         initDataSize: 4,
         initDataContent: [],
-        textSize: 13 * 4,
+        textSize: 14 * 4,
         textContent: [
           0xe1100060, // tst     r0, r0, RRX
           0xe1500101, // cmp     r0, r1, LSL #2
@@ -34,7 +34,8 @@
           0xe28d7000, // add     r7, sp, #0
           0xe5870004, // str     r0, [r7, #4]
           0xe5973004, // ldr     r3, [r7, #4]
-          0xe0030393, // mul     r3, r3, r3
+          0xe0010392, // mul     r1, r2, r3
+          0xe0110392, // muls    r1, r2, r3
           0xe1a00003, // mov     r0, r3
           0xe297700c, // adds    r7, r7, #12
           0xe1a0d007, // mov     sp, r7
