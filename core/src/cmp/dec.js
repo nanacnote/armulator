@@ -101,6 +101,8 @@ T0 - main encoding
 
  */
 
+import { MNEM } from "../lib/def.js";
+
 export class Dec {
   // Machine code decoder
   constructor() {
@@ -129,7 +131,7 @@ export class Dec {
     ];
     // prettier-ignore
     this.T12 = [
-      [["_eq", 0b000],      ["_any"],           ["_ret", "MUL_MULS"]],              // MUL/MULS
+      [["_eq", 0b000],      ["_any"],           ["_ret", MNEM.MUL_MULS]],              // MUL/MULS
       [["_eq", 0b001],      ["_any"],           ["_ret", "MLA_MLAS"]],              // MLA/MLAS
       [["_eq", 0b010],      ["_eq", 0b0],       ["_ret", "UMAAL"]],                 // UMAAL
       [["_eq", 0b010],      ["_eq", 0b1],       ["_ret", undefined]],               // Unallocated
