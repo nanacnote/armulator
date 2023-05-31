@@ -68,15 +68,11 @@ export class Alu extends EventTarget {
         })
       );
       console.log(
-        `Execute Opcode - ${routine.toString(2)} - ${instruction.toString(
-          16
-        )}\n\n`
+        `Execute Routine - ${routine} - ${instruction.toString(16)}\n\n`
       );
     } else {
       console.log(
-        `%c Unsupported Opcode - ${routine.toString(
-          2
-        )} - ${instruction.toString(16)}\n\n`,
+        `%c Unsupported Routine - ${routine} - ${instruction.toString(16)}\n\n`,
         "background: black; color: white"
       );
     }
