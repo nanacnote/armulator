@@ -21,7 +21,7 @@ kill_all_processes() {
   exit 0
 }
 
-elif [ "$1" = "docker:start" ]; then
+if [ "$1" = "docker:start" ]; then
   shift
   if [ "$(docker images -q hiramlabs/openresty 2> /dev/null)" = "" ]; then
     docker build -t hiramlabs/openresty "$@" .
