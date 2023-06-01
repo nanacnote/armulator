@@ -9,8 +9,9 @@ RUN npm i && npm run build && rm -rf node_modules
 FROM node:14 as node_builder
 WORKDIR /usr/src/app
 COPY web .
+RUN npm i
 COPY --from=core_lib_builder ./usr/src/app /usr/src/app/node_modules/armulator-core
-RUN npm i && npm run build
+RUN npm run build
 
 
 FROM openresty/openresty:jammy
