@@ -76,8 +76,8 @@ export class Alu extends EventTarget {
     this.REGS[rd].write(result);
 
     if (setflags) {
-      this.REG.cpsr.N = extractBits(result, 31, 1);
-      this.REG.cpsr.Z = result === 0 ? 1 : 0;
+      this.CPSR.N = extractBits(result, 31, 1);
+      this.CPSR.Z = result === 0 ? 1 : 0;
     }
   }
 
@@ -106,15 +106,15 @@ export class Alu extends EventTarget {
     const rn = extractBits(instruction, 16, 4);
     const imm12 = extractBits(instruction, 0, 12);
     const setflags = extractBits(instruction, 20, 1);
-    const { imm32, carryOut } = expandImmediateWithCarry(imm12, 0);
+    const { imm32, carryOut } = expandImmediateWithCarry(imm12, this.CPSR.C);
     const result = this.REGS[rn].read() & imm32;
     this.REGS[rd].write(result);
 
     // TODO: raise ALUExceptionReturn(result) if destination === pc and setflags
     if (setflags) {
-      this.REG.cpsr.N = extractBits(result, 31, 1);
-      this.REG.cpsr.Z = result === 0 ? 1 : 0;
-      this.REG.cpsr.C = carryOut;
+      this.CPSR.N = extractBits(result, 31, 1);
+      this.CPSR.Z = result === 0 ? 1 : 0;
+      this.CPSR.C = carryOut;
     }
   }
 }
