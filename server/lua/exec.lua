@@ -23,11 +23,8 @@ function exec.kstool()
     end
 
     local command_parts = { "kstool", arch_mode }
-    local command_parts = { "kstool", arch_mode }
 
     for instruction in asm_str:gmatch("([^;]+)") do
-        table.insert(command_parts, "\"" .. instruction .. "\"")
-        local p_handler, err = io.popen(table.concat(command_parts, " "))
         table.insert(command_parts, "\"" .. instruction .. "\"")
         local p_handler, err = io.popen(table.concat(command_parts, " "))
 
@@ -49,11 +46,7 @@ function exec.kstool()
         table.remove(command_parts)
     end
 
-        table.remove(command_parts)
-    end
-
     ngx.say(cjson.encode(ret))
 end
 
 return exec
-
