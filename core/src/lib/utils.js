@@ -1,4 +1,22 @@
 /**
+ * No-operation function (nop).
+ * Does nothing and serves as a placeholder.
+ */
+export function nop() {
+  // No code inside the function body
+}
+
+/**
+ * Creates a bitwise AND mask of the specified length.
+ *
+ * @param {number} length - The length of the mask.
+ * @returns {number} The bitwise AND mask.
+ */
+export function createBitwiseANDMask(length) {
+  return ((1 << length) >>> 0) - 1;
+}
+
+/**
  * Calculates the Fletcher-16 checksum of a string of data.
  *
  * @param {string} data - The data to be checksummed.
@@ -38,4 +56,67 @@ export function extractBits(number, start, count) {
  */
 export function setBit(number, bit, value) {
   return (number & ~(1 << bit)) | (value << bit);
+}
+
+/**
+ * Counts the number of leading zero bits in a given number.
+ * @param {number} number - The input number.
+ * @param {number} [length=32] - The length of the number in bits. Default is 32.
+ * @returns {number} The count of leading zero bits.
+ */
+
+export function countLeadingZeros(number, length = 32) {
+  if (number === 0) {
+    return length;
+  } else {
+    let count = 0;
+    while (!(number & ((1 << (length - 1)) >>> 0))) {
+      count++;
+      number <<= 1;
+    }
+    return count;
+  }
+}
+
+/**
+ * Performs a left rotation on the given value by the specified rotation amount.
+ *
+ * @param {number} value - The value to rotate.
+ * @param {number} rotation - The rotation amount.
+ * @returns {number} The result of the left rotation.
+ */
+export function leftRotate(value, rotation) {
+  const clampRotation = rotation % 32; // Ensure rotation is within the range 0-31
+  return ((value << clampRotation) | (value >>> (32 - clampRotation))) >>> 0;
+}
+
+/**
+ * Performs a right rotation on the given value by the specified rotation amount.
+ *
+ * @param {number} value - The value to rotate.
+ * @param {number} rotation - The rotation amount.
+ * @returns {number} The result of the right rotation.
+ */
+export function rightRotate(value, rotation) {
+  const clampRotation = rotation % 32; // Ensure rotation is within the range 0-31
+  return ((value >>> clampRotation) | (value << (32 - clampRotation))) >>> 0;
+}
+
+/**
+ * Expands a 12-bit immediate value with carry in to a 32-bit value and updates the carry out.
+ *
+ * @param {number} imm12 - The 12-bit immediate value.
+ * @param {number} carryIn - The carry input value.
+ * @returns {{imm32: number, carryOut: number}} An object containing the expanded immediate value and the updated carry value.
+ */
+export function expandImmediateWithCarry(imm12, carryIn) {
+  let carryOut = carryIn;
+  let imm32 = (imm12 >>> 0) & (((1 << 8) >>> 0) - 1);
+  const rotation = (imm12 >>> 8) & (((1 << 4) >>> 0) - 1);
+
+  if (rotation > 0) {
+    imm32 = ((imm32 >>> rotation) | (imm32 << (32 - rotation))) >>> 0;
+    carryOut = (imm32 >>> 31) & (((1 << 4) >>> 0) - 1);
+  }
+  return { imm32, carryOut };
 }
