@@ -27,7 +27,15 @@ T0 - main encoding
                 • CMP (register) - Rotate right with extend variant
                 • CMN (register) - Shift or rotate by value variant
                 • CMN (register) - Rotate right with extend variant
-            T163 - Logical Arithmetic (three register, immediate shift)                     **
+            T163 - Logical Arithmetic (three register, immediate shift)
+                • ORR, ORRS (register) - ORRS, shift or rotate by value variant
+                • ORR, ORRS (register) - ORRS, rotate right with extend variant
+                • MOV, MOVS (register) - MOVS, shift or rotate by value variant
+                • MOV, MOVS (register) - MOVS, rotate right with extend variant
+                • BIC, BICS (register) - BICS, shift or rotate by value variant
+                • BIC, BICS (register) - BICS, rotate right with extend variant
+                • MVN, MVNS (register) - MVNS, shift or rotate by value variant
+                • MVN, MVNS (register) - MVNS, rotate right with extend variant
         T17 - Data-processing register (register shift)                                     **
         T18 - Data-processing immediate
             T181 - Integer Data Processing (two register and immediate)
@@ -131,7 +139,7 @@ export class Dec {
     ];
     // prettier-ignore
     this.T12 = [
-      [["_eq", 0b000],      ["_any"],           ["_ret", MNEM.MUL_MULS]],              // MUL/MULS
+      [["_eq", 0b000],      ["_any"],           ["_ret", MNEM.MUL_MULS]],           // MUL/MULS
       [["_eq", 0b001],      ["_any"],           ["_ret", "MLA_MLAS"]],              // MLA/MLAS
       [["_eq", 0b010],      ["_eq", 0b0],       ["_ret", "UMAAL"]],                 // UMAAL
       [["_eq", 0b010],      ["_eq", 0b1],       ["_ret", undefined]],               // Unallocated
@@ -142,10 +150,10 @@ export class Dec {
     // prettier-ignore
     this.T14 = [
       // TODO: not all opcodes implemented
-      [["_eq", 0b01],         ["_eq", 0b001],         ["_ret", "BX"]],                // BX
-      [["_eq", 0b01],         ["_eq", 0b010],         ["_ret", "BXJ"]],               // BXJ
-      [["_eq", 0b01],         ["_eq", 0b011],         ["_ret", "BLX_REG"]],           // BLX (register)
-      [["_eq", 0b11],         ["_eq", 0b001],         ["_ret", "CLZ"]],               // CLZ
+      [["_eq", 0b01],         ["_eq", 0b001],         ["_ret", MNEM.BX]],                 // BX
+      [["_eq", 0b01],         ["_eq", 0b010],         ["_ret", MNEM.BXJ]],                // BXJ
+      [["_eq", 0b01],         ["_eq", 0b011],         ["_ret", MNEM.BLX_REG]],            // BLX (register)
+      [["_eq", 0b11],         ["_eq", 0b001],         ["_ret", MNEM.CLZ]],                // CLZ
     ];
     // prettier-ignore
     this.T16 = [
@@ -185,7 +193,7 @@ export class Dec {
     ]
     // prettier-ignore
     this.T181 = [
-        [["_eq", 0b000],        ["_any"],       ["_any"],               ["_ret", "AND_ANDS_IMD"]],              // AND, ANDS (immediate)
+        [["_eq", 0b000],        ["_any"],       ["_any"],               ["_ret", MNEM.AND_ANDS_IMD]],           // AND, ANDS (immediate)
         [["_eq", 0b001],        ["_any"],       ["_any"],               ["_ret", "EOR_EORS_IMD"]],              // EOR, EORS (immediate)
         [["_eq", 0b010],        ["_eq", 0b0],   ["_neC","11x1"],        ["_ret", "SUB_IMD"]],                   // SUB, SUBS (immediate) - SUB variant
         [["_eq", 0b010],        ["_eq", 0b0],   ["_eq", 0b1101],        ["_ret", "SUB_IMD_SP"]],                // SUB, SUBS (SP minus immediate) - SUB variant 
@@ -252,11 +260,11 @@ export class Dec {
     this.T5 = [
         [["_eq", 0b1111],       ["_eq", 0b0],       ["_ret", undefined]],                 // Exception Save/Restore
         [["_ne", 0b1111],       ["_eq", 0b0],       ["_ret", undefined]],                 // Load/Store Multiple
-        [["any"],               ["_eq", 0b1],       ["_lup", "T53"]],                     // Branch (immediate)
+        [["_any"],               ["_eq", 0b1],       ["_lup", "_T53"]],                     // Branch (immediate)
     ]
     // prettier-ignore
     this.T53 = [
-        [["_ne", 0b1111],       ["_eq", 0b0],       ["_ret", "B"]],         // B
+        [["_ne", 0b1111],       ["_eq", 0b0],       ["_ret", "B"]],             // B
         [["_ne", 0b1111],       ["_eq", 0b1],       ["_ret", "BL_IMD"]],        // BL/BLX (immediate)
         [["_eq", 0b1111],       ["_any"],           ["_ret", "BLX_IMD"]],       // BL/BLX (immediate)
     ]
@@ -671,3 +679,27 @@ export class Dec {
 // SUB (Subtract): Subtracts the value of a register from the value of another register.
 // TEQ (Test Equal): Compares the value of a register to the value of another register and then sets the zero flag if they are equal.
 // TST (Test): Compares the value of a register to the value of zero and then sets the zero flag if they are equal.
+
+/**
+ * MUL, MULS
+ * Multiply multiplies two register values. The least significant 32 bits of the result are written to the destination register.
+ * These 32 bits do not depend on whether the source register values are considered to be signed values or unsigned values.
+ *
+ * BX
+ * Branch and Exchange causes a branch to an address and instruction set specified by a register.
+ *
+ * BXJ
+ * Branch and Exchange, previously Branch and Exchange Jazelle.
+ * BXJ behaves as a BX instruction, see BX. This means it causes a branch to an address and instruction set specified by a register.
+ *
+ * BLX (register)
+ * Branch with Link and Exchange (register) calls a subroutine at an address specified in the register,
+ * and if necessary changes to the instruction set indicated by bit[0] of the register value.
+ *
+ * CLZ
+ * Count Leading Zeros returns the number of binary zero bits before the first binary one bit in a value.
+ *
+ * AND, ANDS (immediate)
+ * Bitwise AND (immediate) performs a bitwise AND of a register value and an immediate value, and writes the result to the destination register.
+ * If the destination register is not the PC, the ANDS variant of the instruction updates the condition flags based on the result.
+ */
