@@ -33,7 +33,7 @@ if [ "$1" = "init" ]; then
 elif [ "$1" = "docker:start" ]; then
     shift
     if [ "$(docker images -q hiramlabs/openresty 2> /dev/null)" = "" ]; then
-        docker build -t hiramlabs/openresty "$@"
+        docker build -t hiramlabs/openresty "$@" .
     fi
     docker run \
         "$@" \
