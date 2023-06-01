@@ -15,7 +15,7 @@ import {
   ON_DECODE_CYCLE_END,
   ON_EXECUTE_CYCLE_END,
   ON_STEP,
-} from "../var/def.js";
+} from "../lib/def.js";
 
 /**
  * @module Core

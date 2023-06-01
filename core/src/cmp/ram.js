@@ -3,7 +3,7 @@ import {
   ON_RAM_READ,
   ON_RAM_WRITE,
   RAM_SIZE_IN_BYTE,
-} from "../var/def.js";
+} from "../lib/def.js";
 
 /**
  * @module Core

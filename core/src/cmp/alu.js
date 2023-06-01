@@ -1,5 +1,11 @@
-import { fletcher16 } from "../lib/checksum.js";
-import { ON_ALU_EXECUTE } from "../var/def.js";
+import {
+  countLeadingZeros,
+  expandImmediateWithCarry,
+  extractBits,
+  fletcher16,
+  setBit,
+} from "../lib/utils.js";
+import { MNEM, ON_ALU_EXECUTE } from "../lib/def.js";
 
 /**
  * @module Core
@@ -23,6 +29,8 @@ export class Alu extends EventTarget {
    */
   conn2reg(reg) {
     this.REG = reg;
+    this.REGS = [...this.REG];
+    this.CPSR = this.REGS[this.REGS.length - 1];
   }
 
   /**
@@ -34,35 +42,8 @@ export class Alu extends EventTarget {
    * @param {number} options.virtualAddress - The virtual address.
    */
   call({ pid, routine, instruction, virtualAddress }) {
-    if (routine && instruction) {
-      console.log(
-        `Execute Opcode - ${routine.toString(2)} - ${instruction.toString(
-          16
-        )}\n\n`
-      );
-      const reg =
-        this.REG[
-          [
-            "r1",
-            "r2",
-            "r3",
-            "r4",
-            "r5",
-            "r6",
-            "r7",
-            "r8",
-            "r9",
-            "r10",
-            "r11",
-            "r12",
-            "lr",
-            "cpsr",
-          ][
-            Math.floor(Math.random() * (Math.floor(13) - Math.ceil(0) + 1)) +
-              Math.ceil(0)
-          ]
-        ];
-      reg.write(instruction);
+    if (routine && this[routine]) {
+      this[routine].call(this, instruction);
       this.dispatchEvent(
         new CustomEvent(ON_ALU_EXECUTE, {
           detail: {
@@ -73,11 +54,72 @@ export class Alu extends EventTarget {
           },
         })
       );
+      console.log(
+        `Executed Routine - ${routine.toString()} - ${instruction.toString(
+          16
+        )}\n\n`
+      );
     } else {
       console.log(
-        `%c undefined - ${instruction.toString(16)}\n\n`,
+        `%c Unsupported Instruction - ${instruction.toString(16)}\n\n`,
         "background: black; color: white"
       );
     }
   }
+
+  [MNEM.MUL_MULS](instruction) {
+    const rd = extractBits(instruction, 16, 4);
+    const rn = extractBits(instruction, 0, 4);
+    const rm = extractBits(instruction, 8, 4);
+    const setflags = extractBits(instruction, 20, 1);
+    const result = this.REGS[rn].read() * this.REGS[rm].read();
+    this.REGS[rd].write(result);
+
+    if (setflags) {
+      this.CPSR.N = extractBits(result, 31, 1);
+      this.CPSR.Z = result === 0 ? 1 : 0;
+    }
+  }
+
+  [MNEM.BX](instruction) {
+    const rm = extractBits(instruction, 0, 4);
+    const target = this.REGS[rm].read();
+    this.REG.pc.write(target);
+  }
+
+  [MNEM.BLX_REG](instruction) {
+    const rm = extractBits(instruction, 0, 4);
+    const target = this.REGS[rm].read();
+    this.REG.lr.write(this.REG.pc.read() + 4);
+    this.REG.pc.write(target);
+  }
+
+  [MNEM.CLZ](instruction) {
+    const rd = extractBits(instruction, 12, 4);
+    const rm = extractBits(instruction, 0, 4);
+    const result = countLeadingZeros(this.REGS[rm].read());
+    this.REGS[rd].write(result);
+  }
+
+  [MNEM.AND_ANDS_IMD](instruction) {
+    const rd = extractBits(instruction, 12, 4);
+    const rn = extractBits(instruction, 16, 4);
+    const imm12 = extractBits(instruction, 0, 12);
+    const setflags = extractBits(instruction, 20, 1);
+    const { imm32, carryOut } = expandImmediateWithCarry(imm12, this.CPSR.C);
+    const result = this.REGS[rn].read() & imm32;
+    this.REGS[rd].write(result);
+
+    // TODO: raise ALUExceptionReturn(result) if destination === pc and setflags
+    if (setflags) {
+      this.CPSR.N = extractBits(result, 31, 1);
+      this.CPSR.Z = result === 0 ? 1 : 0;
+      this.CPSR.C = carryOut;
+    }
+  }
 }
+
+// const rd = extractBits(instruction, 0, 4)
+// const rn = extractBits(instruction, 0, 4)
+// const rm = extractBits(instruction, 0, 4)
+// const setflags = extractBits(instruction, 0, 1)

@@ -3,7 +3,8 @@ import {
   ON_BUFFER_32_READ,
   ON_REG_READ,
   ON_REG_WRITE,
-} from "../var/def.js";
+} from "../lib/def.js";
+import { extractBits, setBit } from "../lib/utils.js";
 import { Buffer32Bit } from "./buf.js";
 
 /**
@@ -22,6 +23,7 @@ export class Reg extends EventTarget {
   constructor() {
     super();
 
+    this._r0 = new Buffer32Bit("r0");
     this._r1 = new Buffer32Bit("r1");
     this._r2 = new Buffer32Bit("r2");
     this._r3 = new Buffer32Bit("r3");
@@ -39,9 +41,12 @@ export class Reg extends EventTarget {
     this._pc = new Buffer32Bit("pc");
     this._cpsr = new Buffer32Bit("cpsr");
 
+    this._extendCPSR(this._cpsr);
+
     this._readEventHandler = this._readEventHandler.bind(this);
     this._writeEventHandler = this._writeEventHandler.bind(this);
 
+    this._r0.addEventListener(ON_BUFFER_32_READ, this._readEventHandler);
     this._r1.addEventListener(ON_BUFFER_32_READ, this._readEventHandler);
     this._r2.addEventListener(ON_BUFFER_32_READ, this._readEventHandler);
     this._r3.addEventListener(ON_BUFFER_32_READ, this._readEventHandler);
@@ -59,6 +64,7 @@ export class Reg extends EventTarget {
     this._pc.addEventListener(ON_BUFFER_32_READ, this._readEventHandler);
     this._cpsr.addEventListener(ON_BUFFER_32_READ, this._readEventHandler);
 
+    this._r0.addEventListener(ON_BUFFER_32_WRITE, this._writeEventHandler);
     this._r1.addEventListener(ON_BUFFER_32_WRITE, this._writeEventHandler);
     this._r2.addEventListener(ON_BUFFER_32_WRITE, this._writeEventHandler);
     this._r3.addEventListener(ON_BUFFER_32_WRITE, this._writeEventHandler);
@@ -75,6 +81,13 @@ export class Reg extends EventTarget {
     this._lr.addEventListener(ON_BUFFER_32_WRITE, this._writeEventHandler);
     this._pc.addEventListener(ON_BUFFER_32_WRITE, this._writeEventHandler);
     this._cpsr.addEventListener(ON_BUFFER_32_WRITE, this._writeEventHandler);
+  }
+
+  /**
+   * @returns {Buffer32Bit} The r0 general-purpose register. Can be used for any purpose.
+   */
+  get r0() {
+    return this._r0;
   }
 
   /**
@@ -209,6 +222,55 @@ export class Reg extends EventTarget {
   }
 
   /**
+   * Extends the CPSR (Current Program Status Register) with flag properties.
+   * @param {Buffer32Bit} instance - The instance of the Buffer32Bit class.
+   * @private
+   */
+  _extendCPSR(instance) {
+    // TODO: implement all flags
+    Object.defineProperty(instance, "N", {
+      get() {
+        return extractBits(this.read(), 31, 1);
+      },
+      set(value) {
+        this.write(setBit(this.read(), 31, value));
+      },
+      enumerable: true,
+      configurable: true,
+    });
+    Object.defineProperty(instance, "Z", {
+      get() {
+        return extractBits(this.read(), 30, 1);
+      },
+      set(value) {
+        this.write(setBit(this.read(), 30, value));
+      },
+      enumerable: true,
+      configurable: true,
+    });
+    Object.defineProperty(instance, "C", {
+      get() {
+        return extractBits(this.read(), 29, 1);
+      },
+      set(value) {
+        this.write(setBit(this.read(), 29, value));
+      },
+      enumerable: true,
+      configurable: true,
+    });
+    Object.defineProperty(instance, "V", {
+      get() {
+        return extractBits(this.read(), 28, 1);
+      },
+      set(value) {
+        this.write(setBit(this.read(), 28, value));
+      },
+      enumerable: true,
+      configurable: true,
+    });
+  }
+
+  /**
    * Allows an instance of Reg class(this) to be used in a for...of loop returning one of the
    * registers in each iteration.
    * @returns {Object} An object conforming to the iterator protocol with a `next` method.
@@ -218,6 +280,7 @@ export class Reg extends EventTarget {
    */
   [Symbol.iterator]() {
     const registers = [
+      this.r0,
       this.r1,
       this.r2,
       this.r3,

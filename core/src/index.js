@@ -1,4 +1,4 @@
-import * as DEF from "./var/def.js";
+import * as DEF from "./lib/def.js";
 
 import { Clk } from "./cmp/clock.js";
 import { Ram } from "./cmp/ram.js";

@@ -1,5 +1,5 @@
 {
-  "name": "ARMulator",
+  "name": "armulator",
   "version": "1.0.0",
   "description": "JavaScript Visual Emulator for ARM",
   "homepage": "https://github.com/nanacnote/armulator#readme",
@@ -25,7 +25,6 @@
     "daisyui": "^2.49.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "react-hot-loader": "^4.13.1",
     "react-icons": "^4.7.1"
   },
   "devDependencies": {
@@ -33,6 +32,7 @@
     "@babel/core": "^7.20.12",
     "@babel/preset-env": "^7.20.2",
     "@babel/preset-react": "^7.18.6",
+    "@pmmmwh/react-refresh-webpack-plugin": "^0.5.10",
     "@types/animejs": "^3.1.7",
     "@types/react": "^18.0.27",
     "autoprefixer": "^10.4.13",
@@ -48,6 +48,7 @@
     "postcss-loader": "^7.0.2",
     "postcss-preset-env": "^8.0.0",
     "prettier": "^2.8.3",
+    "react-refresh": "^0.14.0",
     "style-loader": "^3.3.1",
     "tailwindcss": "^3.2.4",
     "ts-loader": "^9.4.2",

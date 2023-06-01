@@ -55,3 +55,15 @@ export const RAM_DEV_KEY = 0b00000001000000000000000000000000;
 
 // Constant used to specify the size of the RAM in bytes
 export const RAM_SIZE_IN_BYTE = 0.5 * 1024 * 1024;
+
+// Support ARM mnemonics
+export const MNEM = {
+  MUL_MULS: Symbol.for("MUL_MULS"),
+
+  BX: Symbol.for("BX_BXJ"),
+  BXJ: Symbol.for("BX_BXJ"),
+  BLX_REG: Symbol.for("BLX_REG"),
+  CLZ: Symbol.for("CLZ"),
+
+  AND_ANDS_IMD: Symbol.for("AND_ANDS_IMD"),
+};

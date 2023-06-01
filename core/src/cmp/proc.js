@@ -5,7 +5,7 @@ import {
   INIT_DATA_SECTION,
   STACK_SECTION,
   TEXT_SECTION,
-} from "../var/def.js";
+} from "../lib/def.js";
 
 /**
  * @module Core

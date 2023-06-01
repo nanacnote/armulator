@@ -8,7 +8,7 @@ interface TProps {}
  */
 const Schematic: React.FC<TProps> = (): JSX.Element => {
   const thisComponent = React.useRef<HTMLDivElement>(null);
-  useSchematicSVG(thisComponent);
+  // useSchematicSVG(thisComponent);
 
   return (
     <div ref={thisComponent} className="relative h-[473px]">

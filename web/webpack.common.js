@@ -10,7 +10,13 @@ module.exports = {
         test: /\.(js|jsx)$/,
         exclude: /(node_modules|bower_components)/,
         loader: 'babel-loader',
-        options: { presets: ['@babel/env'] }
+        options: {
+          presets: [
+            '@babel/env',
+            ['@babel/preset-react', { runtime: 'automatic' }]
+          ]
+          // plugins: ['react-refresh/babel'] // TODO: find a way to add this only in dev mode
+        }
       },
       {
         test: /\.tsx?$/,
