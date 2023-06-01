@@ -9,7 +9,6 @@ check_node_version() {
     exit 1
   fi
 }
-check_node_version
 
 kill_all_processes() {
   printf "\n**Attempting a graceful shutdown**\n"
@@ -22,37 +21,39 @@ kill_all_processes() {
   exit 0
 }
 
-if [ "$1" = "init" ]; then
-    shift
-    cd core &&
-    npm i &&
-    cd ../web &&
-    npm i &&
-    npm link ../core &&
-    cd ..
 elif [ "$1" = "docker:start" ]; then
-    shift
-    if [ "$(docker images -q hiramlabs/openresty 2> /dev/null)" = "" ]; then
-        docker build -t hiramlabs/openresty "$@" .
-    fi
-    docker run \
-        "$@" \
-        -d \
-        -p 9001:80 \
-        --name openresty \
-        --restart=unless-stopped \
-        hiramlabs/openresty
+  shift
+  if [ "$(docker images -q hiramlabs/openresty 2> /dev/null)" = "" ]; then
+    docker build -t hiramlabs/openresty "$@" .
+  fi
+  docker run \
+    "$@" \
+    -d \
+    -p 9001:80 \
+    --name openresty \
+    --restart=unless-stopped \
+    hiramlabs/openresty
 elif [ "$1" = "docker:stop" ]; then
     shift
     docker stop "$@" openresty
+elif [ "$1" = "init" ]; then
+  check_node_version
+  shift
+  cd core &&
+  npm i &&
+  cd ../web &&
+  npm i &&
+  npm link ../core &&
+  cd ..
 elif [ "$1" = "dev:start" ]; then
-    shift
-    trap kill_all_processes INT TERM QUIT
-    npm --prefix core run dev --color=always 2>&1 >>local.dev.log &
-    PID_1=$!
-    npm --prefix  web run start --color=always 2>&1 >>local.dev.log &
-    PID_2=$!
-    tail -f local.dev.log
+  check_node_version
+  shift
+  trap kill_all_processes INT TERM QUIT
+  npm --prefix core run dev --color=always 2>&1 >>local.dev.log &
+  PID_1=$!
+  npm --prefix  web run start --color=always 2>&1 >>local.dev.log &
+  PID_2=$!
+  tail -f local.dev.log
 else
   echo >&2 "Invalid or no argument(s) provided for run."
 fi
