@@ -8,7 +8,7 @@ A web-based application that allows users to input a subset of ARM assembly inst
 
 ### Requirements
 
-Node 16
+Node 14
 
 Docker 4.2.0
 
@@ -27,7 +27,7 @@ chmod +x ./run                                          # make the run script ex
 git clone https://github.com/nanacnote/armulator.git    # clone the application repository
 cd armulator                                            # check out the application directory
 chmod +x ./run                                          # make the run script executable (unix like systems)
-./run start:docker                                      # Start a docker container
+./run docker:start                                      # Start a docker container
 ```
 
 After executing the _Running Locally_ commands, navigate to `localhost:9001` in your browser
