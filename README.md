@@ -6,6 +6,10 @@ A web-based application that allows users to input a subset of ARM assembly inst
 
 <!-- [Here](http://armulator.aal.hiramlabs.com/) -->
 
+### Core Library Documentation
+
+[Here](https://github.com/nanacnote/armulator/blob/main/core/API.md)
+
 ### Requirements
 
 Node 14
