@@ -1,189 +1,96 @@
-## Classes
-
-<dl>
-<dt><a href="#Dec">Dec</a></dt>
-<dd><p>T0 - main encoding
-    T1 - data-processing and miscellaneous instructions
-        T11 - Extra load/store                                                              **
-        T12 - Multiply and Accumulate
-            • MUL/MULS
-        T13 - Synchronization primitives and Load-Acquire/Store-Release                     **
-        T14 - Miscellaneous
-            • BX
-            • CLZ
-        T15 - Halfword Multiply and Accumulate                                              **
-        T16 - Data-processing register (immediate shift)</p>
-<pre><code>    T17 - Data-processing register (register shift)
-    
-    T18 - Data-processing immediate  
-        T181 - Integer Data Processing (two register and immediate)
-            • AND, ANDS (immediate)
-            • EOR, EORS (immediate)
-            • SUB, SUBS (immediate) - SUB variant
-            • SUB, SUBS (SP minus immediate) - SUB variant 
-            • ADR - A2
-            • SUB, SUBS (immediate) - SUBS variant
-            • SUB, SUBS (SP minus immediate) - SUBS variant 
-            • RSB, RSBS (immediate)
-            • ADD, ADDS (immediate) - ADD variant
-            • ADD, ADDS (SP plus immediate) - ADD variant 
-            • ADR - A1
-            • ADD, ADDS (immediate) - ADDS variant
-            • ADD, ADDS (SP plus immediate) - ADDS variant
-            • ADC, ADCS (immediate)
-            • SBC, SBCS (immediate)
-            • RSC, RSCS (immediate)
-        T182 - Move Halfword (immediate) 
-            • MOV, MOVS (immediate)
-            • MOVT
-        T183 - Move Special Register and Hints (immediate)                              **
-        T184 - Integer Test and Compare (one register and immediate) 
-            • TST (immediate)
-            • TEQ (immediate)
-            • CMP (immediate)
-            • CMN (immediate)
-        T185 - Logical Arithmetic (two register and immediate)
-            • ORR, ORRS (immediate)
-            • MOV, MOVS (immediate)
-            • BIC, BICS (immediate)
-            • MVN, MVNS (immediate)
-
-T2 - Load/Store Word, Unsigned Byte (immediate, literal)
-• LDR(literal)
-• LDR(immediate) - Post index variant
-• LDR(immediate) - Offset variant
-• LDRB(literal)
-• LDRB(immediate) - Post index variant
-• LDRB(immediate) - Offset variant
-• STR(immediate) - Pre index variant
-• STR(immediate) - Post index variant
-• STR(immediate) - Offset variant
-• STRB(immediate) - Post index variant
-• STRB(immediate) - Offset variant
-
-T3 - Load/Store Word, Unsigned Byte (register)
-• LDR (register) - Pre-indexed variant
-• LDR (register) - Post indexed variant
-• LDRB (register) - Pre indexed variant
-• LDRB (register) - Post indexed variant
-• STR (register) - Pre-indexed variant
-• STR (register) - Post indexed variant
-• STRB (register) - Pre indexed variant
-• STRB (register) - Post indexed variant
-
-T4 - Media instructions \*\*
-
-T5 - Branch, branch with link, and block data transfer
-T51 - Exception Save/Restore **
-T52 - Load/Store Multiple **
-T53 - Branch (immediate)
-• B
-• BL (immediate)
-• BLX (immediate)
-
-T6 - System register access, Advanced SIMD, floating-point, and Supervisor call \*\*
-
-T7 - Unconditional instructions \*\*
-</code></pre>
-
-</dd>
-</dl>
-
-<a name="module_Core"></a>
-
 ## Core
 
-- [Classes](#classes)
-- [Core](#core)
-  - [Core.Alu ⇐ EventTarget](#corealu--eventtarget)
-    - [new exports.Alu()](#new-exportsalu)
-    - [alu.conn2reg(reg)](#aluconn2regreg)
-    - [alu.call(options)](#alucalloptions)
-  - [Core.Buffer32Bit ⇐ EventTarget](#corebuffer32bit--eventtarget)
-    - [new exports.Buffer32Bit(name)](#new-exportsbuffer32bitname)
-    - [buffer32Bit.NAME : String](#buffer32bitname--string)
-    - [buffer32Bit.IS_EMPTY : number](#buffer32bitis_empty--number)
-    - [buffer32Bit.BUFFER : DataView](#buffer32bitbuffer--dataview)
-    - [buffer32Bit.read(\[byteOffset\]) ⇒ number](#buffer32bitreadbyteoffset--number)
-    - [buffer32Bit.write(val, \[byteOffset\]) ⇒ number](#buffer32bitwriteval-byteoffset--number)
-    - [buffer32Bit.flush() ⇒ number](#buffer32bitflush--number)
-    - [buffer32Bit.view() ⇒ string](#buffer32bitview--string)
-    - [buffer32Bit.Symbol.iterator() ⇒ Object](#buffer32bitsymboliterator--object)
-  - [Core.Bus](#corebus)
-    - [new exports.Bus(dev)](#new-exportsbusdev)
-    - [bus.DEVICES : Object](#busdevices--object)
-    - [bus.A_BUS_BUFFER : Buffer32Bit](#busa_bus_buffer--buffer32bit)
-    - [bus.C_BUS_BUFFER : Buffer32Bit](#busc_bus_buffer--buffer32bit)
-    - [bus.D_BUS_BUFFER : Buffer32Bit](#busd_bus_buffer--buffer32bit)
-    - [bus.setAddress(val)](#bussetaddressval)
-    - [bus.setControl(val)](#bussetcontrolval)
-    - [bus.setData(val)](#bussetdataval)
-    - [bus.getData() ⇒ number](#busgetdata--number)
-    - [bus.view() ⇒ Object](#busview--object)
-    - [bus.onTick()](#busontick)
-  - [Core.Clk ⇐ EventTarget](#coreclk--eventtarget)
-    - [new exports.Clk()](#new-exportsclk)
-    - [clk.TICKER : number](#clkticker--number)
-    - [clk.CYCLE : number](#clkcycle--number)
-    - [clk.STATE : number](#clkstate--number)
-    - [clk.SPEED : number](#clkspeed--number)
-    - [clk.CYCLE_START_EVENTS](#clkcycle_start_events)
-    - [clk.CYCLE_END_EVENTS](#clkcycle_end_events)
-    - [clk.start()](#clkstart)
-    - [clk.stop()](#clkstop)
-    - [clk.pause()](#clkpause)
-    - [clk.resume()](#clkresume)
-    - [clk.step()](#clkstep)
-    - [clk.changeSpeed(val)](#clkchangespeedval)
-  - [Core.Cpu](#corecpu)
-    - [new exports.Cpu(parts)](#new-exportscpuparts)
-    - [cpu.run() ⇒ Cpu](#cpurun--cpu)
-    - [cpu.spawn(pid) ⇒ Cpu](#cpuspawnpid--cpu)
-    - [cpu.load(elf) ⇒ Object](#cpuloadelf--object)
-  - [Core.Mmu](#coremmu)
-    - [new exports.Mmu()](#new-exportsmmu)
-    - [mmu.PROCESSES : Map.\<number, Process\>](#mmuprocesses--mapnumber-process)
-    - [mmu.conn2bus(bus)](#mmuconn2busbus)
-    - [mmu.processAlloc(size) ⇒ number](#mmuprocessallocsize--number)
-    - [mmu.for(pid) ⇒ Process | null](#mmuforpid--process--null)
-    - [mmu.malloc(pid, section, size, content) ⇒ Array.\<number\>](#mmumallocpid-section-size-content--arraynumber)
-    - [mmu.translate(virtualAddress) ⇒ number](#mmutranslatevirtualaddress--number)
-  - [Core.Process](#coreprocess)
-    - [new exports.Process(pid, startAddr, endAddr)](#new-exportsprocesspid-startaddr-endaddr)
-    - [process.PID : number](#processpid--number)
-    - [process.PROC_START_ADDRESS : number](#processproc_start_address--number)
-    - [process.PROC_END_ADDRESS : number](#processproc_end_address--number)
-    - [process.set(section, size) ⇒ number](#processsetsection-size--number)
-  - [Core.Ram ⇐ EventTarget](#coreram--eventtarget)
-    - [new exports.Ram()](#new-exportsram)
-    - [ram.read8(\[byteOffset\]) ⇒ number](#ramread8byteoffset--number)
-    - [ram.read16(\[byteOffset\]) ⇒ number](#ramread16byteoffset--number)
-    - [ram.read32(\[byteOffset\]) ⇒ number](#ramread32byteoffset--number)
-    - [ram.write8(val, \[byteOffset\]) ⇒ number](#ramwrite8val-byteoffset--number)
-    - [ram.write16(val, \[byteOffset\]) ⇒ number](#ramwrite16val-byteoffset--number)
-    - [ram.write32(val, \[byteOffset\]) ⇒ number](#ramwrite32val-byteoffset--number)
-    - [ram.getByteLength() ⇒ number](#ramgetbytelength--number)
-    - [ram.view() ⇒ Array.\<string\>](#ramview--arraystring)
-    - [ram.Symbol.iterator() ⇒ Object](#ramsymboliterator--object)
-  - [Core.Reg ⇐ EventTarget](#corereg--eventtarget)
-    - [new exports.Reg()](#new-exportsreg)
-    - [reg.r1 ⇒ Buffer32Bit](#regr1--buffer32bit)
-    - [reg.r2 ⇒ Buffer32Bit](#regr2--buffer32bit)
-    - [reg.r3 ⇒ Buffer32Bit](#regr3--buffer32bit)
-    - [reg.r4 ⇒ Buffer32Bit](#regr4--buffer32bit)
-    - [reg.r5 ⇒ Buffer32Bit](#regr5--buffer32bit)
-    - [reg.r6 ⇒ Buffer32Bit](#regr6--buffer32bit)
-    - [reg.r7 ⇒ Buffer32Bit](#regr7--buffer32bit)
-    - [reg.r8 ⇒ Buffer32Bit](#regr8--buffer32bit)
-    - [reg.r9 ⇒ Buffer32Bit](#regr9--buffer32bit)
-    - [reg.r10 ⇒ Buffer32Bit](#regr10--buffer32bit)
-    - [reg.r11 ⇒ Buffer32Bit](#regr11--buffer32bit)
-    - [reg.r12 ⇒ Buffer32Bit](#regr12--buffer32bit)
-    - [reg.sp ⇒ Buffer32Bit](#regsp--buffer32bit)
-    - [reg.lr ⇒ Buffer32Bit](#reglr--buffer32bit)
-    - [reg.pc ⇒ Buffer32Bit](#regpc--buffer32bit)
-    - [reg.cpsr ⇒ Buffer32Bit](#regcpsr--buffer32bit)
-    - [reg.Symbol.iterator() ⇒ Object](#regsymboliterator--object)
+- [Core](#module_Core)
+  - [.Alu](#module_Core.Alu) ⇐ <code>EventTarget</code>
+    - [new exports.Alu()](#new_module_Core.Alu_new)
+    - [.conn2reg(reg)](#module_Core.Alu+conn2reg)
+    - [.call(options)](#module_Core.Alu+call)
+  - [.Buffer32Bit](#module_Core.Buffer32Bit) ⇐ <code>EventTarget</code>
+    - [new exports.Buffer32Bit(name)](#new_module_Core.Buffer32Bit_new)
+    - [.NAME](#module_Core.Buffer32Bit+NAME) : <code>String</code>
+    - [.IS_EMPTY](#module_Core.Buffer32Bit+IS_EMPTY) : <code>number</code>
+    - [.BUFFER](#module_Core.Buffer32Bit+BUFFER) : <code>DataView</code>
+    - [.read([byteOffset])](#module_Core.Buffer32Bit+read) ⇒ <code>number</code>
+    - [.write(val, [byteOffset])](#module_Core.Buffer32Bit+write) ⇒ <code>number</code>
+    - [.flush()](#module_Core.Buffer32Bit+flush) ⇒ <code>number</code>
+    - [.view()](#module_Core.Buffer32Bit+view) ⇒ <code>string</code>
+    - [.Symbol.iterator()](#module_Core.Buffer32Bit+Symbol.iterator) ⇒ <code>Object</code>
+  - [.Bus](#module_Core.Bus)
+    - [new exports.Bus(dev)](#new_module_Core.Bus_new)
+    - [.DEVICES](#module_Core.Bus+DEVICES) : <code>Object</code>
+    - [.A_BUS_BUFFER](#module_Core.Bus+A_BUS_BUFFER) : <code>Buffer32Bit</code>
+    - [.C_BUS_BUFFER](#module_Core.Bus+C_BUS_BUFFER) : <code>Buffer32Bit</code>
+    - [.D_BUS_BUFFER](#module_Core.Bus+D_BUS_BUFFER) : <code>Buffer32Bit</code>
+    - [.setAddress(val)](#module_Core.Bus+setAddress)
+    - [.setControl(val)](#module_Core.Bus+setControl)
+    - [.setData(val)](#module_Core.Bus+setData)
+    - [.getData()](#module_Core.Bus+getData) ⇒ <code>number</code>
+    - [.view()](#module_Core.Bus+view) ⇒ <code>Object</code>
+    - [.onTick()](#module_Core.Bus+onTick)
+  - [.Clk](#module_Core.Clk) ⇐ <code>EventTarget</code>
+    - [new exports.Clk()](#new_module_Core.Clk_new)
+    - [.TICKER](#module_Core.Clk+TICKER) : <code>number</code>
+    - [.CYCLE](#module_Core.Clk+CYCLE) : <code>number</code>
+    - [.STATE](#module_Core.Clk+STATE) : <code>number</code>
+    - [.SPEED](#module_Core.Clk+SPEED) : <code>number</code>
+    - [.CYCLE_START_EVENTS](#module_Core.Clk+CYCLE_START_EVENTS)
+    - [.CYCLE_END_EVENTS](#module_Core.Clk+CYCLE_END_EVENTS)
+    - [.start()](#module_Core.Clk+start)
+    - [.stop()](#module_Core.Clk+stop)
+    - [.pause()](#module_Core.Clk+pause)
+    - [.resume()](#module_Core.Clk+resume)
+    - [.step()](#module_Core.Clk+step)
+    - [.changeSpeed(val)](#module_Core.Clk+changeSpeed)
+  - [.Cpu](#module_Core.Cpu)
+    - [new exports.Cpu(parts)](#new_module_Core.Cpu_new)
+    - [.run()](#module_Core.Cpu+run) ⇒ <code>Cpu</code>
+    - [.spawn(pid)](#module_Core.Cpu+spawn) ⇒ <code>Cpu</code>
+    - [.load(elf)](#module_Core.Cpu+load) ⇒ <code>Object</code>
+  - [.Mmu](#module_Core.Mmu)
+    - [new exports.Mmu()](#new_module_Core.Mmu_new)
+    - [.PROCESSES](#module_Core.Mmu+PROCESSES) : <code>Map.&lt;number, Process&gt;</code>
+    - [.conn2bus(bus)](#module_Core.Mmu+conn2bus)
+    - [.palloc(size)](#module_Core.Mmu+palloc) ⇒ <code>number</code>
+    - [.malloc(pid, section, size, content)](#module_Core.Mmu+malloc) ⇒ <code>Array.&lt;number&gt;</code>
+    - [.getProcessById(pid)](#module_Core.Mmu+getProcessById) ⇒ <code>Process</code> \| <code>null</code>
+    - [.translate(virtualAddress)](#module_Core.Mmu+translate) ⇒ <code>number</code>
+  - [.Process](#module_Core.Process)
+    - [new exports.Process(pid, startAddr, endAddr)](#new_module_Core.Process_new)
+    - [.PID](#module_Core.Process+PID) : <code>number</code>
+    - [.PROC_START_ADDRESS](#module_Core.Process+PROC_START_ADDRESS) : <code>number</code>
+    - [.PROC_END_ADDRESS](#module_Core.Process+PROC_END_ADDRESS) : <code>number</code>
+    - [.set(section, size)](#module_Core.Process+set) ⇒ <code>number</code>
+  - [.Ram](#module_Core.Ram) ⇐ <code>EventTarget</code>
+    - [new exports.Ram()](#new_module_Core.Ram_new)
+    - [.read8([byteOffset])](#module_Core.Ram+read8) ⇒ <code>number</code>
+    - [.read16([byteOffset])](#module_Core.Ram+read16) ⇒ <code>number</code>
+    - [.read32([byteOffset])](#module_Core.Ram+read32) ⇒ <code>number</code>
+    - [.write8(val, [byteOffset])](#module_Core.Ram+write8) ⇒ <code>number</code>
+    - [.write16(val, [byteOffset])](#module_Core.Ram+write16) ⇒ <code>number</code>
+    - [.write32(val, [byteOffset])](#module_Core.Ram+write32) ⇒ <code>number</code>
+    - [.getByteLength()](#module_Core.Ram+getByteLength) ⇒ <code>number</code>
+    - [.view()](#module_Core.Ram+view) ⇒ <code>Array.&lt;string&gt;</code>
+    - [.Symbol.iterator()](#module_Core.Ram+Symbol.iterator) ⇒ <code>Object</code>
+  - [.Reg](#module_Core.Reg) ⇐ <code>EventTarget</code>
+    - [new exports.Reg()](#new_module_Core.Reg_new)
+    - [.r0](#module_Core.Reg+r0) ⇒ <code>Buffer32Bit</code>
+    - [.r1](#module_Core.Reg+r1) ⇒ <code>Buffer32Bit</code>
+    - [.r2](#module_Core.Reg+r2) ⇒ <code>Buffer32Bit</code>
+    - [.r3](#module_Core.Reg+r3) ⇒ <code>Buffer32Bit</code>
+    - [.r4](#module_Core.Reg+r4) ⇒ <code>Buffer32Bit</code>
+    - [.r5](#module_Core.Reg+r5) ⇒ <code>Buffer32Bit</code>
+    - [.r6](#module_Core.Reg+r6) ⇒ <code>Buffer32Bit</code>
+    - [.r7](#module_Core.Reg+r7) ⇒ <code>Buffer32Bit</code>
+    - [.r8](#module_Core.Reg+r8) ⇒ <code>Buffer32Bit</code>
+    - [.r9](#module_Core.Reg+r9) ⇒ <code>Buffer32Bit</code>
+    - [.r10](#module_Core.Reg+r10) ⇒ <code>Buffer32Bit</code>
+    - [.r11](#module_Core.Reg+r11) ⇒ <code>Buffer32Bit</code>
+    - [.r12](#module_Core.Reg+r12) ⇒ <code>Buffer32Bit</code>
+    - [.sp](#module_Core.Reg+sp) ⇒ <code>Buffer32Bit</code>
+    - [.lr](#module_Core.Reg+lr) ⇒ <code>Buffer32Bit</code>
+    - [.pc](#module_Core.Reg+pc) ⇒ <code>Buffer32Bit</code>
+    - [.cpsr](#module_Core.Reg+cpsr) ⇒ <code>Buffer32Bit</code>
+    - [.Symbol.iterator()](#module_Core.Reg+Symbol.iterator) ⇒ <code>Object</code>
 
 <a name="module_Core.Alu"></a>
 
@@ -695,9 +602,9 @@ Represents a virtual memory management unit (MMU).
   - [new exports.Mmu()](#new_module_Core.Mmu_new)
   - [.PROCESSES](#module_Core.Mmu+PROCESSES) : <code>Map.&lt;number, Process&gt;</code>
   - [.conn2bus(bus)](#module_Core.Mmu+conn2bus)
-  - [.processAlloc(size)](#module_Core.Mmu+processAlloc) ⇒ <code>number</code>
-  - [.for(pid)](#module_Core.Mmu+for) ⇒ <code>Process</code> \| <code>null</code>
+  - [.palloc(size)](#module_Core.Mmu+palloc) ⇒ <code>number</code>
   - [.malloc(pid, section, size, content)](#module_Core.Mmu+malloc) ⇒ <code>Array.&lt;number&gt;</code>
+  - [.getProcessById(pid)](#module_Core.Mmu+getProcessById) ⇒ <code>Process</code> \| <code>null</code>
   - [.translate(virtualAddress)](#module_Core.Mmu+translate) ⇒ <code>number</code>
 
 <a name="new_module_Core.Mmu_new"></a>
@@ -725,9 +632,9 @@ Connects the MMU to a bus.
 | ----- | ------------------- | --------------- |
 | bus   | <code>object</code> | The bus object. |
 
-<a name="module_Core.Mmu+processAlloc"></a>
+<a name="module_Core.Mmu+palloc"></a>
 
-#### mmu.processAlloc(size) ⇒ <code>number</code>
+#### mmu.palloc(size) ⇒ <code>number</code>
 
 Allocates memory for a new process and assigns page memory that maps to physical memory frame.
 
@@ -737,19 +644,6 @@ Allocates memory for a new process and assigns page memory that maps to physical
 | Param | Type                | Description              |
 | ----- | ------------------- | ------------------------ |
 | size  | <code>number</code> | The size of the process. |
-
-<a name="module_Core.Mmu+for"></a>
-
-#### mmu.for(pid) ⇒ <code>Process</code> \| <code>null</code>
-
-Returns the process instance given the process ID.
-
-**Kind**: instance method of [<code>Mmu</code>](#module_Core.Mmu)  
-**Returns**: <code>Process</code> \| <code>null</code> - - The process instance, or null if not found.
-
-| Param | Type                | Description     |
-| ----- | ------------------- | --------------- |
-| pid   | <code>number</code> | The process ID. |
 
 <a name="module_Core.Mmu+malloc"></a>
 
@@ -766,6 +660,19 @@ Allocates a section for a process and packs content into the allocated section.
 | section | <code>string</code>               | The section to allocate.              |
 | size    | <code>number</code>               | The size of the section.              |
 | content | <code>Array.&lt;number&gt;</code> | The content to pack into the section. |
+
+<a name="module_Core.Mmu+getProcessById"></a>
+
+#### mmu.getProcessById(pid) ⇒ <code>Process</code> \| <code>null</code>
+
+Returns the process instance given the process ID.
+
+**Kind**: instance method of [<code>Mmu</code>](#module_Core.Mmu)  
+**Returns**: <code>Process</code> \| <code>null</code> - - The process instance, or null if not found.
+
+| Param | Type                | Description     |
+| ----- | ------------------- | --------------- |
+| pid   | <code>number</code> | The process ID. |
 
 <a name="module_Core.Mmu+translate"></a>
 
@@ -994,6 +901,7 @@ A class representing a set of registers in a processor.
 
 - [.Reg](#module_Core.Reg) ⇐ <code>EventTarget</code>
   - [new exports.Reg()](#new_module_Core.Reg_new)
+  - [.r0](#module_Core.Reg+r0) ⇒ <code>Buffer32Bit</code>
   - [.r1](#module_Core.Reg+r1) ⇒ <code>Buffer32Bit</code>
   - [.r2](#module_Core.Reg+r2) ⇒ <code>Buffer32Bit</code>
   - [.r3](#module_Core.Reg+r3) ⇒ <code>Buffer32Bit</code>
@@ -1018,6 +926,12 @@ A class representing a set of registers in a processor.
 
 Creates a new set of registers.
 
+<a name="module_Core.Reg+r0"></a>
+
+#### reg.r0 ⇒ <code>Buffer32Bit</code>
+
+**Kind**: instance property of [<code>Reg</code>](#module_Core.Reg)  
+**Returns**: <code>Buffer32Bit</code> - The r0 general-purpose register. Can be used for any purpose.  
 <a name="module_Core.Reg+r1"></a>
 
 #### reg.r1 ⇒ <code>Buffer32Bit</code>
