@@ -194,21 +194,21 @@ export class Dec {
     // prettier-ignore
     this.T181 = [
         [["_eq", 0b000],        ["_any"],       ["_any"],               ["_ret", MNEM.AND_ANDS_IMD]],           // AND, ANDS (immediate)
-        [["_eq", 0b001],        ["_any"],       ["_any"],               ["_ret", "EOR_EORS_IMD"]],              // EOR, EORS (immediate)
-        [["_eq", 0b010],        ["_eq", 0b0],   ["_neC","11x1"],        ["_ret", "SUB_IMD"]],                   // SUB, SUBS (immediate) - SUB variant
-        [["_eq", 0b010],        ["_eq", 0b0],   ["_eq", 0b1101],        ["_ret", "SUB_IMD_SP"]],                // SUB, SUBS (SP minus immediate) - SUB variant 
+        [["_eq", 0b001],        ["_any"],       ["_any"],               ["_ret", MNEM.EOR_EORS_IMD]],           // EOR, EORS (immediate)
+        [["_eq", 0b010],        ["_eq", 0b0],   ["_neC","11x1"],        ["_ret", MNEM.SUB_IMD]],                // SUB, SUBS (immediate) - SUB variant
+        [["_eq", 0b010],        ["_eq", 0b0],   ["_eq", 0b1101],        ["_ret", MNEM.SUB_IMD_SP]],             // SUB, SUBS (SP minus immediate) - SUB variant 
         [["_eq", 0b010],        ["_eq", 0b0],   ["_eq", 0b1111],        ["_ret", "ADR_A2"]],                    // ADR - A2
-        [["_eq", 0b010],        ["_eq", 0b1],   ["_ne", 0b1101],        ["_ret", "SUBS_IMD"]],                  // SUB, SUBS (immediate) - SUBS variant
-        [["_eq", 0b010],        ["_eq", 0b1],   ["_eq", 0b1101],        ["_ret", "SUBS_IMD_SP"]],               // SUB, SUBS (SP minus immediate) - SUBS variant 
-        [["_eq", 0b011],        ["_any"],       ["_any"],               ["_ret", "RSB_RSBS_IMD"]],              // RSB, RSBS (immediate)
-        [["_eq", 0b100],        ["_eq", 0b0],   ["_neC","11x1"],        ["_ret", "ADD_IMD"]],                   // ADD, ADDS (immediate) - ADD variant
-        [["_eq", 0b100],        ["_eq", 0b0],   ["_eq", 0b1101],        ["_ret", "ADD_IMD_SP"]],                // ADD, ADDS (SP plus immediate) - ADD variant 
+        [["_eq", 0b010],        ["_eq", 0b1],   ["_ne", 0b1101],        ["_ret", MNEM.SUBS_IMD]],               // SUB, SUBS (immediate) - SUBS variant
+        [["_eq", 0b010],        ["_eq", 0b1],   ["_eq", 0b1101],        ["_ret", MNEM.SUBS_IMD_SP]],            // SUB, SUBS (SP minus immediate) - SUBS variant 
+        [["_eq", 0b011],        ["_any"],       ["_any"],               ["_ret", MNEM.RSB_RSBS_IMD]],           // RSB, RSBS (immediate)
+        [["_eq", 0b100],        ["_eq", 0b0],   ["_neC","11x1"],        ["_ret", MNEM.ADD_IMD]],                // ADD, ADDS (immediate) - ADD variant
+        [["_eq", 0b100],        ["_eq", 0b0],   ["_eq", 0b1101],        ["_ret", MNEM.ADD_IMD_SP]],             // ADD, ADDS (SP plus immediate) - ADD variant 
         [["_eq", 0b100],        ["_eq", 0b0],   ["_eq", 0b1111],        ["_ret", "ADR_A1"]],                    // ADR - A1
-        [["_eq", 0b100],        ["_eq", 0b1],   ["_ne", 0b1101],        ["_ret", "ADDS_IMD"]],                  // ADD, ADDS (immediate) - ADDS variant
-        [["_eq", 0b100],        ["_eq", 0b1],   ["_eq", 0b1101],        ["_ret", "ADDS_IMD_SP"]],               // ADD, ADDS (SP plus immediate) - ADDS variant
-        [["_eq", 0b101],        ["_any"],       ["_any"],               ["_ret", "ADC_ADCS_IMD"]],              // ADC, ADCS (immediate)
-        [["_eq", 0b110],        ["_any"],       ["_any"],               ["_ret", "SBC_SBCS_IMD"]],              // SBC, SBCS (immediate)
-        [["_eq", 0b111],        ["_any"],       ["_any"],               ["_ret", "RSC_RSCS_IMD"]],              // RSC, RSCS (immediate)
+        [["_eq", 0b100],        ["_eq", 0b1],   ["_ne", 0b1101],        ["_ret", MNEM.ADDS_IMD]],               // ADD, ADDS (immediate) - ADDS variant
+        [["_eq", 0b100],        ["_eq", 0b1],   ["_eq", 0b1101],        ["_ret", MNEM.ADDS_IMD_SP]],            // ADD, ADDS (SP plus immediate) - ADDS variant
+        [["_eq", 0b101],        ["_any"],       ["_any"],               ["_ret", MNEM.ADC_ADCS_IMD]],           // ADC, ADCS (immediate)
+        [["_eq", 0b110],        ["_any"],       ["_any"],               ["_ret", MNEM.SBC_SBCS_IMD]],           // SBC, SBCS (immediate)
+        [["_eq", 0b111],        ["_any"],       ["_any"],               ["_ret", MNEM.RSC_RSCS_IMD]],           // RSC, RSCS (immediate)
     ]
     // prettier-ignore
     this.T182 = [
@@ -652,34 +652,6 @@ export class Dec {
   }
 }
 
-// ADC (Add with Carry): Adds the value of a register to the value of another register, and then adds the carry flag.
-// ADD (Add): Adds the value of a register to the value of another register.
-// ADR (Add Immediate to PC): Adds an immediate value to the program counter.
-// AND (Bitwise AND): Performs a bitwise AND operation on the values of two registers.
-// ASR (Arithmetic Shift Right): Shifts the value of a register right by a specified number of bits.
-// BIC (Bitwise Complement and AND): Performs a bitwise AND operation on the value of a register and the bitwise complement of an immediate value.
-// BL (Branch with Link): Branches to a specified address and saves the current instruction pointer to the link register.
-// CMN (Compare Negated): Compares the value of a register to the value of another register, and then negates the result.
-// CMP (Compare): Compares the value of a register to the value of another register.
-// EOR (Bitwise Exclusive OR): Performs a bitwise exclusive OR operation on the values of two registers.
-// LDM (Load Multiple): Loads multiple registers from memory.
-// LDR (Load Register): Loads a register from memory.
-// LSL (Logical Shift Left): Shifts the value of a register left by a specified number of bits.
-// LSR (Logical Shift Right): Shifts the value of a register right by a specified number of bits.
-// MOV (Move): Copies the value of a register to another register.
-// MVN (Move Negated): Copies the bitwise complement of a register to another register.
-// ORR (Bitwise OR): Performs a bitwise OR operation on the values of two registers.
-// ROR (Rotate Right): Rotates the value of a register right by a specified number of bits.
-// RRX (Rotate Right with Carry): Rotates the value of a register right by a specified number of bits and then carries the carry flag into the least significant bit.
-// RSB (Subtract with Borrow): Subtracts the value of a register from the value of another register and then borrows from the carry flag.
-// RSC (Subtract with Carry): Subtracts the value of a register from the value of another register and then carries the carry flag into the least significant bit.
-// SBC (Subtract with Carry): Subtracts the value of a register from the value of another register and then carries the carry flag into the least significant bit.
-// STM (Store Multiple): Stores multiple registers to memory.
-// STR (Store Register): Stores a register to memory.
-// SUB (Subtract): Subtracts the value of a register from the value of another register.
-// TEQ (Test Equal): Compares the value of a register to the value of another register and then sets the zero flag if they are equal.
-// TST (Test): Compares the value of a register to the value of zero and then sets the zero flag if they are equal.
-
 /**
  * MUL, MULS
  * Multiply multiplies two register values. The least significant 32 bits of the result are written to the destination register.
@@ -702,4 +674,40 @@ export class Dec {
  * AND, ANDS (immediate)
  * Bitwise AND (immediate) performs a bitwise AND of a register value and an immediate value, and writes the result to the destination register.
  * If the destination register is not the PC, the ANDS variant of the instruction updates the condition flags based on the result.
+ *
+ * EOR, EORS (immediate)
+ * Bitwise Exclusive OR (immediate) performs a bitwise Exclusive OR of a register value and an immediate value, and writes the result to the destination register.
+ * If the destination register is not the PC, the EORS variant of the instruction updates the condition flags based on the result.
+ *
+ * SUB, SUBS (immediate)
+ * Subtract (immediate) subtracts an immediate value from a register value, and writes the result to the destination register.
+ * If the destination register is not the PC, the SUBS variant of the instruction updates the condition flags based on the result.
+ *
+ * SUB, SUBS (SP minus immediate)
+ * Subtract from SP (immediate) subtracts an immediate value from the SP value, and writes the result to the destination register.
+ * If the destination register is not the PC, the SUBS variant of the instruction updates the condition flags based on the result.
+ *
+ * RSB, RSBS (immediate)
+ * Reverse Subtract (immediate) subtracts a register value from an immediate value, and writes the result to the destination register.
+ * If the destination register is not the PC, the RSBS variant of the instruction updates the condition flags based on the result.
+ *
+ * ADD, ADDS (immediate)
+ * Add (immediate) adds an immediate value to a register value, and writes the result to the destination register.
+ * If the destination register is not the PC, the ADDS variant of the instruction updates the condition flags based on the result.
+ *
+ * ADD, ADDS (SP plus immediate)
+ * Add to SP (immediate) adds an immediate value to the SP value, and writes the result to the destination register.
+ * If the destination register is not the PC, the ADDS variant of the instruction updates the condition flags based on the result.
+ *
+ * ADC, ADCS (immediate)
+ * Add with Carry (immediate) adds an immediate value and the Carry flag value to a register value, and writes the result to the destination register.
+ * If the destination register is not the PC, the ADCS variant of the instruction updates the condition flags based on the result.
+ *
+ * SBC, SBCS (immediate)
+ * Subtract with Carry (immediate) subtracts an immediate value and the value of NOT (Carry flag) from a register value, and writes the result to the destination register.
+ * If the destination register is not the PC, the SBCS variant of the instruction updates the condition flags based on the result.
+ *
+ * RSC, RSCS (immediate)
+ * Reverse Subtract with Carry (immediate) subtracts a register value and the value of NOT (Carry flag) from an immediate value, and writes the result to the destination register.
+ * If the destination register is not the PC, the RSCS variant of the instruction updates the condition flags based on the result.
  */

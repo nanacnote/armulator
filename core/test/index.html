@@ -24,24 +24,40 @@
         bssContent: [],
         initDataSize: 4,
         initDataContent: [],
-        textSize: 18 * 4,
+        textSize: 20 * 4,
         textContent: [
-          0xe202100a, // and     r1, r2, #10
-          0xe2121014, // ands    r1, r2, #20
-          0xe3a0100f, // mov     r1, #15
+          0xe2e1000a, // rsc     r0, r1, #10
+          0xe2f10014, // rscs    r0, r1, #20
+          0xe2c1000a, // sbc     r0, r1, #10
+          0xe2d10014, // sbcs    r0, r1, #20
+          0xe2a1000a, // adc     r0, r1, #10
+          0xe2b10014, // adcs    r0, r1, #10
+          0xe281000a, // add     r0, r1, #10
+          0xe2910014, // adds    r0, r1, #20
+          0xe28d000a, // add     r0, sp, #10
+          0xe29d000a, // adds    r0, sp, #10
+          0xe261000a, // rsb     r0, r1, #10
+          0xe2710014, // rsbs    r0, r1, #20
+          0xe24d000a, // sub     r0, sp, #10
+          0xe25d000a, // subs    r0, sp, #10
+          0xe241000a, // sub     r0, r1, #10
+          0xe2510014, // subs    r0, r1, #20
+          0xe221000a, // eor     r0, r1, #10
+          0xe2310014, // eors    r0, r1, #20
+          0xe201000a, // and     r0, r1, #10
+          0xe2110014, // ands    r0, r1, #20
+          0xe0010392, // mul     r1, r2, r3
+          0xe0110392, // muls    r1, r2, r3
           0xe16f0f11, // clz     r0, r1
+
+          0xe3a0100f, // mov     r1, #15
           0xe1100060, // tst     r0, r0, RRX
           0xe1500101, // cmp     r0, r1, LSL #2
           0xe35300f5, // cmp     r3, #245
           0xe52d7004, // push    {r7}
-          0xe24dd00c, // sub     sp, sp, #12
-          0xe28d7000, // add     r7, sp, #0
           0xe5870004, // str     r0, [r7, #4]
           0xe5973004, // ldr     r3, [r7, #4]
-          0xe0010392, // mul     r1, r2, r3
-          0xe0110392, // muls    r1, r2, r3
           0xe1a00003, // mov     r0, r3
-          0xe297700c, // adds    r7, r7, #12
           0xe1a0d007, // mov     sp, r7
           0xe49d7004, // ldr     r7, [sp], #4
           // 0xe12fff1e, // bx      lr
