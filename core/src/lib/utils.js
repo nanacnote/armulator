@@ -103,6 +103,21 @@ export function rightRotate(value, rotation) {
 }
 
 /**
+ * Expands a 12-bit immediate value to a 32-bit value.
+ *
+ * @param {number} imm12 - The 12-bit immediate value.
+ * @returns {number} The expanded 32-bit value.
+ */
+export function expandImmediate(imm12) {
+  let imm32 = (imm12 >>> 0) & (((1 << 8) >>> 0) - 1);
+  const rotation = (imm12 >>> 8) & (((1 << 4) >>> 0) - 1);
+  if (rotation > 0) {
+    imm32 = ((imm32 >>> rotation) | (imm32 << (32 - rotation))) >>> 0;
+  }
+  return imm32;
+}
+
+/**
  * Expands a 12-bit immediate value with carry in to a 32-bit value and updates the carry out.
  *
  * @param {number} imm12 - The 12-bit immediate value.
@@ -119,4 +134,23 @@ export function expandImmediateWithCarry(imm12, carryIn) {
     carryOut = (imm32 >>> 31) & (((1 << 4) >>> 0) - 1);
   }
   return { imm32, carryOut };
+}
+
+/**
+ * Converts a binary string to a signed integer using two's complement representation.
+ *
+ * @param {string} binStr - The binary string to be converted.
+ * @returns {number} The signed integer representation of the binary string.
+ */
+export function convertToSignedIntTwoComplement(binStr) {
+  const binary = binStr.padStart(32, "0");
+  if (binary[0] === "1") {
+    const flipped = binary
+      .split("")
+      .map((bit) => (bit === "1" ? "0" : "1"))
+      .join("");
+    return -(parseInt(flipped, 2) + 1);
+  } else {
+    return parseInt(binary, 2);
+  }
 }
