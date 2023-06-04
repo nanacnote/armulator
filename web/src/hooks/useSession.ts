@@ -1,4 +1,4 @@
-import { session } from '../lib/helper/session';
+import { session } from '../utils/session';
 
 /**
  *

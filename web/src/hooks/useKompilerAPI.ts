@@ -1,5 +1,5 @@
-import { session } from '../lib/helper/session';
-import { parseInstructionForKstool } from '../lib/helper/utils';
+import { session } from '../utils/session';
+import { parseInstructionForKstool } from '../utils/helpers';
 
 /**
  * Fetch API wrapper to handle compiling Assembly instructions to machine code

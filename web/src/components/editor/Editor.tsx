@@ -6,7 +6,7 @@ import {
   DARK_THEME_NAME,
   LIGHT_THEME_NAME,
   LOG_HEADER_MSG
-} from '../../lib/helper/def';
+} from '../../utils/def';
 import { GlobalDataContext } from '../../context/GlobalData';
 
 interface TProps {}

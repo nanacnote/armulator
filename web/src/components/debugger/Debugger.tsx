@@ -2,7 +2,7 @@ import * as React from 'react';
 import cn from 'classnames';
 import { useArmulatorCore, useSession } from '../../hooks';
 import { Numeral } from '..';
-import { DEBUGGER_EMPTY_MSG, BREAKPOINT_SYMBOL } from '../../lib/helper/def';
+import { DEBUGGER_EMPTY_MSG, BREAKPOINT_SYMBOL } from '../../utils/def';
 
 interface TProps {}
 

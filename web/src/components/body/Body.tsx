@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { Editor, Schematic, Memory, Tab, Debugger } from '..';
 import { useSession } from '../../hooks';
-import { TAB_NAMES } from '../../lib/helper/def';
+import { TAB_NAMES } from '../../utils/def';
 
 interface TProps {}
 

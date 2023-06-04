@@ -1,13 +1,13 @@
 import * as React from 'react';
 import { useArmulatorCore, useSession } from '../../hooks';
 import { Numeral } from '../';
-import { hexDump } from '../../lib/helper/utils';
+import { hexDump } from '../../utils/helpers';
 import {
   HEX_DUMP_SIZE_BYTE,
   MEMORY_HEX_DUMP_TYPE,
   MEMORY_TABLE_VIEW_TYPE,
   NUMBER_OF_MEMORY_TABLE_ENTRIES
-} from '../../lib/helper/def';
+} from '../../utils/def';
 
 interface TProps {}
 
