@@ -19,7 +19,7 @@ export const TAB_NAMES = ['Editor', 'Debugger', 'Memory', 'Schematic'];
 export const DEBUGGER_EMPTY_MSG =
   '{"instruction":"No process has been loaded!","textUUIDS":["9893"],"textContent":["0"]}';
 
-export const NUMBER_OF_MEMORY_TABLE_ENTRIES = 10;
+export const NUMBER_OF_MEMORY_TABLE_ENTRIES = 12;
 
 export const HEX_DUMP_SIZE_BYTE = 512;
 

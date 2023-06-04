@@ -193,7 +193,7 @@ const Memory: React.FC<TProps> = (): JSX.Element => {
         className="content-item-for-view-type"
         data-name={MEMORY_HEX_DUMP_TYPE}
       >
-        <div className="relative bg-base-100 shadow-md h-[441px] border rounded border-base-300 overflow-auto">
+        <div className="relative bg-base-100 shadow-md h-[511px] border rounded border-base-300 overflow-auto">
           <div className="sticky top-0 left-0 right-0 mb-4">
             <div className="alert shadow-lg rounded-none">
               <div className="text-xs font-bold opacity-50">

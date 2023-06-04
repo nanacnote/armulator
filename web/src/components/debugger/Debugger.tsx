@@ -269,7 +269,7 @@ const Debugger: React.FC<TProps> = (): JSX.Element => {
       </div>
       <div className="grid grid-cols-3 gap-4">
         <div className="col-span-3 md:col-span-2">
-          <div className="relative mockup-code h-[473px] overflow-auto">
+          <div className="relative mockup-code h-[511px] overflow-auto">
             <div
               className="step-cta-for-breakpoint absolute top-4 right-4 animate-pulse hover:animate-none hidden"
               role="button"
@@ -323,12 +323,12 @@ const Debugger: React.FC<TProps> = (): JSX.Element => {
           </div>
         </div>
         <div className="col-span-3 md:col-span-1">
-          <div className="h-[473px] overflow-auto">
+          <div className="h-[511px] overflow-auto">
             {registers.map((reg: any) => (
               <div key={reg.key || reg.NAME}>
                 <div
                   className={cn(
-                    'grid grid-cols-7 text-xs mb-[3.5px] pl-3 border rounded border-base-300',
+                    'grid grid-cols-7 text-xs mb-[4px] pl-3 border rounded border-base-300 h-[26px]',
                     {
                       'bg-neutral-content text-warning-content':
                         !reg.hasChanged,
