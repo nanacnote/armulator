@@ -154,3 +154,20 @@ export function convertToSignedIntTwoComplement(binStr) {
     return parseInt(binary, 2);
   }
 }
+
+/**
+ * Concatenates the binary representation of 2 numbers.
+ *
+ * @param {number} val1 - The first number.
+ * @param {number} val2 - The second number.
+ * @returns {number} The concatenated result.
+ * @example
+ * // Example usage:
+ * const binary1 = 0b101;   // Decimal: 5
+ * const binary2 = 0b1011;  // Decimal: 11
+ * const result = concatenateBinary(binary1, binary2);
+ * console.log(result);  // Output: 1011011 (Binary representation of the concatenated number)
+ */
+export function concatenateBinary(val1, val2) {
+  return (val1 << val2.toString(2).length) + val2;
+}
