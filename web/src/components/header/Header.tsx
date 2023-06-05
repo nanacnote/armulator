@@ -5,7 +5,7 @@ import {
   LIGHT_THEME_NAME,
   NUMERAL_TYPE_BIN,
   NUMERAL_TYPE_HEX
-} from '../../lib/helper/def';
+} from '../../utils/def';
 
 interface TProps {}
 

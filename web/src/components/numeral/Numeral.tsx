@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { useSession } from '../../hooks';
-import { NUMERAL_TYPE_BIN, NUMERAL_TYPE_HEX } from '../../lib/helper/def';
+import { NUMERAL_TYPE_BIN, NUMERAL_TYPE_HEX } from '../../utils/def';
 
 interface TProps {
   binStr: string;

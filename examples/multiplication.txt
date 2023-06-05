@@ -1,0 +1,3 @@
+MOV r0, #3
+MOV r1, #4
+MUL r0, r0, r1

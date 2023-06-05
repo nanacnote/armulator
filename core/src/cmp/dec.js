@@ -212,22 +212,22 @@ export class Dec {
     ]
     // prettier-ignore
     this.T182 = [
-        [["_eq", 0b0],      ["_ret", "MOV_MOVS_IMD"]],        // MOV, MOVS (immediate)
-        [["_eq", 0b1],      ["_ret", "MOVT"]],                // MOVT
+        [["_eq", 0b0],      ["_ret", MNEM.MOV_MOVS_IMD]],             // MOV, MOVS (immediate)
+        [["_eq", 0b1],      ["_ret", MNEM.MOVT]],                     // MOVT
     ]
     // prettier-ignore
     this.T184 = [
-        [["_eq", 0b00],     ["_ret", "TST_IMD"]],         // TST (immediate)
-        [["_eq", 0b01],     ["_ret", "TEQ_IMD"]],         // TEQ (immediate)
-        [["_eq", 0b10],     ["_ret", "CMP_IMD"]],         // CMP (immediate)
-        [["_eq", 0b11],     ["_ret", "CMN_IMD"]],         // CMN (immediate)
+        [["_eq", 0b00],     ["_ret", MNEM.TST_IMD]],              // TST (immediate)
+        [["_eq", 0b01],     ["_ret", MNEM.TEQ_IMD]],              // TEQ (immediate)
+        [["_eq", 0b10],     ["_ret", MNEM.CMP_IMD]],              // CMP (immediate)
+        [["_eq", 0b11],     ["_ret", MNEM.CMN_IMD]],              // CMN (immediate)
     ]
     // prettier-ignore
     this.T185 = [
-        [["_eq", 0b00],     ["_ret", "ORR_ORRS_IMD"]],         // ORR, ORRS (immediate)
-        [["_eq", 0b01],     ["_ret", "MOV_MOVS_IMD"]],         // MOV, MOVS (immediate)
-        [["_eq", 0b10],     ["_ret", "BIC_BICS_IMD"]],         // BIC, BICS (immediate)
-        [["_eq", 0b11],     ["_ret", "MVN_MVNS_IMD"]],         // MVN, MVNS (immediate)
+        [["_eq", 0b00],     ["_ret", MNEM.ORR_ORRS_IMD]],             // ORR, ORRS (immediate)
+        [["_eq", 0b01],     ["_ret", MNEM.MOV_MOVS_IMD]],             // MOV, MOVS (immediate)
+        [["_eq", 0b10],     ["_ret", MNEM.BIC_BICS_IMD]],             // BIC, BICS (immediate)
+        [["_eq", 0b11],     ["_ret", MNEM.MVN_MVNS_IMD]],             // MVN, MVNS (immediate)
     ]
     // prettier-ignore
     this.T2 = [
@@ -260,13 +260,13 @@ export class Dec {
     this.T5 = [
         [["_eq", 0b1111],       ["_eq", 0b0],       ["_ret", undefined]],                 // Exception Save/Restore
         [["_ne", 0b1111],       ["_eq", 0b0],       ["_ret", undefined]],                 // Load/Store Multiple
-        [["_any"],               ["_eq", 0b1],       ["_lup", "_T53"]],                     // Branch (immediate)
+        [["_any"],               ["_eq", 0b1],       ["_lup", "_T53"]],                   // Branch (immediate)
     ]
     // prettier-ignore
     this.T53 = [
-        [["_ne", 0b1111],       ["_eq", 0b0],       ["_ret", "B"]],             // B
-        [["_ne", 0b1111],       ["_eq", 0b1],       ["_ret", "BL_IMD"]],        // BL/BLX (immediate)
-        [["_eq", 0b1111],       ["_any"],           ["_ret", "BLX_IMD"]],       // BL/BLX (immediate)
+        [["_ne", 0b1111],       ["_eq", 0b0],       ["_ret", MNEM.B]],              // B
+        [["_ne", 0b1111],       ["_eq", 0b1],       ["_ret", "BL_IMD"]],            // BL/BLX (immediate)
+        [["_eq", 0b1111],       ["_any"],           ["_ret", "BLX_IMD"]],           // BL/BLX (immediate)
     ]
   }
 
@@ -710,4 +710,32 @@ export class Dec {
  * RSC, RSCS (immediate)
  * Reverse Subtract with Carry (immediate) subtracts a register value and the value of NOT (Carry flag) from an immediate value, and writes the result to the destination register.
  * If the destination register is not the PC, the RSCS variant of the instruction updates the condition flags based on the result.
+ *
+ * MOV, MOVS (immediate)
+ * Move (immediate) writes an immediate value to the destination register.
+ * If the destination register is not the PC, the MOVS variant of the instruction updates the condition flags based on the result.
+ *
+ * MOVT
+ * Move Top writes an immediate value to the top halfword of the destination register. It does not affect the contents of the bottom halfword.
+ *
+ * TST (immediate)
+ * Test (immediate) performs a bitwise AND operation on a register value and an immediate value. It updates the condition flags based on the result, and discards the result.
+ *
+ * TEQ (immediate)
+ * Test Equivalence (immediate) performs a bitwise exclusive OR operation on a register value and an immediate value.
+ * It updates the condition flags based on the result, and discards the result.
+ *
+ * CMP (immediate)
+ * Compare (immediate) subtracts an immediate value from a register value. It updates the condition flags based on the result, and discards the result.
+ *
+ * CMN (immediate)
+ * Compare Negative (immediate) adds a register value and an immediate value. It updates the condition flags based on the result, and discards the result.
+ *
+ * ORR, ORRS (immediate)
+ * Bitwise OR (immediate) performs a bitwise (inclusive) OR of a register value and an immediate value, and writes the result to the destination register.
+ * If the destination register is not the PC, the ORRS variant of the instruction updates the condition flags based on the result.
+ *
+ * BIC, BICS (immediate)
+ * Bitwise Bit Clear (immediate) performs a bitwise AND of a register value and the complement of an immediate value, and writes the result to the destination register.
+ * If the destination register is not the PC, the BICS variant of the instruction updates the condition flags based on the result.
  */

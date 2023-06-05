@@ -5,7 +5,6 @@ import {
   expandImmediateWithCarry,
   extractBits,
   fletcher16,
-  setBit,
 } from "../lib/utils.js";
 import { MNEM, ON_ALU_EXECUTE } from "../lib/def.js";
 
@@ -59,7 +58,7 @@ export class Alu extends EventTarget {
       console.log(
         `Executed Routine - ${routine.toString()} - ${instruction.toString(
           16
-        )}\n\n`
+        )} [PC => ${this.REG.pc.read()}]\n\n`
       );
     } else {
       console.log(
@@ -392,4 +391,141 @@ export class Alu extends EventTarget {
           : 1;
     }
   }
+
+  [MNEM.MOV_MOVS_IMD](instruction) {
+    const rd = extractBits(instruction, 12, 4);
+    const imm12 = extractBits(instruction, 0, 12);
+    const setflags = extractBits(instruction, 20, 1);
+    const { imm32, carryOut } = expandImmediateWithCarry(imm12, this.CPSR.C);
+    const result = imm32;
+    // TODO: raise ALUExceptionReturn(result) if destination === pc and setflags
+    this.REGS[rd].write(result);
+    if (setflags) {
+      this.CPSR.N = extractBits(result, 31, 1);
+      this.CPSR.Z = result === 0 ? 1 : 0;
+      this.CPSR.C = carryOut;
+    }
+  }
+
+  [MNEM.MOVT](instruction) {
+    const rd = extractBits(instruction, 12, 4);
+    const imm4 = extractBits(instruction, 16, 4).toString(2).padStart(4, "0");
+    const imm12 = extractBits(instruction, 0, 12).toString(2).padStart(12, "0");
+    const imm16 = parseInt(imm4 + imm12, 2);
+    this.REGS[rd].BUFFER.setUint16(0, imm16);
+  }
+
+  [MNEM.TST_IMD](instruction) {
+    const rn = extractBits(instruction, 16, 4);
+    const imm12 = extractBits(instruction, 0, 12);
+    const { imm32, carryOut } = expandImmediateWithCarry(imm12, this.CPSR.C);
+    const result = this.REGS[rn].read() & imm32;
+    this.CPSR.N = extractBits(result, 31, 1);
+    this.CPSR.Z = result === 0 ? 1 : 0;
+    this.CPSR.C = carryOut;
+  }
+
+  [MNEM.TEQ_IMD](instruction) {
+    const rn = extractBits(instruction, 16, 4);
+    const imm12 = extractBits(instruction, 0, 12);
+    const { imm32, carryOut } = expandImmediateWithCarry(imm12, this.CPSR.C);
+    const result = this.REGS[rn].read() ^ imm32;
+    this.CPSR.N = extractBits(result, 31, 1);
+    this.CPSR.Z = result === 0 ? 1 : 0;
+    this.CPSR.C = carryOut;
+  }
+
+  [MNEM.CMP_IMD](instruction) {
+    const rn = extractBits(instruction, 16, 4);
+    const imm12 = extractBits(instruction, 0, 12);
+    const imm32 = expandImmediate(imm12);
+    const unsignedSum = this.REGS[rn].read() + ~imm32 + 1;
+    const signedSum =
+      convertToSignedIntTwoComplement(this.REGS[rn].view()) +
+      ~convertToSignedIntTwoComplement(imm32.toString(2)) +
+      1;
+    const result = extractBits(unsignedSum, 0, 31);
+    this.CPSR.N = extractBits(signedSum, 31, 1);
+    this.CPSR.Z = result === 0 ? 1 : 0;
+    this.CPSR.C = result === unsignedSum ? 0 : 1;
+    this.CPSR.V =
+      convertToSignedIntTwoComplement(result.toString(2)) === signedSum ? 0 : 1;
+  }
+
+  [MNEM.CMN_IMD](instruction) {
+    const rn = extractBits(instruction, 16, 4);
+    const imm12 = extractBits(instruction, 0, 12);
+    const imm32 = expandImmediate(imm12);
+    const unsignedSum = this.REGS[rn].read() + imm32;
+    const signedSum =
+      convertToSignedIntTwoComplement(this.REGS[rn].view()) +
+      convertToSignedIntTwoComplement(imm32.toString(2));
+    const result = extractBits(unsignedSum, 0, 31);
+    this.CPSR.N = extractBits(signedSum, 31, 1);
+    this.CPSR.Z = result === 0 ? 1 : 0;
+    this.CPSR.C = result === unsignedSum ? 0 : 1;
+    this.CPSR.V =
+      convertToSignedIntTwoComplement(result.toString(2)) === signedSum ? 0 : 1;
+  }
+
+  [MNEM.ORR_ORRS_IMD](instruction) {
+    const rd = extractBits(instruction, 12, 4);
+    const rn = extractBits(instruction, 16, 4);
+    const imm12 = extractBits(instruction, 0, 12);
+    const setflags = extractBits(instruction, 20, 1);
+    const { imm32, carryOut } = expandImmediateWithCarry(imm12, this.CPSR.C);
+    const result = this.REGS[rn].read() | imm32;
+    // TODO: raise ALUExceptionReturn(result) if destination === pc and setflags
+    this.REGS[rd].write(result);
+    if (setflags) {
+      this.CPSR.N = extractBits(result, 31, 1);
+      this.CPSR.Z = result === 0 ? 1 : 0;
+      this.CPSR.C = carryOut;
+    }
+  }
+
+  [MNEM.BIC_BICS_IMD](instruction) {
+    const rd = extractBits(instruction, 12, 4);
+    const rn = extractBits(instruction, 16, 4);
+    const imm12 = extractBits(instruction, 0, 12);
+    const setflags = extractBits(instruction, 20, 1);
+    const { imm32, carryOut } = expandImmediateWithCarry(imm12, this.CPSR.C);
+    const result = this.REGS[rn].read() & ~imm32;
+    // TODO: raise ALUExceptionReturn(result) if destination === pc and setflags
+    this.REGS[rd].write(result);
+    if (setflags) {
+      this.CPSR.N = extractBits(result, 31, 1);
+      this.CPSR.Z = result === 0 ? 1 : 0;
+      this.CPSR.C = carryOut;
+    }
+  }
+
+  [MNEM.MVN_MVNS_IMD](instruction) {
+    const rd = extractBits(instruction, 12, 4);
+    const imm12 = extractBits(instruction, 0, 12);
+    const setflags = extractBits(instruction, 20, 1);
+    const { imm32, carryOut } = expandImmediateWithCarry(imm12, this.CPSR.C);
+    const result = ~imm32;
+    // TODO: raise ALUExceptionReturn(result) if destination === pc and setflags
+    this.REGS[rd].write(result);
+    if (setflags) {
+      this.CPSR.N = extractBits(result, 31, 1);
+      this.CPSR.Z = result === 0 ? 1 : 0;
+      this.CPSR.C = carryOut;
+    }
+  }
+
+  [MNEM.B](instruction) {
+    const imm24 = extractBits(instruction, 0, 24);
+    const imm26 = imm24 << 2;
+    const msb = extractBits(imm26, 25, 1);
+    const imm32 = parseInt(imm26.toString(2).padStart(32, msb.toString()), 2);
+    this.REG.pc.write(this.REG.pc.read() + imm32);
+
+    console.log(this.REG.pc.read() + imm32);
+    console.log(imm24.toString(2), imm26.toString(2), msb, imm32);
+  }
 }
+// this.REG.r0.write(0b1);
+// this._inspectRoutine(0, 0b1, imm32, "TEQ");
+// console.log(this.REGS[rn].view(), imm32.toString(2), result.toString(2));

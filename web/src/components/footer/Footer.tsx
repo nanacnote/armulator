@@ -3,8 +3,8 @@ import cn from 'classnames';
 import pkg from '../../../package.json';
 import { GlobalDataContext } from '../../context/GlobalData';
 import { useArmulatorCore, useSession, useKompilerAPI } from '../../hooks';
-import { EDITOR_LOGGER_PAYLOADS, TAB_NAMES } from '../../lib/helper/def';
-import { sleep } from '../../lib/helper/utils';
+import { EDITOR_LOGGER_PAYLOADS, TAB_NAMES } from '../../utils/def';
+import { sleep } from '../../utils/helpers';
 
 interface TProps {}
 

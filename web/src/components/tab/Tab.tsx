@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { useSession } from '../../hooks';
-import { TAB_NAMES } from '../../lib/helper/def';
+import { TAB_NAMES } from '../../utils/def';
 
 interface TProps {}
 

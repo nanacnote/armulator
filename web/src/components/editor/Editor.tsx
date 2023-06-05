@@ -6,7 +6,7 @@ import {
   DARK_THEME_NAME,
   LIGHT_THEME_NAME,
   LOG_HEADER_MSG
-} from '../../lib/helper/def';
+} from '../../utils/def';
 import { GlobalDataContext } from '../../context/GlobalData';
 
 interface TProps {}
@@ -100,12 +100,12 @@ const Editor: React.FC<TProps> = (): JSX.Element => {
     <div ref={thisComponent} className="p-4">
       <div className="grid grid-cols-9 gap-4">
         <div className="col-span-9 md:col-span-6">
-          <pre id="ace-editor-container" className="h-[473px] text-base"></pre>
+          <pre id="ace-editor-container" className="h-[511px] text-base"></pre>
         </div>
         <div className="relative col-span-9 md:col-span-3">
           <div
             id="editor-view-console-logger"
-            className="mockup-code min-w-[100%] text-xs h-[250px] md:h-[473px] overflow-auto"
+            className="mockup-code min-w-[100%] text-xs h-[250px] md:h-[511px] overflow-auto"
           >
             <pre className="text-warning mb-4">
               <code>{LOG_HEADER_MSG}</code>

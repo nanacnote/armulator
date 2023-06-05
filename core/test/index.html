@@ -9,7 +9,46 @@
   <body>
     <script type="module">
       import { cpu, clk, reg, ram } from "../src/index.js";
-      clk.changeSpeed(50);
+      const textContent = [
+        0xe3e0000a, // mvn     r0, #10
+        0xe3f0000a, // mvns    r0, #10
+        0xe3c1000a, // orr     r0, r1, #0b1010
+        0xe3d1000a, // orrs    r0, r1, #0b1010
+        0xe381000f, // orr     r0, r1, #0b1111
+        0xe391000f, // orrs    r0, r1, #0b1111
+        0xe370000a, // cmn     r0, #10
+        0xe350000a, // cmp     r0, #10
+        0xe3300001, // teq     r0, #1
+        0xe3100001, // tst     r0, #1
+        0xe3411234, // movt    r1, #0x1234
+        0xe3a0000a, // mov     r0, #10
+        0xe3b00014, // movs    r0, #20
+        0xe2e1000a, // rsc     r0, r1, #10
+        0xe2f10014, // rscs    r0, r1, #20
+        0xe2c1000a, // sbc     r0, r1, #10
+        0xe2d10014, // sbcs    r0, r1, #20
+        0xe2a1000a, // adc     r0, r1, #10
+        0xe2b10014, // adcs    r0, r1, #10
+        0xe281000a, // add     r0, r1, #10
+        0xe2910014, // adds    r0, r1, #20
+        0xe28d000a, // add     r0, sp, #10
+        0xe29d000a, // adds    r0, sp, #10
+        0xe261000a, // rsb     r0, r1, #10
+        0xe2710014, // rsbs    r0, r1, #20
+        0xe24d000a, // sub     r0, sp, #10
+        0xe25d000a, // subs    r0, sp, #10
+        0xe241000a, // sub     r0, r1, #10
+        0xe2510014, // subs    r0, r1, #20
+        0xe221000a, // eor     r0, r1, #10
+        0xe2310014, // eors    r0, r1, #20
+        0xe201000a, // and     r0, r1, #10
+        0xe2110014, // ands    r0, r1, #20
+        0xe0010392, // mul     r1, r2, r3
+        0xe0110392, // muls    r1, r2, r3
+        0xe16f0f11, // clz     r0, r1
+        // 0xeaffffee, // b       #-64
+      ];
+      clk.changeSpeed(10);
       // console.log(ram.view());
       // console.log(reg.pc.view());
       // clk.addEventListener("stop", () => {
@@ -24,76 +63,10 @@
         bssContent: [],
         initDataSize: 4,
         initDataContent: [],
-        textSize: 20 * 4,
-        textContent: [
-          0xe2e1000a, // rsc     r0, r1, #10
-          0xe2f10014, // rscs    r0, r1, #20
-          0xe2c1000a, // sbc     r0, r1, #10
-          0xe2d10014, // sbcs    r0, r1, #20
-          0xe2a1000a, // adc     r0, r1, #10
-          0xe2b10014, // adcs    r0, r1, #10
-          0xe281000a, // add     r0, r1, #10
-          0xe2910014, // adds    r0, r1, #20
-          0xe28d000a, // add     r0, sp, #10
-          0xe29d000a, // adds    r0, sp, #10
-          0xe261000a, // rsb     r0, r1, #10
-          0xe2710014, // rsbs    r0, r1, #20
-          0xe24d000a, // sub     r0, sp, #10
-          0xe25d000a, // subs    r0, sp, #10
-          0xe241000a, // sub     r0, r1, #10
-          0xe2510014, // subs    r0, r1, #20
-          0xe221000a, // eor     r0, r1, #10
-          0xe2310014, // eors    r0, r1, #20
-          0xe201000a, // and     r0, r1, #10
-          0xe2110014, // ands    r0, r1, #20
-          0xe0010392, // mul     r1, r2, r3
-          0xe0110392, // muls    r1, r2, r3
-          0xe16f0f11, // clz     r0, r1
-
-          0xe3a0100f, // mov     r1, #15
-          0xe1100060, // tst     r0, r0, RRX
-          0xe1500101, // cmp     r0, r1, LSL #2
-          0xe35300f5, // cmp     r3, #245
-          0xe52d7004, // push    {r7}
-          0xe5870004, // str     r0, [r7, #4]
-          0xe5973004, // ldr     r3, [r7, #4]
-          0xe1a00003, // mov     r0, r3
-          0xe1a0d007, // mov     sp, r7
-          0xe49d7004, // ldr     r7, [sp], #4
-          // 0xe12fff1e, // bx      lr
-          // 0x0120d0e5, // ldrb r2, [r0, #1] --> undefined,
-        ],
+        textSize: textContent.length * 4,
+        textContent,
       });
       cpu.spawn(extELF.pid).run();
-      // console.log(extELF);
-
-      // setTimeout(() => {
-      //   const pid = cpu.load({
-      //     procSize: 48,
-      //     envSize: 4,
-      //     envContent: [],
-      //     bssSize: 4,
-      //     bssContent: [],
-      //     initDataSize: 4,
-      //     initDataContent: [],
-      //     textSize: 48,
-      //     textContent: [
-      //       0xe35300f5, // cmp     r3, #245
-      //       0xe52d7004, // push    {r7}
-      //       0xe24dd00c, // sub     sp, sp, #12
-      //       0xe28d7000, // add     r7, sp, #0
-      //       0xe5870004, // str     r0, [r7, #4]
-      //       0xe5973004, // ldr     r3, [r7, #4]
-      //       0xe0030393, // mul     r3, r3, r3
-      //       0xe1a00003, // mov     r0, r3
-      //       0xe297700c, // adds    r7, r7, #12
-      //       0xe1a0d007, // mov     sp, r7
-      //       0xe49d7004, // ldr     r7, [sp], #4
-      //       0xe12fff1e, // bx      lr
-      //     ],
-      //   });
-      //   cpu.spawn(pid).run();
-      // }, 5000);
     </script>
   </body>
 </html>

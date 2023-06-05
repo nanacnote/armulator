@@ -79,4 +79,18 @@ export const MNEM = {
   ADC_ADCS_IMD: Symbol.for("ADC_ADCS_IMD"),
   SBC_SBCS_IMD: Symbol.for("SBC_SBCS_IMD"),
   RSC_RSCS_IMD: Symbol.for("RSC_RSCS_IMD"),
+
+  MOV_MOVS_IMD: Symbol.for("MOV_MOVS_IMD"),
+  MOVT: Symbol.for("MOVT"),
+
+  TST_IMD: Symbol.for("TST_IMD"),
+  TEQ_IMD: Symbol.for("TEQ_IMD"),
+  CMP_IMD: Symbol.for("CMP_IMD"),
+  CMN_IMD: Symbol.for("CMN_IMD"),
+
+  ORR_ORRS_IMD: Symbol.for("ORR_ORRS_IMD"),
+  BIC_BICS_IMD: Symbol.for("BIC_BICS_IMD"),
+  MVN_MVNS_IMD: Symbol.for("MVN_MVNS_IMD"),
+
+  B: Symbol.for("B"),
 };
