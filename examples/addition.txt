@@ -1,0 +1,3 @@
+MOV r1, #10         ;; Load the first immediate value into r1
+MOV r2, #3          ;; Load the second immediate value into r2
+ADDS r0, r1, r2     ;; Add the values in register r1 and r2 and store in r0

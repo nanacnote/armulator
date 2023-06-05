@@ -1,7 +1,0 @@
-void main() {
-    int result;
-    int operand_1 = 10;
-    int operand_2 = 5;
-    
-    result = operand_1 + operand_2;
-}
